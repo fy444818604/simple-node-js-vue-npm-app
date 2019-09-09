@@ -3,6 +3,9 @@ const path = require('path');
 //
 module.exports = {
 	baseUrl: './',
+	publicPath: process.env.NODE_ENV === 'production'
+	    ? '/basic/'
+	    : '/',
 	chainWebpack: (config) => {
 		config.resolve.alias
 			.set('@', path.resolve(__dirname, './src'))
