@@ -1,0 +1,114 @@
+@import './assets/style/font/iconfont.css';
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  font-size: 14px;
+  font-family: "Microsoft Yahei";
+}
+
+[v-cloak] {
+  display: none;
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
+.clearfix {
+  zoom: 1;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+img {
+  vertical-align: middle;
+  /*max-width:100%;*/
+}
+
+ul li {
+  list-style: none;
+}
+
+::selection {
+  background: transparent;
+  color: #4a80f6;
+}
+
+a {
+  text-decoration: none;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+}
+
+.text-overflow {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+body,html{
+  height: 100%;
+  width: 100%
+}
+
+#app{
+  height: 100%;
+}
+
+.page-container{
+  padding: 20px;
+  position: relative;
+  min-height: calc(100vh - 60px);
+  overflow: visible;
+  background: #f1f4f5;
+}
+
+.fy-page-title{
+  margin-top: 0;
+  display: block;
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #37474f;
+}
+
+.box{
+  background-color: #ffffff;
+  border: 1px solid #ffffff;
+  box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  border-radius: 1px;
+  width: 100%;
+  min-height: 100px;
+  margin-bottom: 24px;
+  padding: 24px;
+}
+
+.box-title-explain{
+  font-size: 14px;
+  margin-bottom: 11px;
+}
+
+.box-title{
+  @extend .box-title-explain;
+  font-weight: bold;
+}
