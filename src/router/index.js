@@ -17,6 +17,16 @@ const router = new Router({
 			meta: {
 				title: '登录'
 			}
+		},
+		{
+			path: '/basic/setting/system',
+			name: 'system',
+			component: (resolve) => {
+				require(['../views/basic/setting/system'], resolve)
+			},
+			meta: {
+				title: '设置'
+			}
 		}
 	]
 })
