@@ -30,11 +30,12 @@
 						<!-- <img :src="item.webInfoIcon" v-if="item.webInfoIcon != ''">
 						<span v-else>{{item.webName.substring(0,2)}}</span> -->
 						<span>{{item.webName.substring(0,2)}}</span>
-						<div class="bookmark-del" v-show="bookmarkSwitch" @click.stop="bookmarkDel(item.webInfoId)">
-							<i class="iconfont icon-close"></i>
-						</div>
-						<div class="bookmark-edit" @click.stop="bookmarkAddLayer(item)">
+						
+						<div class="bookmark-edit" @click.stop.prevent="bookmarkAddLayer(item)">
 							<i class="iconfont icon-edit"></i>
+						</div>
+						<div class="bookmark-del" v-show="bookmarkSwitch" @click.stop.prevent="bookmarkDel(item.webInfoId)">
+							<i class="iconfont icon-close"></i>
 						</div>
 					</a>
 					<div>
@@ -540,7 +541,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		z-index: 2;
+		z-index: 10;
 	}
 
 	.bookmark-del>.icon-close {

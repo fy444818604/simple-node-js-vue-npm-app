@@ -2,26 +2,19 @@ const webpack = require('webpack');
 const path = require('path');
 //
 module.exports = {
-	baseUrl: './',
-	publicPath: process.env.NODE_ENV === 'production'
-	    ? '/basic/'
-	    : '/',
+	baseUrl: process.env.NODE_ENV === 'production' ?
+		'/basic/' :
+		'/',
 	chainWebpack: (config) => {
 		config.resolve.alias
 			.set('@', path.resolve(__dirname, './src'))
-		//.set('hexToRgb', path.resolve(__dirname, './src/assets/javascript/particles.min.js'))
-		//.set('app', path.resolve(__dirname, './src/assets/javascript/app.js'))
 	},
 	configureWebpack: {
 		plugins: [
 			new webpack.ProvidePlugin({
 				$: "jquery",
 				jQuery: "jquery",
-				"windows.jQuery": "jquery",
-				//hexToRgb: "hexToRgb",
-				//"window.hexToRgb": "hexToRgb",
-				//app: "app",
-				//"window.app": "app"
+				"windows.jQuery": "jquery"
 			})
 		]
 	},
