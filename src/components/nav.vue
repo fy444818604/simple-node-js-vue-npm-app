@@ -49,7 +49,7 @@
 						menu_id: 1,
 						menu_text: '基础设置',
 						menu_icon: 'icon-home',
-						menu_href: '',
+						menu_href: '/basic/Layout/system',
 						menu_pid: 0,
 						menu_target_type: 0
 					},
@@ -73,7 +73,7 @@
 						menu_id: 4,
 						menu_text: '行政级别设置',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/admin-level-setting',
 						menu_pid: 3,
 						menu_target_type: 0
 					},
@@ -81,7 +81,7 @@
 						menu_id: 5,
 						menu_text: '行政区域设置',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/admin-area-setting',
 						menu_pid: 3,
 						menu_target_type: 0
 					},
@@ -89,7 +89,7 @@
 						menu_id: 6,
 						menu_text: '学区管理',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/school-area-man',
 						menu_pid: 1,
 						menu_target_type: 0
 					},
@@ -97,7 +97,7 @@
 						menu_id: 7,
 						menu_text: '阶段设置',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/stage-setting',
 						menu_pid: 1,
 						menu_target_type: 0
 					},
@@ -113,7 +113,7 @@
 						menu_id: 9,
 						menu_text: '科目管理',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/subject-man',
 						menu_pid: 8,
 						menu_target_type: 0
 					},
@@ -121,7 +121,7 @@
 						menu_id: 10,
 						menu_text: '教材版本',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/textbook-man',
 						menu_pid: 8,
 						menu_target_type: 0
 					},
@@ -129,7 +129,7 @@
 						menu_id: 11,
 						menu_text: '教材内容',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/textbook-cont',
 						menu_pid: 8,
 						menu_target_type: 0
 					},
@@ -137,7 +137,7 @@
 						menu_id: 12,
 						menu_text: '知识点管理',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/point',
 						menu_pid: 8,
 						menu_target_type: 0
 					},

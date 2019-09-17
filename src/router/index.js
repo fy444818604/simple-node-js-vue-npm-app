@@ -42,7 +42,7 @@ const router = new Router({
 				path: '/basic/Layout/admin-level-setting',
 				name: 'admin-level-setting',
 				component: (resolve) => {
-					require(['../views/basic/setting/system'], resolve)
+					require(['../views/basic/setting/adm-level'], resolve)
 				},
 				meta: {
 					title: '行政级别设置',
@@ -52,7 +52,7 @@ const router = new Router({
 				path: '/basic/Layout/admin-area-setting',
 				name: 'admin-area-setting',
 				component: (resolve) => {
-					require(['../views/basic/setting/system'], resolve)
+					require(['../views/basic/setting/adm-areas'], resolve)
 				},
 				meta: {
 					title: '行政区域设置',
@@ -62,7 +62,7 @@ const router = new Router({
 				path: '/basic/Layout/school-area-man',
 				name: 'school-area-man',
 				component: (resolve) => {
-					require(['../views/basic/setting/system'], resolve)
+					require(['../views/basic/setting/school-district'], resolve)
 				},
 				meta: {
 					title: '学区管理',
@@ -72,7 +72,7 @@ const router = new Router({
 				path: '/basic/Layout/stage-setting',
 				name: 'stage-setting',
 				component: (resolve) => {
-					require(['../views/basic/setting/system'], resolve)
+					require(['../views/basic/setting/phase-admin'], resolve)
 				},
 				meta: {
 					title: '阶段设置',
@@ -82,7 +82,7 @@ const router = new Router({
 				path: '/basic/Layout/subject-man',
 				name: 'subject-man',
 				component: (resolve) => {
-					require(['../views/basic/setting/system'], resolve)
+					require(['../views/basic/setting/subjects-admin'], resolve)
 				},
 				meta: {
 					title: '科目管理',
@@ -92,7 +92,7 @@ const router = new Router({
 				path: '/basic/Layout/textbook-man',
 				name: 'textbook-man',
 				component: (resolve) => {
-					require(['../views/basic/setting/system'], resolve)
+					require(['../views/basic/setting/material-version'], resolve)
 				},
 				meta: {
 					title: '教材版本',
@@ -102,7 +102,7 @@ const router = new Router({
 				path: '/basic/Layout/textbook-cont',
 				name: 'textbook-cont',
 				component: (resolve) => {
-					require(['../views/basic/setting/system'], resolve)
+					require(['../views/basic/setting/material-conet'], resolve)
 				},
 				meta: {
 					title: '教材内容',
@@ -112,7 +112,7 @@ const router = new Router({
 				path: '/basic/Layout/point',
 				name: 'point',
 				component: (resolve) => {
-					require(['../views/basic/setting/system'], resolve)
+					require(['../views/basic/setting/knowledge-admin'], resolve)
 				},
 				meta: {
 					title: '知识点管理',
@@ -222,7 +222,7 @@ const router = new Router({
 				path: '/basic/Layout/enter-type',
 				name: 'enter-type',
 				component: (resolve) => {
-					require(['../views/basic/setting/system'], resolve)
+					require(['../views/basic/setting/admissions-set'], resolve)
 				},
 				meta: {
 					title: '招生类型',
@@ -245,8 +245,8 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
 	/* 路由发生变化修改页面title */
-	if (to.meta.requireAuth) {
-		if (store.state.Authorization) { // 通过vuex state获取当前的token是否存在
+	// if (to.meta.requireAuth) {
+	// 	if (store.state.Authorization) { // 通过vuex state获取当前的token是否存在
 			// 			Vue.prototype.$post('/api/loginV', {
 			// 				token: store.state.Authorization
 			// 			}).then(res => {
@@ -261,20 +261,20 @@ router.beforeEach((to, from, next) => {
 			// 					})
 			// 				}
 			// 			}).catch(err => {
-			// 
+			//
 			// 			})
-			next();
-		} else {
-			next({
-				path: '/signin',
-				query: {
-					redirect: to.fullPath
-				} // 将跳转的路由path作为参数，登录成功后跳转到该路由
-			})
-		}
-	} else {
+
+		// } else {
+		// 	next({
+		// 		path: '/signin',
+		// 		query: {
+		// 			redirect: to.fullPath
+		// 		} // 将跳转的路由path作为参数，登录成功后跳转到该路由
+		// 	})
+		// }
+	// } else {
 		next();
-	}
+	// }
 	if (to.meta.title) {
 		document.title = to.meta.title;
 	}
