@@ -95,7 +95,7 @@
 					},
 					{
 						menu_id: 7,
-						menu_text: '阶段设置',
+						menu_text: '学段设置',
 						menu_icon: '',
 						menu_href: '',
 						menu_pid: 1,
