@@ -75,7 +75,7 @@ const router = new Router({
 					require(['../views/basic/setting/phase-admin'], resolve)
 				},
 				meta: {
-					title: '阶段设置',
+					title: '学段设置',
 					requireAuth: true
 				}
 			}, {
