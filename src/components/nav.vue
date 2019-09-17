@@ -41,10 +41,41 @@
 				this.expend = !this.expend
 			},
 			menuSearch() {
-				this.$post('/api/menu1').then(res => {
-					this.menuData = this.getTree(res, 0);
-					this.getFirstMenu(this.menuData[0])
-				})
+				// this.$post('/api/menu1').then(res => {
+				// 	this.menuData = this.getTree(res, 0);
+				// 	this.getFirstMenu(this.menuData[0])
+				// })
+					let data = [
+						{menu_id:1,menu_text:'基础设置',menu_icon:'icon-home',menu_href:'',menu_pid:0,menu_target_type:0},
+						{menu_id:2,menu_text:'系统设置',menu_icon:'',menu_href:'',menu_pid:1,menu_target_type:0},
+						{menu_id:3,menu_text:'行政区域',menu_icon:'',menu_href:'',menu_pid:1,menu_target_type:0},
+						{menu_id:4,menu_text:'行政级别设置',menu_icon:'',menu_href:'',menu_pid:3,menu_target_type:0},
+						{menu_id:5,menu_text:'行政区域设置',menu_icon:'',menu_href:'',menu_pid:3,menu_target_type:0},
+						{menu_id:6,menu_text:'学区管理',menu_icon:'',menu_href:'',menu_pid:1,menu_target_type:0},
+						{menu_id:7,menu_text:'阶段设置',menu_icon:'',menu_href:'',menu_pid:1,menu_target_type:0},
+						{menu_id:8,menu_text:'学科管理',menu_icon:'',menu_href:'',menu_pid:1,menu_target_type:0},
+						{menu_id:9,menu_text:'科目管理',menu_icon:'',menu_href:'',menu_pid:8,menu_target_type:0},
+						{menu_id:10,menu_text:'教材版本',menu_icon:'',menu_href:'',menu_pid:8,menu_target_type:0},
+						{menu_id:11,menu_text:'教材内容',menu_icon:'',menu_href:'',menu_pid:8,menu_target_type:0},
+						{menu_id:12,menu_text:'知识点管理',menu_icon:'',menu_href:'',menu_pid:8,menu_target_type:0},
+						{menu_id:13,menu_text:'人员设置',menu_icon:'',menu_href:'',menu_pid:1,menu_target_type:0},
+						{menu_id:14,menu_text:'政治面貌',menu_icon:'',menu_href:'',menu_pid:13,menu_target_type:0},
+						{menu_id:15,menu_text:'就读类型',menu_icon:'',menu_href:'',menu_pid:13,menu_target_type:0},
+						{menu_id:16,menu_text:'职务设置',menu_icon:'',menu_href:'',menu_pid:13,menu_target_type:0},
+						{menu_id:17,menu_text:'岗位设置',menu_icon:'',menu_href:'',menu_pid:13,menu_target_type:0},
+						{menu_id:18,menu_text:'用工类型',menu_icon:'',menu_href:'',menu_pid:13,menu_target_type:0},
+						{menu_id:19,menu_text:'职称设置',menu_icon:'',menu_href:'',menu_pid:13,menu_target_type:0},
+						{menu_id:20,menu_text:'学历设置',menu_icon:'',menu_href:'',menu_pid:13,menu_target_type:0},
+						{menu_id:21,menu_text:'学位设置',menu_icon:'',menu_href:'',menu_pid:13,menu_target_type:0},
+						{menu_id:22,menu_text:'账号变动',menu_icon:'',menu_href:'',menu_pid:1,menu_target_type:0},
+						{menu_id:23,menu_text:'学生变动',menu_icon:'',menu_href:'',menu_pid:22,menu_target_type:0},
+						{menu_id:23,menu_text:'教职工变动',menu_icon:'',menu_href:'',menu_pid:22,menu_target_type:0},
+						{menu_id:24,menu_text:'招生设置',menu_icon:'',menu_href:'',menu_pid:1,menu_target_type:0},
+						{menu_id:25,menu_text:'招生类型',menu_icon:'',menu_href:'',menu_pid:24,menu_target_type:0},
+						{menu_id:26,menu_text:'生源类型',menu_icon:'',menu_href:'',menu_pid:24,menu_target_type:0},
+					]
+					this.menuData = this.getTree(data, 0);
+					// this.getFirstMenu(this.menuData[0])
 			},
 			getTree(list, parentId) {
 				var re = new Array();

@@ -19,14 +19,25 @@ const router = new Router({
 			}
 		},
 		{
-			path: '/basic/setting/system',
-			name: 'system',
+			path: '/basic/Layout',
+			name: 'Layout',
 			component: (resolve) => {
-				require(['../views/basic/setting/system'], resolve)
+				require(['../views/basic/layout/layout'], resolve)
 			},
 			meta: {
-				title: '设置'
-			}
+				title: '首页',
+				requireAuth: true
+			},
+			children: [{
+				path: '/basic/Layout/setting/system',
+				name: 'system',
+				component: (resolve) => {
+					require(['../views/basic/setting/system'], resolve)
+				},
+				meta: {
+					title: '设置'
+				}
+			}]
 		}
 	]
 })
@@ -35,22 +46,29 @@ router.beforeEach((to, from, next) => {
 	/* 路由发生变化修改页面title */
 	if (to.meta.requireAuth) {
 		if (store.state.Authorization) { // 通过vuex state获取当前的token是否存在
-			Vue.prototype.$post('/api/loginV',{token:store.state.Authorization}).then(res => {
-				if(res.status == 200){
-					next();
-				}else{
-					next({
-						path: '/signin',
-						query: {redirect: to.fullPath} // 将跳转的路由path作为参数，登录成功后跳转到该路由
-					})
-				}
-			}).catch(err => {
-				
-			})
+// 			Vue.prototype.$post('/api/loginV', {
+// 				token: store.state.Authorization
+// 			}).then(res => {
+// 				if (res.status == 200) {
+// 					next();
+// 				} else {
+// 					next({
+// 						path: '/signin',
+// 						query: {
+// 							redirect: to.fullPath
+// 						} // 将跳转的路由path作为参数，登录成功后跳转到该路由
+// 					})
+// 				}
+// 			}).catch(err => {
+// 
+// 			})
+			next();
 		} else {
 			next({
 				path: '/signin',
-				query: {redirect: to.fullPath} // 将跳转的路由path作为参数，登录成功后跳转到该路由
+				query: {
+					redirect: to.fullPath
+				} // 将跳转的路由path作为参数，登录成功后跳转到该路由
 			})
 		}
 	} else {
