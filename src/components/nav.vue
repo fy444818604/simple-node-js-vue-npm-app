@@ -57,7 +57,7 @@
 						menu_id: 2,
 						menu_text: '系统设置',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/system',
 						menu_pid: 1,
 						menu_target_type: 0
 					},
