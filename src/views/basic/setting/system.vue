@@ -2,10 +2,8 @@
 <template>
 	<div>
 		<div class="system ">
-			<!--头部-->
-			<el-row class="system-title">
-				<el-col :span="12"><div class="grid-content bg-purple cha-title">{{ title }}</div></el-col>
-			</el-row>
+			<!--页面title-->
+			<pageTitle :title="list" ></pageTitle>
 			<!--名称/logo-->
 			<ul class="system-name con-size">
 				<li class="system-name-top">
@@ -52,15 +50,15 @@
 </template>
 
 <script>
+	import pageTitle from './page-title'
     export default {
         name: "system",
 		data(){
 			return{
-				title:'系统设置',
+				list:'系统设置',
 				sysName:'系统名称：',
 				sysVal:'基础数据平台',
 				logo:'logo：',
-				logoSrc:'../../../assets/image/sys-log-bg.png',
 				version:'系统版本：V1.0.1',
 				online:'在线升级',
 				offline:'离线升级',
@@ -74,6 +72,9 @@
 				tiemVal:'2019-09-17'
 			}
 		},
+		components: {
+			pageTitle
+		},
 		created() {
 
 		},
@@ -83,11 +84,6 @@
 <style scoped>
 	.system{
 		padding: 18px 24px;
-	}
-	/*标题*/
-	.system-title{
-		border-bottom: 1px solid #E5E7EF;
-		height: 32px;
 	}
 	/*名称/logo*/
 	.system-name{
