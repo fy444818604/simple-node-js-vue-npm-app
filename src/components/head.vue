@@ -1,10 +1,10 @@
 <!-- 头部组件 -->
 <template>
-	<div class="header" :style="{background:`linear-gradient(to right, ${$store.state.headConfig.back} , ${$store.state.headConfig.back1})`}">
+	<div class="header" :style="{background:bgColor}">
 		<div>
 			<img :src="logo" class="logo" alt="" />
 			<div class="user-system-name">{{ systemName }}</div>
-			<div class="system-name"> | {{systemName1}}</div>
+			<div class="system-name" v-if="systemName1Show"> | {{systemName1}}</div>
 		</div>
 		<div class="header-right">
 			<img class="userPhoto" src="http://cdn.admui.com/demo/pjax/2.0.0/images/avatar.svg" style="margin-right: 15px;" alt="" />
@@ -20,8 +20,10 @@
 		data() {
 			return {
 				logo: 'image/logo.png',
-				systemName: 'demo主标题',
+				systemName: '教育局基础数据平台',
+				systemName1Show:false,
 				systemName1: 'demo副标题',
+				bgColor:'#4A80F6',
 				swithch: this.$store.state.offsideConfig.offsideFold
 			}
 		},
