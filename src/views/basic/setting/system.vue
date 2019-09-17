@@ -3,7 +3,9 @@
 	<div>
 		<div class="system ">
 			<!--页面title-->
-			<pageTitle :title="list" ></pageTitle>
+			<el-row class="system-title">
+				<el-col :span="12"><div class="grid-content bg-purple cha-title">{{ pageTile }}</div></el-col>
+			</el-row>
 			<!--名称/logo-->
 			<ul class="system-name con-size">
 				<li class="system-name-top">
@@ -50,12 +52,11 @@
 </template>
 
 <script>
-	import pageTitle from './page-title'
     export default {
         name: "system",
 		data(){
 			return{
-				list:'系统设置',
+				pageTile:'系统设置',
 				sysName:'系统名称：',
 				sysVal:'基础数据平台',
 				logo:'logo：',
@@ -71,9 +72,6 @@
 				tiemKey:'授权时间：',
 				tiemVal:'2019-09-17'
 			}
-		},
-		components: {
-			pageTitle
 		},
 		created() {
 
