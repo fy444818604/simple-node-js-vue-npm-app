@@ -12,6 +12,7 @@ import {post,get} from './request/http'
 import layer from 'vue-layer'
 import vcolorpicker from 'vcolorpicker'
 import 'vue-layer/lib/vue-layer.css';
+import './App.scss';
 Vue.use(VueParticles);
 Vue.use(vcolorpicker)
 Vue.prototype.$axios = axios
