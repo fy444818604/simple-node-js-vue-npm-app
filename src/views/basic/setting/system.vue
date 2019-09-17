@@ -2,9 +2,9 @@
 <template>
 	<div>
 		<div class="system ">
-			<!--头部-->
+			<!--页面title-->
 			<el-row class="system-title">
-				<el-col :span="12"><div class="grid-content bg-purple cha-title">{{ title }}</div></el-col>
+				<el-col :span="12"><div class="grid-content bg-purple cha-title">{{ pageTile }}</div></el-col>
 			</el-row>
 			<!--名称/logo-->
 			<ul class="system-name con-size">
@@ -56,11 +56,10 @@
         name: "system",
 		data(){
 			return{
-				title:'系统设置',
+				pageTile:'系统设置',
 				sysName:'系统名称：',
 				sysVal:'基础数据平台',
 				logo:'logo：',
-				logoSrc:'../../../assets/image/sys-log-bg.png',
 				version:'系统版本：V1.0.1',
 				online:'在线升级',
 				offline:'离线升级',
@@ -83,11 +82,6 @@
 <style scoped>
 	.system{
 		padding: 18px 24px;
-	}
-	/*标题*/
-	.system-title{
-		border-bottom: 1px solid #E5E7EF;
-		height: 32px;
 	}
 	/*名称/logo*/
 	.system-name{
