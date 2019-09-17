@@ -69,7 +69,8 @@ a {
 
 body,html{
   height: 100%;
-  width: 100%
+  width: 100%;
+  font-size: 14px;
 }
 
 #app{
@@ -117,3 +118,13 @@ body,html{
   font-size: 14px;
   color: #303133;
 }
+/*常规字体颜色*/
+.con-size{
+  color: #606266;
+}
+/*el-ui的input覆盖*/
+.el-input__inner{
+  height: 36px;
+  line-height: 36px;
+}
+
