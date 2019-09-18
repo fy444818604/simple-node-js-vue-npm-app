@@ -122,7 +122,7 @@ const router = new Router({
 				path: '/basic/Layout/politics',
 				name: 'politics',
 				component: (resolve) => {
-					require(['../views/basic/setting/system'], resolve)
+					require(['../views/basic/setting/pol-land'], resolve)
 				},
 				meta: {
 					title: '政治面貌',
@@ -132,7 +132,7 @@ const router = new Router({
 				path: '/basic/Layout/attend-type',
 				name: 'attend-type',
 				component: (resolve) => {
-					require(['../views/basic/setting/system'], resolve)
+					require(['../views/basic/setting/Studying-type'], resolve)
 				},
 				meta: {
 					title: '就读类型',
@@ -142,7 +142,7 @@ const router = new Router({
 				path: '/basic/Layout/duty-setting',
 				name: 'duty-setting',
 				component: (resolve) => {
-					require(['../views/basic/setting/system'], resolve)
+					require(['../views/basic/setting/position-set'], resolve)
 				},
 				meta: {
 					title: '职务设置',
@@ -152,7 +152,7 @@ const router = new Router({
 				path: '/basic/Layout/job-setting',
 				name: 'job-setting',
 				component: (resolve) => {
-					require(['../views/basic/setting/system'], resolve)
+					require(['../views/basic/setting/jobs-set'], resolve)
 				},
 				meta: {
 					title: '岗位设置',
@@ -162,7 +162,7 @@ const router = new Router({
 				path: '/basic/Layout/job-type',
 				name: 'job-type',
 				component: (resolve) => {
-					require(['../views/basic/setting/system'], resolve)
+					require(['../views/basic/setting/labor-type'], resolve)
 				},
 				meta: {
 					title: '用工类型',
@@ -172,7 +172,7 @@ const router = new Router({
 				path: '/basic/Layout/job-level-setting',
 				name: 'job-level-setting',
 				component: (resolve) => {
-					require(['../views/basic/setting/system'], resolve)
+					require(['../views/basic/setting/technical-set'], resolve)
 				},
 				meta: {
 					title: '职称设置',
@@ -182,7 +182,7 @@ const router = new Router({
 				path: '/basic/Layout/education-setting',
 				name: 'education-setting',
 				component: (resolve) => {
-					require(['../views/basic/setting/system'], resolve)
+					require(['../views/basic/setting/education-set'], resolve)
 				},
 				meta: {
 					title: '学历设置',
@@ -192,7 +192,7 @@ const router = new Router({
 				path: '/basic/Layout/education-level-setting',
 				name: 'education-level-setting',
 				component: (resolve) => {
-					require(['../views/basic/setting/system'], resolve)
+					require(['../views/basic/setting/degree-set'], resolve)
 				},
 				meta: {
 					title: '学位设置',
@@ -202,7 +202,7 @@ const router = new Router({
 				path: '/basic/Layout/student-account',
 				name: 'student-account',
 				component: (resolve) => {
-					require(['../views/basic/setting/system'], resolve)
+					require(['../views/basic/setting/students-change'], resolve)
 				},
 				meta: {
 					title: '学生变动',
@@ -212,7 +212,7 @@ const router = new Router({
 				path: '/basic/Layout/teacher-account',
 				name: 'teacher-account',
 				component: (resolve) => {
-					require(['../views/basic/setting/system'], resolve)
+					require(['../views/basic/setting/teacher-change'], resolve)
 				},
 				meta: {
 					title: '教职工变动',
@@ -232,7 +232,7 @@ const router = new Router({
 				path: '/basic/Layout/source-type',
 				name: 'source-type',
 				component: (resolve) => {
-					require(['../views/basic/setting/system'], resolve)
+					require(['../views/basic/setting/students-type'], resolve)
 				},
 				meta: {
 					title: '生源类型',

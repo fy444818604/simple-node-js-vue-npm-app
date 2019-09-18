@@ -153,7 +153,7 @@
 						menu_id: 14,
 						menu_text: '政治面貌',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/politics',
 						menu_pid: 13,
 						menu_target_type: 0
 					},
@@ -161,7 +161,7 @@
 						menu_id: 15,
 						menu_text: '就读类型',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/attend-type',
 						menu_pid: 13,
 						menu_target_type: 0
 					},
@@ -169,7 +169,7 @@
 						menu_id: 16,
 						menu_text: '职务设置',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/duty-setting',
 						menu_pid: 13,
 						menu_target_type: 0
 					},
@@ -177,7 +177,7 @@
 						menu_id: 17,
 						menu_text: '岗位设置',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/job-setting',
 						menu_pid: 13,
 						menu_target_type: 0
 					},
@@ -185,7 +185,7 @@
 						menu_id: 18,
 						menu_text: '用工类型',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/job-type',
 						menu_pid: 13,
 						menu_target_type: 0
 					},
@@ -193,7 +193,7 @@
 						menu_id: 19,
 						menu_text: '职称设置',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/job-level-setting',
 						menu_pid: 13,
 						menu_target_type: 0
 					},
@@ -201,7 +201,7 @@
 						menu_id: 20,
 						menu_text: '学历设置',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/education-setting',
 						menu_pid: 13,
 						menu_target_type: 0
 					},
@@ -209,7 +209,7 @@
 						menu_id: 21,
 						menu_text: '学位设置',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/education-level-setting',
 						menu_pid: 13,
 						menu_target_type: 0
 					},
@@ -225,7 +225,7 @@
 						menu_id: 23,
 						menu_text: '学生变动',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/student-account',
 						menu_pid: 22,
 						menu_target_type: 0
 					},
@@ -233,7 +233,7 @@
 						menu_id: 23,
 						menu_text: '教职工变动',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/teacher-account',
 						menu_pid: 22,
 						menu_target_type: 0
 					},
@@ -249,7 +249,7 @@
 						menu_id: 25,
 						menu_text: '招生类型',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/enter-type',
 						menu_pid: 24,
 						menu_target_type: 0
 					},
@@ -257,7 +257,7 @@
 						menu_id: 26,
 						menu_text: '生源类型',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/source-type',
 						menu_pid: 24,
 						menu_target_type: 0
 					},

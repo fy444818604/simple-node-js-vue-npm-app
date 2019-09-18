@@ -1,11 +1,10 @@
-<!--账号变动-->
+<!--生源类型-->
 <template>
-
 </template>
 
 <script>
     export default {
-        name: "accountChanges"
+        name: "students-type"
     }
 </script>
 

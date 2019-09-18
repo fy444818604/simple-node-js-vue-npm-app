@@ -1,11 +1,11 @@
-<!--人员设置-->
+<!--职称设置-->
 <template>
 
 </template>
 
 <script>
     export default {
-        name: "personnelSet"
+        name: "technical-set"
     }
 </script>
 
