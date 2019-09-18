@@ -6,14 +6,12 @@ import App from './App.vue'
 import VueRouter from 'vue-router'
 import router from './router'
 import store from './store'
-import VueParticles from 'vue-particles'
 import axios from 'axios'
 import {post,get} from './request/http'
 import layer from 'vue-layer'
 import vcolorpicker from 'vcolorpicker'
 import 'vue-layer/lib/vue-layer.css';
 import './App.scss';
-Vue.use(VueParticles);
 Vue.use(vcolorpicker)
 Vue.prototype.$axios = axios
 Vue.prototype.$post = post

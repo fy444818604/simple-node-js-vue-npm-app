@@ -3,7 +3,7 @@
 		<div id="particles-js">
 			<div class="login">
 				<div class="login-top">
-					登录
+					{{type == 1?'管理员登录':'用户登录'}}
 				</div>
 				<div class="login-center clearfix">
 					<div class="login-center-img"><img src="../../assets/image/name.png" /></div>
@@ -24,23 +24,17 @@
 					登陆
 				</div>
 			</div>
-			<div class="sk-rotating-plane"></div>
 		</div>
-		<!-- 粒子漂浮物 -->
-		<vue-particles color="#fff" :particleOpacity="0.7" :particlesNumber="30" shapeType="star" :particleSize="5"
-		 linesColor="#fff" :linesWidth="2" :lineLinked="true" :lineOpacity="0.4" :linesDistance="150" :moveSpeed="3"
-		 :hoverEffect="true" hoverMode="grab" :clickEffect="true" clickMode="push">
-		</vue-particles>
 	</div>
 </template>
 <script>
 	import {mapMutations} from 'vuex';
 	import '../../assets/style/style.css';
-	import '../../assets/style/reset.css';
 	export default {
 		name: "signin",
 		data() {
 			return {
+				type:1,
 				user: 'admin',
 				password: '123456'
 			}
@@ -49,7 +43,7 @@
 
 		},
 		mounted() {
-
+			
 		},
 		methods: {
 			...mapMutations(['changeLogin']),

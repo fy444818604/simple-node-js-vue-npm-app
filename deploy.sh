@@ -20,6 +20,6 @@ git commit -m 'deploy'
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
 
 # 部署到 https://<USERNAME>.github.io/<REPO>
-git push -f https://github.com/fy444818604/basic.git master:gh-pages
+git push -f git@192.168.38.83:big_resource/sc_base_fn.git master:gh-pages
 
 cd -	
