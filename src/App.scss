@@ -113,6 +113,21 @@ body,html{
   @extend .box-title-explain;
   font-weight: bold;
 }
+
+.flex{
+	display: flex;
+}
+
+.flex-between{
+	display: flex;
+	justify-content: space-between;
+}
+
+.flex-center{
+	display: flex;
+	justify-content: center;
+	align-content: center;
+}
 /*文字标题*/
 .cha-title{
   font-size: 14px;

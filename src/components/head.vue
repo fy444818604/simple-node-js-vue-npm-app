@@ -7,8 +7,12 @@
 			<div class="system-name" v-if="systemName1Show"> | {{systemName1}}</div>
 		</div>
 		<div class="header-right">
-			<img class="userPhoto" src="http://cdn.admui.com/demo/pjax/2.0.0/images/avatar.svg" style="margin-right: 15px;" alt="" />
-			<div class="heaer-right-arrow" :class="swithch?'':'active'" v-if="$store.state.offsideConfig.offsideShow" @click="monoSwich"><i
+			<div class="user-info">
+				<img class="userPhoto" src="http://cdn.admui.com/demo/pjax/2.0.0/images/avatar.svg" style="margin-right: 15px;" alt="" />
+				<div class="user-name">管理员</div>
+				<i class="iconfont icon-arrow-down"></i>
+			</div>
+			<div class="heaer-right-arrow" :class="swithch?'':'active'" v-if="swithShow" @click="monoSwich"><i
 				 class="iconfont icon-arrow-header" :class="swithch?'':'active'"></i></div>
 		</div>
 	</div>
@@ -24,7 +28,8 @@
 				systemName1Show:false,
 				systemName1: 'demo副标题',
 				bgColor:'#4A80F6',
-				swithch: this.$store.state.offsideConfig.offsideFold
+				swithch: this.$store.state.offsideConfig.offsideFold,
+				swithShow:false
 			}
 		},
 		watch: {
@@ -57,6 +62,13 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+	}
+	
+	.user-info{
+		display: flex;
+		align-items: center;
+		margin-right: 18px;
+		overflow: hidden;
 	}
 
 	.logo {
@@ -107,5 +119,15 @@
 	.icon-arrow-header.active {
 		transform: rotate(180deg);
 		display: inline-block;
+	}
+	
+	.icon-arrow-down{
+		transform: rotate(90deg);
+		display: inline-block;
+		font-size: 16px;
+		margin-left: 5px;
+	}
+	.user-name{
+		color: #FFFFFF;
 	}
 </style>
