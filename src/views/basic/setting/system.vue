@@ -1,7 +1,7 @@
 <!--系统设置-->
 <template>
 	<div>
-		<div class="system ">
+		<div class="system">
 			<!--页面title-->
 			<el-row class="system-title">
 				<el-col :span="12"><div class="grid-content bg-purple cha-title">{{ pageTile }}</div></el-col>
@@ -82,6 +82,10 @@
 <style scoped>
 	.system{
 		padding: 18px 24px;
+	}
+	.system-title{
+		height: 32px;
+		border-bottom: 1px solid #e5e7ef;
 	}
 	/*名称/logo*/
 	.system-name{
