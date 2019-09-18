@@ -2,54 +2,63 @@
 	<div style="height: 100%;overflow: hidden">
 		<div id="particles-js">
 			<div class="login">
-				<div class="login-top">
-					登录
+				<div class="type-change">
+					<img :src="type == 1?userIcon:adminIcon" alt="">
 				</div>
-				<div class="login-center clearfix">
+				<div class="login-top">
+					{{type == 1?'管理员登录':'用户登录'}}
+				</div>
+				<div class="login-center">
 					<div class="login-center-img"><img src="../../assets/image/name.png" /></div>
 					<div class="login-center-input">
-						<input type="text" name="" value="" placeholder="请输入您的用户名" v-model="user" onfocus="this.placeholder=''" onblur="this.placeholder='请输入您的用户名'" />
-						<div class="login-center-input-text">用户名</div>
+						<input type="text" name="" value="" placeholder="请输入用户名" v-model="user" />
 					</div>
 				</div>
-				<div class="login-center clearfix">
+				<div class="login-center">
 					<div class="login-center-img"><img src="../../assets/image/password.png" /></div>
 					<div class="login-center-input">
-						<input type="password" name="" value="" placeholder="请输入您的密码" v-model="password" onfocus="this.placeholder=''"
-						 onblur="this.placeholder='请输入您的密码'" />
-						<div class="login-center-input-text">密码</div>
+						<input :type="passwordShow?'text':'password'" name="" value="" placeholder="请输入密码" v-model="password" />
+					</div>
+					<img class="pass-img" :src="wordShow" @click="passwordShow = !passwordShow">
+				</div>
+				<div class="login-code">
+					<div class="code-input">
+						<img src="../../assets/image/code.png" />
+						<input type="text" name="" value="" placeholder="请输入验证码" v-model="code"/>
+					</div>
+					<div class="code-wrap">
+						
 					</div>
 				</div>
 				<div class="login-button" @click="login">
 					登陆
 				</div>
 			</div>
-			<div class="sk-rotating-plane"></div>
 		</div>
-		<!-- 粒子漂浮物 -->
-		<vue-particles color="#fff" :particleOpacity="0.7" :particlesNumber="30" shapeType="star" :particleSize="5"
-		 linesColor="#fff" :linesWidth="2" :lineLinked="true" :lineOpacity="0.4" :linesDistance="150" :moveSpeed="3"
-		 :hoverEffect="true" hoverMode="grab" :clickEffect="true" clickMode="push">
-		</vue-particles>
 	</div>
 </template>
 <script>
 	import {mapMutations} from 'vuex';
 	import '../../assets/style/style.css';
-	import '../../assets/style/reset.css';
 	export default {
 		name: "signin",
 		data() {
 			return {
+				userIcon:require('@/assets/image/user.png'),
+				adminIcon:require('@/assets/image/admin.png'),
+				wordShow:require('@/assets/image/eye.png'),
+				passwordShow:false,
+				type:1,
 				user: 'admin',
-				password: '123456'
+				password: '123456',
+				code:''
 			}
 		},
 		created() {
 
 		},
 		mounted() {
-
+			
 		},
 		methods: {
 			...mapMutations(['changeLogin']),

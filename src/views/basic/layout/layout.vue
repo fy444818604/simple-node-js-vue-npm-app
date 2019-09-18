@@ -1,3 +1,4 @@
+<!-- 框架 -->
 <template>
 	<div id="layout">
 		<fy-head></fy-head>
