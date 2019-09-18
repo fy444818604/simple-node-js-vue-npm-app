@@ -49,7 +49,7 @@
 						menu_id: 1,
 						menu_text: '基础设置',
 						menu_icon: 'icon-home',
-						menu_href: '/basic/Layout/system',
+						menu_href: '',
 						menu_pid: 0,
 						menu_target_type: 0
 					},
