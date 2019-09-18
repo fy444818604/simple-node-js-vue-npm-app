@@ -238,6 +238,56 @@ const router = new Router({
 					title: '生源类型',
 					requireAuth: true
 				}
+			}, {
+				path: '/basic/Layout/org-type',
+				name: 'org-type',
+				component: (resolve) => {
+					require(['../views/basic/organization/org-type'], resolve)
+				},
+				meta: {
+					title: '机构类型',
+					requireAuth: true
+				}
+			}, {
+				path: '/basic/Layout/org-set',
+				name: 'org-set',
+				component: (resolve) => {
+					require(['../views/basic/organization/org-set'], resolve)
+				},
+				meta: {
+					title: '机构设置',
+					requireAuth: true
+				}
+			}, {
+				path: '/basic/Layout/calendar-set',
+				name: 'calendar-set',
+				component: (resolve) => {
+					require(['../views/basic/calendar/calendar-set'], resolve)
+				},
+				meta: {
+					title: '校历设置',
+					requireAuth: true
+				}
+			}, {
+				path: '/basic/Layout/calendar-type',
+				name: 'calendar-type',
+				component: (resolve) => {
+					require(['../views/basic/calendar/calendar-type'], resolve)
+				},
+				meta: {
+					title: '作息类型',
+					requireAuth: true
+				}
+			}, {
+				path: '/basic/Layout/calendar-time',
+				name: 'calendar-time',
+				component: (resolve) => {
+					require(['../views/basic/calendar/calendar-time'], resolve)
+				},
+				meta: {
+					title: '作息时间',
+					requireAuth: true
+				}
 			}]
 		}
 	]

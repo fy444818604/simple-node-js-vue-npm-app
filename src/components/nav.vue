@@ -49,7 +49,7 @@
 						menu_id: 1,
 						menu_text: '基础设置',
 						menu_icon: 'icon-home',
-						menu_href: '/basic/Layout/system',
+						menu_href: '',
 						menu_pid: 0,
 						menu_target_type: 0
 					},
@@ -273,7 +273,7 @@
 						menu_id: 28,
 						menu_text: '机构类型',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/org-type',
 						menu_pid: 27,
 						menu_target_type: 0
 					},
@@ -281,7 +281,7 @@
 						menu_id: 29,
 						menu_text: '机构设置',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/org-set',
 						menu_pid: 27,
 						menu_target_type: 0
 					},
@@ -297,7 +297,7 @@
 						menu_id: 31,
 						menu_text: '校历设置',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/calendar-set',
 						menu_pid: 30,
 						menu_target_type: 0
 					},
@@ -305,7 +305,7 @@
 						menu_id: 32,
 						menu_text: '作息类型',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/calendar-type',
 						menu_pid: 30,
 						menu_target_type: 0
 					},
@@ -313,7 +313,7 @@
 						menu_id: 33,
 						menu_text: '作息时间',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/calendar-time',
 						menu_pid: 30,
 						menu_target_type: 0
 					},
