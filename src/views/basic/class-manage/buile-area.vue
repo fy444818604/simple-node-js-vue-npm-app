@@ -33,7 +33,7 @@
     <div class="area-content">
       <el-table
         :data="tableData"
-         stripe
+        stripe
         style="width: 100%">
         <el-table-column
           prop="id"
@@ -70,6 +70,15 @@
         <el-table-column
           align="center"
           label="操作">
+          <template slot-scope="scope">
+       <!--      <div class="tableColumn-control">
+              <i v-if="" class="iconfont icon-more"></i>
+              <div v-else>
+                <el-button type="text" size="small">停用</el-button>
+                <el-button type="text" size="small">编辑</el-button>
+              </div>
+            </div> -->
+          </template>
         </el-table-column>
       </el-table>
     </div>
@@ -290,6 +299,22 @@ export default {
 
   .area-content {
     margin-top: 24px;
+    .tableColumn-control {
+      height: 50px;
+      line-height: 50px;
+      i {
+        color: #487ff6;
+        cursor: pointer;
+      }
+      button {
+        &:first-child {
+          color: #606266;
+        }
+      }
+      div {
+        background: #D0E9FF;
+      }
+    }
   }
 
   .area-footer {
@@ -320,6 +345,10 @@ export default {
     border-bottom: 1px solid #E5E5E5;
   }
   .area .el-dialog__footer {
+    padding: 0;
+  }
+
+  .area .el-table td {
     padding: 0;
   }
 </style>
