@@ -19,7 +19,7 @@
 <script>
 	import TopHead from '../../../components/head'
 	import LeftNav from '../../../components/nav'
-	import note from '../../../components/note'
+	// import note from '../../../components/note'
 	export default {
 		name: 'layout',
 		data() {
@@ -33,7 +33,7 @@
 		components: {
 			'fy-head': TopHead,
 			'fy-nav': LeftNav,
-			'fy-note': note
+			// 'fy-note': note
 		},
 		methods: {
 			
