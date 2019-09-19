@@ -7,11 +7,9 @@
   font-size: 14px;
   font-family: "Microsoft Yahei";
 }
-
 [v-cloak] {
   display: none;
 }
-
 .clearfix:after {
   visibility: hidden;
   display: block;
@@ -142,4 +140,18 @@ body,html{
   height: 36px;
   line-height: 36px;
 }
+//tree的背景颜色
+.el-tree {
+  background: #F9FBFC;
+}
+//tree的三角符号
+.el-tree-node__expand-icon{
+  color: #55595C;
+  font-size: 18px;
+}
+//tree每行的高度
+.el-tree-node__content {
+  height: 36px;
+}
+
 
