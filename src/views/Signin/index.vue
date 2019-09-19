@@ -19,7 +19,7 @@
 					<div class="login-center-input">
 						<input :type="passwordShow?'text':'password'" name="" value="" placeholder="请输入密码" v-model="password" />
 					</div>
-					<img class="pass-img" :src="wordShow" @click="passwordShow = !passwordShow">
+					<img class="pass-img" :src="passwordShow?wordHide:wordShow" @click="passwordShow = !passwordShow">
 				</div>
 				<div class="login-code">
 					<div class="code-input">
@@ -47,6 +47,7 @@
 				userIcon:require('@/assets/image/user.png'),
 				adminIcon:require('@/assets/image/admin.png'),
 				wordShow:require('@/assets/image/eye.png'),
+				wordHide:require('@/assets/image/eye-close.png'),
 				passwordShow:false,
 				type:1,
 				user: 'admin',

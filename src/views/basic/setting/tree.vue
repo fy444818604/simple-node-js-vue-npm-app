@@ -1,7 +1,7 @@
 <template>
     <div class="tree">
         <div class="tree-top">
-            <el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
+            <el-tree :data="data" :props="defaultProps" default-expand-all :expand-on-click-node="false"   @node-click="handleNodeClick"></el-tree>
         </div>
         <div class="tree-bnt">
             2222
@@ -57,7 +57,8 @@
         },
         methods: {
             handleNodeClick(data) {
-                console.log(data);
+                console.log(data.label);
+
             }
         }
     };
@@ -71,15 +72,14 @@
     }
     .tree-top{
         height: calc(100% - 44px);
+        padding-top: 8px;
+        padding-left: 5px;
+        overflow: auto;
     }
     .tree-bnt{
         height: 44px;
         line-height: 44px;
         text-align: center;
-    }
-    /*el-ui样式覆盖*/
-    .el-tree {
-         background: #F9FBFC;
     }
 
 </style>
