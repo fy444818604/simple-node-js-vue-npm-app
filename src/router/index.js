@@ -238,63 +238,6 @@ const router = new Router({
 					title: '生源类型',
 					requireAuth: true
 				}
-			},
-			/* 教室管理 */
-			{
-				path:'/basic/Layout/buile-area',
-				name:'buile-area',
-				component:(resolve) => {
-					require(['../views/basic/class-manage/buile-area'], resolve)
-				},
-				meta: {
-					title: '建筑场所',
-					requireAuth: true
-				}
-			},
-			{
-				path:'/basic/Layout/room-type',
-				name:'buile-area',
-				component:(resolve) => {
-					require(['../views/basic/class-manage/room-type'], resolve)
-				},
-				meta: {
-					title: '教室类型',
-					requireAuth: true
-				}
-			},
-			{
-				path:'/basic/Layout/room-setting',
-				name:'buile-area',
-				component:(resolve) => {
-					require(['../views/basic/class-manage/room-setting'], resolve)
-				},
-				meta: {
-					title: '教室设置',
-					requireAuth: true
-				}
-			},
-			/* 年级班级 */
-			{
-				path:'/basic/Layout/cla-mates',
-				name:'buile-area',
-				component:(resolve) => {
-					require(['../views/basic/grade-manage/cla-mates'], resolve)
-				},
-				meta: {
-					title: '班级管理',
-					requireAuth: true
-				}
-			},
-			{
-				path:'/basic/Layout/stu-year',
-				name:'buile-area',
-				component:(resolve) => {
-					require(['../views/basic/grade-manage/stu-year'], resolve)
-				},
-				meta: {
-					title: '学届管理',
-					requireAuth: true
-				}
 			}
 		]
 		}
