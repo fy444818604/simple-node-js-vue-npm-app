@@ -338,6 +338,26 @@ const router = new Router({
 					title: '班级管理',
 					requireAuth: true
 				}
+			}, {
+				path: '/basic/Layout/teacher',
+				name: 'teacher',
+				component: (resolve) => {
+					require(['../views/basic/account/teacher'], resolve)
+				},
+				meta: {
+					title: '教职工账号',
+					requireAuth: true
+				}
+			}, {
+				path: '/basic/Layout/student',
+				name: 'student',
+				component: (resolve) => {
+					require(['../views/basic/account/student'], resolve)
+				},
+				meta: {
+					title: '学生账号',
+					requireAuth: true
+				}
 			}]
 		}
 	]

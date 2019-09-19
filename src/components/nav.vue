@@ -48,7 +48,7 @@
 				let data = [{
 						menu_id: 1,
 						menu_text: '基础设置',
-						menu_icon: 'icon-home',
+						menu_icon: 'icon-setup',
 						menu_href: '',
 						menu_pid: 0,
 						menu_target_type: 0
@@ -264,7 +264,7 @@
 					{
 						menu_id: 27,
 						menu_text: '组织机构',
-						menu_icon: 'icon-home',
+						menu_icon: 'icon-apartment',
 						menu_href: '',
 						menu_pid: 0,
 						menu_target_type: 0
@@ -288,7 +288,7 @@
 					{
 						menu_id: 30,
 						menu_text: '校历管理',
-						menu_icon: 'icon-home',
+						menu_icon: 'icon-calendar',
 						menu_href: '',
 						menu_pid: 0,
 						menu_target_type: 0
@@ -352,7 +352,7 @@
 					{
 						menu_id: 38,
 						menu_text: '年级班级',
-						menu_icon: 'icon-home',
+						menu_icon: 'icon-grade',
 						menu_href: '',
 						menu_pid: 0,
 						menu_target_type: 0
@@ -376,7 +376,7 @@
 					{
 						menu_id: 41,
 						menu_text: '账号管理',
-						menu_icon: 'icon-home',
+						menu_icon: 'icon-user',
 						menu_href: '',
 						menu_pid: 0,
 						menu_target_type: 0
@@ -385,7 +385,7 @@
 						menu_id: 42,
 						menu_text: '教职工账号',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/teacher',
 						menu_pid: 41,
 						menu_target_type: 0
 					},
@@ -393,7 +393,7 @@
 						menu_id: 43,
 						menu_text: '学生账号',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/student',
 						menu_pid: 41,
 						menu_target_type: 0
 					},

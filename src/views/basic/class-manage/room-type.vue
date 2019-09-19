@@ -3,43 +3,20 @@
   <div class="room-type">
     <div class="header">
       <div>教室类型</div>
-      <div class="add-icon">
+      <div @click="handleShowAdd" class="add-icon">
         <i class="iconfont icon-add"></i>
       </div>
     </div>
     <div class="content">
-      <el-table 
-        :data="tableData" stripe
-        style="width: 100%">
-        <el-table-column
-          prop="id"
-          label="显示顺序"
-          width="100"
-        ></el-table-column>
-        <el-table-column
-          prop="type"
-          label="教室类型"
-          width="100"
-        ></el-table-column>
-        <el-table-column
-          prop="desc"
-          align="center"
-          label="描述"
-        ></el-table-column>
-        <el-table-column
-          prop="status"
-          label="状态"
-          width="100"
-        ></el-table-column>
-        <el-table-column
-          label="操作"
-          width="100"
-        ></el-table-column>
-      </el-table>
+      <base-table      
+        :tableData="tableData" 
+        :tableColumn="tableColumn"></base-table>
     </div>
 
     <div class="footer">
-      <div class="type-control">control</div>
+      <div class="type-control">
+         <state-switch @switchL="handleSwicthState"></state-switch>
+      </div>
       <div class="page-control">
         <el-pagination
           @size-change="handleSizeChange"
@@ -53,11 +30,35 @@
         <el-button size="mini">确定</el-button>
       </div>
     </div>
-    
+
+    <!-- modal -->
+    <base-modal 
+      @on-close="handleClose"
+      @on-save="handleSave"
+      :visible="visible"  
+      title="新建教室类型">
+      <el-form ref="formInfo" :model="formInfo" label-width="80px" :rules="rule">
+        <el-form-item label="教室类型" prop="type">
+          <el-input v-model="formInfo.type"></el-input>
+        </el-form-item>
+        <el-form-item label="描述">
+          <el-input v-model="formInfo.desc"></el-input>
+        </el-form-item>
+        <el-form-item label="显示顺序">
+           <el-input v-model="formInfo.order"></el-input>
+        </el-form-item>
+      </el-form>
+    </base-modal>
+
   </div>
 </template>
 <script>
 export default {
+  components:{
+    baseTable:()=>import("./../../../components/table"),
+    stateSwitch:() => import("./../../../components/state-switch"),
+    baseModal:() => import("./../../../components/modal")
+  },
   data(){
     return {
       tableData:[        
@@ -68,15 +69,56 @@ export default {
           desc:'1号教学楼',
           status:'启用'
         }],
-        pagination:{
-          currentPage:1,
-          total:20
-        }
+      tableColumn:[
+          {
+            prop:'id',
+            label:'id'
+          },
+          { 
+            prop:'type',
+            label:"教室类型",
+          },
+          {
+            prop:'desc',
+            label:'描述'
+          },
+          {
+            prop:'status',
+            label:'状态'
+          }
+        ],
+      pagination:{
+        currentPage:1,
+        total:20
+      },
+      /* modal*/
+      visible: false,
+      formInfo:{
+        type:'',
+        desc:'',
+        order:''
+      },
+      rule:{
+        type:[{required: true, message: '请输入教室类型', trigger: 'blur'}]
+      }
     }
   },
   methods:{
     handleSizeChange(){},
-    handleCurrentChange(){}
+    handleCurrentChange(){},
+    handleShowAdd(){
+      this.visible = true
+    },
+    handleSwicthState(val){},
+    /* modal */
+    handleClose(){
+      /* 数据清楚 */
+      this.visible = false
+    },
+    handleSave(){
+      /* 数据验证 */
+      this.visible = false
+    }
   }
 }
 </script>
