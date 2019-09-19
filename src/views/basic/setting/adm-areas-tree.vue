@@ -1,17 +1,12 @@
 <template>
     <div class="tree">
-        <div class="tree-top">
             <el-tree :data="data" :props="defaultProps" default-expand-all :expand-on-click-node="false"   @node-click="handleNodeClick"></el-tree>
-        </div>
-        <div class="tree-bnt">
-            2222
-        </div>
     </div>
 </template>
 
 <script>
     export default {
-        name:'tree',
+        name:'adm-areas-tree',
         data() {
             return {
                 data: [{
@@ -57,7 +52,7 @@
         },
         methods: {
             handleNodeClick(data) {
-                console.log(data.label);
+                this.$emit('superiorData',data.label)
 
             }
         }
@@ -68,18 +63,7 @@
     .tree{
         height: 100%;
         border-right:1px solid #e5e7ef ;
-        background: #F9FBFC;
-    }
-    .tree-top{
-        height: calc(100% - 44px);
-        padding-top: 8px;
-        padding-left: 5px;
-        overflow: auto;
-    }
-    .tree-bnt{
-        height: 44px;
-        line-height: 44px;
-        text-align: center;
+        background: #fff;
     }
 
 </style>

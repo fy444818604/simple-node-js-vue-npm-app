@@ -36,7 +36,15 @@
                         <div>简称：</div>
                         <div><el-input v-model="referred" placeholder="请输入内容"></el-input></div>
                     </li>
-                    <li><div>上级：</div><div>2</div></li>
+                    <li>
+                        <div>上级：</div>
+                        <div>
+                            <div class="superior-top" @click="superiorClisk">{{ superior }}</div>
+                            <div class="superior-bnt" v-show="admTree">
+                                <adm-areas-tree @superiorData="superiorData"></adm-areas-tree>
+                            </div>
+                        </div>
+                    </li>
                     <li><div>行政级别：</div><div>
                         <el-select v-model="level" placeholder="请选择">
                             <el-option
@@ -58,7 +66,8 @@
     </div>
 </template>
 <script>
-    import tree from './tree'
+    import tree from '../../../components/tree'
+    import admAreasTree from './adm-areas-tree'
     export default {
         name: "adm-areas",
         data(){
@@ -68,6 +77,8 @@
                 //详情和编辑切换
                 editorShow:false,
                 detailsShow:true,
+                //自定义树下拉
+                admTree:false,
                 //数据
                 nodeName:'中国',
                 referred:'中',
@@ -95,6 +106,7 @@
         },
         components:{
            'tree':tree,
+            'adm-areas-tree':admAreasTree
 
         },
         methods: {
@@ -105,6 +117,13 @@
             confirmEditor(){//编辑保存
                 this.editorShow = false;
                 this.detailsShow = !this.detailsShow
+            },
+            superiorClisk(){//展开收缩自定义下拉
+                this.admTree = !this.admTree
+            },
+            superiorData(data){//自定义下拉选中数据
+                this.superior = data;
+                this.admTree = false
             }
         }
     }
@@ -148,12 +167,33 @@
           width: 80px;
     }
     .adm-areas-rnt-cont>ul>li>div:nth-child(2){
-        width: 250px;
+        width: 290px;
     }
     .el-button{
         padding: 9px 12px;
     }
     .el-select{
-        width: 250px;
+        width: 290px;
+    }
+    /*自定义下拉框*/
+    .superior-top{
+        height: 36px;
+        width: 290px;
+        border: 1px solid #dcdfe6;
+        border-radius: 4px;
+        padding: 0 15px;
+    }
+    .superior-bnt{
+        height: 200px;
+        width: 290px;
+        overflow: auto;
+        position: relative;
+        z-index: 999;
+        top: 6px;
+        left: 0px;
+        border: 1px solid #e4e7ed;
+        box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
     }
 </style>

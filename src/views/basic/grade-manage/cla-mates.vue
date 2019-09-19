@@ -31,7 +31,7 @@
 
         <div>
           <span>学届:</span>
-          <el-select  style="width:90px;margin-left:10px" 
+          <el-select style="width:90px;margin-left:10px" 
             v-model="search.grade">
             <el-option
               v-for="item in search.gradeList"
@@ -44,7 +44,7 @@
 
         <div class="item">
           <span>建筑:</span>
-            <el-select  style="width:200px;margin-left:10px" 
+            <el-select style="width:200px;margin-left:10px" 
             v-model="search.area">
             <el-option
               v-for="item in search.areaList"
@@ -58,46 +58,15 @@
         <el-button>查询</el-button>
         <el-button style="color:#606266;text-decoration: underline" type="text">清空</el-button>
       </div>
-      <el-table 
-        :data="tableData" stripe
-        style="width: 100%">
-        <el-table-column
-          prop="id"
-          label="序号"
-        ></el-table-column>
-        <el-table-column
-          prop="type"
-          label="学届名称"
-        ></el-table-column>
-        <el-table-column
-          prop="desc"
-          align="center"
-          label="入学时间"
-        ></el-table-column>
-        <el-table-column
-          prop="status"
-          label="学制"
-        ></el-table-column>
-        <el-table-column
-          label="年级别称"
-        ></el-table-column>
-        <el-table-column
-          label="年级别称"
-        ></el-table-column>
-        <el-table-column
-          label="当前进度"
-        ></el-table-column>
-        <el-table-column
-          label="状态"
-        ></el-table-column>
-        <el-table-column
-          label="操作"
-        ></el-table-column>
-      </el-table>
+
+      <base-table :tableData="tableData" :tableColumn="tableColumn">
+      </base-table>
     </div>
 
     <div class="footer">
-      <div class="type-control">control</div>
+      <div class="type-control">
+        <state-switch @switchL="handleSwicthState"></state-switch>
+      </div>
       <div class="page-control">
         <el-pagination
           @size-change="handleSizeChange"
@@ -111,12 +80,49 @@
         <el-button size="mini">确定</el-button>
       </div>
     </div>
-
+    <!-- modal -->
+    <base-modal
+      @on-close="handleClose"
+      @on-save="handleSave"
+      :visible="dialog.visible"
+      :title="dialog.title"
+    >
+      <el-form label-width="80px" :model="formInfo" :rules="rules">
+        <el-form-item label="学校" prop="school">
+          <el-select style="width:100%" v-model="formInfo.school">
+            <el-option value="xxx" label="xxx"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="班名" prop="className">
+          <el-input v-model="formInfo.className"></el-input>
+        </el-form-item>
+        <el-form-item label="学届" prop="classYear">
+          <el-select style="width:100%" v-model="formInfo.classYear">
+            <el-option value="xxx" label="xxx"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="班主任" prop="teacher">
+          <el-select style="width:100%" v-model="formInfo.teacher">
+            <el-option value="xxx" label="xxx"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="教室" prop="classRoom">
+          <el-select style="width:100%" v-model="formInfo.classRoom">
+            <el-option value="xxx" label="xxx"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+    </base-modal>
   </div>
 </template>
 
 <script>
 export default {
+  components:{
+    baseTable:()=>import("./../../../components/table"),
+    stateSwitch:() => import("./../../../components/state-switch"),
+    baseModal:() => import("./../../../components/modal")
+  },
   data(){
     return {
       search:{
@@ -128,6 +134,28 @@ export default {
         gradeList:[{value:'',label:"全部"}],
         areaList:[{value:'',label:""}]
       },
+      tableColumn:[
+        {
+          prop:"id",
+          label:"序号"
+        },
+        {
+          prop:"name",
+          label:"名称"
+        },
+        {
+          prop:"type",
+          label:"类型"
+        },
+        {
+          prop:"desc",
+          label:"描述"
+        },
+        {
+          prop:"status",
+          label:"状态"
+        }
+      ],
       tableData:[        
         {
           id:1,
@@ -140,13 +168,40 @@ export default {
         currentPage:1,
         total:20
       },
+      /* dialog */
+      dialog:{
+        title:'新建',
+        visible:false
+      },
+      formInfo:{
+        school:'',
+        classYear:'',
+        teacher:'',
+        classRoom:'',
+        className:''
+      },
+      rules:{
+        school:[{required: true, message: '请选择学校名称', trigger: 'blur'}],
+        classYear:[{required: true, message: '请选择学校名称', trigger: 'blur'}],
+        teacher:[{required: true, message: '请选择学校名称', trigger: 'blur'}],
+        classRoom:[{required: true, message: '请选择学校名称', trigger: 'blur'}],
+        className:[{required: true, message: '请选择学校名称', trigger: 'blur'}],
+
+      }
     }
   },
   methods:{
     handleSizeChange(){},
     handleCurrentChange(){},
     /* add */
-    handleAdd(){}
+    handleAdd(){
+      this.dialog.visible = true
+    },
+    handleSwicthState(){},
+    handleClose(){
+      this.dialog.visible = false
+    },
+    handleSave(){}
   }
 }
 </script>

@@ -23,46 +23,13 @@
         <el-button size="mini">查询</el-button>
         <el-button style="color:#606266;text-decoration: underline" type="text">清空</el-button>
       </div>
-      <el-table 
-        :data="tableData" stripe
-        style="width: 100%">
-        <el-table-column
-          prop="id"
-          label="序号"
-        ></el-table-column>
-        <el-table-column
-          prop="type"
-          label="学届名称"
-        ></el-table-column>
-        <el-table-column
-          prop="desc"
-          align="center"
-          label="入学时间"
-        ></el-table-column>
-        <el-table-column
-          prop="status"
-          label="学制"
-        ></el-table-column>
-        <el-table-column
-          label="年级别称"
-        ></el-table-column>
-        <el-table-column
-          label="年级别称"
-        ></el-table-column>
-        <el-table-column
-          label="当前进度"
-        ></el-table-column>
-        <el-table-column
-          label="状态"
-        ></el-table-column>
-        <el-table-column
-          label="操作"
-        ></el-table-column>
-      </el-table>
+      <base-table :tableData="tableData" :tableColumn="tableColumn"></base-table>
     </div>
 
     <div class="footer">
-      <div class="type-control">control</div>
+      <div class="type-control">
+        <state-switch @switchL="handleSwicthState"></state-switch>
+      </div>
       <div class="page-control">
         <el-pagination
           @size-change="handleSizeChange"
@@ -77,7 +44,7 @@
       </div>
     </div>
 
-    <!-- modal -->
+    <!-- modal 不base-modal -->
     <el-dialog      
       :visible.sync="dialog.visible"
       :title="dialog.title"
@@ -136,10 +103,28 @@
 </template>
 <script>
 export default {
+  components:{
+    baseTable:()=>import("./../../../components/table"),
+    stateSwitch:() => import("./../../../components/state-switch"),
+  },
   data(){
     return {
       value:'',
       options:[{label:"阶段一",value:"阶段一"}],
+      tableColumn:[
+        {
+          prop:'id',
+          label:"序号"
+        },
+        {
+          prop:'type',
+          label:"学届名称"
+        },
+        {
+          prop:'desc',
+          label:"入学时间"
+        }
+      ],
       tableData:[        
         {
           id:1,
@@ -193,9 +178,14 @@ export default {
     handleCurrentChange(){},
 
     /* modal */
-    handleClose(){},
+    handleClose(){
+      this.dialog.visible = false
+    },
     handleSave(){
       /* 判断是add 还是 edit */
+    },
+    handleSwicthState(){
+
     }
   }
 }
