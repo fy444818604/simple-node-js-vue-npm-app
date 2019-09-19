@@ -238,8 +238,107 @@ const router = new Router({
 					title: '生源类型',
 					requireAuth: true
 				}
-			}
-		]
+			}, {
+				path: '/basic/Layout/org-type',
+				name: 'org-type',
+				component: (resolve) => {
+					require(['../views/basic/organization/org-type'], resolve)
+				},
+				meta: {
+					title: '机构类型',
+					requireAuth: true
+				}
+			}, {
+				path: '/basic/Layout/org-set',
+				name: 'org-set',
+				component: (resolve) => {
+					require(['../views/basic/organization/org-set'], resolve)
+				},
+				meta: {
+					title: '机构设置',
+					requireAuth: true
+				}
+			}, {
+				path: '/basic/Layout/calendar-set',
+				name: 'calendar-set',
+				component: (resolve) => {
+					require(['../views/basic/calendar/calendar-set'], resolve)
+				},
+				meta: {
+					title: '校历设置',
+					requireAuth: true
+				}
+			}, {
+				path: '/basic/Layout/calendar-type',
+				name: 'calendar-type',
+				component: (resolve) => {
+					require(['../views/basic/calendar/calendar-type'], resolve)
+				},
+				meta: {
+					title: '作息类型',
+					requireAuth: true
+				}
+			}, {
+				path: '/basic/Layout/calendar-time',
+				name: 'calendar-time',
+				component: (resolve) => {
+					require(['../views/basic/calendar/calendar-time'], resolve)
+				},
+				meta: {
+					title: '作息时间',
+					requireAuth: true
+				}
+			}, {
+				path: '/basic/Layout/build-area',
+				name: 'build-area',
+				component: (resolve) => {
+					require(['../views/basic/class-manage/build-area'], resolve)
+				},
+				meta: {
+					title: '建筑场所',
+					requireAuth: true
+				}
+			}, {
+				path: '/basic/Layout/room-type',
+				name: 'room-type',
+				component: (resolve) => {
+					require(['../views/basic/class-manage/room-type'], resolve)
+				},
+				meta: {
+					title: '教室类型',
+					requireAuth: true
+				}
+			}, {
+				path: '/basic/Layout/room-setting',
+				name: 'room-setting',
+				component: (resolve) => {
+					require(['../views/basic/class-manage/room-setting'], resolve)
+				},
+				meta: {
+					title: '教室设置',
+					requireAuth: true
+				}
+			}, {
+				path: '/basic/Layout/stu-year',
+				name: 'stu-year',
+				component: (resolve) => {
+					require(['../views/basic/grade-manage/stu-year'], resolve)
+				},
+				meta: {
+					title: '学届管理',
+					requireAuth: true
+				}
+			}, {
+				path: '/basic/Layout/cla-mates',
+				name: 'cla-mates',
+				component: (resolve) => {
+					require(['../views/basic/grade-manage/cla-mates'], resolve)
+				},
+				meta: {
+					title: '班级管理',
+					requireAuth: true
+				}
+			}]
 		}
 	]
 })

@@ -329,7 +329,7 @@
 						menu_id: 35,
 						menu_text: '建筑场所',
 						menu_icon: '',
-						menu_href: '/basic/Layout/buile-area',
+						menu_href: '/basic/Layout/build-area',
 						menu_pid: 34,
 						menu_target_type: 0
 					},
