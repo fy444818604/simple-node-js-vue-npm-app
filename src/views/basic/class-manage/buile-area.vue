@@ -34,11 +34,12 @@
       <el-table
         :data="tableData"
         stripe
+        @row-click="handleRowClick"
         style="width: 100%">
         <el-table-column
           prop="id"
           label="显示顺序"
-          width="100"
+          align="center"
         >
         </el-table-column>
         <el-table-column
@@ -71,13 +72,13 @@
           align="center"
           label="操作">
           <template slot-scope="scope">
-       <!--      <div class="tableColumn-control">
-              <i v-if="" class="iconfont icon-more"></i>
+            <div class="tableColumn-control">
+              <i v-if="show" @click="show=false" class="iconfont icon-more"></i>
               <div v-else>
                 <el-button type="text" size="small">停用</el-button>
                 <el-button type="text" size="small">编辑</el-button>
               </div>
-            </div> -->
+            </div>
           </template>
         </el-table-column>
       </el-table>
@@ -143,6 +144,7 @@
 export default {
   data(){
     return {
+      show:true,
       currentSelect:"成都第X中学",
       // areaList:[{label:"树形下拉",value:"成都第X1中学"},{label:"树形下拉",value:"成都第X2中学"}],
       defaultProps: {
@@ -242,6 +244,7 @@ export default {
     }
   },
   methods:{
+    handleRowClick(){},
     /* 选择建筑场地 */
     filterNode(value, data) {
         if (!value) return true;
