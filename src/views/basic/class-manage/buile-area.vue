@@ -25,67 +25,25 @@
           </el-dropdown-menu>
       </el-dropdown>
       </div>
-      <div @click="dialog.visible = true" class="right">
+      <div @click="handleAdd" class="right">
         <i class="iconfont icon-add"></i>
       </div>
     </div>
 
     <div class="area-content">
-      <el-table
-        :data="tableData"
-        stripe
-        @row-click="handleRowClick"
-        style="width: 100%">
-        <el-table-column
-          prop="id"
-          label="显示顺序"
-          align="center"
+      <base-table
+        :tableData="tableData" 
+        :tableColumn="tableColumn"
+        @on-stop="handleStop"
+        @on-edit="handleEdit"
         >
-        </el-table-column>
-        <el-table-column
-          prop="name"
-          label="名称"
-          align="center"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="title"
-          align="center"
-          label="所属学校">
-        </el-table-column>
-        <el-table-column
-          prop="area"
-          align="center"
-          label="校区">
-        </el-table-column>
-        <el-table-column
-          prop="desc"
-          align="center"
-          label="描述">
-        </el-table-column>
-        <el-table-column
-          prop="status"
-          align="center"
-          label="状态">
-        </el-table-column>
-        <el-table-column
-          align="center"
-          label="操作">
-          <template slot-scope="scope">
-            <div class="tableColumn-control">
-              <i v-if="show" @click="show=false" class="iconfont icon-more"></i>
-              <div v-else>
-                <el-button type="text" size="small">停用</el-button>
-                <el-button type="text" size="small">编辑</el-button>
-              </div>
-            </div>
-          </template>
-        </el-table-column>
-      </el-table>
+      </base-table>
     </div>
 
     <div class="area-footer">
-      <div class="type-control">control</div>
+      <div class="type-control">
+        <state-switch @switchL="handleSwicthState"></state-switch>
+      </div>
       <div class="page-control">
         <el-pagination
           @size-change="handleSizeChange"
@@ -101,52 +59,49 @@
     </div>
 
     <!-- modal -->
-    <el-dialog
-      class="dialog"
+    <base-modal   
       :title="dialog.title"
-      :visible.sync="dialog.visible"
-      width="30%"
-      :before-close="handleClose">
-      <el-form ref="form" :model="formInfo" label-width="80px" :rules="formRules">
-        <el-form-item label="学校" prop="title">
-          <el-select v-model="formInfo.title" style="width:100%">
-            <el-option label="区域一"  value="shanghai"></el-option>
-            <el-option label="区域e"  value="shanghai2"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="名称" prop="name">
-          <el-input v-model="formInfo.name"></el-input>
-        </el-form-item>
-        <el-form-item label="所属校区" prop="area">
-          <el-select v-model="formInfo.area" style="width:100%">
-            <el-option label="区域一"  value="shanghai"></el-option>
-            <el-option label="区域一2"  value="shangha2i"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="描述">
-          <el-input v-model="formInfo.desc"></el-input>
-        </el-form-item>
-        <el-form-item label="显示顺序">
-          <el-input v-model="formInfo.order"></el-input>
-        </el-form-item>
-      </el-form>
-      <div class="form-control" slot="footer">
-        <el-button @click="handleClose" size="mini">取消</el-button>
-        <el-button @click="handleSave" size="mini" type="primary">保存</el-button>
-      </div>
-
-    </el-dialog>
+      @on-close="handleClose"
+      @on-save="handleSave"
+      :visible="dialog.visible">
+        <el-form ref="form" :model="formInfo" label-width="80px" :rules="formRules">
+          <el-form-item label="学校" prop="title">
+            <el-select v-model="formInfo.title" style="width:100%">
+              <el-option label="区域一"  value="shanghai"></el-option>
+              <el-option label="区域e"  value="shanghai2"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="名称" prop="name">
+            <el-input v-model="formInfo.name"></el-input>
+          </el-form-item>
+          <el-form-item label="所属校区" prop="area">
+            <el-select v-model="formInfo.area" style="width:100%">
+              <el-option label="区域一"  value="shanghai"></el-option>
+              <el-option label="区域一2"  value="shangha2i"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="描述">
+            <el-input v-model="formInfo.desc"></el-input>
+          </el-form-item>
+          <el-form-item label="显示顺序">
+            <el-input v-model="formInfo.order"></el-input>
+          </el-form-item>
+        </el-form>
+    </base-modal>
 
   </div>
 </template>
 
 <script>
 export default {
+  components:{
+    stateSwitch:() => import("./../../../components/state-switch"),
+    baseTable:()=>import("./../../../components/table"),
+    baseModal:() => import("./../../../components/modal")
+  },
   data(){
     return {
-      show:true,
       currentSelect:"成都第X中学",
-      // areaList:[{label:"树形下拉",value:"成都第X1中学"},{label:"树形下拉",value:"成都第X2中学"}],
       defaultProps: {
         children: 'children',
         label: 'label'
@@ -187,7 +142,8 @@ export default {
           title:'成都第X中学',
           area:'城南校区',
           desc:'1号教学楼',
-          status:'启用'
+          status:'启用',
+
         },
         {
           id:2,
@@ -195,7 +151,8 @@ export default {
           title:'成都第X中学',
           area:'城南校区',
           desc:'1号教学楼',
-          status:'启用'
+          status:'启用',
+  
         },
         {
           id:3,
@@ -203,7 +160,8 @@ export default {
           title:'成都第X中学',
           area:'城南校区',
           desc:'1号教学楼',
-          status:'启用'
+          status:'启用',
+  
         },
         {
           id:4,
@@ -211,7 +169,30 @@ export default {
           title:'成都第X中学',
           area:'城南校区',
           desc:'1号教学楼',
-          status:'启用'
+          status:'启用',
+     
+        }
+      ],
+      tableColumn:[
+        {
+          prop:'id',
+          label:'显示顺序'
+        },
+        {
+          prop:'name',
+          label:'名称'
+        },
+        {
+          prop:'title',
+          label:'所属机构'
+        },
+        {
+          prop:'area',
+          label:'校区'
+        },
+        {
+          prop:'desc',
+          label:'描述'
         }
       ],
       /* 分页 */
@@ -220,7 +201,7 @@ export default {
         total:10
       },
       /* dialog */
-      dialog:{
+      dialog: {
         visible:false,
         title: '新建',
       },
@@ -244,7 +225,6 @@ export default {
     }
   },
   methods:{
-    handleRowClick(){},
     /* 选择建筑场地 */
     filterNode(value, data) {
         if (!value) return true;
@@ -274,6 +254,24 @@ export default {
         }
       })
       this.handleClose()
+    },
+    /* 表格的操作 */
+    handleStop(row){
+      console.log(row);
+    },
+    handleEdit(row){
+      console.log(row);
+    },
+    /* 控制状态 */
+    handleSwicthState(val) {
+      console.log(val)
+    },
+    handleAdd(){
+      this.$layer.open({
+         title: '在线调试',
+         content: '可以填写任意的layer代码',
+         area: ['422px', '434px']
+      });  
     }
   }
 }
@@ -302,22 +300,6 @@ export default {
 
   .area-content {
     margin-top: 24px;
-    .tableColumn-control {
-      height: 50px;
-      line-height: 50px;
-      i {
-        color: #487ff6;
-        cursor: pointer;
-      }
-      button {
-        &:first-child {
-          color: #606266;
-        }
-      }
-      div {
-        background: #D0E9FF;
-      }
-    }
   }
 
   .area-footer {
@@ -330,28 +312,5 @@ export default {
         margin-left: 10px;
       }
     }
-  }
-
-  .dialog {
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  .form-control {
-    height: 60px;
-    line-height: 60px;
-    padding-right: 15px;
-    background-color: #f5f5f5
-  }
-</style>
-<style>
-  .area .el-dialog__header {
-    border-bottom: 1px solid #E5E5E5;
-  }
-  .area .el-dialog__footer {
-    padding: 0;
-  }
-
-  .area .el-table td {
-    padding: 0;
   }
 </style>

@@ -5,7 +5,7 @@
     <div class="header">
       <div class="left">
         <div>教室设置</div>
-
+        <div>xxxxx</div>
       </div>
       <div @click="dialog.visible = true" class="right">
         <i class="iconfont icon-add"></i>
@@ -13,61 +13,16 @@
     </div>
 
     <div class="content">
-      <el-table
-        :data="tableData"
-        stripe
-        style="width: 100%">
-        <el-table-column
-          prop="id"
-          label="显示顺序"
-          width="100"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="name"
-          label="教室名称"
-          align="center"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="type"
-          label="教室类型"
-          align="center"
-        >
-        </el-table-column>
-
-        <el-table-column
-          prop="school"
-          align="center"
-          label="学校">
-        </el-table-column>
-
-        <el-table-column
-          prop="build"
-          align="center"
-          label="所属建筑">
-        </el-table-column>
-
-        <el-table-column
-          prop="area"
-          align="center"
-          label="校区">
-        </el-table-column>
-
-        <el-table-column
-          prop="status"
-          align="center"
-          label="状态">
-        </el-table-column>
-        <el-table-column
-          align="center"
-          label="操作">
-        </el-table-column>
-      </el-table>
+      <base-table  
+        :tableData="tableData" 
+        :tableColumn="tableColumn">
+      </base-table>
     </div>
 
     <div class="footer">
-      <div class="type-control">control</div>
+      <div class="type-control">
+         <state-switch @switchL="handleSwicthState"></state-switch>
+      </div>
       <div class="page-control">
         <el-pagination
           @size-change="handleSizeChange"
@@ -83,12 +38,12 @@
     </div>
 
  <!-- modal -->
-    <el-dialog
-      class="dialog"
+    <base-modal
       :title="dialog.title"
-      :visible.sync="dialog.visible"
-      width="30%"
-      :before-close="handleClose">
+      :visible="dialog.visible"
+      @on-close="handleClose"
+      @on-save="handleSave"
+    >
       <el-form ref="form" :model="formInfo" label-width="80px" :rules="formRules">
         <el-form-item label="学校" prop="title">
           <el-select v-model="formInfo.title" style="width:100%">
@@ -112,19 +67,37 @@
           <el-input v-model="formInfo.order"></el-input>
         </el-form-item>
       </el-form>
-      <div class="form-control" slot="footer">
-        <el-button @click="handleClose" size="mini">取消</el-button>
-        <el-button @click="handleSave" size="mini" type="primary">保存</el-button>
-      </div>
-    </el-dialog>
-
+    </base-modal>
 
   </div>
 </template>
 <script>
 export default {
+  components:{
+    stateSwitch:() => import("./../../../components/state-switch"),
+    baseTable:()=>import("./../../../components/table"),
+    baseModal:() => import("./../../../components/modal")
+  },
   data(){
     return {
+      tableColumn:[
+        {
+          prop:'id',
+          label:'id'
+        },
+        { 
+          prop:'type',
+          label:"教室类型",
+        },
+        {
+          prop:'desc',
+          label:'描述'
+        },
+        {
+          prop:'status',
+          label:'状态'
+        }
+      ],
       tableData:[
         {
           id:1,
@@ -165,6 +138,11 @@ export default {
   methods:{
     handleSizeChange(){},
     handleCurrentChange(){},
+
+    handleSwicthState(val){
+
+    },
+
     /* dialog */
     handleClose(){
       this.dialog.visible = false
@@ -215,23 +193,5 @@ export default {
       }
     }
   }
-  .dialog {
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  .form-control {
-    height: 60px;
-    line-height: 60px;
-    padding-right: 15px;
-    background-color: #f5f5f5
-  }
 } 
-</style>
-<style>
-  .room-setting .el-dialog__header {
-    border-bottom: 1px solid #E5E5E5;
-  }
-  .room-setting .el-dialog__footer {
-    padding: 0;
-  }
 </style>
