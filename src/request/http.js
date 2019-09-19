@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Toast } from 'vant';
 import QS from 'qs';
 import store from '../store/index';
-import router from '@/router/index'
+import router from '@/router/index' 
 
 // 环境的切换
 // if (process.env.NODE_ENV == 'development') {

@@ -3,7 +3,7 @@
 	<div>
 		<div class="system">
 			<!--页面title-->
-			<el-row class="system-title">
+			<el-row class="system-title"> 
 				<el-col :span="12"><div class="grid-content bg-purple cha-title">{{ pageTile }}</div></el-col>
 			</el-row>
 			<!--名称/logo-->

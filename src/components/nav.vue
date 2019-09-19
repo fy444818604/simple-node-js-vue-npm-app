@@ -329,7 +329,7 @@
 						menu_id: 35,
 						menu_text: '建筑场所',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/build-area',
 						menu_pid: 34,
 						menu_target_type: 0
 					},
@@ -337,7 +337,7 @@
 						menu_id: 36,
 						menu_text: '教室类型',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/room-type',
 						menu_pid: 34,
 						menu_target_type: 0
 					},
@@ -345,7 +345,7 @@
 						menu_id: 37,
 						menu_text: '教室设置',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/room-setting',
 						menu_pid: 34,
 						menu_target_type: 0
 					},
@@ -361,7 +361,7 @@
 						menu_id: 39,
 						menu_text: '学届管理',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/stu-year',
 						menu_pid: 38,
 						menu_target_type: 0
 					},
@@ -369,7 +369,7 @@
 						menu_id: 40,
 						menu_text: '班级管理',
 						menu_icon: '',
-						menu_href: '',
+						menu_href: '/basic/Layout/cla-mates',
 						menu_pid: 38,
 						menu_target_type: 0
 					},
@@ -468,7 +468,7 @@
 		transform: rotate(180deg)
 	}
 
-	.el-scrollbar__wrap {
+	.fy-nav-wrap .el-scrollbar__wrap {
 		overflow-x: hidden
 	}
 </style>
