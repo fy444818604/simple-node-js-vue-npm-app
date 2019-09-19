@@ -1,7 +1,7 @@
 <!-- 教职工账号 -->
 <template>
 	<!-- <router-link target="_blank" :to="{path:'/basic/Layout/system',query:{id:'1'}}">新页面打开</router-link> -->
-	<div id="teacher-account">
+	<div class="page-container" id="teacher-account">
 		<div class="flex-between">
 			<div>
 				<div>教职工账号</div>

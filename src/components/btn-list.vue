@@ -54,6 +54,7 @@
 		},
 		methods: {
 			tip: function(name, type, positon) {
+				console.log(123)
 				var that = this;
 				if (name != that.change) {
 					that.change = name;
@@ -103,5 +104,12 @@
 	}
 </script>
 
-<style>
+<style scoped="scoped">
+	.icon-btn{
+		border: none;
+		background: transparent;
+	}
+	.icon-btn{
+		color: #3b8bff;
+	}
 </style>
