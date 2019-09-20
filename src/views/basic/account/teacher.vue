@@ -22,11 +22,11 @@
 				btnGroup: [{
 					icon: 'icon-add',
 					name: '添加',
-					alias: '添加'
+					alias: 1
 				},{
 					icon: 'icon-edit',
 					name: '编辑',
-					alias: '编辑'
+					alias: 2
 				},]
 			}
 		},
@@ -34,7 +34,7 @@
 			'btn-list': btnList
 		},
 		methods:{
-			btnClick(){
+			btnClick(val){
 				
 			}
 		}

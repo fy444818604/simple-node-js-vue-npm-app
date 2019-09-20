@@ -1,102 +1,25 @@
-<!-- 按钮组 -->
+<!-- 按钮组件 -->
 <template>
-	<button class="icon-btn" @click="btnClick" @mouseenter="tip(list.name,list.icon,list.position)" @mouseleave="tipHide"><i
-		 class="iconfont" :class="[list.icon,list.position]"></i></button>
+	<el-tooltip class="item" effect="dark" :content="list.name" placement="top">
+		<button class="icon-btn" @click="btnClick"><i class="iconfont" :class="list.icon"></i></button>
+	</el-tooltip>
 </template>
 
 <script>
 	export default {
 		name: 'btnList',
 		props: {
-			model: Object,
-			start: Number,
-			position: String
+			model: Object
 		},
 		data() {
 			return {
 				list: this.model
 			}
 		},
-		watch: {
-			start() {
-				if (this.start == 1) {
-					if (this.list.name == '启用') {
-						var data = {
-							name: '停用',
-							alias: '停用',
-							icon: 'icon-form-stop'
-						}
-						this.list = data
-					}
-				} else {
-					if (this.list.name == '停用') {
-						var data = {
-							name: '启用',
-							alias: '启用',
-							icon: 'icon-form-start'
-						}
-						this.list = data
-					}
-				}
-			}
-		},
 		created: function() {
-			if (this.start == 1) {
-				if (this.list.name == '启用') {
-					var data = {
-						name: '停用',
-						alias: '停用',
-						icon: 'icon-form-stop'
-					}
-					this.list = data
-				}
-			}
+			
 		},
 		methods: {
-			tip: function(name, type, positon) {
-				console.log(123)
-				var that = this;
-				if (name != that.change) {
-					that.change = name;
-					that.tipShow = true
-				}
-				if (that.tipShow) {
-					that.tipShow = false;
-
-					if (positon != undefined) {
-						this.$layer.tips(name, '.' + positon, {
-							tips: 1,
-							time: 200000,
-							success: function(layero) {
-								var left = parseInt(layero.css('left')) - 10 + "px";
-								layero.css({
-									'left': left
-								})
-							},
-							end: function() {
-								that.tipShow = true
-							}
-						});
-					} else {
-						this.$layer.tips(name, '.' + type, {
-							tips: 1,
-							time: 200000,
-							success: function(layero) {
-								var left = parseInt(layero.css('left')) - 10 + "px";
-								layero.css({
-									'left': left
-								})
-							},
-							end: function() {
-								that.tipShow = true
-							}
-						});
-					}
-				}
-			},
-			tipHide: function() {
-				this.$layer.closeAll('tips')
-			},
 			btnClick: function() {
 				this.$emit('btn-click', this.model.alias)
 			}
@@ -105,11 +28,14 @@
 </script>
 
 <style scoped="scoped">
-	.icon-btn{
+	.icon-btn {
 		border: none;
 		background: transparent;
+		outline: none;
+		margin-right: 16px;
 	}
-	.icon-btn{
+
+	.icon-btn {
 		color: #3b8bff;
 	}
 </style>
