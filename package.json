@@ -15,7 +15,7 @@
 		"vant": "^1.6.11",
 		"vcolorpicker": "^0.1.8",
 		"vue": "^2.5.17",
-		"vue-layer": "^1.0.0",
+		"vue-layer": "^1.0.2",
 		"vue-layui": "^1.0.1",
 		"vue-particles": "^1.0.9",
 		"vue-quill-editor": "^3.0.6",
