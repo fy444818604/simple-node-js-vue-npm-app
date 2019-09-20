@@ -45,7 +45,7 @@
     </div>
 
     <!-- modal 不base-modal -->
-    <el-dialog      
+<!--     <el-dialog      
       :visible.sync="dialog.visible"
       :title="dialog.title"
       width="30%"
@@ -97,15 +97,84 @@
         <el-button @click="handleClose" size="mini">取消</el-button>
         <el-button @click="handleSave" size="mini" type="primary">保存</el-button>
       </div>
-    </el-dialog>
-
+    </el-dialog> -->
+    <!-- modal one -->
+    <div class="stu-yeaer-modal-add">
+     <el-form 
+        style="width:330px;margin:24px auto"
+        ref="formAdd"  
+        label-width="80px"
+        :rules="dialog.formAddRules" 
+        :model="dialog.formAdd">
+        <el-form-item label="学校" prop="name">
+          <el-select v-model="dialog.formAdd.name" style="width:100%">
+            <el-option label="xxx" value="xxx"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="入学时间" prop="time">
+          <el-select v-model="dialog.formAdd.time" style="width:100%">
+            <el-option label="xxx" value="xxx"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="阶段" prop="stage">
+          <el-select v-model="dialog.formAdd.stage" style="width:100%">
+            <el-option label="xxx" value="xxx"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="学制" prop="type">
+          <el-input v-model="dialog.formAdd.type"></el-input>
+        </el-form-item>
+      </el-form>
+      <div class="form-control">
+        <base-btn 
+          @on-change="handleCancel" 
+          border="1px solid #E5E7EF" 
+          height="34px" 
+          color="#606266" 
+          bg="#fff">取消</base-btn>
+          <base-btn @on-change="handleSave">保存</base-btn>
+      </div>
+    </div>
+    <!-- modal two -->
+    <div class="tu-yeaer-modal-edit">
+      <el-form
+        style="width:330px;margin:24px auto"
+        ref="formEdit"  
+        label-width="80px"
+        :rules="dialog.formEditRules" 
+        :model="dialog.formEdit">
+        <el-form-item label="学届名称" prop="name">
+          <el-input disabled v-model="dialog.formEdit.name"></el-input>
+        </el-form-item>
+        <el-form-item label="第一学年" prop="one">
+          <el-input v-model="dialog.formEdit.one"></el-input>
+        </el-form-item>
+        <el-form-item label="第二学年" prop="two">
+          <el-input v-model="dialog.formEdit.two"></el-input>
+        </el-form-item>
+        <el-form-item label="第三学年" prop="three">
+          <el-input v-model="dialog.formEdit.three"></el-input>
+        </el-form-item>
+      </el-form>
+      <div class="form-control">
+        <base-btn 
+          @on-change="handleCancel" 
+          border="1px solid #E5E7EF" 
+          height="34px" 
+          color="#606266" 
+          bg="#fff">取消</base-btn>
+          <base-btn @on-change="handleSave">保存</base-btn>
+      </div>
+    </div>
   </div>
 </template>
 <script>
+import layer from "layui-layer"
 export default {
   components:{
     baseTable:()=>import("./../../../components/table"),
     stateSwitch:() => import("./../../../components/state-switch"),
+    baseBtn:() => import("./../../../components/btn")
   },
   data(){
     return {
@@ -138,10 +207,9 @@ export default {
         total:20
       },
       /* dialog */
+      modalIndexAdd:0,
+      modalIndexEdit:0,
       dialog: {
-        type:'',
-        title:'新建',
-        visible: false,
         formAdd:{
           name:'', //机构
           time:'', //时间
@@ -169,17 +237,28 @@ export default {
     }
   },
   methods:{
-    /* 增加 */
-    handleAdd() {
-      this.dialog.type = "add"
-      this.dialog.visible = true
-    },
+
     handleSizeChange(){},
     handleCurrentChange(){},
 
     /* modal */
-    handleClose(){
-      this.dialog.visible = false
+    /* 增加 */
+    handleAdd() {
+      let that = this
+      this.modalIndexAdd = layer.open({
+        type: 1,
+        title:"新建",
+        content: $('.stu-yeaer-modal-add'),
+        area: ['422px'],
+        cancel:function(){
+          layer.close(that.modalIndexAdd)
+          $('.stu-yeaer-modal-add').hide()
+        }
+      })
+    },
+    handleCancel(){
+      layer.close(this.modalIndexAdd)
+      $('.stu-yeaer-modal-add').hide()
     },
     handleSave(){
       /* 判断是add 还是 edit */
@@ -224,19 +303,14 @@ export default {
       }
     }
   }
+  .stu-yeaer-modal-add, .tu-yeaer-modal-edit {
+    display: none;
+  }
   .form-control {
     height: 60px;
     line-height: 60px;
-    padding-right: 15px;
+    text-align: right;
     background-color: #f5f5f5
   }
 }
-</style>
-<style>
-  .stu-year .el-dialog__header {
-    border-bottom: 1px solid #E5E5E5;
-  }
-  .stu-year .el-dialog__footer {
-    padding: 0;
-  }
 </style>

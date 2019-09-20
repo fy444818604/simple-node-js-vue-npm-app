@@ -4,26 +4,26 @@
 
     <div class="area-title">
       <div class="left">
-        <div>建筑场所</div>
-        <el-dropdown trigger="click" placement="bottom">
-        <span class="el-dropdown-link">
-          {{currentSelect}}<i class="el-icon-arrow-down el-icon--right"></i>
-        </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-input
-              v-model="filterText">
-            </el-input>
+        <div class="title">建筑场所</div>
+        <div class="select-more">
+          <div @click.stop="handleShowSelect" class="select-item">{{currentSelect}}</div>
+          <div v-clickOutSide="handleHideSelect" class="lists" v-show="isShow">
+            <div class="filter-input">
+              <el-input v-model="filterText"></el-input>
+            </div>
+            <div class="list-tree">
               <el-tree
                 @node-click="handleSelect"
-                style="width:250px"
                 class="filter-tree"
                 :data="areaList"
                 :props="defaultProps"
                 :filter-node-method="filterNode"
-                ref="tree">
+                ref="tree"
+                >
               </el-tree>
-          </el-dropdown-menu>
-      </el-dropdown>
+            </div>
+          </div>
+        </div>
       </div>
       <div @click="handleAdd" class="right">
         <i class="iconfont icon-add"></i>
@@ -59,6 +59,12 @@
     </div>
 
     <!-- modal -->
+
+    <div class="build-area-mdoal">
+        <el-form style="width:330px;margin:24px auto" ref="form" :model="formInfo" label-width="80px" :rules="formRules">
+          <el-form-item label="机构" prop="title">
+            <el-input v-model="formInfo.title" suffix-icon="iconfont icon-apartment"></el-input>
+         <!--<el-select  v-model="formInfo.title" style="width:100%">
     <base-modal
       :title="dialog.title"
       @on-close="handleClose"
@@ -69,8 +75,8 @@
             <el-select v-model="formInfo.title" style="width:100%">
               <el-option label="区域一"  value="shanghai"></el-option>
               <el-option label="区域e"  value="shanghai2"></el-option>
-            </el-select>
-          </el-form-item>
+            </el-select> -->
+          </el-form-item> 
           <el-form-item label="名称" prop="name">
             <el-input v-model="formInfo.name"></el-input>
           </el-form-item>
@@ -87,20 +93,30 @@
             <el-input v-model="formInfo.order"></el-input>
           </el-form-item>
         </el-form>
-    </base-modal>
-
+        <div class="form-control">
+          <base-btn 
+            @on-change="handleCancel" 
+            border="1px solid #E5E7EF" 
+            height="34px" 
+            color="#606266" 
+            bg="#fff">取消</base-btn>
+          <base-btn @on-change="handleSave">保存</base-btn>
+        </div>
+    </div>
   </div>
 </template>
 
 <script>
+import layer from 'layui-layer'
 export default {
   components:{
     stateSwitch:() => import("./../../../components/state-switch"),
     baseTable:()=>import("./../../../components/table"),
-    baseModal:() => import("./../../../components/modal")
+    baseBtn:() => import("./../../../components/btn")
   },
   data(){
     return {
+      isShow:false,
       currentSelect:"成都第X中学",
       defaultProps: {
         children: 'children',
@@ -129,6 +145,16 @@ export default {
                 {
                   id: 1-2-1,
                   label: '雅安yyy中学',
+                }
+              ]
+            },
+            {
+              id: 1-3,
+              label: '绵阳市教育厅',
+              children:[
+                {
+                  id: 1-3-1,
+                  label: '绵阳zzz中学',
                 }
               ]
             }
@@ -201,10 +227,7 @@ export default {
         total:10
       },
       /* dialog */
-      dialog: {
-        visible:false,
-        title: '新建',
-      },
+      modalIndex:0,
       formInfo:{
         title:'',
         name:'',
@@ -224,37 +247,36 @@ export default {
       this.$refs.tree.filter(val);
     }
   },
+  created(){
+    /* 初始化表格 */
+    this.initTableData();
+  },
   methods:{
+    /* 初始化表格数据 */
+    initTableData(){
+
+    },
     /* 选择建筑场地 */
     filterNode(value, data) {
         if (!value) return true;
-        return data.label.indexOf(value) !== -1;
+        return data.label.indexOf(value) !== -1
     },
     handleSelect(value){
       if(!value.children) {
-        const {id,label} = value;
-        this.currentSelect = label;
-
+        const {id,label} = value
+        this.currentSelect = label
+        this.handleHideSelect()
       }
+    },
+    handleShowSelect(){
+      this.isShow = true
+    },
+    handleHideSelect(){
+      this.isShow = false
     },
     /* 分页相关 */
     handleCurrentChange(){},
     handleSizeChange(){},
-
-    /* dialog */
-    handleClose(){
-      this.dialog.visible = false
-    },
-    handleSave(){
-      /* todo */
-      /* judge */
-      this.$refs.form.validate((valid) => {
-        if(valid) {
-          console.log("valid");
-        }
-      })
-      this.handleClose()
-    },
     /* 表格的操作 */
     handleStop(row){
       console.log(row);
@@ -266,12 +288,35 @@ export default {
     handleSwicthState(val) {
       console.log(val)
     },
+    /* 打开弹层 */
     handleAdd(){
+<<<<<<< HEAD
+      let that = this
+      this.modalIndex = layer.open({
+        type: 1,
+        title:"新建",
+        content: $('.build-area-mdoal'),
+        area: ['422px'],
+        cancel:function(){
+          layer.close(that.modalIndex)
+          $('.build-area-mdoal').hide()
+        }
+      });  
+    },
+    /* 关闭弹层 */
+    handleCancel(){
+      layer.close(this.modalIndex)
+      $('.build-area-mdoal').hide()
+    },
+    handleSave(){
+
+=======
       this.$layer.open({
          title: '在线调试',
          content: '可以填写任意的layer代码',
          area: ['422px', '434px']
       });
+>>>>>>> f4d2153b69f01476685cf5e9effa7823c10c6c70
     }
   }
 }
@@ -287,6 +332,38 @@ export default {
     justify-content: space-between;
     .left {
       display: flex;
+      .title {
+        color: #303133;
+        font-weight: Bold;
+      }
+      .select-more {
+        margin-left: 22px;
+        position: relative;
+        .select-item {
+          cursor: pointer;
+          color: #606266;
+        }
+        .lists {
+          z-index: 999;
+          position: absolute;
+          left: 0;
+          top: 30px;
+          border-radius: 4px;
+          border: 1px solid rgba(204, 204, 204, 0.671);
+          background: #fff;
+          box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.1);
+
+          .filter-input {
+            padding: 5px;
+          }
+          .list-tree {
+            width: 254px;
+            height: 200px;
+            overflow: auto;
+            overflow-x: hidden;
+          }
+        }
+      }
       .el-dropdown-link {
         margin-left: 22px;
         cursor: pointer;
@@ -312,5 +389,21 @@ export default {
         margin-left: 10px;
       }
     }
+  }
+
+  .build-area-mdoal {
+    display: none;
+    .form-control {
+      height: 60px;
+      line-height: 60px;
+      text-align: right;
+      background-color: #f5f5f5
+    }
+  }
+</style>
+<style>
+  .area .el-tree {
+    margin-top: 5px;
+    background: #fff;
   }
 </style>

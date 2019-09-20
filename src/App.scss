@@ -80,7 +80,6 @@ body,html{
   position: relative;
   min-height: calc(100vh - 60px);
   overflow: visible;
-  background: #f1f4f5;
 }
 
 .fy-page-title{
@@ -126,10 +125,18 @@ body,html{
 	justify-content: center;
 	align-content: center;
 }
+.el-dropdown{
+	cursor: default;
+}
+.bt-line{
+	border-bottom: 1px solid #E5E7EF;
+}
 /*文字标题*/
 .cha-title{
   font-size: 14px;
   color: #303133;
+  margin-right: 10px;
+  font-weight: bold;
 }
 /*常规字体颜色*/
 .con-size{
@@ -153,11 +160,49 @@ body,html{
 .el-tree-node__content {
   height: 36px;
 }
-/*字体图标*/
-.iconfont{
-  color: #4a80f6;
-  font-size: 18px;
-  margin-left: 8px;
+
+.pb10{
+	padding-bottom: 10px;
 }
 
+.pt20{
+	padding-top: 20px;
+}
 
+.mt20{
+	margin-top: 20px;
+}
+
+.el-form-item{
+	margin-bottom: 20px;
+}
+
+.btn{
+	outline: none;
+	padding: 8px 14px;
+	color: #606266;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+}
+
+.primary-btn{
+	@extend .btn;
+	border-radius: 4px;
+	background: #F5F5F5;
+	border: 1px solid #dcdfe6;
+}
+
+.clear-btn{
+	@extend .btn;
+	text-decoration: underline;
+}
+
+.el-table th{
+	background-color: #f5f5f5;
+}
+
+.icon-more{
+	color: #4A80F6;
+	cursor: pointer;
+}

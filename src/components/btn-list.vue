@@ -34,8 +34,9 @@
 		outline: none;
 		margin-right: 16px;
 	}
-
+	
 	.icon-btn {
-		color: #3b8bff;
+		color: #4A80F6;
 	}
+	
 </style>

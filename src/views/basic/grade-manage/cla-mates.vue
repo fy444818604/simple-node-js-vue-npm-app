@@ -5,7 +5,9 @@
       <div class="header">
         <div class="left">
           <div>班级管理</div>
-          <div>xxxxxxx</div>
+          <div class="select-more">
+            <div>成都第X中学↓</div>
+          </div>
         </div>
         <div @click="handleAdd" class="add-icon">
           <i class="iconfont icon-add"></i>
@@ -81,13 +83,12 @@
       </div>
     </div>
     <!-- modal -->
-    <base-modal
-      @on-close="handleClose"
-      @on-save="handleSave"
-      :visible="dialog.visible"
-      :title="dialog.title"
-    >
-      <el-form label-width="80px" :model="formInfo" :rules="rules">
+    <div class="cla-mates-modal">
+      <el-form 
+        style="width:330px;margin:24px auto"
+        label-width="80px" 
+        :model="formInfo" 
+        :rules="rules">
         <el-form-item label="学校" prop="school">
           <el-select style="width:100%" v-model="formInfo.school">
             <el-option value="xxx" label="xxx"></el-option>
@@ -112,16 +113,27 @@
           </el-select>
         </el-form-item>
       </el-form>
-    </base-modal>
+      <div class="form-control">
+        <base-btn 
+          @on-change="handleCancel" 
+          border="1px solid #E5E7EF" 
+          height="34px" 
+          color="#606266" 
+          bg="#fff">取消</base-btn>
+          <base-btn @on-change="handleSave">保存</base-btn>
+      </div>
+    </div>
+    
   </div>
 </template>
 
 <script>
+import layer from "layui-layer"
 export default {
   components:{
     baseTable:()=>import("./../../../components/table"),
     stateSwitch:() => import("./../../../components/state-switch"),
-    baseModal:() => import("./../../../components/modal")
+    baseBtn:() => import("./../../../components/btn")
   },
   data(){
     return {
@@ -169,10 +181,7 @@ export default {
         total:20
       },
       /* dialog */
-      dialog:{
-        title:'新建',
-        visible:false
-      },
+      modalIndex:0,
       formInfo:{
         school:'',
         classYear:'',
@@ -195,11 +204,22 @@ export default {
     handleCurrentChange(){},
     /* add */
     handleAdd(){
-      this.dialog.visible = true
+      let that = this
+      this.modalIndex = layer.open({
+        type: 1,
+        title:"新建",
+        content: $('.cla-mates-modal'),
+        area: ['422px'],
+        cancel:function(){
+          layer.close(that.modalIndex)
+          $('.cla-mates-modal').hide()
+        }
+      })
     },
     handleSwicthState(){},
-    handleClose(){
-      this.dialog.visible = false
+    handleCancel(){
+      layer.close(this.modalIndex)
+      $('.cla-mates-modal').hide()
     },
     handleSave(){}
   }
@@ -217,6 +237,10 @@ export default {
     padding-bottom: 10px;
     .left {
       display: flex;
+    }
+    .select-more {
+      margin-left: 10px;
+      cursor: pointer;
     }
     .add-icon {
       color: #487ff6;
@@ -246,10 +270,13 @@ export default {
       }
     }
   }
+  .cla-mates-modal {
+    display: none;
+  }
   .form-control {
     height: 60px;
     line-height: 60px;
-    padding-right: 15px;
+    text-align: right;
     background-color: #f5f5f5
   }
 }
