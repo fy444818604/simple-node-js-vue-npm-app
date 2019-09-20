@@ -49,7 +49,10 @@
 			</el-table-column>
 			<el-table-column prop="name" label="姓名">
 			</el-table-column>
-			<el-table-column prop="sex" label="性别">
+			<el-table-column label="性别">
+				<template slot-scope="scope">
+					{{scope.row.sex == 1?'男':'女'}}
+				</template>
 			</el-table-column>
 			<el-table-column prop="org" label="机构">
 			</el-table-column>
@@ -65,7 +68,14 @@
 					{{scope.row.status == 1?'启用':'停用'}}
 				</template>
 			</el-table-column>
-			<el-table-column prop="id" label="操作">
+			<el-table-column prop="id" label="操作" width="60">
+				<template slot-scope="scope">
+					<i class="iconfont icon-more"></i>
+					<!-- <ul>
+						<li>停用</li>
+						<li>编辑</li>
+					</ul> -->
+				</template>
 			</el-table-column>
 		</el-table>
 		<div class="flex-between mt20">
@@ -77,8 +87,8 @@
 
 <script>
 	import btnList from '@/components/btn-list'
-	import stateSwitch from '../../../components/state-switch'
-	import paging from '../../../components/paging'
+	import stateSwitch from '@/components/state-switch'
+	import paging from '@/components/paging'
 	export default {
 		data() {
 			return {
@@ -87,9 +97,21 @@
 					name: '添加',
 					alias: 1
 				}, {
-					icon: 'icon-edit',
-					name: '编辑',
+					icon: 'icon-input',
+					name: '导入',
 					alias: 2
+				}, {
+					icon: 'icon-permissions',
+					name: '重置密码',
+					alias: 3
+				}, {
+					icon: 'icon-enable',
+					name: '启用',
+					alias: 4
+				}, {
+					icon: 'icon-stop',
+					name: '停用',
+					alias: 5
 				}],
 				currentSelect: "成都第X中学",
 				defaultProps: {
