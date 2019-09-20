@@ -32,7 +32,7 @@
 
     <div class="area-content">
       <base-table
-        :tableData="tableData" 
+        :tableData="tableData"
         :tableColumn="tableColumn"
         @on-stop="handleStop"
         @on-edit="handleEdit"
@@ -59,7 +59,7 @@
     </div>
 
     <!-- modal -->
-    <base-modal   
+    <base-modal
       :title="dialog.title"
       @on-close="handleClose"
       @on-save="handleSave"
@@ -152,7 +152,7 @@ export default {
           area:'城南校区',
           desc:'1号教学楼',
           status:'启用',
-  
+
         },
         {
           id:3,
@@ -161,7 +161,7 @@ export default {
           area:'城南校区',
           desc:'1号教学楼',
           status:'启用',
-  
+
         },
         {
           id:4,
@@ -170,7 +170,7 @@ export default {
           area:'城南校区',
           desc:'1号教学楼',
           status:'启用',
-     
+
         }
       ],
       tableColumn:[
@@ -271,7 +271,7 @@ export default {
          title: '在线调试',
          content: '可以填写任意的layer代码',
          area: ['422px', '434px']
-      });  
+      });
     }
   }
 }

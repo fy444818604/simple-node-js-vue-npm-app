@@ -6,12 +6,15 @@
             <el-col :span="12"><div class="grid-content bg-purple cha-title">{{ pageTile }}</div></el-col>
             <el-col :span="12"><div class="grid-content bg-purple-light"><i class="iconfont icon-add"></i></div></el-col>
         </el-row>
-        <query></query>
+        <!--表单-->
+        <!--表格-->
+        <div>
+
+        </div>
     </div>
 </template>
 
 <script>
-    import query from './query'
     export default {
         name: "schoolDistrict",
         data(){
@@ -20,7 +23,7 @@
             }
         },
         components:{
-            'query':query
+
         }
     }
 </script>
