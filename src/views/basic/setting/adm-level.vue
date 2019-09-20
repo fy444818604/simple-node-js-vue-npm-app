@@ -176,12 +176,7 @@
     .level-bnt .bg-purple{
         margin-top: 4px;
     }
-    /*字体图标*/
-    .iconfont{
-        color: #4a80f6;
-        font-size: 18px;
-        margin-left: 8px;
-    }
+
     item__label:before {
         content: "*";
         color: #f56c6c;
