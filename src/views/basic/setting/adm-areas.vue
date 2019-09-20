@@ -12,7 +12,7 @@
                 <el-col :span="12"><div class="grid-content bg-purple-light">
                     <i class="iconfont icon-add"></i>
                     <i class="iconfont icon-edit" @click="editor()"></i>
-                    <i class="iconfont icon-add"></i>
+                    <i class="iconfont icon-stop"></i>
                 </div></el-col>
             </el-row>
             <!--内容详情/修改/编辑-->
