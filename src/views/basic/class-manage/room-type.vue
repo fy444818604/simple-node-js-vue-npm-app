@@ -2,7 +2,7 @@
 <template>
   <div class="room-type">
     <div class="header">
-      <div>教室类型</div>
+      <div class="title">教室类型</div>
       <div @click="handleShowAdd" class="add-icon">
         <i class="iconfont icon-add"></i>
       </div>
@@ -32,12 +32,8 @@
     </div>
 
     <!-- modal -->
-    <base-modal 
-      @on-close="handleClose"
-      @on-save="handleSave"
-      :visible="visible"  
-      title="新建教室类型">
-      <el-form ref="formInfo" :model="formInfo" label-width="80px" :rules="rule">
+    <div class="room-type-modal">
+      <el-form style="width:330px;margin:24px auto" ref="formInfo" :model="formInfo" label-width="80px" :rules="rule">
         <el-form-item label="教室类型" prop="type">
           <el-input v-model="formInfo.type"></el-input>
         </el-form-item>
@@ -48,16 +44,27 @@
            <el-input v-model="formInfo.order"></el-input>
         </el-form-item>
       </el-form>
-    </base-modal>
+      <div class="form-control">
+        <base-btn @on-change="handleSave">确认</base-btn>
+        <base-btn 
+          @on-change="handleCancel" 
+          border="1px solid #E5E7EF" 
+          height="34px" 
+          color="#606266" 
+          bg="#fff">取消</base-btn>
+      </div>
+    </div>
+
 
   </div>
 </template>
 <script>
+import layer from 'layui-layer'
 export default {
   components:{
     baseTable:()=>import("./../../../components/table"),
     stateSwitch:() => import("./../../../components/state-switch"),
-    baseModal:() => import("./../../../components/modal")
+    baseBtn:() => import("./../../../components/btn")
   },
   data(){
     return {
@@ -92,7 +99,7 @@ export default {
         total:20
       },
       /* modal*/
-      visible: false,
+      modalIndex:0,
       formInfo:{
         type:'',
         desc:'',
@@ -106,18 +113,29 @@ export default {
   methods:{
     handleSizeChange(){},
     handleCurrentChange(){},
-    handleShowAdd(){
-      this.visible = true
-    },
     handleSwicthState(val){},
     /* modal */
-    handleClose(){
-      /* 数据清楚 */
-      this.visible = false
+    handleShowAdd(){
+      let that = this
+      this.modalIndex = layer.open({
+        type: 1,
+        title:"新建教室类型",
+        content: $('.room-type-modal'),
+        area: ['422px'],
+        cancel:function(){
+          layer.close(that.modalIndex)
+          $('.room-type-modal').hide()
+        }
+      })
+    },
+    handleCancel(){
+      /* 数据清除 */
+      layer.close(this.modalIndex)
+      $('.room-type-modal').hide()
     },
     handleSave(){
       /* 数据验证 */
-      this.visible = false
+
     }
   }
 }
@@ -129,6 +147,10 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    .title {
+      color: #303133;
+      font-weight: Bold;
+    }
     .add-icon {
       color: #487ff6;
       cursor: pointer;
@@ -146,6 +168,16 @@ export default {
       button {
         margin-left: 10px;
       }
+    }
+  }
+
+  .room-type-modal {
+    display: none;
+    .form-control {
+      height: 60px;
+      line-height: 60px;
+      text-align: right;
+      background-color: #f5f5f5
     }
   }
 }
