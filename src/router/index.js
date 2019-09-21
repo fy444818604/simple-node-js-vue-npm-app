@@ -359,41 +359,50 @@ const router = new Router({
 					requireAuth: true
 				}
 			}]
-		}
-	]
+		}, {
+			path: '/basic/teacher-detail',
+			name: 'teacher-detail',
+			component: (resolve) => {
+				require(['../views/basic/account/teacher-detail'], resolve)
+			},
+			meta: {
+				title: '基本信息',
+				requireAuth: true
+			}
+		}]
 })
 
 router.beforeEach((to, from, next) => {
 	/* 路由发生变化修改页面title */
 	// if (to.meta.requireAuth) {
 	// 	if (store.state.Authorization) { // 通过vuex state获取当前的token是否存在
-			// 			Vue.prototype.$post('/api/loginV', {
-			// 				token: store.state.Authorization
-			// 			}).then(res => {
-			// 				if (res.status == 200) {
-			// 					next();
-			// 				} else {
-			// 					next({
-			// 						path: '/signin',
-			// 						query: {
-			// 							redirect: to.fullPath
-			// 						} // 将跳转的路由path作为参数，登录成功后跳转到该路由
-			// 					})
-			// 				}
-			// 			}).catch(err => {
-			//
-			// 			})
+	// 			Vue.prototype.$post('/api/loginV', {
+	// 				token: store.state.Authorization
+	// 			}).then(res => {
+	// 				if (res.status == 200) {
+	// 					next();
+	// 				} else {
+	// 					next({
+	// 						path: '/signin',
+	// 						query: {
+	// 							redirect: to.fullPath
+	// 						} // 将跳转的路由path作为参数，登录成功后跳转到该路由
+	// 					})
+	// 				}
+	// 			}).catch(err => {
+	//
+	// 			})
 
-		// } else {
-		// 	next({
-		// 		path: '/signin',
-		// 		query: {
-		// 			redirect: to.fullPath
-		// 		} // 将跳转的路由path作为参数，登录成功后跳转到该路由
-		// 	})
-		// }
 	// } else {
-		next();
+	// 	next({
+	// 		path: '/signin',
+	// 		query: {
+	// 			redirect: to.fullPath
+	// 		} // 将跳转的路由path作为参数，登录成功后跳转到该路由
+	// 	})
+	// }
+	// } else {
+	next();
 	// }
 	if (to.meta.title) {
 		document.title = to.meta.title;
