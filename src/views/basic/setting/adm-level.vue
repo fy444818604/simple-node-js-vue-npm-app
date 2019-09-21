@@ -99,7 +99,7 @@
                 /* dialog */
                 dialog: {
                     visible:false,
-                    title: '新建',
+                    title: '新建行政级别',
                 },
                 admForm:{
                     level:'',
@@ -136,6 +136,7 @@
             },
             //modal
             admClose(){
+
                 this.dialog.visible = false
             },
             admSave(){
@@ -144,7 +145,6 @@
                         console.log(valid);
                     }
                 })
-
             },
             //添加弹框
             admAdd(){
