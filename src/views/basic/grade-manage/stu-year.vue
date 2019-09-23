@@ -282,8 +282,11 @@ export default {
     border-bottom: 1px solid #E5E7EF;
     padding-bottom: 10px;
     .add-icon {
-      color: #487ff6;
+      margin-right: 24px;
       cursor: pointer;
+      i {
+        color: #487ff6;
+      }
     }
   }
   .content {

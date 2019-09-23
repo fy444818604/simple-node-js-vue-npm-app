@@ -109,6 +109,10 @@ export default {
       isShow:false,
       filterText:'',
       currentSelect:'xxxx',
+      defaultProps: {
+        children: 'children',
+        label: 'label'
+      },
       tableColumn:[
         {
           prop:'id',
@@ -266,8 +270,11 @@ export default {
       }
     }
     .right {
-      color: #487ff6;
       cursor: pointer;
+      margin-right: 24px;
+      i {
+        color: #487ff6;
+      }
     }
  }
  .content {

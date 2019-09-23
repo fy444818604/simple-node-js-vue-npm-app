@@ -17,7 +17,7 @@ if (process.env.NODE_ENV == 'development') {
 //设置请求超时
 axios.defaults.timeout = 10000;
 
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
 //post请求头的设置
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
