@@ -116,7 +116,6 @@ export default {
     handleSwicthState(val){},
     /* modal */
     handleShowAdd(){
-      // this.visible = true
       let that = this
       this.modalIndex = layer.open({
         type: 1,

@@ -65,22 +65,23 @@
 			...mapMutations(['changeLogin']),
 			login() {
 				var params = {
-					username: this.user,
+					userName: this.user,
 					password: this.password
 				};
-				this.$post('/api/login', params).then(res => {
-					if (res.status == 200) {
-						this.changeLogin({
-							Authorization: res.token
-						});
-						this.$router.push({
-							path: '/Layout'
-						});
-					} else {
-						alert('密码错误')
-					}
+				this.$post('/base/api/auth/loginByUserPwd', params).then(res => {
+					console.log(res)
+					// if (res.status == 200) {
+					// 	this.changeLogin({
+					// 		Authorization: res.token
+					// 	});
+					// 	this.$router.push({
+					// 		path: '/Layout'
+					// 	});
+					// } else {
+					// 	alert('密码错误')
+					// }
 				}).catch(err => {
-
+					
 				});
 			}
 		}

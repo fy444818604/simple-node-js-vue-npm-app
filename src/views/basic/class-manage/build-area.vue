@@ -59,23 +59,10 @@
     </div>
 
     <!-- modal -->
-
     <div class="build-area-mdoal">
         <el-form style="width:330px;margin:24px auto" ref="form" :model="formInfo" label-width="80px" :rules="formRules">
           <el-form-item label="机构" prop="title">
             <el-input v-model="formInfo.title" suffix-icon="iconfont icon-apartment"></el-input>
-         <!--<el-select  v-model="formInfo.title" style="width:100%">
-    <base-modal
-      :title="dialog.title"
-      @on-close="handleClose"
-      @on-save="handleSave"
-      :visible="dialog.visible">
-        <el-form ref="form" :model="formInfo" label-width="80px" :rules="formRules">
-          <el-form-item label="学校" prop="title">
-            <el-select v-model="formInfo.title" style="width:100%">
-              <el-option label="区域一"  value="shanghai"></el-option>
-              <el-option label="区域e"  value="shanghai2"></el-option>
-            </el-select> -->
           </el-form-item> 
           <el-form-item label="名称" prop="name">
             <el-input v-model="formInfo.name"></el-input>
@@ -290,7 +277,6 @@ export default {
     },
     /* 打开弹层 */
     handleAdd(){
-<<<<<<< HEAD
       let that = this
       this.modalIndex = layer.open({
         type: 1,
@@ -309,14 +295,6 @@ export default {
       $('.build-area-mdoal').hide()
     },
     handleSave(){
-
-=======
-      this.$layer.open({
-         title: '在线调试',
-         content: '可以填写任意的layer代码',
-         area: ['422px', '434px']
-      });
->>>>>>> f4d2153b69f01476685cf5e9effa7823c10c6c70
     }
   }
 }
