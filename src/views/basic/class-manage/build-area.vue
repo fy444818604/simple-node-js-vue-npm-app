@@ -26,7 +26,9 @@
         </div>
       </div>
       <div @click="handleAdd" class="right">
-        <i class="iconfont icon-add"></i>
+        <el-tooltip class="item" effect="dark" content="添加" placement="top">
+          <i class="iconfont icon-add"></i>
+        </el-tooltip>
       </div>
     </div>
 
@@ -105,11 +107,11 @@ export default {
     return {
       isShow:false,
       currentSelect:"成都第X中学",
+      filterText:'',
       defaultProps: {
         children: 'children',
         label: 'label'
       },
-      filterText:'',
       areaList:[
         {
           id: 1,
@@ -206,6 +208,10 @@ export default {
         {
           prop:'desc',
           label:'描述'
+        },
+        {
+          prop:'status',
+          label:'状态'
         }
       ],
       /* 分页 */
