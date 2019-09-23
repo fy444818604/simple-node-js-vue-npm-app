@@ -26,7 +26,9 @@
         </div>
       </div>
       <div @click="handleAdd" class="right">
-        <i class="iconfont icon-add"></i>
+        <el-tooltip class="item" effect="dark" content="添加" placement="top">
+          <i class="iconfont icon-add"></i>
+        </el-tooltip>
       </div>
     </div>
 
@@ -62,22 +64,22 @@
     <div class="build-area-mdoal">
         <el-form style="width:330px;margin:24px auto" ref="form" :model="formInfo" label-width="80px" :rules="formRules">
           <el-form-item label="机构" prop="title">
-            <el-input v-model="formInfo.title" suffix-icon="iconfont icon-apartment"></el-input>
+            <el-input v-model="formInfo.orgId" suffix-icon="iconfont icon-apartment"></el-input>
           </el-form-item> 
           <el-form-item label="名称" prop="name">
             <el-input v-model="formInfo.name"></el-input>
           </el-form-item>
           <el-form-item label="所属校区" prop="area">
-            <el-select v-model="formInfo.area" style="width:100%">
+            <el-select v-model="formInfo.campusId" style="width:100%">
               <el-option label="区域一"  value="shanghai"></el-option>
               <el-option label="区域一2"  value="shangha2i"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="描述">
-            <el-input v-model="formInfo.desc"></el-input>
+            <el-input v-model="formInfo.description"></el-input>
           </el-form-item>
           <el-form-item label="显示顺序">
-            <el-input v-model="formInfo.order"></el-input>
+            <el-input v-model="formInfo.orderIndex"></el-input>
           </el-form-item>
         </el-form>
         <div class="form-control">
@@ -105,11 +107,11 @@ export default {
     return {
       isShow:false,
       currentSelect:"成都第X中学",
+      filterText:'',
       defaultProps: {
         children: 'children',
         label: 'label'
       },
-      filterText:'',
       areaList:[
         {
           id: 1,
@@ -206,6 +208,10 @@ export default {
         {
           prop:'desc',
           label:'描述'
+        },
+        {
+          prop:'status',
+          label:'状态'
         }
       ],
       /* 分页 */
@@ -213,20 +219,23 @@ export default {
         currentPage:1,
         total:10
       },
+      /* switch status */
+      status: 0,   //状态:0启动、1停用、全部''
       /* dialog */
       modalIndex:0,
       formInfo:{
-        title:'',
-        name:'',
-        area:'',
-        desc:'',
-        order:''
+        campusId:0,        // 校区ID
+        name:'',           // 名称
+        orderIndex:0,      // 顺序 
+        description:'',    // 描述
+        orgId:0            // 机构Id
       },
       formRules:{
         title:[{required: true, message: '请选择学校名称', trigger: 'blur'}],
         name:[{required: true, message: '请输入名称', trigger: 'blur'}],
         area:[{required: true, message: '请选择所属校区', trigger: 'blur'}],
-      }
+      },
+      
     }
   },
   watch: {
@@ -330,7 +339,6 @@ export default {
           border: 1px solid rgba(204, 204, 204, 0.671);
           background: #fff;
           box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.1);
-
           .filter-input {
             padding: 5px;
           }
@@ -342,14 +350,13 @@ export default {
           }
         }
       }
-      .el-dropdown-link {
-        margin-left: 22px;
-        cursor: pointer;
-      }
     }
     .right {
-      color: #487ff6;
+      margin-right: 24px;
       cursor: pointer;
+      i {
+        color: #487ff6;
+      }
     }
   }
 

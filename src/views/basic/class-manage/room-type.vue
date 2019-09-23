@@ -4,7 +4,9 @@
     <div class="header">
       <div class="title">教室类型</div>
       <div @click="handleShowAdd" class="add-icon">
-        <i class="iconfont icon-add"></i>
+        <el-tooltip class="item" effect="dark" content="添加" placement="top">
+          <i class="iconfont icon-add"></i>
+        </el-tooltip>
       </div>
     </div>
     <div class="content">
@@ -152,8 +154,11 @@ export default {
       font-weight: Bold;
     }
     .add-icon {
-      color: #487ff6;
+      margin-right: 24px;
       cursor: pointer;
+      i {
+        color: #487ff6;
+      }
     }
   }
   .content {

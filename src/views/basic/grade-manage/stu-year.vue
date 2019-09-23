@@ -5,7 +5,9 @@
     <div class="header">
       <div>学届管理</div>
       <div @click="handleAdd" class="add-icon">
-        <i class="iconfont icon-add"></i>
+        <el-tooltip class="item" effect="dark" content="添加" placement="top">
+          <i class="iconfont icon-add"></i>
+        </el-tooltip>
       </div>
     </div>
 
@@ -280,8 +282,11 @@ export default {
     border-bottom: 1px solid #E5E7EF;
     padding-bottom: 10px;
     .add-icon {
-      color: #487ff6;
+      margin-right: 24px;
       cursor: pointer;
+      i {
+        color: #487ff6;
+      }
     }
   }
   .content {
