@@ -42,8 +42,8 @@
                     <div>
                         <div class="school-structure-top">
                             <div class="school-structure-bnt">2222</div>
-                            
                         </div>
+
                     </div>
                 </el-form-item>
                 <el-form-item label="描述"  >
@@ -215,7 +215,7 @@
         height: 200px;
         background: red;
         position: relative;
-        top: 40px;
+        top: 38px;
         left: 0px;
         z-index: 9999;
     }
