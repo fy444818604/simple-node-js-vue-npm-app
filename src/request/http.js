@@ -6,13 +6,13 @@ import store from '../store/index';
 import router from '@/router/index' 
 
 // 环境的切换
-// if (process.env.NODE_ENV == 'development') {
-// 	axios.defaults.baseURL = 'http://192.168.38.17:8888';
-// } else if (process.env.NODE_ENV == 'debug') {
-// 	axios.defaults.baseURL = 'http://192.168.38.17:8888';
-// } else if (process.env.NODE_ENV == 'production') {
-// 	axios.defaults.baseURL = 'http://192.168.38.17:8888';
-// }
+if (process.env.NODE_ENV == 'development') {
+	axios.defaults.baseURL = 'http://192.168.38.100:8088';
+} else if (process.env.NODE_ENV == 'debug') {
+	axios.defaults.baseURL = 'http://192.168.38.17:8888';
+} else if (process.env.NODE_ENV == 'production') {
+	axios.defaults.baseURL = 'http://192.168.38.17:8888';
+}
 
 //设置请求超时
 axios.defaults.timeout = 10000;
@@ -20,7 +20,7 @@ axios.defaults.timeout = 10000;
 axios.defaults.withCredentials = true;
 
 //post请求头的设置
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 
 // 请求拦截器
 axios.interceptors.request.use(
@@ -125,7 +125,7 @@ export function get(url, params) {
  */
 export function post(url, params) {
 	return new Promise((resolve, reject) => {
-        axios.post(url, QS.stringify(params),{headers: {
+        axios.post(url, params,{headers: {
                         'token': localStorage.getItem('Authorization')
                     }})
         .then(res => {

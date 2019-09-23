@@ -6,6 +6,7 @@
   word-wrap: break-word;
   font-size: 14px;
   font-family: "Microsoft Yahei";
+  color: #606266;
 }
 [v-cloak] {
   display: none;
@@ -73,6 +74,22 @@ body,html{
 
 #app{
   height: 100%;
+}
+
+.main-line{
+	border-color: #E5E7EF!important;
+}
+
+.main-color{
+	color: #4A80F6;
+}
+
+.main-bold{
+	color: #303133;
+}
+
+.main-exp{
+	color: #909399;
 }
 
 .page-container{
@@ -205,4 +222,9 @@ body,html{
 .icon-more{
 	color: #4A80F6;
 	cursor: pointer;
+}
+
+.el-tabs__nav-wrap::after{
+	height: 1px;
+	@extend .main-line
 }

@@ -35,7 +35,7 @@
 		margin-right: 16px;
 	}
 	
-	.icon-btn {
+	.iconfont {
 		color: #4A80F6;
 	}
 	

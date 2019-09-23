@@ -1,6 +1,5 @@
 <!-- 教职工账号 -->
 <template>
-	<!-- <router-link target="_blank" :to="{path:'/basic/Layout/system',query:{id:'1'}}">新页面打开</router-link> -->
 	<div class="page-container" id="teacher-account">
 		<div class="flex-between bt-line pb10">
 			<div class="flex">
@@ -47,7 +46,10 @@
 			</el-table-column>
 			<el-table-column prop="workNum" label="工号" width="120">
 			</el-table-column>
-			<el-table-column prop="name" label="姓名">
+			<el-table-column label="姓名">
+				<template slot-scope="scope">
+					<router-link class="main-color" target="_blank" :to="{path:'/basic/teacher-detail',query:{id:scope.row.id}}">{{scope.row.name}}</router-link>
+				</template>
 			</el-table-column>
 			<el-table-column label="性别">
 				<template slot-scope="scope">
