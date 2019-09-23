@@ -81,19 +81,26 @@ export default {
       tableColumn:[
           {
             prop:'id',
-            label:'id'
+            label:'显示顺序',
+            align:"center",
+            width:100
           },
           { 
             prop:'type',
             label:"教室类型",
+            align:"center",
+            width:100
           },
           {
             prop:'desc',
+            align:"center",
             label:'描述'
           },
           {
             prop:'status',
-            label:'状态'
+            label:'状态',
+            align:"center",
+            width:100
           }
         ],
       pagination:{
