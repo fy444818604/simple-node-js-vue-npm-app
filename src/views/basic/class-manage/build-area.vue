@@ -5,25 +5,7 @@
     <div class="area-title">
       <div class="left">
         <div class="title">建筑场所</div>
-        <div class="select-more">
-          <div @click.stop="handleShowSelect" class="select-item">{{currentSelect}}</div>
-          <div v-clickOutSide="handleHideSelect" class="lists" v-show="isShow">
-            <div class="filter-input">
-              <el-input v-model="filterText"></el-input>
-            </div>
-            <div class="list-tree">
-              <el-tree
-                @node-click="handleSelect"
-                class="filter-tree"
-                :data="areaList"
-                :props="defaultProps"
-                :filter-node-method="filterNode"
-                ref="tree"
-                >
-              </el-tree>
-            </div>
-          </div>
-        </div>
+        <slelct-tree currentSelect="xxxx" :treeList="treeList"></slelct-tree>
       </div>
       <div @click="handleAdd" class="right">
         <el-tooltip class="item" effect="dark" content="添加" placement="top">
@@ -63,13 +45,13 @@
     <!-- modal -->
     <div class="build-area-mdoal">
         <el-form style="width:330px;margin:24px auto" ref="form" :model="formInfo" label-width="80px" :rules="formRules">
-          <el-form-item label="机构" prop="title">
+          <el-form-item label="机构" prop="orgId">
             <el-input v-model="formInfo.orgId" suffix-icon="iconfont icon-apartment"></el-input>
           </el-form-item> 
           <el-form-item label="名称" prop="name">
             <el-input v-model="formInfo.name"></el-input>
           </el-form-item>
-          <el-form-item label="所属校区" prop="area">
+          <el-form-item label="所属校区" prop="campusId">
             <el-select v-model="formInfo.campusId" style="width:100%">
               <el-option label="区域一"  value="shanghai"></el-option>
               <el-option label="区域一2"  value="shangha2i"></el-option>
@@ -89,9 +71,10 @@
             height="34px" 
             color="#606266" 
             bg="#fff">取消</base-btn>
-          <base-btn @on-change="handleSave">保存</base-btn>
+          <base-btn unselectable="on" onselectstart="return false;"  @on-change="handleSave">保存</base-btn>
         </div>
     </div>
+    
   </div>
 </template>
 
@@ -101,18 +84,43 @@ export default {
   components:{
     stateSwitch:() => import("./../../../components/state-switch"),
     baseTable:()=>import("./../../../components/table"),
-    baseBtn:() => import("./../../../components/btn")
+    baseBtn:() => import("./../../../components/btn"),
+    slelctTree:() => import("./../../../components/select-tree")
   },
   data(){
+    const tableColumn = [{
+          prop:'id',
+          label:'显示顺序',
+          align:"center"
+        },
+        {
+          prop:'name',
+          label:'名称',
+          align:"center"
+        },
+        {
+          prop:'title',
+          label:'所属机构',
+          align:"center"
+        },
+        {
+          prop:'area',
+          label:'校区',
+          align:"center"
+        },
+        {
+          prop:'desc',
+          label:'描述',
+          align:"center"
+        },
+        {
+          prop:'status',
+          label:'状态',
+          align:"center"
+        }];
     return {
-      isShow:false,
       currentSelect:"成都第X中学",
-      filterText:'',
-      defaultProps: {
-        children: 'children',
-        label: 'label'
-      },
-      areaList:[
+      treeList:[
         {
           id: 1,
           label: '四川省教育厅',
@@ -188,32 +196,7 @@ export default {
 
         }
       ],
-      tableColumn:[
-        {
-          prop:'id',
-          label:'显示顺序'
-        },
-        {
-          prop:'name',
-          label:'名称'
-        },
-        {
-          prop:'title',
-          label:'所属机构'
-        },
-        {
-          prop:'area',
-          label:'校区'
-        },
-        {
-          prop:'desc',
-          label:'描述'
-        },
-        {
-          prop:'status',
-          label:'状态'
-        }
-      ],
+      tableColumn,
       /* 分页 */
       pagination:{
         currentPage:1,
@@ -231,16 +214,11 @@ export default {
         orgId:0            // 机构Id
       },
       formRules:{
-        title:[{required: true, message: '请选择学校名称', trigger: 'blur'}],
-        name:[{required: true, message: '请输入名称', trigger: 'blur'}],
-        area:[{required: true, message: '请选择所属校区', trigger: 'blur'}],
+        orgId:[{required: true, message: '请选择机构', trigger: 'blur'}],
+        name: [{required: true, message: '请输入名称', trigger: 'blur'}],
+        campusId: [{required: true, message: '请选择所属校区', trigger: 'blur'}],
       },
       
-    }
-  },
-  watch: {
-    filterText(val) {
-      this.$refs.tree.filter(val);
     }
   },
   created(){
@@ -251,24 +229,6 @@ export default {
     /* 初始化表格数据 */
     initTableData(){
 
-    },
-    /* 选择建筑场地 */
-    filterNode(value, data) {
-        if (!value) return true;
-        return data.label.indexOf(value) !== -1
-    },
-    handleSelect(value){
-      if(!value.children) {
-        const {id,label} = value
-        this.currentSelect = label
-        this.handleHideSelect()
-      }
-    },
-    handleShowSelect(){
-      this.isShow = true
-    },
-    handleHideSelect(){
-      this.isShow = false
     },
     /* 分页相关 */
     handleCurrentChange(){},
@@ -282,7 +242,7 @@ export default {
     },
     /* 控制状态 */
     handleSwicthState(val) {
-      console.log(val)
+      this.status = val;
     },
     /* 打开弹层 */
     handleAdd(){
@@ -304,6 +264,7 @@ export default {
       $('.build-area-mdoal').hide()
     },
     handleSave(){
+      console.log("save");
     }
   }
 }
@@ -322,33 +283,6 @@ export default {
       .title {
         color: #303133;
         font-weight: Bold;
-      }
-      .select-more {
-        margin-left: 22px;
-        position: relative;
-        .select-item {
-          cursor: pointer;
-          color: #606266;
-        }
-        .lists {
-          z-index: 999;
-          position: absolute;
-          left: 0;
-          top: 30px;
-          border-radius: 4px;
-          border: 1px solid rgba(204, 204, 204, 0.671);
-          background: #fff;
-          box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.1);
-          .filter-input {
-            padding: 5px;
-          }
-          .list-tree {
-            width: 254px;
-            height: 200px;
-            overflow: auto;
-            overflow-x: hidden;
-          }
-        }
       }
     }
     .right {
@@ -384,11 +318,5 @@ export default {
       text-align: right;
       background-color: #f5f5f5
     }
-  }
-</style>
-<style>
-  .area .el-tree {
-    margin-top: 5px;
-    background: #fff;
   }
 </style>

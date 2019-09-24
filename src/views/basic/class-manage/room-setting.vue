@@ -5,25 +5,7 @@
     <div class="header">
       <div class="left">
         <div class="title">教室设置</div>
-        <div class="select-more">
-          <div @click.stop="handleShowSelect" class="select-item">{{currentSelect}}</div>
-          <div v-clickOutSide="handleHideSelect" class="lists" v-show="isShow">
-            <div class="filter-input">
-              <el-input v-model="filterText"></el-input>
-            </div>
-            <div class="list-tree">
-              <el-tree
-                @node-click="handleSelect"
-                class="filter-tree"
-                :data="areaList"
-                :props="defaultProps"
-                :filter-node-method="filterNode"
-                ref="tree"
-                >
-              </el-tree>
-            </div>
-          </div>
-        </div>
+        <slelct-tree currentSelect="YYYY" :treeList="treeList"></slelct-tree>
       </div>
       <div @click="handleAdd" class="right">
         <el-tooltip class="item" effect="dark" content="添加" placement="top">
@@ -102,17 +84,50 @@ export default {
   components:{
     stateSwitch:() => import("./../../../components/state-switch"),
     baseTable:()=>import("./../../../components/table"),
-    baseBtn:() => import("./../../../components/btn")
+    baseBtn:() => import("./../../../components/btn"),
+    slelctTree:() => import("./../../../components/select-tree")
   },
   data(){
     return {
-      isShow:false,
-      filterText:'',
       currentSelect:'xxxx',
-      defaultProps: {
-        children: 'children',
-        label: 'label'
-      },
+      treeList:[
+        {
+          id: 1,
+          label: '四川省教育厅',
+          children:[
+            {
+              id: 1-1,
+              label: '成都市教育厅',
+              children:[
+                {
+                  id: 1-1-1,
+                  label: '成都xxx中学',
+                }
+              ]
+            },
+            {
+              id: 1-2,
+              label: '雅安市教育厅',
+              children:[
+                {
+                  id: 1-2-1,
+                  label: '雅安yyy中学',
+                }
+              ]
+            },
+            {
+              id: 1-3,
+              label: '绵阳市教育厅',
+              children:[
+                {
+                  id: 1-3-1,
+                  label: '绵阳zzz中学',
+                }
+              ]
+            }
+          ]
+        }
+      ],
       tableColumn:[
         {
           prop:'id',
@@ -169,33 +184,13 @@ export default {
       }
     }
   },
-  watch: {
-    filterText(val) {
-      this.$refs.tree.filter(val);
-    }
-  },
   methods:{
-    handleHideSelect(){
-      this.isShow = false
-    },
-    handleShowSelect(){
-      this.isShow = true
-    },
-    handleSelect(value){
-      if(!value.children) {
-        const {id,label} = value
-        this.currentSelect = label
-        this.handleHideSelect()
-      }
-    },
-    filterNode(){},
     handleSizeChange(){},
     handleCurrentChange(){},
 
     handleSwicthState(val){
 
     },
-
     /* dialog */
     handleAdd(){
       let that = this
@@ -239,34 +234,6 @@ export default {
       .title {
         color: #303133;
         font-weight: Bold;
-      }
-      .select-more {
-        margin-left: 22px;
-        position: relative;
-        .select-item {
-          cursor: pointer;
-          color: #606266;
-        }
-        .lists {
-          z-index: 999;
-          position: absolute;
-          left: 0;
-          top: 30px;
-          border-radius: 4px;
-          border: 1px solid rgba(204, 204, 204, 0.671);
-          background: #fff;
-          box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.1);
-
-          .filter-input {
-            padding: 5px;
-          }
-          .list-tree {
-            width: 254px;
-            height: 200px;
-            overflow: auto;
-            overflow-x: hidden;
-          }
-        }
       }
     }
     .right {

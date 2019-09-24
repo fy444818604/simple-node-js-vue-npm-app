@@ -5,9 +5,7 @@
       <div class="header">
         <div class="left">
           <div>班级管理</div>
-          <div class="select-more">
-            <div>成都第X中学↓</div>
-          </div>
+          <slelct-tree currentSelect="zzz" :treeList="treeList"></slelct-tree>
         </div>
         <div @click="handleAdd" class="add-icon">
           <el-tooltip class="item" effect="dark" content="添加" placement="top">
@@ -135,10 +133,49 @@ export default {
   components:{
     baseTable:()=>import("./../../../components/table"),
     stateSwitch:() => import("./../../../components/state-switch"),
-    baseBtn:() => import("./../../../components/btn")
+    baseBtn:() => import("./../../../components/btn"),
+    slelctTree:() => import("./../../../components/select-tree")
   },
   data(){
     return {
+      treeList:[
+        {
+          id: 1,
+          label: '四川省教育厅',
+          children:[
+            {
+              id: 1-1,
+              label: '成都市教育厅',
+              children:[
+                {
+                  id: 1-1-1,
+                  label: '成都xxx中学',
+                }
+              ]
+            },
+            {
+              id: 1-2,
+              label: '雅安市教育厅',
+              children:[
+                {
+                  id: 1-2-1,
+                  label: '雅安yyy中学',
+                }
+              ]
+            },
+            {
+              id: 1-3,
+              label: '绵阳市教育厅',
+              children:[
+                {
+                  id: 1-3-1,
+                  label: '绵阳zzz中学',
+                }
+              ]
+            }
+          ]
+        }
+      ],
       search:{
         name:'',//班级名称
         stage:'',//阶段
@@ -178,6 +215,7 @@ export default {
           desc:'1号教学楼',
           status:'启用'
       }],
+      // 分页
       pagination:{
         currentPage:1,
         total:20
