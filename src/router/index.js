@@ -369,7 +369,60 @@ const router = new Router({
 				title: '基本信息',
 				requireAuth: true
 			}
-		}]
+		},
+		{
+			path: '/equipment/Layout',
+			name: 'equipment-Layout',
+			component: (resolve) => {
+				require(['../views/equipment/layout/layout'], resolve)
+			},
+			meta: {
+				title: '首页',
+				requireAuth: true
+			},
+			children: [{
+				path: '/equipment/Layout/mcu',
+				name: 'mcu',
+				component: (resolve) => {
+					require(['../views/equipment/mcu/index'], resolve)
+				},
+				meta: {
+					title: 'mcu管理',
+					requireAuth: true
+				},
+			},{
+				path: '/equipment/Layout/mcu-edit',
+				name: 'mcu-edit',
+				component: (resolve) => {
+					require(['../views/equipment/mcu/edit'], resolve)
+				},
+				meta: {
+					title: 'mcu新建&编辑',
+					requireAuth: true
+				},
+			},{
+				path: '/equipment/Layout/classroom-setting',
+				name: 'classroom-setting',
+				component: (resolve) => {
+					require(['../views/equipment/classroom-setting/index'], resolve)
+				},
+				meta: {
+					title: '录播教室设置',
+					requireAuth: true
+				},
+			},{
+				path: '/equipment/Layout/classroom-setting-edit',
+				name: 'classroom-setting-edit',
+				component: (resolve) => {
+					require(['../views/equipment/classroom-setting/edit'], resolve)
+				},
+				meta: {
+					title: '录播教室设置',
+					requireAuth: true
+				},
+			}]
+		}
+	]
 })
 
 router.beforeEach((to, from, next) => {

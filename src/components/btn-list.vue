@@ -37,6 +37,7 @@
 	
 	.iconfont {
 		color: #4A80F6;
+		font-size: 20px;
 	}
 	
 </style>
