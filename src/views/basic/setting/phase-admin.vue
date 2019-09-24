@@ -102,7 +102,7 @@
                 ],
                 //添加弹框
                 dialog: {
-                    visible:true,
+                    visible:false,
                     title: '新建',
                 },
                 admForm:{
