@@ -9,7 +9,6 @@
       :width="item.width"
       :align="item.align"
       >
-      
     </el-table-column>
     <el-table-column
       align="center"
@@ -17,8 +16,8 @@
       label="操作">
       <template slot-scope="scope">
         <div class="tableColumn-control">
-          <i v-if="!scope.row.showBtn" @click.stop="hanldeChange(scope.row)" class="iconfont icon-more"></i>
-          <div v-else>
+          <i v-if="!scope.row.showBtn" @mouseenter="handleMouseEnter(scope.row)" class="iconfont icon-more"></i>
+          <div v-else @mouseleave="handleMouseLeave(scope.row)">
             <span @click="handleStop(scope.row)">停用</span>
             <span @click="handleEdit(scope.row)">编辑</span>
           </div>
@@ -57,30 +56,20 @@ export default {
       immediate:true
     }
   },
-  mounted(){
-    let that = this;
-    window.addEventListener("click",function(){
-      const temp = that.customData.map(item => {
-        return Object.assign({},item,{showBtn:false})
-      })
-      that.customData = [...temp]
-    })
-  },
   methods:{
-    /* 对table数组对象添加showBtn属性 */
+    /* 初始化 table add showBtn */
     initTable(table){
-      table.forEach(element => {
-        element.showBtn = false;
-      });
-       this.customData =  table;
+      const temp = table.map(item=>Object.assign({},item,{showBtn:false}))
+      this.customData = [...temp]
     },
-    formatShowBtn(val,row){
-      this.customData.filter(item => item.id === row.id)[0].showBtn = val
+    /* 鼠标移入移除 */
+    handleMouseEnter(row){
+      row.showBtn = true
       this.customData = [...this.customData]
     },
-    hanldeChange(row){
-      this.customData.forEach(item=>item.showBtn = false)
-      this.formatShowBtn(true,row)
+    handleMouseLeave(row){
+      row.showBtn = false
+      this.customData = [...this.customData]
     },
     handleStop(row){
       this.$emit("on-stop",row)
@@ -118,5 +107,4 @@ export default {
 </style>
 <style>
 .base-table.el-table td { padding: 0; }
-
 </style>
