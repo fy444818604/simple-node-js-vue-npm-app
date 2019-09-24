@@ -2,7 +2,7 @@
 <template>
     <div class="adm-areas">
         <div class="adm-areas-left">
-            <tree></tree>
+            <tree :treeData="treeData"></tree>
         </div>
         <div class="adm-areas-rnt">
             <!--标题-->
@@ -102,6 +102,42 @@
                     value: '5',
                     label: '镇'
                 }],
+                treeData: [{
+                    label: '中国',
+                    children: [{
+                        label: '二级 1-1',
+                        children: [{
+                            label: '三级 1-1-1'
+                        }]
+                    }]
+                }, {
+                    label: '一级 2',
+                    children: [{
+                        label: '二级 2-1',
+                        children: [{
+                            label: '三级 2-1-1'
+                        }]
+                    }, {
+                        label: '二级 2-2',
+                        children: [{
+                            label: '三级 2-2-1'
+                        }]
+                    }]
+                }, {
+                    label: '一级 3',
+                    children: [{
+                        label: '二级 3-1',
+                        children: [{
+                            label: '三级 3-1-1'
+                        }]
+                    }, {
+                        label: '二级 3-2',
+                        children: [{
+                            label: '三级 3-2-1'
+                        }]
+                    }]
+                }],
+
             }
         },
         components:{
