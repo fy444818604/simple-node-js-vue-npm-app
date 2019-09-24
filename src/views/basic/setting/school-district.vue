@@ -40,10 +40,12 @@
                 </el-form-item>
                 <el-form-item label="组织结构"  prop="institutions">
                     <div>
-                        <div class="school-structure-top">
-                            <div class="school-structure-bnt">2222</div>
+                        <div class="school-structure-top" @click="structureTop">
+                            {{ label }}
                         </div>
-
+                        <div class="school-structure-bnt" v-show="structureBnt">
+                            <adm-areas-tree @superiorData="structureT"></adm-areas-tree>
+                        </div>
                     </div>
                 </el-form-item>
                 <el-form-item label="描述"  >
@@ -62,6 +64,7 @@
     import stateSwitch from '../../../components/state-switch'
     import paging from '../../../components/paging'
     import modal from '../../../components/modal'
+    import admAreasTree from  './adm-areas-tree'
     export default {
         name: "schoolDistrict",
         data(){
@@ -138,14 +141,18 @@
                 formRules:{
                     name:[{required: true, message: '请输入学区名称', trigger: 'blur'}],
                     institutions:[{required: true, message: '请选择组织结构', trigger: 'blur'}],
-                }
+                },
+                //自定义下拉框选中数据
+                label:'',
+                structureBnt:false
             }
         },
         components:{
             'school-table':table,
             'school-stateSwitch':stateSwitch,
             'school-paging':paging,
-            'school-modal':modal
+            'school-modal':modal,
+            'adm-areas-tree':admAreasTree,
         },
         methods: {
             //表格操作
@@ -175,6 +182,15 @@
             },
             schoolAdd(){
                 this.dialog.visible = true
+            },
+            //添加弹框里面的自定义下拉框
+            structureT(label){
+                console.log(label);
+                this.label = label;
+                this.structureBnt = false
+            },
+            structureTop(){
+                this.structureBnt = true
             }
         }
     }
@@ -209,14 +225,21 @@
         height: 36px;
         border: 1px solid #dcdfe6;
         border-radius: 4px;
+        padding: 0 15px;
     }
     .school-structure-bnt{
         width: 100%;
         height: 200px;
-        background: red;
-        position: relative;
-        top: 38px;
+        position: absolute;
+        top: 42px;
         left: 0px;
         z-index: 9999;
+        border: 1px solid #e4e7ed;
+        overflow: auto;
+        border-radius: 4px;
+        background-color: #fff;
+        box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+        box-sizing: border-box;
     }
+
 </style>
