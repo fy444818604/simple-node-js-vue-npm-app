@@ -1,8 +1,9 @@
+<!-- 学生详情 -->
 <template>
 	<div id="teachaer-detail">
 		<div class="detai-title">
 			<div class="detail-name">{{teacherName}}</div>
-			<div>教职工</div>
+			<div>学生</div>
 		</div>
 		<div class="detail-tab-container">
 			<div class="btnGroup">
@@ -41,7 +42,7 @@
 									</template>
 									<ul class="detail-table-list">
 										<li>
-											<div>工号</div>
+											<div>学号</div>
 											<div>2018012545</div>
 										</li>
 										<li>
@@ -69,11 +70,11 @@
 											<div>2018012545</div>
 										</li>
 										<li>
-											<div>手机</div>
+											<div>班级</div>
 											<div>2018012545</div>
 										</li>
 										<li>
-											<div>婚姻状况</div>
+											<div>就读类型</div>
 											<div>2018012545</div>
 										</li>
 										<li>
@@ -82,14 +83,6 @@
 										</li>
 										<li>
 											<div>加入时间</div>
-											<div>2018012545</div>
-										</li>
-										<li>
-											<div>学历</div>
-											<div>2018012545</div>
-										</li>
-										<li>
-											<div>学位</div>
 											<div>2018012545</div>
 										</li>
 										<li>
@@ -110,36 +103,16 @@
 									<template slot="title">
 										<div class="detail-table-title">
 											<img :src="require('@/assets/image/student.png')" alt="">
-											<span>工作信息</span>
+											<span>招生信息</span>
 										</div>
 									</template>
 									<ul class="detail-table-list">
 										<li>
-											<div>机构</div>
-											<div>教研组</div>
+											<div>招生类型</div>
+											<div>春季</div>
 										</li>
 										<li>
-											<div>职务</div>
-											<div>应届毕业生</div>
-										</li>
-										<li>
-											<div>岗位</div>
-											<div>应届毕业生</div>
-										</li>
-										<li>
-											<div>职称</div>
-											<div>应届毕业生</div>
-										</li>
-										<li>
-											<div>用工性质</div>
-											<div>应届毕业生</div>
-										</li>
-										<li>
-											<div>到岗时间</div>
-											<div>应届毕业生</div>
-										</li>
-										<li>
-											<div>直接上级</div>
+											<div>生源类型</div>
 											<div>应届毕业生</div>
 										</li>
 									</ul>
@@ -218,51 +191,37 @@
 						</li>
 					</ul>
 				</el-tab-pane>
-				<el-tab-pane label="个人介绍" name="third">
-					<div style="padding-left: 20px;width: 680px;padding-top: 20px;">
-						<el-form :label-position="labelPosition" label-width="86px" :model="intro">
-							<el-form-item label="个人简介:">
-								<el-input type="textarea" :disabled="!edit1" :rows="4" v-model="intro.personal"></el-input>
-							</el-form-item>
-							<el-form-item label="教室资格证:">
-								<i class="iconfont icon-picture"></i>
-							</el-form-item>
-							<el-form-item label="个人履历:">
-								<el-row v-for="(item,index) in intro.record" :key="index">
-									<el-col :span="12">
-										<el-input :disabled="!edit1" v-model="item.text"></el-input>
-									</el-col>
-									<el-col :span="1">
-										&nbsp;
-									</el-col>
-									<el-col :span="5">
-										<el-date-picker :disabled="!edit1" type="date" placeholder="选择日期" v-model="item.startTime" style="width: 100%;"></el-date-picker>
-									</el-col>
-									<el-col class="line" :span="1">-</el-col>
-									<el-col :span="5">
-										<el-date-picker :disabled="!edit1" type="date" placeholder="选择日期" v-model="item.endTime" style="width: 100%;"></el-date-picker>
-									</el-col>
-								</el-row>
-							</el-form-item>
-							<el-form-item label="获奖&证书:">
-								<el-row v-for="(item,index) in intro.Award" :key="index">
-									<el-col :span="12">
-										<el-input :disabled="!edit1" v-model="item.text"></el-input>
-									</el-col>
-									<el-col :span="1">
-										&nbsp;
-									</el-col>
-									<el-col :span="5">
-										<el-date-picker :disabled="!edit1" type="date" placeholder="选择日期" v-model="item.time" style="width: 100%;"></el-date-picker>
-									</el-col>
-									<el-col class="line" :span="1">&nbsp;</el-col>
-									<el-col :span="5">
-										<i class="iconfont icon-picture"></i>
-									</el-col>
-								</el-row>
-							</el-form-item>
-						</el-form>
+				<el-tab-pane label="家长信息" name="third">
+					<div class="detail-card-title">
+						<img :src="require('@/assets/image/name.png')" alt="">
+						<div>家长1</div>
 					</div>
+					<ul class="detail-table-list detail-line">
+						<li>
+							<div>姓名</div>
+							<div>101011</div>
+						</li>
+						<li>
+							<div>关系</div>
+							<div>2019-08-27 16:44</div>
+						</li>
+						<li>
+							<div>身份证号</div>
+							<div>启用</div>
+						</li>
+						<li>
+							<div>手机号</div>
+							<div>101011</div>
+						</li>
+						<li>
+							<div>微信绑定</div>
+							<div>2019-08-27 16:44</div>
+						</li>
+						<li>
+							<div>状态</div>
+							<div>启用</div>
+						</li>
+					</ul>
 				</el-tab-pane>
 			</el-tabs>
 			<div class="replenish-line"></div>
@@ -278,8 +237,8 @@
 				activeName: 'third',
 				labelPosition: 'right',
 				active: ['1', '2', '3'],
-				edit:false,
-				edit1:false,
+				edit: false,
+				edit1: false,
 				teacherName: '林浩阳',
 				userPhoto: require('@/assets/image/user-detail.png'),
 				btnGroup: [{
@@ -327,8 +286,8 @@
 	.el-tabs__header {
 		margin-bottom: 0;
 	}
-	
-	.el-collapse-item__content{
+
+	.el-collapse-item__content {
 		padding-bottom: 0;
 	}
 

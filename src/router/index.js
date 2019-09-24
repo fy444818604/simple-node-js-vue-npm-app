@@ -366,7 +366,17 @@ const router = new Router({
 				require(['../views/basic/account/teacher-detail'], resolve)
 			},
 			meta: {
-				title: '基本信息',
+				title: '教职工基本信息',
+				requireAuth: true
+			}
+		}, {
+			path: '/basic/student-detail',
+			name: 'student-detail',
+			component: (resolve) => {
+				require(['../views/basic/account/student-detail'], resolve)
+			},
+			meta: {
+				title: '学生基本信息',
 				requireAuth: true
 			}
 		},
