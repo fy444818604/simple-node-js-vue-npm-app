@@ -1,3 +1,4 @@
+<!--下拉框的树-->
 <template>
     <div class="tree">
             <el-tree :data="data" :props="defaultProps" default-expand-all :expand-on-click-node="false"   @node-click="handleNodeClick"></el-tree>
