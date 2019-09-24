@@ -421,6 +421,58 @@ const router = new Router({
 					requireAuth: true
 				},
 			}]
+		},
+		{
+			path: '/authorization/Layout',
+			name: 'authorization-Layout',
+			component: (resolve) => {
+				require(['../views/authorization/layout/layout'], resolve)
+			},
+			meta: {
+				title: '首页',
+				requireAuth: true
+			},
+			children: [{
+				path: '/authorization/Layout/role-man',
+				name: 'role-man',
+				component: (resolve) => {
+					require(['../views/authorization/role-man/index'], resolve)
+				},
+				meta: {
+					title: '角色管理',
+					requireAuth: true
+				},
+			},{
+				path: '/authorization/Layout/role-man-detail',
+				name: 'role-man-detail',
+				component: (resolve) => {
+					require(['../views/authorization/role-man/detail'], resolve)
+				},
+				meta: {
+					title: '角色详情',
+					requireAuth: true
+				},
+			},{
+				path: '/authorization/Layout/action-auth',
+				name: 'action-auth',
+				component: (resolve) => {
+					require(['../views/authorization/action-auth/index'], resolve)
+				},
+				meta: {
+					title: '功能授权',
+					requireAuth: true
+				},
+			},{
+				path: '/authorization/Layout/action-auth-detail',
+				name: 'action-auth-detail',
+				component: (resolve) => {
+					require(['../views/authorization/action-auth/detail'], resolve)
+				},
+				meta: {
+					title: '功能授权详情',
+					requireAuth: true
+				},
+			}]
 		}
 	]
 })
