@@ -27,7 +27,7 @@
 				toggleWidth: '240px',
 				menuData1:[{
 						menu_id: 1,
-						menu_text: '基础设置199',
+						menu_text: '基础设置',
 						menu_icon: 'icon-setup',
 						menu_href: '',
 						menu_pid: 0,

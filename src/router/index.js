@@ -366,7 +366,17 @@ const router = new Router({
 				require(['../views/basic/account/teacher-detail'], resolve)
 			},
 			meta: {
-				title: '基本信息',
+				title: '教职工基本信息',
+				requireAuth: true
+			}
+		}, {
+			path: '/basic/student-detail',
+			name: 'student-detail',
+			component: (resolve) => {
+				require(['../views/basic/account/student-detail'], resolve)
+			},
+			meta: {
+				title: '学生基本信息',
 				requireAuth: true
 			}
 		},
@@ -418,6 +428,58 @@ const router = new Router({
 				},
 				meta: {
 					title: '录播教室设置',
+					requireAuth: true
+				},
+			}]
+		},
+		{
+			path: '/authorization/Layout',
+			name: 'authorization-Layout',
+			component: (resolve) => {
+				require(['../views/authorization/layout/layout'], resolve)
+			},
+			meta: {
+				title: '首页',
+				requireAuth: true
+			},
+			children: [{
+				path: '/authorization/Layout/role-man',
+				name: 'role-man',
+				component: (resolve) => {
+					require(['../views/authorization/role-man/index'], resolve)
+				},
+				meta: {
+					title: '角色管理',
+					requireAuth: true
+				},
+			},{
+				path: '/authorization/Layout/role-man-detail',
+				name: 'role-man-detail',
+				component: (resolve) => {
+					require(['../views/authorization/role-man/detail'], resolve)
+				},
+				meta: {
+					title: '角色详情',
+					requireAuth: true
+				},
+			},{
+				path: '/authorization/Layout/action-auth',
+				name: 'action-auth',
+				component: (resolve) => {
+					require(['../views/authorization/action-auth/index'], resolve)
+				},
+				meta: {
+					title: '功能授权',
+					requireAuth: true
+				},
+			},{
+				path: '/authorization/Layout/action-auth-detail',
+				name: 'action-auth-detail',
+				component: (resolve) => {
+					require(['../views/authorization/action-auth/detail'], resolve)
+				},
+				meta: {
+					title: '功能授权详情',
 					requireAuth: true
 				},
 			}]
