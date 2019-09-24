@@ -47,13 +47,8 @@
         </el-form-item>
       </el-form>
       <div class="form-control">
-        <base-btn @on-change="handleSave">确认</base-btn>
-        <base-btn 
-          @on-change="handleCancel" 
-          border="1px solid #E5E7EF" 
-          height="34px" 
-          color="#606266" 
-          bg="#fff">取消</base-btn>
+        <base-btn @on-cancel="handleCancel" type="cancel"></base-btn>
+        <base-btn @on-save="handleSave" type="save"></base-btn>
       </div>
     </div>
 
@@ -81,19 +76,26 @@ export default {
       tableColumn:[
           {
             prop:'id',
-            label:'id'
+            label:'显示顺序',
+            align:"center",
+            width:100
           },
           { 
             prop:'type',
             label:"教室类型",
+            align:"center",
+            width:100
           },
           {
             prop:'desc',
+            align:"center",
             label:'描述'
           },
           {
             prop:'status',
-            label:'状态'
+            label:'状态',
+            align:"center",
+            width:100
           }
         ],
       pagination:{
