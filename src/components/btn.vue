@@ -15,8 +15,7 @@
 export default {
   props: {
     type:{
-      style:String,
-      required:true
+      style:String
     }
   },
   methods:{
