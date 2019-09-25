@@ -6,20 +6,12 @@ import App from './App.vue'
 import VueRouter from 'vue-router'
 import router from './router'
 import store from './store'
-import axios from 'axios'
-import {
-	post,
-	get
-} from './request/http'
 import layer from 'layui-layer'
-import vcolorpicker from 'vcolorpicker'
 import 'layui-layer/layer.css';
 import './App.scss';
-Vue.use(vcolorpicker)
-Vue.prototype.$axios = axios
-Vue.prototype.$post = post
-Vue.prototype.$get = get
+import * as api from './request/api';
 Vue.prototype.$layer = layer;
+Vue.prototype.$api = api;
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);

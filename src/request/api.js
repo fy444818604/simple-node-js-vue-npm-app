@@ -3,4 +3,4 @@
  */
 import { get, post } from './http'
 
-export const apiLogin = params => post('/api/login', params);
+export const apiLogin = params => post('/base/api/auth/loginByUserPwd', params);

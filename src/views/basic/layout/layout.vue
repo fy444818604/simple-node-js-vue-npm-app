@@ -434,7 +434,4 @@
 		height: 100%;
 	}
 
-	.main-middle>.el-scrollbar>.el-scrollbar__wrap{
-		height: calc(100% + 17px);
-	}
 </style>
