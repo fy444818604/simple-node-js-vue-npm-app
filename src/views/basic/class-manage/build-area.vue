@@ -80,7 +80,8 @@ export default {
     stateSwitch:() => import("./../../../components/state-switch"),
     baseTable:()=>import("./../../../components/table"),
     baseBtn:() => import("./../../../components/btn"),
-    slelctTree:() => import("./../../../components/select-tree")
+    slelctTree:() => import("./../../../components/select-tree"),
+    baseTitle:() => import("@/components/title")
   },
   data(){
     const tableColumn = [{
