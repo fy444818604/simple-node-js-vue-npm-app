@@ -10,12 +10,8 @@
             </div></el-col>
         </el-row>
         <!--表格-->
-        <pol-table
-                :tableData="tableData"
-                :tableColumn="tableColumn"
-                @on-stop="polStop"
-                @on-edit="polEdit">
-        </pol-table>
+
+
         <!--分页/启用/停用-->
         <el-row class="pol-bnt">
             <el-col :span="5"><div class="grid-content bg-purple cha-title">
@@ -48,7 +44,6 @@
 
 <script>
     import bntList from '../../../components/btn-list'
-    import table from '../../../components/table'
     import stateSwitch from '../../../components/state-switch'
     import paging from '../../../components/paging'
     /*import modal from '../../../components/modal'*/
@@ -62,47 +57,6 @@
                     name:'添加',
                     icon:'icon-add'
                 },
-                //表格
-                tableData:[
-                    {
-                        id:1,
-                        level:'1号教学楼',
-                        describe:'111',
-                        status:'启用',
-
-                    },
-                ],
-                tableColumn:[
-                    {
-                        prop:'id',
-                        label:'序号'
-                    },
-                    {
-                        prop:'level',
-                        label:'机构'
-                    },
-                    {
-                        prop:'year',
-                        label:'学年'
-                    },
-                    {
-                        prop:'semester',
-                        label:'学期'
-                    },
-                    {
-                        prop:'schoolTime',
-                        label:'开学时间'
-                    },
-                    {
-                        prop:' vacationTime',
-                        label:'放假时间'
-                    },
-
-                    {
-                        prop:'status',
-                        label:'状态'
-                    }
-                ],
                 //分页
                 pageSize:'',//显示多少页
                 pageCurrent:'',//当前页
@@ -125,7 +79,6 @@
         },
         components:{
             'bnt-list':bntList,
-            'pol-table':table,
             'stateSwitch':stateSwitch,
             'pol-paging':paging,
             /* 'pol-modal':modal*/

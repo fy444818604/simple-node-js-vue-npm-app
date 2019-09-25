@@ -56,7 +56,7 @@
         name: "calendar-type",
         data(){
             return{
-                pageTile:'作息时间',
+                pageTile:'作息类型',
                 //按钮
                 model:{
                     name:'添加',
