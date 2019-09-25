@@ -20,16 +20,16 @@ module.exports = {
 	},
 	lintOnSave: undefined,
 	devServer: {
-		proxy: {
-			'/base': {
-				// target: 'http://api.xiaoyangedu.com',
-				target: 'http://192.168.38.100:8088',
-				ws: true,
-				changeOrigin: true,
-				pathRewrite: {
-					'^/base': '/base', // rewrite path
-				}
-			}
-		}
+		// proxy: {
+		// 	'/base': {
+		// 		// target: 'http://api.xiaoyangedu.com',
+		// 		target: 'http://192.168.38.100:8088',
+		// 		ws: true,
+		// 		changeOrigin: true,
+		// 		pathRewrite: {
+		// 			'^/base': '/base', // rewrite path
+		// 		}
+		// 	}
+		// }
 	}
 }

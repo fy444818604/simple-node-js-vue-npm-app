@@ -50,8 +50,8 @@
 				wordHide:require('@/assets/image/eye-close.png'),
 				passwordShow:false,
 				type:1,
-				user: 'admin',
-				password: '123456',
+				user: 'administrator',
+				password: '123456789',
 				code:''
 			}
 		},
@@ -68,21 +68,18 @@
 					userName: this.user,
 					password: this.password
 				};
-				this.$post('/base/api/auth/loginByUserPwd', params).then(res => {
-					console.log(res)
-					// if (res.status == 200) {
-					// 	this.changeLogin({
-					// 		Authorization: res.token
-					// 	});
-					// 	this.$router.push({
-					// 		path: '/Layout'
-					// 	});
-					// } else {
-					// 	alert('密码错误')
-					// }
-				}).catch(err => {
-					
-				});
+				this.$api.apiLogin(params).then(res => {
+					if (res.success) {
+						this.changeLogin({
+							Authorization: res.data.userToken.accessToken
+						});
+						this.$router.push({
+							path: '/basic/Layout'
+						});
+					} else {
+						alert('密码错误')
+					}
+				})
 			}
 		}
 	}

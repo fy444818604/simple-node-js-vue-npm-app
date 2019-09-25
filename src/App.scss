@@ -228,3 +228,7 @@ body,html{
 	height: 1px;
 	@extend .main-line
 }
+
+.el-scrollbar__wrap{
+	height: calc(100% + 17px);
+}
