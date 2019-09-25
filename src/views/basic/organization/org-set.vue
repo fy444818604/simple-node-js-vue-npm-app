@@ -7,7 +7,63 @@
         <div class="org-set-rnt">
             <div class="org-set-rnt-title"><span class="cha-title">{{ title }}</span>><span>  {{ viceTitel }}</span></div>
             <el-tabs v-model="activeName" @tab-click="handleClick">
-                <el-tab-pane label="基本信息" name="first">基本信息</el-tab-pane>
+                <el-tab-pane label="基本信息" name="first">
+                    <ul class="information">
+                        <li>
+                            <div>名称：</div>
+                            <div>2</div>
+                        </li>
+                        <li>
+                            <div>简称：</div>
+                            <div>2</div>
+                        </li>
+                        <li>
+                            <div>上级单位：</div>
+                            <div>2</div>
+                        </li>
+                        <li>
+                            <div>类型：</div>
+                            <div>2</div>
+                        </li>
+                        <li>
+                            <div>阶段：</div>
+                            <div>2</div>
+                        </li>
+                        <li>
+                            <div>区域：</div>
+                            <div>2</div>
+                        </li>
+                        <li>
+                            <div>学校账号：</div>
+                            <div>2</div>
+                        </li>
+                        <li>
+                            <div>登录密码：</div>
+                            <div>2</div>
+                        </li>
+                        <li>
+                            <div>会控密码：</div>
+                            <div>2</div>
+                        </li>
+                        <li>
+                            <div>学区：</div>
+                            <div>2</div>
+                        </li>
+                        <li>
+                            <div>排序：</div>
+                            <div>2</div>
+                        </li>
+                        <li>
+                            <div>状态：</div>
+                            <div>2</div>
+                        </li>
+                        <li>
+                            <div>地址：</div>
+                            <div>2</div>
+                        </li>
+                    </ul>
+                </el-tab-pane>
+                <!---->
                 <el-tab-pane label="成员信息" name="second">
                     <!--表格-->
                     <org-table
@@ -16,10 +72,11 @@
                     </org-table>
                 </el-tab-pane>
             </el-tabs>
-            <div class="org-set-rnt-bott">
-                <btnList :model="modelAdd"></btnList>
-                <btnList :model="modelEditor"></btnList>
-                <btnList :model="modelDisable"></btnList>
+            <!--右上角的按钮-->
+            <div class="org-set-rnt-bott" v-if="tableShow">
+                <btnList :model="modelAdd" @btn-click="Add"></btnList>
+                <btnList :model="modelEditor" @btn-click="Editor"></btnList>
+                <btnList :model="modelDisable" @btn-click="Disable"></btnList>
             </div>
         </div>
     </div>
@@ -37,6 +94,7 @@
                 viceTitel:'详情',
                 //选项卡
                 activeName: 'first',
+                tableShow:true,
                 //左边菜单
                 modelAdd:{
                     name:'添加',
@@ -121,9 +179,26 @@
             'org-table':table
         },
         methods: {
-            handleClick(tab, event) {
-                console.log(tab, event);
+            //选项卡
+            handleClick(tab) {
+                if(tab.label != '基本信息'){
+                    this.tableShow = false
+                }else {
+                    this.tableShow = true
+                }
             },
+            //添加
+            Add(){
+                console.log(1)
+            },
+            //编辑
+            Editor(){
+                console.log(2)
+            },
+            //禁用
+            Disable(){
+                console.log(3)
+            }
         }
     }
 </script>
@@ -149,5 +224,18 @@
         position: absolute;
         top: 60px;
         right: 15px;
+    }
+    /*基本信息*/
+    .information{
+        line-height: 45px;
+    }
+    .information>li{
+       display: flex;
+
+    }
+    .information>li>div:nth-child(1){
+        width: 71px;
+        text-align: right;
+        margin-right: 25px;
     }
 </style>
