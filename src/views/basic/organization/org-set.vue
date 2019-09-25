@@ -8,60 +8,44 @@
             <div class="org-set-rnt-title"><span class="cha-title">{{ title }}</span>><span>  {{ viceTitel }}</span></div>
             <el-tabs v-model="activeName" @tab-click="handleClick">
                 <el-tab-pane label="基本信息" name="first">
-                    <ul class="information">
-                        <li>
-                            <div>名称：</div>
-                            <div>2</div>
-                        </li>
-                        <li>
-                            <div>简称：</div>
-                            <div>2</div>
-                        </li>
-                        <li>
-                            <div>上级单位：</div>
-                            <div>2</div>
-                        </li>
-                        <li>
-                            <div>类型：</div>
-                            <div>2</div>
-                        </li>
-                        <li>
-                            <div>阶段：</div>
-                            <div>2</div>
-                        </li>
-                        <li>
-                            <div>区域：</div>
-                            <div>2</div>
-                        </li>
-                        <li>
-                            <div>学校账号：</div>
-                            <div>2</div>
-                        </li>
-                        <li>
-                            <div>登录密码：</div>
-                            <div>2</div>
-                        </li>
-                        <li>
-                            <div>会控密码：</div>
-                            <div>2</div>
-                        </li>
-                        <li>
-                            <div>学区：</div>
-                            <div>2</div>
-                        </li>
-                        <li>
-                            <div>排序：</div>
-                            <div>2</div>
-                        </li>
-                        <li>
-                            <div>状态：</div>
-                            <div>2</div>
-                        </li>
-                        <li>
-                            <div>地址：</div>
-                            <div>2</div>
-                        </li>
-                    </ul>
+                    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm">
+                        <el-form-item label="名称" prop="name">
+                            <el-input v-model="ruleForm.name"></el-input>
+                        </el-form-item>
+                        <el-form-item label="简称" prop="name">
+                            <el-input v-model="ruleForm.name"></el-input>
+                        </el-form-item>
+                        <el-form-item label="上级单位" prop="region">
+                            <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
+                                <el-option label="区域一" value="shanghai"></el-option>
+                                <el-option label="区域二" value="beijing"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="类型" prop="region">
+                            <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
+                                <el-option label="区域一" value="shanghai"></el-option>
+                                <el-option label="区域二" value="beijing"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="阶段" prop="region">
+                            <el-select
+                                    v-model="value2"
+                                    multiple
+                                    collapse-tags
+                                    placeholder="请选择">
+                                <el-option
+                                        v-for="item in options"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+                            <el-button @click="resetForm('ruleForm')">重置</el-button>
+                        </el-form-item>
+                    </el-form>
                 </el-tab-pane>
                 <!---->
                 <el-tab-pane label="成员信息" name="second">
@@ -171,6 +155,38 @@
                         label:'状态'
                     }
                 ],
+                ruleForm: {
+                    name: '',
+                    region: '',
+                },
+                rules: {
+                    name: [
+                        { required: true, message: '请输入活动名称', trigger: 'blur' },
+                        { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                    ],
+                    region: [
+                        { required: true, message: '请选择活动区域', trigger: 'change' }
+                    ],
+
+                },
+                options: [{
+                    value: '选项1',
+                    label: '黄金糕'
+                }, {
+                    value: '选项2',
+                    label: '双皮奶'
+                }, {
+                    value: '选项3',
+                    label: '蚵仔煎'
+                }, {
+                    value: '选项4',
+                    label: '龙须面'
+                }, {
+                    value: '选项5',
+                    label: '北京烤鸭'
+                }],
+                value1: [],
+                value2: []
             }
         },
         components: {
@@ -198,12 +214,29 @@
             //禁用
             Disable(){
                 console.log(3)
+            },
+            submitForm(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        alert('submit!');
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+            resetForm(formName) {
+                this.$refs[formName].resetFields();
             }
         }
     }
 </script>
 
+
 <style scoped>
+    .el-input,.el-select {
+        width: 280px;
+    }
     .org-set{
         display: flex;
         height: 100%;
@@ -224,18 +257,5 @@
         position: absolute;
         top: 60px;
         right: 15px;
-    }
-    /*基本信息*/
-    .information{
-        line-height: 45px;
-    }
-    .information>li{
-       display: flex;
-
-    }
-    .information>li>div:nth-child(1){
-        width: 71px;
-        text-align: right;
-        margin-right: 25px;
     }
 </style>
