@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import layer from 'layui-layer'
+// import layer from 'layui-layer'
 export default {
   components:{
     stateSwitch:() => import("./../../../components/state-switch"),
@@ -242,7 +242,7 @@ export default {
     /* 打开弹层 */
     handleAdd(){
       let that = this
-      this.modalIndex = layer.open({
+      this.modalIndex = this.$layer.open({
         type: 1,
         title:"新建",
         content: $('.build-area-mdoal'),

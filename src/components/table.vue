@@ -12,7 +12,7 @@
     </el-table-column>
     <el-table-column
       align="center"
-      width="150"
+      width="60"
       label="操作">
       <template slot-scope="scope">
         <div class="tableColumn-control">
@@ -93,14 +93,20 @@ export default {
       }
       span {
         display: inline-block;
-        margin-left: 10px;
         cursor: pointer;
         &:last-child {
           color: #487ff6;
+          margin-left: 10px;
         }
       }
       div {
+        text-align: center;
         background: #D0E9FF;
+        position: absolute;
+        z-index: 999;
+        left: -60px;
+        top: 0;
+        width: 120px;
       }
     }
  }

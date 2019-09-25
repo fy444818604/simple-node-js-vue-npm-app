@@ -14,7 +14,7 @@
     <div class="content">
       <div class="search-info">
         <span>阶段:</span>
-        <el-select size='mini' style="width:80px;margin:0 18px;" v-model="value" placeholder="不限">
+        <el-select  style="width:80px;margin:0 18px;" v-model="value" placeholder="不限">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -22,7 +22,7 @@
             :value="item.value">
           </el-option>
         </el-select>
-        <el-button size="mini">查询</el-button>
+        <el-button >查询</el-button>
         <el-button style="color:#606266;text-decoration: underline" type="text">清空</el-button>
       </div>
       <base-table :tableData="tableData" :tableColumn="tableColumn"></base-table>

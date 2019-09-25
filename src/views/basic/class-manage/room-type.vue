@@ -95,7 +95,7 @@ export default {
             prop:'status',
             label:'状态',
             align:"center",
-            width:100
+            width:200
           }
         ],
       pagination:{
