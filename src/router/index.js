@@ -287,6 +287,16 @@ const basic = {
 			requireAuth: true
 		}
 	}, {
+		path: '/basic/Layout/calendar-detail',
+		name: 'calendar-detail',
+		component: (resolve) => {
+			require(['../views/basic/calendar/calendar-detail'], resolve)
+		},
+		meta: {
+			title: '作息时间详情',
+			requireAuth: true
+		}
+	}, {
 		path: '/basic/Layout/build-area',
 		name: 'build-area',
 		component: (resolve) => {

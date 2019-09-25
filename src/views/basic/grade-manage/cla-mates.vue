@@ -4,7 +4,7 @@
 
       <div class="header">
         <div class="left">
-          <div>班级管理</div>
+          <div class="title">班级管理</div>
           <slelct-tree currentSelect="zzz" :treeList="treeList"></slelct-tree>
         </div>
         <div @click="handleAdd" class="add-icon">
@@ -272,6 +272,10 @@ export default {
     padding-bottom: 10px;
     .left {
       display: flex;
+      .title {
+        color: #303133;
+        font-weight: bold;
+      }
     }
     .select-more {
       margin-left: 10px;

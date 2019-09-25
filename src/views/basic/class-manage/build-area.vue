@@ -74,13 +74,14 @@
 </template>
 
 <script>
-import layer from 'layui-layer'
+// import layer from 'layui-layer'
 export default {
   components:{
     stateSwitch:() => import("./../../../components/state-switch"),
     baseTable:()=>import("./../../../components/table"),
     baseBtn:() => import("./../../../components/btn"),
-    slelctTree:() => import("./../../../components/select-tree")
+    slelctTree:() => import("./../../../components/select-tree"),
+    baseTitle:() => import("@/components/title")
   },
   data(){
     const tableColumn = [{
@@ -242,7 +243,7 @@ export default {
     /* 打开弹层 */
     handleAdd(){
       let that = this
-      this.modalIndex = layer.open({
+      this.modalIndex = this.$layer.open({
         type: 1,
         title:"新建",
         content: $('.build-area-mdoal'),

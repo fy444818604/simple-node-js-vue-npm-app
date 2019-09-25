@@ -3,7 +3,7 @@
   <div class="stu-year">
 
     <div class="header">
-      <div>学届管理</div>
+      <div class="title">学届管理</div>
       <div @click="handleAdd" class="add-icon">
         <el-tooltip class="item" effect="dark" content="添加" placement="top">
           <i class="iconfont icon-add"></i>
@@ -14,7 +14,7 @@
     <div class="content">
       <div class="search-info">
         <span>阶段:</span>
-        <el-select size='mini' style="width:80px;margin:0 18px;" v-model="value" placeholder="不限">
+        <el-select  style="width:80px;margin:0 18px;" v-model="value" placeholder="不限">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -22,7 +22,7 @@
             :value="item.value">
           </el-option>
         </el-select>
-        <el-button size="mini">查询</el-button>
+        <el-button >查询</el-button>
         <el-button style="color:#606266;text-decoration: underline" type="text">清空</el-button>
       </div>
       <base-table :tableData="tableData" :tableColumn="tableColumn"></base-table>
@@ -276,6 +276,10 @@ export default {
     justify-content: space-between;
     border-bottom: 1px solid #E5E7EF;
     padding-bottom: 10px;
+    .title {
+      color: #303133;
+      font-weight: bold;
+    }
     .add-icon {
       margin-right: 24px;
       cursor: pointer;

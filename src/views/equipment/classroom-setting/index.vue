@@ -19,7 +19,11 @@
 					width="55">
 				</el-table-column>
 				 <el-table-column width="55" prop="id" align="center" label="序号"></el-table-column>
-				 <el-table-column prop="name" align="center" label="名称"></el-table-column>
+				 <el-table-column prop="name" align="center" label="名称">
+					 <template slot-scope="scope">
+						 <router-link style="color:#4A80F6" to="/equipment/Layout/classroom-setting-edit">{{scope.row.name}}</router-link>
+					 </template>
+				 </el-table-column>
 				 <el-table-column prop="class" align="center" label="教室"></el-table-column>
 				 <el-table-column prop="desc" align="center" label="描述"></el-table-column>
 				 <el-table-column prop="status" align="center" label="状态"></el-table-column>
