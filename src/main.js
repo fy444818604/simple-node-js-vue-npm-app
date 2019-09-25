@@ -11,15 +11,15 @@ import {
 	post,
 	get
 } from './request/http'
-import layer from 'vue-layer'
+import layer from 'layui-layer'
 import vcolorpicker from 'vcolorpicker'
-import 'vue-layer/lib/vue-layer.css';
+import 'layui-layer/layer.css';
 import './App.scss';
 Vue.use(vcolorpicker)
 Vue.prototype.$axios = axios
 Vue.prototype.$post = post
 Vue.prototype.$get = get
-Vue.prototype.$layer = layer(Vue);
+Vue.prototype.$layer = layer;
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
