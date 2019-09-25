@@ -140,7 +140,7 @@ body,html{
 .flex-center{
 	display: flex;
 	justify-content: center;
-	align-content: center;
+  align-content: center;
 }
 .el-dropdown{
 	cursor: default;
@@ -227,4 +227,8 @@ body,html{
 .el-tabs__nav-wrap::after{
 	height: 1px;
 	@extend .main-line
+}
+
+.el-scrollbar__wrap{
+	height: calc(100% + 17px);
 }
