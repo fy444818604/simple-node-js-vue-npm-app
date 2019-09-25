@@ -87,7 +87,7 @@
 									</ul>
 								</template>
 								<!-- 编辑 录播教室管理 -->
-								<template v-else-if="true">
+								<template v-else-if="false">
 									<div class="edit-pay">
 										<el-form :model="editPlayForm" :rules="editRules" label-width="80px">
 											<el-form-item label="设备厂商" prop="id">
@@ -121,40 +121,42 @@
 								</template>
 								<!-- 编辑 摄像头 -->
 								<template v-else>
-									<div class="edit-camera">
-										<el-form label-suffix=":" :model="editCameraForm" :rules="editCameraRules" label-width="85px">
-											<el-form-item label="设备名称" prop="name">
-												<el-input v-model="editCameraForm.name"></el-input>
-											</el-form-item>
-											<el-form-item label="设备IP" prop="ip">
-												<el-input v-model="editCameraForm.ip"></el-input>
-											</el-form-item>
-											<el-form-item label="端口号" prop="port">
-												<el-input v-model="editCameraForm.port"></el-input>
-											</el-form-item>
-											<el-form-item label="账号" prop="account">
-												<el-input v-model="editCameraForm.account"></el-input>
-											</el-form-item>
-											<el-form-item label="密码" prop="password">
-												<el-input v-model="editCameraForm.password"></el-input>
-											</el-form-item>
-											<el-form-item label="取流地址" prop="address">
-												<el-input v-model="editCameraForm.address"></el-input>
-											</el-form-item>
-											<el-form-item label="设备类型">
-												<el-input v-model="editCameraForm.type"></el-input>
-											</el-form-item>
-											<el-form-item label="设备型号">
-												<el-input v-model="editCameraForm.typeNumber"></el-input>
-											</el-form-item>
-											<el-form-item label="设备编号">
-												<el-input v-model="editCameraForm.number"></el-input>
-											</el-form-item>
-											<el-form-item>
-												<base-btn type="save"></base-btn>
-											</el-form-item>
-										</el-form>
-									</div>
+									<el-scrollbar>
+										<div class="edit-camera">
+											<el-form label-suffix=":" :model="editCameraForm" :rules="editCameraRules" label-width="85px">
+												<el-form-item label="设备名称" prop="name">
+													<el-input v-model="editCameraForm.name"></el-input>
+												</el-form-item>
+												<el-form-item label="设备IP" prop="ip">
+													<el-input v-model="editCameraForm.ip"></el-input>
+												</el-form-item>
+												<el-form-item label="端口号" prop="port">
+													<el-input v-model="editCameraForm.port"></el-input>
+												</el-form-item>
+												<el-form-item label="账号" prop="account">
+													<el-input v-model="editCameraForm.account"></el-input>
+												</el-form-item>
+												<el-form-item label="密码" prop="password">
+													<el-input v-model="editCameraForm.password"></el-input>
+												</el-form-item>
+												<el-form-item label="取流地址" prop="address">
+													<el-input v-model="editCameraForm.address"></el-input>
+												</el-form-item>
+												<el-form-item label="设备类型">
+													<el-input v-model="editCameraForm.type"></el-input>
+												</el-form-item>
+												<el-form-item label="设备型号">
+													<el-input v-model="editCameraForm.typeNumber"></el-input>
+												</el-form-item>
+												<el-form-item label="设备编号">
+													<el-input v-model="editCameraForm.number"></el-input>
+												</el-form-item>
+												<el-form-item>
+													<base-btn type="save"></base-btn>
+												</el-form-item>
+											</el-form>
+										</div>
+									</el-scrollbar>
 								</template>
 							</div>
 						</div>
@@ -434,8 +436,6 @@ export default {
 		}
 		.right {
 			flex: 1;
-				overflow: scroll;
-				overflow-x: hidden;
 			.rigt-info {
 				color: #606266;
 				padding-left: 50px;
