@@ -3,7 +3,7 @@
   <div class="stu-year">
 
     <div class="header">
-      <div>学届管理</div>
+      <div class="title">学届管理</div>
       <div @click="handleAdd" class="add-icon">
         <el-tooltip class="item" effect="dark" content="添加" placement="top">
           <i class="iconfont icon-add"></i>
@@ -276,6 +276,10 @@ export default {
     justify-content: space-between;
     border-bottom: 1px solid #E5E7EF;
     padding-bottom: 10px;
+    .title {
+      color: #303133;
+      font-weight: bold;
+    }
     .add-icon {
       margin-right: 24px;
       cursor: pointer;
