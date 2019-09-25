@@ -44,10 +44,41 @@
 									<span>暂无设备信息</span>
 								</template>
 								<template v-else>
-									d
+									<ul class="equip-nav">
+										<li @click="handleSelect(n)" :class="{active:n === active}" v-for="n in 4" :key="n" >
+											<i class="iconfont icon-live"></i>
+											<span>成都第x中学1号录播主机</span>
+										</li>
+									</ul>
+									<div class="control">
+										显示停用 <el-switch v-model="value">
+										</el-switch>
+									</div>
 								</template>
 							</div>
-							<div class="right">2</div>
+							<div class="right">
+								<template v-if="false"></template>
+								<template v-else>
+									<ul class="rigt-info">
+										<li class="item">
+											<span>学校:</span>
+											<span>成都第X中学</span>
+										</li>
+										<li class="item">
+											<span>教室:</span>
+											<span>101/1号教学楼/城南校区</span>
+										</li>
+										<li class="item">
+											<span>名称:</span>
+											<span>1号录播教室</span>
+										</li>
+										<li class="item">
+											<span>描述:</span>
+											<span>1号录播教室</span>
+										</li>
+									</ul>
+								</template>
+							</div>
 						</div>
 					</el-tab-pane>
 				</el-tabs>
@@ -68,11 +99,16 @@ export default {
 				{icon:'icon-stop',name:'停用'}
 			]},
 			activeName:'first',
+			active:3,
+			value: true
 		}
 	},
 	methods:{
 		handleClick(){},
-		handleAdd(){}
+		handleAdd(){},
+		handleSelect(n){
+			this.active = n;
+		}
 	}
 }
 </script>
@@ -120,8 +156,37 @@ export default {
 	.equipment-info {
 		height: 100%;
 		.left {
-			width: 220px;
+			position: relative;
+			width: 250px;
 			border-right: 1px solid #E5E7EF;
+			.equip-nav {
+				li {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					width: 220px;
+					height:44px;
+					border: 1px solid #E4E7F0;
+					color: #606266;
+					border-bottom-color: transparent;
+					cursor: pointer;
+					i{
+						padding-right: 5px;
+					}
+					&:last-child {
+						border-bottom-color: #E4E7F0;
+					}
+					&.active {
+						color: #4A80F6;
+						border-color: #4A80F6;
+					}
+				}
+			}
+			.control {
+				position: absolute;
+				left: 45px;
+				bottom: 5px;
+			}
 		}
 		.right {
 			flex: 1;
