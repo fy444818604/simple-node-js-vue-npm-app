@@ -10,8 +10,10 @@ import layer from 'layui-layer'
 import 'layui-layer/layer.css';
 import './App.scss';
 import * as api from './request/api';
+import * as myLayer from './assets/javascript/notice';
 Vue.prototype.$layer = layer;
 Vue.prototype.$api = api;
+Vue.prototype.$myLayer = myLayer;
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
