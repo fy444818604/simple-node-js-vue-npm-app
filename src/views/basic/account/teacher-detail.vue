@@ -43,31 +43,58 @@
 										<ul class="detail-table-list">
 											<li>
 												<div>工号</div>
-												<div>2018012545</div>
+												<div>
+													<span v-show="!edit">{{baseForm.workId}}</span>
+													<el-input v-show="edit" v-model="baseForm.workId"></el-input>
+												</div>
 											</li>
 											<li>
 												<div>姓名</div>
-												<div>2018012545</div>
+												<div>
+													<span v-show="!edit">{{baseForm.name}}</span>
+													<el-input v-show="edit" v-model="baseForm.name"></el-input>
+												</div>
 											</li>
 											<li>
 												<div>性别</div>
-												<div>2018012545</div>
+												<div>
+													<span v-show="!edit">{{baseForm.sex}}</span>
+													<el-select v-show="edit" v-model="baseForm.sex">
+														<el-option label="男" value="1"></el-option>
+														<el-option label="女" value="2"></el-option>
+													</el-select>
+												</div>
 											</li>
 											<li>
 												<div>民族</div>
-												<div>2018012545</div>
+												<div>
+													<span v-show="!edit">{{baseForm.nation}}</span>
+													<el-select v-show="edit" v-model="baseForm.nation">
+														<el-option label="汉" value="汉"></el-option>
+														<el-option label="满" value="满"></el-option>
+													</el-select>
+												</div>
 											</li>
 											<li>
 												<div>出生日期</div>
-												<div>2018012545</div>
+												<div>
+													<span v-show="!edit">{{baseForm.name}}</span>
+													<el-input v-show="edit" :disabled="true" v-model="baseForm.name"></el-input>
+												</div>
 											</li>
 											<li>
 												<div>年龄</div>
-												<div>2018012545</div>
+												<div>
+													<span v-show="!edit">{{baseForm.name}}</span>
+													<el-input v-show="edit" :disabled="true" v-model="baseForm.name"></el-input>
+												</div>
 											</li>
 											<li>
 												<div>身份证号</div>
-												<div>2018012545</div>
+												<div>
+													<span v-show="!edit">{{baseForm.idCard}}</span>
+													<el-input v-show="edit" :disabled="true" v-model="baseForm.idCard"></el-input>
+												</div>
 											</li>
 											<li>
 												<div>手机</div>
@@ -220,6 +247,9 @@
 						</ul>
 					</el-tab-pane>
 					<el-tab-pane label="个人介绍" name="third">
+						<div class="btnGroup">
+							<btn-list v-for="(item,index) in btnGroup1" :key="index" :model="item" @btn-click="btnClick1"></btn-list>
+						</div>
 						<div style="padding-left: 20px;width: 680px;padding-top: 20px;">
 							<el-form :label-position="labelPosition" label-width="86px" :model="intro">
 								<el-form-item label="个人简介:">
@@ -280,23 +310,35 @@
 				activeName: 'first',
 				labelPosition: 'right',
 				active: ['1', '2', '3'],
-				edit:false,
-				edit1:false,
+				edit: true,
+				edit1: false,
 				teacherName: '林浩阳',
 				userPhoto: require('@/assets/image/user-detail.png'),
 				btnGroup: [{
 					icon: 'icon-enable',
 					name: '启用',
-					alias: 3
+					alias: 1
 				}, {
 					icon: 'icon-permissions',
 					name: '重置密码',
-					alias: 4
+					alias: 2
 				}, {
 					icon: 'icon-edit',
 					name: '编辑',
-					alias: 5
+					alias: 3
 				}],
+				btnGroup1: [{
+					icon: 'icon-edit',
+					name: '编辑',
+					alias: 4
+				}],
+				baseForm: {
+					workId: '2018012545',
+					name: '5asdasd',
+					sex:1,
+					nation:'汉',
+					idCard:''
+				},
 				intro: {
 					personal: '哈撒给',
 					record: [{
@@ -317,9 +359,12 @@
 		},
 		methods: {
 			handleClick(tab, event) {
-				
+
 			},
 			btnClick() {
+
+			},
+			btnClick1() {
 
 			}
 		}
@@ -329,8 +374,8 @@
 	.el-tabs__header {
 		margin-bottom: 0;
 	}
-	
-	.el-collapse-item__content{
+
+	.el-collapse-item__content {
 		padding-bottom: 0;
 	}
 
