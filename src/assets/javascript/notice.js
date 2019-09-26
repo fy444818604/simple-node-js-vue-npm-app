@@ -19,12 +19,12 @@ export const formLayer = (title, src, area, callback) => {
 		resize: false,
 		yes: function(index, layero) {
 			if (callback()) {
-				src.hide()
+				src.style.display = 'none';
 				layer.close(index)
 			}
 		},
 		btn2: function(index, layero) {
-			src.hide()
+			src.style.display = 'none';
 			layer.close(index)
 		}
 	})
