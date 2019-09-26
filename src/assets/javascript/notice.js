@@ -26,6 +26,9 @@ export const formLayer = (title, src, area, callback) => {
 		btn2: function(index, layero) {
 			src.hide();
 			layer.close(index)
+		},
+		cancel:function(){
+			src.hide();
 		}
 	})
 }	
