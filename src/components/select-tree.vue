@@ -6,17 +6,19 @@
       <div class="filter-input">
         <el-input v-model="filterText"></el-input>
       </div>
-      <div class="list-tree">
-        <el-tree
-          @node-click="handleSelect"
-          class="filter-tree"
-          :data="treeList"
-          :props="defaultProps"
-          :filter-node-method="filterNode"
-          ref="tree"
-          >
-        </el-tree>
-      </div>
+      <el-scrollbar style="height:200px">
+        <div class="list-tree">
+            <el-tree
+              @node-click="handleSelect"
+              class="filter-tree"
+              :data="treeList"
+              :props="defaultProps"
+              :filter-node-method="filterNode"
+              ref="tree"
+              >
+            </el-tree>
+        </div>
+      </el-scrollbar>
     </div>
   </div>
 </template>
@@ -86,9 +88,6 @@ export default {
     }
     .list-tree {
       width: 254px;
-      height: 200px;
-      overflow: auto;
-      overflow-x: hidden;
     }
   }
 }

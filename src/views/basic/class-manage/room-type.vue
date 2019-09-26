@@ -15,12 +15,8 @@
     </div>
 
     <div class="footer">
-      <div class="type-control">
-         <state-switch @switchL="handleSwicthState"></state-switch>
-      </div>
-      <div class="page-control">
-        <page :pageTotal="12"></page>
-      </div>
+      <state-switch @switchL="handleSwicthState"></state-switch>
+      <page :pageTotal="12"></page>
     </div>
 
     <!-- modal -->
@@ -36,22 +32,17 @@
            <el-input v-model="formInfo.order"></el-input>
         </el-form-item>
       </el-form>
-      <div class="form-control">
-        <base-btn @on-cancel="handleCancel" type="cancel"></base-btn>
-        <base-btn @on-save="handleSave" type="save"></base-btn>
-      </div>
     </div>
 
 
   </div>
 </template>
 <script>
-import layer from 'layui-layer'
+
 export default {
   components:{
     baseTable:()=>import("./../../../components/table"),
     stateSwitch:() => import("./../../../components/state-switch"),
-    baseBtn:() => import("./../../../components/btn"),
     baseTitle:() => import("@/components/title"),
     btnList:() => import("@/components/btn-list"),
     page:() => import("@/components/paging")
@@ -93,7 +84,6 @@ export default {
         ],
  
       /* modal*/
-      modalIndex:0,
       formInfo:{
         type:'',
         desc:'',
@@ -106,79 +96,25 @@ export default {
   },
   methods:{
     handleAdd(){
-      alert("12")
+      this.$myLayer.formLayer('新建教室类型',$('.room-type-modal'),['422px'])
     },
-    handleSizeChange(){},
-    handleCurrentChange(){},
     handleSwicthState(val){},
-    /* modal */
-    handleShowAdd(){
-      let that = this
-      this.modalIndex = layer.open({
-        type: 1,
-        title:"新建教室类型",
-        content: $('.room-type-modal'),
-        area: ['422px'],
-        cancel:function(){
-          layer.close(that.modalIndex)
-          $('.room-type-modal').hide()
-        }
-      })
-    },
-    handleCancel(){
-      /* 数据清除 */
-      layer.close(this.modalIndex)
-      $('.room-type-modal').hide()
-    },
-    handleSave(){
-      /* 数据验证 */
-
-    }
   }
 }
 </script>
 <style lang="scss" scoped>
 .room-type {
   padding: 18px 24px;
-  // .header {
-  //   display: flex;
-  //   align-items: center;
-  //   justify-content: space-between;
-  //   .title {
-  //     color: #303133;
-  //     font-weight: Bold;
-  //   }
-  //   .add-icon {
-  //     margin-right: 24px;
-  //     cursor: pointer;
-  //     i {
-  //       color: #487ff6;
-  //     }
-  //   }
-  // }
   .content {
-     margin-top: 24px;
+    margin-top: 24px;
   }
   .footer {
     display: flex;
     justify-content: space-between;
     margin-top: 24px;
-    .page-control {
-      display: flex;
-      button {
-        margin-left: 10px;
-      }
-    }
   }
-
   .room-type-modal {
     display: none;
-    .form-control {
-      height: 60px;
-      line-height: 60px;
-      text-align: right;
-      background-color: #f5f5f5
-    }
   }
 }
 </style>
