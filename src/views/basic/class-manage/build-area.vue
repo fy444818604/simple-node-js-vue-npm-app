@@ -74,7 +74,6 @@
 </template>
 
 <script>
-// import layer from 'layui-layer'
 export default {
   components:{
     stateSwitch:() => import("./../../../components/state-switch"),
@@ -242,17 +241,20 @@ export default {
     },
     /* 打开弹层 */
     handleAdd(){
-      let that = this
-      this.modalIndex = this.$layer.open({
-        type: 1,
-        title:"新建",
-        content: $('.build-area-mdoal'),
-        area: ['422px'],
-        cancel:function(){
-          layer.close(that.modalIndex)
-          $('.build-area-mdoal').hide()
-        }
-      });  
+      let dom = document.querySelector(".build-area-mdoal");
+      console.log(dom)
+      this.$myLayer.formLayer("新建",$(dom),['422px'])
+      // let that = this
+      // this.modalIndex = this.$layer.open({
+      //   type: 1,
+      //   title:"新建",
+      //   content: $('.build-area-mdoal'),
+      //   area: ['422px'],
+      //   cancel:function(){
+      //     layer.close(that.modalIndex)
+      //     $('.build-area-mdoal').hide()
+      //   }
+      // });  
     },
     /* 关闭弹层 */
     handleCancel(){
