@@ -2,6 +2,11 @@
 <template>
   <el-table class="base-table" :data="customData" style="width: 100%" :stripe="stripe">
     <el-table-column
+      v-if="showSelect"
+      type="selection"
+      width="55">
+    </el-table-column>
+    <el-table-column
       v-for="item in tableColumn" 
       :key="item.prop"
       :prop="item.prop"
@@ -17,8 +22,8 @@
       <template slot-scope="scope">
         <div class="tableColumn-control">
           <i v-if="!scope.row.showBtn" @mouseenter="handleMouseEnter(scope.row)" class="iconfont icon-more"></i>
-          <div v-else @mouseleave="handleMouseLeave(scope.row)">
-            <span @click="handleStop(scope.row)">停用</span>
+          <div :class="{single:single}" v-else @mouseleave="handleMouseLeave(scope.row)">
+            <span v-if="!single" @click="handleStop(scope.row)">停用</span>
             <span @click="handleEdit(scope.row)">编辑</span>
           </div>
         </div>
@@ -41,7 +46,9 @@ export default {
     stripe: {
       type:Boolean,
       default: true
-    }
+    },
+    showSelect:Boolean,
+    single:Boolean
   },
   data(){
     return {
@@ -104,9 +111,16 @@ export default {
         background: #D0E9FF;
         position: absolute;
         z-index: 999;
-        left: -60px;
+        left: -40px;
         top: 0;
-        width: 120px;
+        width: 100px;
+        &.single {
+          width: 60px;
+          left: 0;
+          span {
+            margin-left: 0px;
+          }
+        }
       }
     }
  }

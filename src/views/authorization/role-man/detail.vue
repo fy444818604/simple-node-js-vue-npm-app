@@ -1,10 +1,7 @@
 <!-- 角色详情 -->
 <template>
 	<div class="role-detail">
-		<el-breadcrumb separator-class="el-icon-arrow-right">
-			<el-breadcrumb-item class="title">角色</el-breadcrumb-item>
-			<el-breadcrumb-item>系统管理员</el-breadcrumb-item>
-		</el-breadcrumb>
+		<base-title bread :breadList="['系统管理员']" title="角色"></base-title>
 		<div class="content">
 			<el-tabs v-model="activeName" @tab-click="handleClick">
 				<el-tab-pane label="角色信息" name="first">
@@ -43,9 +40,14 @@
 					<btn-list :model="{icon:'icon-edit',name:'编辑'}"></btn-list>
 				</template>
 				<template v-if="true">
-					<btn-list :model="{icon:'icon-edit',name:'编辑'}"></btn-list>
+					<btn-list :model="{icon:'icon-add',name:'添加'}"></btn-list>
+					<btn-list :model="{icon:'icon-del',name:'删除'}"></btn-list>
 				</template>
 			</div>
+		</div>
+
+		<div class="footer">
+ 			<page class="page" :pageTotal="23"></page>
 		</div>
 	</div>
 </template>
@@ -59,7 +61,9 @@ export default {
 		}
 	},
 	components:{
-		btnList:()=>import("@/components/btn-list")
+		btnList:()=>import("@/components/btn-list"),
+		page:()=>import("@/components/paging"),
+		baseTitle:()=>import("@/components/title")
 	},
 	methods:{
 		handleClick(){}
@@ -95,6 +99,13 @@ export default {
 			top: 10px;
 		}
 	}
+	.footer {
+		text-align: right;
+		margin-top: 25px;
+		.page {
+			display: inline-block
+		}
+	}
 }
 </style>
 <style>
@@ -102,5 +113,4 @@ export default {
 	color: #303133;
 	font-weight: bold;
 }
-	
 </style>
