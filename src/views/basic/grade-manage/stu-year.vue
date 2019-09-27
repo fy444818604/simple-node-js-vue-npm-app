@@ -1,15 +1,12 @@
 <!--学届管理-->
 <template>
   <div class="stu-year">
-
-    <div class="header">
-      <div class="title">学届管理</div>
-      <div @click="handleAdd" class="add-icon">
-        <el-tooltip class="item" effect="dark" content="添加" placement="top">
-          <i class="iconfont icon-add"></i>
-        </el-tooltip>
-      </div>
-    </div>
+    
+    <base-title title="学届管理" border>
+      <template slot="btn">
+        <btn-list @btn-click="handleAdd" :model="{icon:'icon-add',name:'添加'}"></btn-list>
+      </template>
+    </base-title>
 
     <div class="content">
       <div class="search-info">
@@ -29,77 +26,10 @@
     </div>
 
     <div class="footer">
-      <div class="type-control">
-        <state-switch @switchL="handleSwicthState"></state-switch>
-      </div>
-      <div class="page-control">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="pagination.currentPage"
-          :page-sizes="[5, 10, 15, 20]"
-          :page-size="5"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="pagination.total">
-        </el-pagination>
-        <el-button size="mini">确定</el-button>
-      </div>
+      <state-switch @switchL="handleSwicthState"></state-switch>
+      <page :pageTotal="22"></page>
     </div>
 
-    <!-- modal 不base-modal -->
-<!--     <el-dialog      
-      :visible.sync="dialog.visible"
-      :title="dialog.title"
-      width="30%"
-      :before-close="handleClose">
-      <el-form 
-        v-if="dialog.type==='add'"
-        ref="formAdd"  
-        label-width="80px"
-        :rules="dialog.formAddRules" 
-        :model="dialog.formAdd">
-        <el-form-item label="机构" prop="name">
-          <el-select v-model="dialog.formAdd.name" style="width:100%">
-            <el-option label="xxx" value="xxx"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="入学时间" prop="time">
-          <el-select v-model="dialog.formAdd.time" style="width:100%">
-            <el-option label="xxx" value="xxx"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="阶段" prop="stage">
-          <el-select v-model="dialog.formAdd.stage" style="width:100%">
-            <el-option label="xxx" value="xxx"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="学制" prop="type">
-          <el-input v-model="dialog.formAdd.type"></el-input>
-        </el-form-item>
-      </el-form>
-      <el-form v-else
-        ref="formEdit"  
-        label-width="80px"
-        :rules="dialog.formEditRules" 
-        :model="dialog.formEdit">
-        <el-form-item label="学届名称" prop="name">
-          <el-input disabled v-model="dialog.formEdit.name"></el-input>
-        </el-form-item>
-        <el-form-item label="第一学年" prop="one">
-          <el-input v-model="dialog.formEdit.one"></el-input>
-        </el-form-item>
-        <el-form-item label="第二学年" prop="two">
-          <el-input v-model="dialog.formEdit.two"></el-input>
-        </el-form-item>
-        <el-form-item label="第三学年" prop="three">
-          <el-input v-model="dialog.formEdit.three"></el-input>
-        </el-form-item>
-        </el-form>
-      <div class="form-control" slot="footer">
-        <el-button @click="handleClose" size="mini">取消</el-button>
-        <el-button @click="handleSave" size="mini" type="primary">保存</el-button>
-      </div>
-    </el-dialog> -->
     <!-- modal one -->
     <div class="stu-yeaer-modal-add">
      <el-form 
@@ -127,15 +57,6 @@
           <el-input v-model="dialog.formAdd.type"></el-input>
         </el-form-item>
       </el-form>
-      <div class="form-control">
-        <base-btn 
-          @on-change="handleCancel" 
-          border="1px solid #E5E7EF" 
-          height="34px" 
-          color="#606266" 
-          bg="#fff">取消</base-btn>
-          <base-btn @on-change="handleSave">保存</base-btn>
-      </div>
     </div>
     <!-- modal two -->
     <div class="tu-yeaer-modal-edit">
@@ -158,20 +79,17 @@
           <el-input v-model="dialog.formEdit.three"></el-input>
         </el-form-item>
       </el-form>
-      <div class="form-control">
-        <base-btn @on-cancel="handleCancel" type="cancel"></base-btn>
-        <base-btn @on-save="handleSave" type="save"></base-btn>
-      </div>
     </div>
   </div>
 </template>
 <script>
-import layer from "layui-layer"
 export default {
   components:{
     baseTable:()=>import("./../../../components/table"),
     stateSwitch:() => import("./../../../components/state-switch"),
-    baseBtn:() => import("./../../../components/btn")
+    baseTitle:()=>import("@/components/title"),
+    btnList:()=>import("@/components/btn-list"),
+    page:()=>import("@/components/paging")
   },
   data(){
     return {
@@ -199,13 +117,7 @@ export default {
           desc:'1号教学楼',
           status:'启用'
         }],
-      pagination:{
-        currentPage:1,
-        total:20
-      },
       /* dialog */
-      modalIndexAdd:0,
-      modalIndexEdit:0,
       dialog: {
         formAdd:{
           name:'', //机构
@@ -234,31 +146,10 @@ export default {
     }
   },
   methods:{
-
-    handleSizeChange(){},
-    handleCurrentChange(){},
-
     /* modal */
     /* 增加 */
     handleAdd() {
-      let that = this
-      this.modalIndexAdd = layer.open({
-        type: 1,
-        title:"新建",
-        content: $('.stu-yeaer-modal-add'),
-        area: ['422px'],
-        cancel:function(){
-          layer.close(that.modalIndexAdd)
-          $('.stu-yeaer-modal-add').hide()
-        }
-      })
-    },
-    handleCancel(){
-      layer.close(this.modalIndexAdd)
-      $('.stu-yeaer-modal-add').hide()
-    },
-    handleSave(){
-      /* 判断是add 还是 edit */
+      this.$myLayer.formLayer("新建",$('.stu-yeaer-modal-add'),['422px'])
     },
     handleSwicthState(){
 
@@ -270,24 +161,6 @@ export default {
 <style lang="scss" scoped>
 .stu-year {
   padding: 18px 24px;
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #E5E7EF;
-    padding-bottom: 10px;
-    .title {
-      color: #303133;
-      font-weight: bold;
-    }
-    .add-icon {
-      margin-right: 24px;
-      cursor: pointer;
-      i {
-        color: #487ff6;
-      }
-    }
-  }
   .content {
     .search-info {
       margin-top: 20px;
@@ -300,21 +173,9 @@ export default {
     display: flex;
     justify-content: space-between;
     margin-top: 24px;
-    .page-control {
-      display: flex;
-      button {
-        margin-left: 10px;
-      }
-    }
   }
   .stu-yeaer-modal-add, .tu-yeaer-modal-edit {
     display: none;
-  }
-  .form-control {
-    height: 60px;
-    line-height: 60px;
-    text-align: right;
-    background-color: #f5f5f5
   }
 }
 </style>
