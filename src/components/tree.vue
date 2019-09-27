@@ -22,13 +22,13 @@
                 stateSwitch:false,
                 defaultProps: {
                     children: 'children',
-                    label: 'label'
+                    label: 'name'
                 }
             };
         },
         methods: {
             handleNodeClick(data) {
-                console.log(data.label);
+                console.log(data.id);
             },
             switchChange(val){ //开关监听
                 console.log(val)
