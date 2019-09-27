@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Toast } from 'vant';
 import QS from 'qs';
 import store from '../store/index';
-import router from '@/router/index' 
+import router from '@/router/index'
 
 // 环境的切换
 if (process.env.NODE_ENV == 'development') {
@@ -34,7 +34,7 @@ axios.interceptors.request.use(
     error => {
         return Promise.error(error);
     })
-	
+
 	// 响应拦截器
 axios.interceptors.response.use(
     response => {
@@ -109,7 +109,7 @@ axios.interceptors.response.use(
 export function get(url, params) {
 	return new Promise((resolve, reject) => {
 		axios.get(url, {
-			params: params
+			params: params,
 		}).then(res => {
 			resolve(res.data);
 		}).catch(err => {
@@ -118,15 +118,15 @@ export function get(url, params) {
 	});
 }
 
-/** 
- * post方法，对应post请求 
- * @param {String} url [请求的url地址] 
- * @param {Object} params [请求时携带的参数] 
+/**
+ * post方法，对应post请求
+ * @param {String} url [请求的url地址]
+ * @param {Object} params [请求时携带的参数]
  */
 export function post(url, params) {
 	return new Promise((resolve, reject) => {
         axios.post(url, params,{headers: {
-                        'token': localStorage.getItem('Authorization')
+                        'token': localStorage.getItem('Authorization'),
                     }})
         .then(res => {
             resolve(res.data);

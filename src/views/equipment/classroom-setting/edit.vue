@@ -1,18 +1,18 @@
 <!-- mcu管理添加&编辑 -->
 <template>
 	<div class="setting-edit">
-		<div class="header flex">
-			<div class="title">录播教室管理</div>
-			<i class="iconfont icon-arrow-down"></i>
-			<div>1号录播教室</div>
-		</div>
+		<base-title title="录播教室管理" bread :breadList="['1号录播教室']"></base-title>
 		<div class="content">
 			<div class="icon">
-				<btn-list v-if="activeName === 'first'" @btn-click="handleAdd" :model="icons.first"></btn-list>
+				<btn-list 
+					v-if="activeName === 'first'" 
+					@btn-click="handleAdd" 
+					:model="{icon:'icon-edit',name:'添加'}">
+				</btn-list>
 				<div v-else>
-					<btn-list @btn-click="handleAdd" :model="icons.second[0]"></btn-list>
-					<btn-list @btn-click="handleAdd" :model="icons.second[1]"></btn-list>
-					<btn-list @btn-click="handleAdd" :model="icons.second[2]"></btn-list>
+					<btn-list @btn-click="handleAdd" :model="{icon:'icon-add',name:'添加'}"></btn-list>
+					<btn-list @btn-click="handleAdd" :model="{icon:'icon-edit',name:'编辑'}"></btn-list>
+					<btn-list @btn-click="handleAdd" :model="	{icon:'icon-stop',name:'停用'}"></btn-list>
 				</div>
 			</div>
 			<template>
@@ -205,10 +205,10 @@
 					<el-input v-model="editPlayForm.number"></el-input>
 				</el-form-item>
 			</el-form>
-			<div class="footer">
+			<!-- <div class="footer">
 				<baseBtn type="cancel"></baseBtn>
 				<baseBtn type="save"></baseBtn>
-			</div>
+			</div> -->
 		</div>
 		<!-- 新建摄像头modal -->
 		<div class="create-canmera-modal">
@@ -241,10 +241,10 @@
 					<el-input v-model="editCameraForm.number"></el-input>
 				</el-form-item>
 			</el-form>	
-			<div class="footer">
+			<!-- <div class="footer">
 				<baseBtn type="cancel"></baseBtn>
 				<baseBtn type="save"></baseBtn>
-			</div>
+			</div> -->
 		</div>
 
 
@@ -255,14 +255,11 @@
 export default {
 	components:{
 		btnList:()=>import("@/components/btn-list"),
-		baseBtn:() => import("@/components/btn")
+		// baseBtn:() => import("@/components/btn"),
+		baseTitle:()=>import("@/components/title")
 	},
 	data(){
 		return {
-			icons:{first:{icon:'icon-edit',name:'添加'},second:[
-				{icon:'icon-add',name:'添加'},{icon:'icon-edit',name:'编辑'},
-				{icon:'icon-stop',name:'停用'}
-			]},
 			activeName:'first',
 			active:3,
 			value: true,
@@ -307,7 +304,6 @@ export default {
 	},
 	methods:{
 		handleClick(){},
-		handleAdd(){},
 		handleSelect(n){
 			this.active = n;
 		},
@@ -330,30 +326,10 @@ export default {
 			})
 		},
 		handleAddPlay(){
-			const that = this
-			this.playIndex = this.$layer.open({
-				type:1,
-				title:'新建',
-				area: ['422px','554px'],
-				content:$(".create-play-modal"),
-				cancel:function(){
-					that.$layer.close(that.playIndex)
-					$('.create-play-modal').hide()
-				}
-			})
+			this.$myLayer.formLayer("新建",$(".create-play-modal"),['422px','554px'])
 		},
 		handleAddCamera(){
-			const that = this
-			this.cameraIndex = this.$layer.open({
-				type:1,
-				title:'新建',
-				area: ['422px'],
-				content:$(".create-canmera-modal"),
-				cancel:function(){
-					that.$layer.close(that.cameraIndex)
-					$('.create-canmera-modal').hide()
-				}
-			})
+			this.$myLayer.formLayer("新建",$(".create-canmera-modal"), ['422px'])
 		}
 	}
 }
@@ -363,17 +339,6 @@ export default {
 .setting-edit {
 	padding: 18px 24px;
 	height: 100%;
-}
-.header{
-	align-items: center;
-	color: #303133;
-	i {
-		font-size: 12px;
-	}
-	.title {
-		color: #303133;
-		font-weight: bold;
-	}
 }
 .setting-edit .content {
 	margin-top: 10px;

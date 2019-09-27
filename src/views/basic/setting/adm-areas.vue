@@ -102,50 +102,31 @@
                     value: '5',
                     label: '镇'
                 }],
-                treeData: [{
-                    label: '中国',
-                    children: [{
-                        label: '二级 1-1',
-                        children: [{
-                            label: '三级 1-1-1'
-                        }]
-                    }]
-                }, {
-                    label: '一级 2',
-                    children: [{
-                        label: '二级 2-1',
-                        children: [{
-                            label: '三级 2-1-1'
-                        }]
-                    }, {
-                        label: '二级 2-2',
-                        children: [{
-                            label: '三级 2-2-1'
-                        }]
-                    }]
-                }, {
-                    label: '一级 3',
-                    children: [{
-                        label: '二级 3-1',
-                        children: [{
-                            label: '三级 3-1-1'
-                        }]
-                    }, {
-                        label: '二级 3-2',
-                        children: [{
-                            label: '三级 3-2-1'
-                        }]
-                    }]
-                }],
-
+                treeData: [],
             }
         },
         components:{
            'tree':tree,
             'adm-areas-tree':admAreasTree
-
+        },
+        //初始化
+        created(){
+            this.areasTree();
         },
         methods: {
+            areasTree(){
+                var val = {
+                    level:1,
+                };
+                this.$api.areasTree(val).then(res => {
+                    if(res.success == true){
+                        console.log(res.data);
+                        this.treeData = res.data;
+                    }else {
+                        console.log('请求失败')
+                    }
+                })
+            },
             editor() {  //编辑
                 this.editorShow = !this.editorShow;
                 this.detailsShow = !this.detailsShow
