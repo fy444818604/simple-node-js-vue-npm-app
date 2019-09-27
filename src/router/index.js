@@ -474,6 +474,31 @@ const authorization = {
 		},
 	}]
 }
+
+const resource = {
+	path: '/resource/Layout',
+	name: 'resource-Layout',
+	component: (resolve) => {
+		require(['../views/resource/layout/layout'], resolve)
+	},
+	meta: {
+		title: '首页',
+		requireAuth: true
+	},
+	children:[
+		{
+			path: '/resource/Layout',
+			name: 'resource-Layout',
+			component: (resolve) => {
+				require(['../views/resource/index/index'], resolve)
+			},
+			meta: {
+				title: '首页',
+				requireAuth: true
+			}
+		}
+	]
+}
 const router = new Router({
 	base: './',
 	routes: [
@@ -502,7 +527,8 @@ const router = new Router({
 			}
 		},
 		equipment,
-		authorization
+		authorization,
+		resource
 	]
 })
 
