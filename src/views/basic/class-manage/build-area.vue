@@ -4,7 +4,7 @@
 
     <base-title title="建筑场所">
       <template slot="filterTree">
-        <slelct-tree currentSelect="四川省教育厅" :treeList="treeList"></slelct-tree>
+        <slelct-tree @on-change="handleChangeSelect" :currentSelect="currentSelect" :treeList="treeList"></slelct-tree>
       </template>
       <template slot="btn">
         <btn-list @btn-click="handleAdd"  :model="{icon:'icon-add',name:'添加'}"></btn-list>
@@ -176,11 +176,6 @@ export default {
         }
       ],
       tableColumn,
-      /* 分页 */
-      pagination:{
-        currentPage:1,
-        total:10
-      },
       /* switch status */
       status: 0,   //状态:0启动、1停用、全部''
       /* dialog */
@@ -199,6 +194,11 @@ export default {
     }
   },
   methods:{
+    /* 点击选择 filter-tree */
+    handleChangeSelect(val){
+      const {id,label} = val
+      this.currentSelect = label
+    },
     /* 表格的操作 */
     handleStop(row){
       console.log(row);

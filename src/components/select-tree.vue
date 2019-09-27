@@ -60,7 +60,6 @@ export default {
     },
     filterNode(value, data) {
       if (!value) return true;
-      // console.log(data);
       return data.label.indexOf(value) !== -1;
     },
   }

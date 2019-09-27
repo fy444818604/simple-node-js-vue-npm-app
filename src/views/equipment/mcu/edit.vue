@@ -1,11 +1,9 @@
 <!-- mcu管理添加&编辑 -->
 <template>
 	<div class="mcu-addEdit">
-		<div class="header flex">
-			<div class="title">MCU管理</div>
-			<i class="iconfont icon-arrow-down"></i>
-			<div>新建</div>
-		</div>
+
+		<base-title title="MCU管理" border bread :breadList="['新建']"></base-title>
+
 		<div class="content">
 			<el-form :model="formInfo" :rules="formRules" label-width="90px" label-suffix=":" style="width:360px">
 				<el-form-item label="设备厂商">
@@ -44,6 +42,9 @@
 
 <script>
 export default {
+	components:{
+ 		baseTitle:()=>import("@/components/title"),
+	},
 	data(){
 		return {
 			formInfo:{
@@ -66,20 +67,6 @@ export default {
 .mcu-addEdit {
 	padding: 18px 24px;
 }
-.header{
-	align-items: center;
-	color: #303133;
-	border-bottom: 1px solid #E5E7EF;
-	padding-bottom: 7px;
-	i {
-		font-size: 12px;
-	}
-	.title {
-		color: #303133;
-		font-weight: bold;
-	}
-}
-
 .content {
 	margin-top: 20px;
 }

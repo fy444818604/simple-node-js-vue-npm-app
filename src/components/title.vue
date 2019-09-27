@@ -13,7 +13,7 @@
           <el-breadcrumb-item :key="item" v-for="item in breadList">{{item}}</el-breadcrumb-item>
         </el-breadcrumb>
       </template>
-      <div v-else class="title">{{title}}</div> 
+      <div v-else class="singleTitle">{{title}}</div> 
       <slot name="filterTree"></slot>
     </div>
     <div class="right">
@@ -29,19 +29,19 @@
   .left {
     display: flex;
     align-items: center;
-    .title {
+    .singleTitle {
       color: #303133;
       font-weight: bold;
     }
   }
   &.border {
-    padding-bottom: 7px;
+    padding-bottom: 10px;
     border-bottom: 1px solid #E5E7EF;
   }  
 }
 </style>
 <style>
-.header .el-breadcrumb .el-breadcrumb__item.title span {
+.base-header .el-breadcrumb .el-breadcrumb__item.title span {
 	color: #303133;
 	font-weight: bold;
 }

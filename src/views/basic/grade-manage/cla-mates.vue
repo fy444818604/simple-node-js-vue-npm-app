@@ -1,17 +1,15 @@
 <!--班级管理-->
 <template>
 	<div class="cla-mates">
-		<div class="header">
-			<div class="left">
-				<div class="title">班级管理</div>
-				<slelct-tree currentSelect="zzz" :treeList="treeList"></slelct-tree>
-			</div>
-			<div @click="handleAdd" class="add-icon">
-				<el-tooltip class="item" effect="dark" content="添加" placement="top">
-					<i class="iconfont icon-add"></i>
-				</el-tooltip>
-			</div>
-		</div>
+    <base-title title="班级管理" border>
+      <template slot="filterTree">
+        <slelct-tree  currentSelect="zzz" :treeList="treeList"></slelct-tree>
+      </template>
+      <template slot="btn">
+        <btn-list @btn-click="handleAdd" :model="{icon:'icon-add',name:'添加'}"></btn-list>
+      </template>
+    </base-title>
+
 		<div class="content">
 			<div class="search-info">
 				<el-input style="width:200px" v-model="search.name" placeholder="请输入班级名称查询"></el-input>
@@ -42,17 +40,12 @@
 			<base-table :tableData="tableData" :tableColumn="tableColumn">
 			</base-table>
 		</div>
-		<div class="footer">
-			<div class="type-control">
-				<state-switch @switchL="handleSwicthState"></state-switch>
-			</div>
-			<div class="page-control">
-				<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pagination.currentPage"
-				 :page-sizes="[5, 10, 15, 20]" :page-size="5" layout="total, sizes, prev, pager, next, jumper" :total="pagination.total">
-				</el-pagination>
-				<el-button size="mini">确定</el-button>
-			</div>
-		</div>
+
+    <div class="footer">
+      <state-switch @switchL="handleSwicthState"></state-switch>
+      <page :pageTotal="22"></page>
+    </div>
+
 		<!-- modal -->
 		<div class="cla-mates-modal">
 			<el-form style="width:330px;margin:24px auto" label-width="80px" :model="formInfo" :rules="rules">
@@ -80,22 +73,19 @@
 					</el-select>
 				</el-form-item>
 			</el-form>
-			<div class="form-control">
-				<base-btn @on-cancel="handleCancel" type="cancel"></base-btn>
-				<base-btn @on-save="handleSave" type="save"></base-btn>
-			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-	import layer from "layui-layer"
 	export default {
 		components: {
 			baseTable: () => import("./../../../components/table"),
 			stateSwitch: () => import("./../../../components/state-switch"),
-			baseBtn: () => import("./../../../components/btn"),
-			slelctTree: () => import("./../../../components/select-tree")
+			slelctTree: () => import("./../../../components/select-tree"),
+			baseTitle:()=>import("@/components/title"),
+			btnList:()=>import("@/components/btn-list"),
+			page:()=>import("@/components/paging")
 		},
 		data() {
 			return {
@@ -174,13 +164,7 @@
 					desc: '1号教学楼',
 					status: '启用'
 				}],
-				// 分页
-				pagination: {
-					currentPage: 1,
-					total: 20
-				},
 				/* dialog */
-				modalIndex: 0,
 				formInfo: {
 					school: '',
 					classYear: '',
@@ -219,28 +203,11 @@
 			}
 		},
 		methods: {
-			handleSizeChange() {},
-			handleCurrentChange() {},
 			/* add */
 			handleAdd() {
-				let that = this
-				this.modalIndex = layer.open({
-					type: 1,
-					title: "新建",
-					content: $('.cla-mates-modal'),
-					area: ['422px'],
-					cancel: function() {
-						layer.close(that.modalIndex)
-						$('.cla-mates-modal').hide()
-					}
-				})
+				this.$myLayer.formLayer("新建",$('.cla-mates-modal'),['422px'])
 			},
 			handleSwicthState() {},
-			handleCancel() {
-				layer.close(this.modalIndex)
-				$('.cla-mates-modal').hide()
-			},
-			handleSave() {}
 		}
 	}
 </script>
@@ -248,72 +215,24 @@
 <style lang="scss" scoped>
 	.cla-mates {
 		padding: 18px 24px;
-
-		.header {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			border-bottom: 1px solid #E5E7EF;
-			padding-bottom: 10px;
-
-			.left {
-				display: flex;
-
-				.title {
-					color: #303133;
-					font-weight: bold;
-				}
-			}
-
-			.select-more {
-				margin-left: 10px;
-				cursor: pointer;
-			}
-
-			.add-icon {
-				margin-right: 24px;
-				cursor: pointer;
-
-				i {
-					color: #487ff6;
-				}
-			}
-		}
-
 		.content {
 			.search-info {
 				margin-top: 20px;
 				margin-bottom: 20px;
 				display: flex;
 				align-items: center;
-
 				.item {
 					margin: 0 15px;
 				}
 			}
 		}
-
 		.footer {
 			display: flex;
 			justify-content: space-between;
 			margin-top: 24px;
-			.page-control {
-				display: flex;
-				button {
-					margin-left: 10px;
-				}
-			}
 		}
-
 		.cla-mates-modal {
 			display: none;
-		}
-
-		.form-control {
-			height: 60px;
-			line-height: 60px;
-			text-align: right;
-			background-color: #f5f5f5
 		}
 	}
 </style>

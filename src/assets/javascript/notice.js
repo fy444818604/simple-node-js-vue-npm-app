@@ -15,7 +15,7 @@ export const formLayer = (title, src, area, callback) => {
 		content: src,
 		area: area,
 		btn: ['确认', '取消'],
-		btnAlign: 'c',
+		btnAlign: 'r',
 		resize: false,
 		yes: function(index, layero) {
 			if (callback()) {

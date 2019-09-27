@@ -1,18 +1,15 @@
 <!--教室设置-->
 <template>
   <div class="room-setting">
-    
-    <div class="header">
-      <div class="left">
-        <div class="title">教室设置</div>
-        <slelct-tree currentSelect="YYYY" :treeList="treeList"></slelct-tree>
-      </div>
-      <div @click="handleAdd" class="right">
-        <el-tooltip class="item" effect="dark" content="添加" placement="top">
-          <i class="iconfont icon-add"></i>
-        </el-tooltip>
-      </div>
-    </div>
+  
+    <base-title title="教室设置">
+      <template slot="filterTree">
+        <slelct-tree :currentSelect="currentSelect" :treeList="treeList"></slelct-tree>
+      </template>
+      <template slot="btn">
+        <btn-list @btn-click="handleAdd" :model="{icon:'icon-add',name:'添加'}"></btn-list>
+      </template>
+    </base-title>
 
     <div class="content">
       <base-table  
@@ -22,21 +19,8 @@
     </div>
 
     <div class="footer">
-      <div class="type-control">
-         <state-switch @switchL="handleSwicthState"></state-switch>
-      </div>
-      <div class="page-control">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="pagination.currentPage"
-          :page-sizes="[5, 10, 15, 20]"
-          :page-size="5"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="pagination.total">
-        </el-pagination>
-        <el-button size="mini">确定</el-button>
-      </div>
+      <state-switch @switchL="handleSwicthState"></state-switch>
+      <page :pageTotal="22"></page>
     </div>
 
  <!-- modal -->
@@ -64,23 +48,20 @@
           <el-input v-model="formInfo.order"></el-input>
         </el-form-item>
       </el-form>
-      <div class="form-control">
-        <base-btn @on-cancel="handleCancel" type="cancel"></base-btn>
-        <base-btn @on-save="handleSave" type="save"></base-btn>
-      </div>
     </div>
 
 
   </div>
 </template>
 <script>
-import layer from 'layui-layer'
 export default {
   components:{
-    stateSwitch:() => import("./../../../components/state-switch"),
-    baseTable:()=>import("./../../../components/table"),
-    baseBtn:() => import("./../../../components/btn"),
-    slelctTree:() => import("./../../../components/select-tree")
+    stateSwitch:() => import("@/components/state-switch"),
+    baseTable:()=>import("@/components/table"),
+    slelctTree:() => import("@/components/select-tree"),
+    baseTitle:()=>import("@/components/title"),
+    btnList:()=>import("@/components/btn-list"),
+    page:()=>import("@/components/paging")
   },
   data(){
     return {
@@ -154,17 +135,8 @@ export default {
           status:'启用'
         }
       ],
-      /* 分页 */
-      pagination:{
-        currentPage:1,
-        total:20
-      },
+
       /* dialog */
-      modalIndex:0,
-      dialog:{
-        visible:false,
-        title:'新建'
-      },
       formInfo:{
         title:'',
         name:'',
@@ -180,39 +152,11 @@ export default {
     }
   },
   methods:{
-    handleSizeChange(){},
-    handleCurrentChange(){},
-
     handleSwicthState(val){
-
     },
     /* dialog */
     handleAdd(){
-      let that = this
-      this.modalIndex = layer.open({
-        type: 1,
-        title:"新建",
-        content: $('.room-setting-modal'),
-        area: ['422px'],
-        cancel:function(){
-          layer.close(that.modalIndex)
-          $('.room-setting-modal').hide()
-        }
-      })
-      
-    },
-    handleCancel(){
-      layer.close(this.modalIndex)
-      $('.room-setting-modal').hide()
-    },
-    handleSave(){
-      /* todo */
-      /* judge */
-      this.$refs.form.validate((valid) => {
-        if(valid) {
-          console.log("valid");
-        }
-      })
+      this.$myLayer.formLayer("新建",$('.room-setting-modal'),['422px'])      
     }
   }
 }
@@ -220,25 +164,6 @@ export default {
 <style lang="scss" scoped>
 .room-setting {
  padding: 18px 24px;
- .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    .left {
-      display: flex;
-      .title {
-        color: #303133;
-        font-weight: Bold;
-      }
-    }
-    .right {
-      cursor: pointer;
-      margin-right: 24px;
-      i {
-        color: #487ff6;
-      }
-    }
- }
  .content {
    margin-top: 24px;
  }
@@ -246,22 +171,10 @@ export default {
     display: flex;
     justify-content: space-between;
     margin-top: 24px;
-    .page-control {
-      display: flex;
-      button {
-        margin-left: 10px;
-      }
-    }
   }
 
   .room-setting-modal {
     display: none;
-    .form-control {
-      height: 60px;
-      line-height: 60px;
-      text-align: right;
-      background-color: #f5f5f5
-    }
   }
 } 
 </style>

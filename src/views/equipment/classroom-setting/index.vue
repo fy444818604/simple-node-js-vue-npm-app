@@ -1,17 +1,18 @@
 <!-- 录播教室管理管理列表 -->
 <template>
 	<div class="setting">
-		<div class="header flex-between">
-			<div class="left flex">
-				<div class="title">录播教室管理</div>
+    <base-title title="录播教室管理">
+			<template slot="filterTree">
 				<slelct-tree currentSelect="xxxx" :treeList="treeList"></slelct-tree>
-			</div>
-			<div class="right">
-				<btn-list @btn-click="handleAdd" :model="icons[0]"></btn-list>
-				<btn-list @btn-click="handleAdd" :model="icons[1]"></btn-list>
-				<btn-list @btn-click="handleAdd" :model="icons[2]"></btn-list>
-			</div>
-		</div>
+			</template>
+      <template slot="btn">
+				<btn-list @btn-click="handleAdd" :model="{icon:'icon-add',name:'添加'}"></btn-list>
+				<btn-list @btn-click="handleAdd" :model="{icon:'icon-stop',name:'暂停'}"></btn-list>
+				<btn-list @btn-click="handleAdd" :model="{icon:'icon-enable',name:'确认'}"></btn-list>
+      </template>
+    </base-title>
+
+
 		<div class="content">
 			 <el-table :data="customData" style="width: 100%">
 				<el-table-column
@@ -46,14 +47,14 @@
 <script>
 export default {
 	components:{
+		baseTitle:()=>import("@/components/title"),
 		stateSwitch:()=>import("@/components/state-switch"),
 		btnList:()=>import("@/components/btn-list"),
 		page:()=>import("@/components/paging"),
-		slelctTree:() => import("./../../../components/select-tree")
+		slelctTree:() => import("@/components/select-tree")
 	},
 	data(){
 		return {
-			icons:[{icon:'icon-add',name:'添加'},{icon:'icon-stop',name:'stop'},{icon:'icon-enable',name:'√'}],
 			customData:[				{
 				id:1,
 				name:'xxx',
@@ -74,13 +75,7 @@ export default {
 .setting {
 	padding: 18px 24px;
 }
-.header{
-	.title {
-		color: #303133;
-		font-weight: bold;
-	}
-}
 .content {
-	margin:26px 0;
+	margin:24px 0;
 }
 </style>
