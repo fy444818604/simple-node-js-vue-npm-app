@@ -154,7 +154,25 @@
             'school-modal':modal,
             'adm-areas-tree':admAreasTree,
         },
+        //初始化
+        created(){
+            this.schoolList();
+        },
         methods: {
+            schoolList(){
+                var params = {
+                    pageIndex :1,
+                    pageSize:10
+                };
+                this.$api.school(params).then(res => {
+                    console.log(res);
+                    if(res.success == true){
+                        console.log(res);
+                    }else {
+                        console.log('请求失败')
+                    }
+                })
+            },
             //表格操作
             schoolStop(row){
                 console.log(row)

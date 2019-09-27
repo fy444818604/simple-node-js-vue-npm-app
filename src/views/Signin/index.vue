@@ -27,7 +27,7 @@
 						<input type="text" name="" value="" placeholder="请输入验证码" v-model="code"/>
 					</div>
 					<div class="code-wrap">
-						
+
 					</div>
 				</div>
 				<div class="login-button" @click="login">
@@ -59,7 +59,7 @@
 
 		},
 		mounted() {
-			
+
 		},
 		methods: {
 			...mapMutations(['changeLogin']),

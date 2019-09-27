@@ -1,15 +1,6 @@
 <!-- 资源平台首页 -->
 <template>
-  <div class="resource-index">
-    <!-- 轮播 -->
-    <!-- <el-carousel class="base-carousel">
-      <el-carousel-item>
-        <div class="item">
-        </div>
-      </el-carousel-item>
-    </el-carousel> -->
-    <!-- <resTitle title="推荐"></resTitle> -->
-  </div>
+	<div>平台首页</div>
 </template>
 
 <script>
