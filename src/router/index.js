@@ -487,8 +487,8 @@ const resource = {
 	},
 	children:[
 		{
-			path: '/resource/Layout',
-			name: 'resource-Layout',
+			path: '/resource/Layout/index',
+			name: 'resource-Layout-index',
 			component: (resolve) => {
 				require(['../views/resource/index/index'], resolve)
 			},

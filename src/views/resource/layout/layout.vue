@@ -1,5 +1,6 @@
 <!-- 资源平台框架 -->
 <template>
+  <router-view></router-view>
 </template>
 
 <script>
