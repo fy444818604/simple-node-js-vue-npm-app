@@ -1,6 +1,6 @@
-<!-- 资源平台首页 -->
+<!-- 发现主页 -->
 <template>
-	<div>平台首页</div>
+	<div>发现主页</div>
 </template>
 
 <script>

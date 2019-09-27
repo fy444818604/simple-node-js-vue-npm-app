@@ -487,8 +487,8 @@ const resource = {
 	},
 	children:[
 		{
-			path: '/resource/Layout',
-			name: 'resource-Layout',
+			path: '/resource/Layout/index',
+			name: 'index',
 			component: (resolve) => {
 				require(['../views/resource/index/index'], resolve)
 			},
@@ -496,7 +496,40 @@ const resource = {
 				title: '首页',
 				requireAuth: true
 			}
-		}
+		},
+		{
+			path: '/resource/Layout/resource-list',
+			name: 'resource-list',
+			component: (resolve) => {
+				require(['../views/resource/resource-list/index'], resolve)
+			},
+			meta: {
+				title: '资源',
+				requireAuth: true
+			}
+		},
+		{
+			path: '/resource/Layout/album',
+			name: 'album',
+			component: (resolve) => {
+				require(['../views/resource/album/index'], resolve)
+			},
+			meta: {
+				title: '专辑',
+				requireAuth: true
+			}
+		},
+		{
+			path: '/resource/Layout/discover',
+			name: 'discover',
+			component: (resolve) => {
+				require(['../views/resource/discover/index'], resolve)
+			},
+			meta: {
+				title: '发现',
+				requireAuth: true
+			}
+		},
 	]
 }
 const router = new Router({

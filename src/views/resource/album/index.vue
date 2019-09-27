@@ -1,6 +1,6 @@
-<!-- 资源平台首页 -->
+<!-- 资源专辑主页 -->
 <template>
-	<div>平台首页</div>
+	<div>资源专辑主页</div>
 </template>
 
 <script>
