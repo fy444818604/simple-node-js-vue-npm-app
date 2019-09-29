@@ -400,6 +400,26 @@ const equipment = {
 			requireAuth: true
 		},
 	}, {
+		path: '/equipment/Layout/meeting-setting',
+		name: 'meeting-setting',
+		component: (resolve) => {
+			require(['../views/equipment/meeting-setting/index'], resolve)
+		},
+		meta: {
+			title: '会议室设置',
+			requireAuth: true
+		},
+	}, {
+		path: '/equipment/Layout/meeting-setting-edit',
+		name: 'meeting-setting-edit',
+		component: (resolve) => {
+			require(['../views/equipment/meeting-setting/edit'], resolve)
+		},
+		meta: {
+			title: '会议室设置',
+			requireAuth: true
+		},
+	}, {
 		path: '/equipment/Layout/classroom-setting',
 		name: 'classroom-setting',
 		component: (resolve) => {
@@ -487,8 +507,8 @@ const resource = {
 	},
 	children:[
 		{
-			path: '/resource/Layout',
-			name: 'resource-Layout',
+			path: '/resource/Layout/index',
+			name: 'index',
 			component: (resolve) => {
 				require(['../views/resource/index/index'], resolve)
 			},
@@ -496,7 +516,40 @@ const resource = {
 				title: '首页',
 				requireAuth: true
 			}
-		}
+		},
+		{
+			path: '/resource/Layout/resource-list',
+			name: 'resource-list',
+			component: (resolve) => {
+				require(['../views/resource/resource-list/index'], resolve)
+			},
+			meta: {
+				title: '资源',
+				requireAuth: true
+			}
+		},
+		{
+			path: '/resource/Layout/album',
+			name: 'album',
+			component: (resolve) => {
+				require(['../views/resource/album/index'], resolve)
+			},
+			meta: {
+				title: '专辑',
+				requireAuth: true
+			}
+		},
+		{
+			path: '/resource/Layout/discover',
+			name: 'discover',
+			component: (resolve) => {
+				require(['../views/resource/discover/index'], resolve)
+			},
+			meta: {
+				title: '发现',
+				requireAuth: true
+			}
+		},
 	]
 }
 const router = new Router({

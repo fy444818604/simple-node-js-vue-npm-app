@@ -35,6 +35,14 @@
 					},
 					{
 						menu_id: 2,
+						menu_text: '会议室设置',
+						menu_icon: 'icon-grade',
+						menu_href: '/equipment/Layout/meeting-setting',
+						menu_pid: 0,
+						menu_target_type: 0
+					},
+					{
+						menu_id: 3,
 						menu_text: '录播教室设置',
 						menu_icon: 'icon-video2',
 						menu_href: '/equipment/Layout/classroom-setting',
