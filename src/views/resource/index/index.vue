@@ -116,7 +116,7 @@
 			.item {
 				width: 100%;
 				height: 100%;
-				background: url(./../../../assets/image/logo.jpeg) no-repeat left top;
+				background: url(./../../../assets/image/city-1.jpg) no-repeat left top;
 				background-size: 100% 100%;
 			}
 		}

@@ -33,11 +33,13 @@ export default {
   margin-left: 1%;
   margin-bottom: 20px;
   .res-bg {
+    cursor: pointer;
     height: 0;
     position: relative;
     border-radius: 8px;
-    padding-bottom: 60%;
-    background: skyblue;
+    padding-bottom: 56%;
+    background: url(./../assets/image/city-1.jpg) no-repeat;
+    background-size: 100% 100%;
     .play-time {
       position: absolute;
       right: 10px;
