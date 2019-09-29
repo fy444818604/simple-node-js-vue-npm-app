@@ -488,11 +488,7 @@ const resource = {
 	children:[
 		{
 			path: '/resource/Layout/index',
-<<<<<<< HEAD
 			name: 'resource-Layout-index',
-=======
-			name: 'index',
->>>>>>> cfd94f8b13a0e48ff9d6b5a8fb9a770f335498cf
 			component: (resolve) => {
 				require(['../views/resource/index/index'], resolve)
 			},
