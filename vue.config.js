@@ -1,10 +1,8 @@
 const webpack = require('webpack');
 const path = require('path');
-//
 module.exports = {
 	baseUrl: process.env.NODE_ENV === 'production' ?
-		'/' :
-		'/',
+		'/' : '/',
 	chainWebpack: (config) => {
 		config.resolve.alias
 			.set('@', path.resolve(__dirname, './src'))
