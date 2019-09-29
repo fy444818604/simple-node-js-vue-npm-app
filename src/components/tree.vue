@@ -14,27 +14,27 @@
     </div>
 </template>
 <script>
-    export default {
-        name:'tree',
-        props: ['treeData'],
-        data() {
-            return {
-                stateSwitch:false,
-                defaultProps: {
-                    children: 'children',
-                    label: 'name'
-                }
-            };
-        },
-        methods: {
-            handleNodeClick(data) {
-                console.log(data.id);
-            },
-            switchChange(val){ //开关监听
-                console.log(val)
+export default {
+    name:'tree',
+    props: ['treeData'],
+    data() {
+        return {
+            stateSwitch:false,
+            defaultProps: {
+                children: 'children',
+                label: 'name'
             }
+        };
+    },
+    methods: {
+        handleNodeClick(data) {
+            console.log(data.id);
+        },
+        switchChange(val){ //开关监听
+            console.log(val)
         }
-    };
+    }
+};
 </script>
 
 <style scoped>

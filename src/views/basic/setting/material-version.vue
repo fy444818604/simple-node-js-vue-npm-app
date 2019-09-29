@@ -47,121 +47,121 @@
 </template>
 
 <script>
-    import bntList from '../../../components/btn-list'
-    import table from '../../../components/table'
-    import stateSwitch from '../../../components/state-switch'
-    import paging from '../../../components/paging'
-    import modal from '../../../components/modal'
-    export default {
-        name: "materialVersion",
-        data() {
-            return {
-                pageTile: '教材版本',
-                //按钮
-                model: {
-                    name: '添加',
-                    icon: 'icon-add'
-                },
-                //表格
-                tableData:[
-                    {
-                        id:1,
-                        level:'1号教学楼',
-                        status:'启用',
-
-                    },
-                    {
-                        id:2,
-                        level:'1号教学楼',
-                        status:'启用',
-
-                    },
-                    {
-                        id:3,
-                        level:'1号教学楼',
-                        status:'启用',
-
-                    },
-                    {
-                        id:4,
-                        level:'1号教学楼',
-                        status:'启用',
-
-                    }
-                ],
-                tableColumn:[
-                    {
-                        prop:'id',
-                        label:'显示顺序'
-                    },
-                    {
-                        prop:'level',
-                        label:'行政级别'
-                    },
-                    {
-                        prop:'status',
-                        label:'状态'
-                    }
-                ],
-                //分页
-                pageSize:'',//显示多少页
-                pageCurrent:'',//当前页
-                pageTotal:300,//总条数
-                //弹框
-                /* dialog */
-                dialog: {
-                    visible:false,
-                    title: '新建',
-                },
-                matForm:{
-                    name:'',
-                    number:'',
-                    describe:''
-                },
-                formRules:{
-                    name:[{required: true, message: '不能为空', trigger: 'blur'}],
-                },
-            }
-        },
-        components:{
-            'bnt-list':bntList,
-            'mat-table':table,
-            'stateSwitch':stateSwitch,
-            'mat-paging':paging,
-            'mat-modal':modal
-        },
-        methods: {
-            //添加
-            matAdd(){
-                this.dialog.visible = true;
+import bntList from '../../../components/btn-list'
+import table from '../../../components/table'
+import stateSwitch from '../../../components/state-switch'
+import paging from '../../../components/paging'
+import modal from '../../../components/modal'
+export default {
+    name: "materialVersion",
+    data() {
+        return {
+            pageTile: '教材版本',
+            //按钮
+            model: {
+                name: '添加',
+                icon: 'icon-add'
             },
             //表格
-            matStop(row){
-                console.log(row)
-            },
-            matEdit(row){
-                console.log(row)
-            },
-            //状态
-            stateList(state){
-                console.log(state)
-            },
+            tableData:[
+                {
+                    id:1,
+                    level:'1号教学楼',
+                    status:'启用',
+
+                },
+                {
+                    id:2,
+                    level:'1号教学楼',
+                    status:'启用',
+
+                },
+                {
+                    id:3,
+                    level:'1号教学楼',
+                    status:'启用',
+
+                },
+                {
+                    id:4,
+                    level:'1号教学楼',
+                    status:'启用',
+
+                }
+            ],
+            tableColumn:[
+                {
+                    prop:'id',
+                    label:'显示顺序'
+                },
+                {
+                    prop:'level',
+                    label:'行政级别'
+                },
+                {
+                    prop:'status',
+                    label:'状态'
+                }
+            ],
             //分页
-            SizeChange(val){
-                console.log(val)
-            },
-            CurrentChange(val){
-                console.log(val)
-            },
+            pageSize:'',//显示多少页
+            pageCurrent:'',//当前页
+            pageTotal:300,//总条数
             //弹框
-            matSave(){
-                this.dialog.visible = false
+            /* dialog */
+            dialog: {
+                visible:false,
+                title: '新建',
             },
-            matClose(){
-                this.dialog.visible = false
+            matForm:{
+                name:'',
+                number:'',
+                describe:''
+            },
+            formRules:{
+                name:[{required: true, message: '不能为空', trigger: 'blur'}],
             },
         }
+    },
+    components:{
+        'bnt-list':bntList,
+        'mat-table':table,
+        'stateSwitch':stateSwitch,
+        'mat-paging':paging,
+        'mat-modal':modal
+    },
+    methods: {
+        //添加
+        matAdd(){
+            this.dialog.visible = true;
+        },
+        //表格
+        matStop(row){
+            console.log(row)
+        },
+        matEdit(row){
+            console.log(row)
+        },
+        //状态
+        stateList(state){
+            console.log(state)
+        },
+        //分页
+        SizeChange(val){
+            console.log(val)
+        },
+        CurrentChange(val){
+            console.log(val)
+        },
+        //弹框
+        matSave(){
+            this.dialog.visible = false
+        },
+        matClose(){
+            this.dialog.visible = false
+        },
     }
+}
 </script>
 
 <style scoped>

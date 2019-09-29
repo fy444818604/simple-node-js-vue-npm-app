@@ -303,72 +303,72 @@
 </template>
 
 <script>
-	import btnList from '@/components/btn-list'
-	export default {
-		data() {
-			return {
-				activeName: 'first',
-				labelPosition: 'right',
-				active: ['1', '2', '3'],
-				edit: true,
-				edit1: false,
-				teacherName: '林浩阳',
-				userPhoto: require('@/assets/image/user-detail.png'),
-				btnGroup: [{
-					icon: 'icon-enable',
-					name: '启用',
-					alias: 1
-				}, {
-					icon: 'icon-permissions',
-					name: '重置密码',
-					alias: 2
-				}, {
-					icon: 'icon-edit',
-					name: '编辑',
-					alias: 3
-				}],
-				btnGroup1: [{
-					icon: 'icon-edit',
-					name: '编辑',
-					alias: 4
-				}],
-				baseForm: {
-					workId: '2018012545',
-					name: '5asdasd',
-					sex:1,
-					nation:'汉',
-					idCard:''
-				},
-				intro: {
-					personal: '哈撒给',
-					record: [{
-						text: '成都希望小学',
-						startTime: '',
-						endTime: ''
-					}],
-					Award: [{
-						text: '2018年市级优秀教师',
-						time: '',
-						pic: ''
-					}]
-				}
-			};
-		},
-		components: {
-			'btn-list': btnList
-		},
-		methods: {
-			handleClick(tab, event) {
+import btnList from '@/components/btn-list'
+export default {
+    data() {
+        return {
+            activeName: 'first',
+            labelPosition: 'right',
+            active: ['1', '2', '3'],
+            edit: true,
+            edit1: false,
+            teacherName: '林浩阳',
+            userPhoto: require('@/assets/image/user-detail.png'),
+            btnGroup: [{
+                icon: 'icon-enable',
+                name: '启用',
+                alias: 1
+            }, {
+                icon: 'icon-permissions',
+                name: '重置密码',
+                alias: 2
+            }, {
+                icon: 'icon-edit',
+                name: '编辑',
+                alias: 3
+            }],
+            btnGroup1: [{
+                icon: 'icon-edit',
+                name: '编辑',
+                alias: 4
+            }],
+            baseForm: {
+                workId: '2018012545',
+                name: '5asdasd',
+                sex:1,
+                nation:'汉',
+                idCard:''
+            },
+            intro: {
+                personal: '哈撒给',
+                record: [{
+                    text: '成都希望小学',
+                    startTime: '',
+                    endTime: ''
+                }],
+                Award: [{
+                    text: '2018年市级优秀教师',
+                    time: '',
+                    pic: ''
+                }]
+            }
+        };
+    },
+    components: {
+        'btn-list': btnList
+    },
+    methods: {
+        handleClick(tab, event) {
 
-			},
-			btnClick() {
+        },
+        btnClick() {
 
-			},
-			btnClick1() {
+        },
+        btnClick1() {
 
-			}
-		}
-	};
+        }
+    }
+};
 </script>
 <style>
 	.el-tabs__header {

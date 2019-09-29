@@ -24,48 +24,48 @@
 </template>
 
 <script>
-	export default {
-		name: 'TopHead',
-		data() {
-			return {
-				logo: require('@/assets/image/logo.png'),
-				systemName: '教育局基础数据平台',
-				systemName1Show:false,
-				systemName1: 'demo副标题',
-				bgColor:'#4A80F6',
-				swithch: this.$store.state.offsideConfig.offsideFold,
-				swithShow:false,
-				loginInfoShow:false
-			}
-		},
-		watch: {
-			swithch(val) {
-				if (val) {
-					$('.note-card-wrap').stop().animate({
-						right: '0'
-					}, 200)
-				} else {
-					$('.note-card-wrap').stop().animate({
-						right: '-340px'
-					}, 200)
-				}
-			}
-		},
-		methods: {
-			monoSwich() {
-				this.swithch = !this.swithch;
-			},
-			loginShow(){
-				this.loginInfoShow = true;
-			},
-			loginHide(){
-				this.loginInfoShow = false;
-			}
-		},
-		mounted() {
+export default {
+    name: 'TopHead',
+    data() {
+        return {
+            logo: require('@/assets/image/logo.png'),
+            systemName: '教育局基础数据平台',
+            systemName1Show:false,
+            systemName1: 'demo副标题',
+            bgColor:'#4A80F6',
+            swithch: this.$store.state.offsideConfig.offsideFold,
+            swithShow:false,
+            loginInfoShow:false
+        }
+    },
+    watch: {
+        swithch(val) {
+            if (val) {
+                $('.note-card-wrap').stop().animate({
+                    right: '0'
+                }, 200)
+            } else {
+                $('.note-card-wrap').stop().animate({
+                    right: '-340px'
+                }, 200)
+            }
+        }
+    },
+    methods: {
+        monoSwich() {
+            this.swithch = !this.swithch;
+        },
+        loginShow(){
+            this.loginInfoShow = true;
+        },
+        loginHide(){
+            this.loginInfoShow = false;
+        }
+    },
+    mounted() {
 			
-		}
-	}
+    }
+}
 </script>
 
 <style lang="scss" scoped>

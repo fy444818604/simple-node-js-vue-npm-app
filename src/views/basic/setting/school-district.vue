@@ -60,114 +60,114 @@
 </template>
 
 <script>
-    import table from '../../../components/table'
-    import stateSwitch from '../../../components/state-switch'
-    import paging from '../../../components/paging'
-    import admAreasTree from  './adm-areas-tree'
-    import bntList from  '../../../components/btn-list'
-    export default {
-        name: "schoolDistrict",
-        data(){
-            return{
-                pageTile:'学区管理',
-                pageSize:10,//显示多少页
-                pageCurrent:1,//当前页
-                pageTotal:0,//总条数
-                status:0,
-                //表格
-                tableData:[],
-                tableColumn:[
-                    {
-                        prop:'id',
-                        label:'显示顺序'
-                    },
-                    {
-                        prop:'name',
-                        label:'学区名称'
-                    },
-                    {
-                        prop:'orgName',
-                        label:'组织结构'
-                    },
-                    {
-                        prop:'description',
-                        label:'描述'
-                    },
-                    {
-                        prop:'statusText',
-                        label:'状态'
-                    }
-                ],
-                //添加弹框
-                schoolForm:{
-                    name:'',
-                    institutions:'',
-                    describe:'',
-                    order:''
+import table from '../../../components/table'
+import stateSwitch from '../../../components/state-switch'
+import paging from '../../../components/paging'
+import admAreasTree from  './adm-areas-tree'
+import bntList from  '../../../components/btn-list'
+export default {
+    name: "schoolDistrict",
+    data(){
+        return{
+            pageTile:'学区管理',
+            pageSize:10,//显示多少页
+            pageCurrent:1,//当前页
+            pageTotal:0,//总条数
+            status:0,
+            //表格
+            tableData:[],
+            tableColumn:[
+                {
+                    prop:'id',
+                    label:'显示顺序'
                 },
-                formRules:{
-                    name:[{required: true, message: '请输入学区名称', trigger: 'blur'}],
-                    institutions:[{required: true, message: '请选择组织结构', trigger: 'blur'}],
+                {
+                    prop:'name',
+                    label:'学区名称'
                 },
-                //自定义下拉框选中数据
-                label:'',
-                structureBnt:false
-            }
-        },
-        components:{
-            'school-table':table,
-            'school-stateSwitch':stateSwitch,
-            'school-paging':paging,
-            'adm-areas-tree':admAreasTree,
-            'bnt-list':bntList
-        },
-        //初始化
-        created(){
-            this.schoolList();
-        },
-        methods: {
-            //分页数据请求
-            schoolList(){
-                var params = {
-                    pageIndex :this.pageCurrent,
-                    pageSize:this.pageSize,
-                    orgId:0,
-                    status:this.status
-                };
-                this.$api.school(params).then(res => {
-                    if(res.success == true){
-                        //赋值分页总数
-                        this.pageTotal = res.totalDatas;
-                        //赋值表格数据
-                        this.tableData = res.data;
-                    }else {
-                        console.log('请求失败')
-                    }
-                })
+                {
+                    prop:'orgName',
+                    label:'组织结构'
+                },
+                {
+                    prop:'description',
+                    label:'描述'
+                },
+                {
+                    prop:'statusText',
+                    label:'状态'
+                }
+            ],
+            //添加弹框
+            schoolForm:{
+                name:'',
+                institutions:'',
+                describe:'',
+                order:''
             },
-            //保存编辑接口
-            schoolListAdd(){
-                var params = {
-                    name:this.schoolForm.name,
-                };
-                this.$api.schoolAdd(params).then(res => {
-                    if(res.success == true){
-                            console.log(res)
-                    }else {
-                        console.log('请求失败')
-                    }
-                })
+            formRules:{
+                name:[{required: true, message: '请输入学区名称', trigger: 'blur'}],
+                institutions:[{required: true, message: '请选择组织结构', trigger: 'blur'}],
             },
-            //停用接口
-            schoolDis(){
+            //自定义下拉框选中数据
+            label:'',
+            structureBnt:false
+        }
+    },
+    components:{
+        'school-table':table,
+        'school-stateSwitch':stateSwitch,
+        'school-paging':paging,
+        'adm-areas-tree':admAreasTree,
+        'bnt-list':bntList
+    },
+    //初始化
+    created(){
+        this.schoolList();
+    },
+    methods: {
+        //分页数据请求
+        schoolList(){
+            let params = {
+                pageIndex :this.pageCurrent,
+                pageSize:this.pageSize,
+                orgId:0,
+                status:this.status
+            };
+            this.$api.school(params).then(res => {
+                if(res.success == true){
+                    //赋值分页总数
+                    this.pageTotal = res.totalDatas;
+                    //赋值表格数据
+                    this.tableData = res.data;
+                }else {
+                    console.log('请求失败')
+                }
+            })
+        },
+        //保存编辑接口
+        schoolListAdd(){
+            let params = {
+                name:this.schoolForm.name,
+            };
+            this.$api.schoolAdd(params).then(res => {
+                if(res.success == true){
+                    console.log(res)
+                }else {
+                    console.log('请求失败')
+                }
+            })
+        },
+        //停用接口
+        schoolDis(){
 
-            },
-            //表格操作
-            schoolStop(row){//停用
-               /* this.$myLayer.confirmLayer('确定停用?',function () {});*/
-                console.log(row.id)
-                console.log(row.id.toFixed(0))
-               /* var params = {
+        },
+        //表格操作
+        schoolStop(row){//停用
+            /* this.$myLayer.confirmLayer('确定停用?',function () {});*/
+            console.log(row.id)
+            console.log(row.id.toFixed(0))
+            /* var params = {
                     id:row.id,
                     status:row.status
                 };
@@ -182,52 +182,52 @@
 
 
 
-            },
-            schoolEdit(row){//编辑
-                var editForm = {
-                    name:row.row.name,
-                    institutions:row.row.orgName,
-                    describe:row.row.description,
-                    order:row.$index+1
-                };
-                this.schoolForm = editForm;
-                this.$myLayer.formLayer("编辑",$('.stu-yeaer-modal-add'),['422px'],function () {
-                    this.schoolListAdd()
-                })
-            },
-            //启用/禁用
-            schoolSwitch(state){
-                this.status = state;
-                this.schoolList();
-            },
-            //分页
-            SizeChange(pageSize){//显示多少页
-                this.pageSize = pageSize;
-                this.schoolList();
-            },
-            CurrentChange(pageCurrent){//当前页
-                this.pageCurrent = pageCurrent;
-                this.schoolList();
-            },
-            //添加弹框
-            schoolAdd(){
-              /*  var name = this.schoolForm;
+        },
+        schoolEdit(row){//编辑
+            let editForm = {
+                name:row.row.name,
+                institutions:row.row.orgName,
+                describe:row.row.description,
+                order:row.$index+1
+            };
+            this.schoolForm = editForm;
+            this.$myLayer.formLayer("编辑",$('.stu-yeaer-modal-add'),['422px'],function () {
+                this.schoolListAdd()
+            })
+        },
+        //启用/禁用
+        schoolSwitch(state){
+            this.status = state;
+            this.schoolList();
+        },
+        //分页
+        SizeChange(pageSize){//显示多少页
+            this.pageSize = pageSize;
+            this.schoolList();
+        },
+        CurrentChange(pageCurrent){//当前页
+            this.pageCurrent = pageCurrent;
+            this.schoolList();
+        },
+        //添加弹框
+        schoolAdd(){
+            /*  var name = this.schoolForm;
                 this.$refs[name].resetFields();*/
-                this.$myLayer.formLayer("新建",$('.stu-yeaer-modal-add'),['422px'],function () {
-                    this.schoolListAdd()
-                })
-            },
-            //添加弹框里面的自定义下拉框
-            structureT(label){
-                console.log(label);
-                this.label = label;
-                this.structureBnt = false
-            },
-            structureTop(){
-                this.structureBnt = true
-            }
+            this.$myLayer.formLayer("新建",$('.stu-yeaer-modal-add'),['422px'],function () {
+                this.schoolListAdd()
+            })
+        },
+        //添加弹框里面的自定义下拉框
+        structureT(label){
+            console.log(label);
+            this.label = label;
+            this.structureBnt = false
+        },
+        structureTop(){
+            this.structureBnt = true
         }
     }
+}
 </script>
 
 <style scoped>

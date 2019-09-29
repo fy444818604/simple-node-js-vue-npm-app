@@ -93,14 +93,14 @@
 </template>
 
 <script>
-	export default {
-		components: {
-			resTip: () => import("@/components/res-tip"),
-			resTitle: () => import("@/components/res-title"),
-			resBox: () => import("@/components/res-box"),
-			resFooter: () => import("@/components/res-footer"),
-		}
-	}
+export default {
+    components: {
+        resTip: () => import("@/components/res-tip"),
+        resTitle: () => import("@/components/res-title"),
+        resBox: () => import("@/components/res-box"),
+        resFooter: () => import("@/components/res-footer"),
+    }
+}
 </script>
 
 <style lang="scss" scoped="scoped">

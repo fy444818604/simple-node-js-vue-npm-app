@@ -24,21 +24,21 @@
 </template>
 
 <script>
-    export default {
-        name: "query",
-        data(){
-            return{
-                options: [{
-                    value: '选项1',
-                    label: '黄金糕'
-                }, {
-                    value: '选项2',
-                    label: '双皮奶'
-                }],
-                value: ''
-            }
+export default {
+    name: "query",
+    data(){
+        return{
+            options: [{
+                value: '选项1',
+                label: '黄金糕'
+            }, {
+                value: '选项2',
+                label: '双皮奶'
+            }],
+            value: ''
         }
     }
+}
 </script>
 
 <style scoped>

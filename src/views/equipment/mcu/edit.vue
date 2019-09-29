@@ -42,24 +42,24 @@
 
 <script>
 export default {
-	components:{
+    components:{
  		baseTitle:()=>import("@/components/title"),
-	},
-	data(){
-		return {
-			formInfo:{
-				name:''
-			},
-			formRules:{
-				name:[{ required: true, message: '设备名称不能为空', trigger: 'blur' }],
-				ip:[{ required: true, message: 'ip不能为空', trigger: 'blur' }],
-				port:[{ required: true, message: '端口号不能为空', trigger: 'blur' }],
-				account:[{ required: true, message: '账户不能为空', trigger: 'blur' }],
-				password:[{ required: true, message: '密码不能为空', trigger: 'blur' }],
-				version:[{ required: true, message: '版本号不能为空', trigger: 'blur' }]
-			}
-		}
-	}
+    },
+    data(){
+        return {
+            formInfo:{
+                name:''
+            },
+            formRules:{
+                name:[{ required: true, message: '设备名称不能为空', trigger: 'blur' }],
+                ip:[{ required: true, message: 'ip不能为空', trigger: 'blur' }],
+                port:[{ required: true, message: '端口号不能为空', trigger: 'blur' }],
+                account:[{ required: true, message: '账户不能为空', trigger: 'blur' }],
+                password:[{ required: true, message: '密码不能为空', trigger: 'blur' }],
+                version:[{ required: true, message: '版本号不能为空', trigger: 'blur' }]
+            }
+        }
+    }
 }
 </script>
 

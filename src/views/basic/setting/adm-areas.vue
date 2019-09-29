@@ -66,85 +66,85 @@
     </div>
 </template>
 <script>
-    import tree from '../../../components/tree'
-    import admAreasTree from './adm-areas-tree'
-    export default {
-        name: "adm-areas",
-        data(){
-            return{
-                //标题
-                pageTile:'行政区域设置',
-                //详情和编辑切换
-                editorShow:false,
-                detailsShow:true,
-                //自定义树下拉
-                admTree:false,
-                //数据
-                nodeName:'中国',
-                referred:'中',
-                superior:'无',
-                level:'国家',
-                order:1,
-                state:'启用',
-                options: [{
-                    value: '1',
-                    label: '国家'
-                }, {
-                    value: '2',
-                    label: '省'
-                }, {
-                    value: '3',
-                    label: '市'
-                }, {
-                    value: '4',
-                    label: '县'
-                }, {
-                    value: '5',
-                    label: '镇'
-                }],
-                treeData: [],
-            }
+import tree from '../../../components/tree'
+import admAreasTree from './adm-areas-tree'
+export default {
+    name: "adm-areas",
+    data(){
+        return{
+            //标题
+            pageTile:'行政区域设置',
+            //详情和编辑切换
+            editorShow:false,
+            detailsShow:true,
+            //自定义树下拉
+            admTree:false,
+            //数据
+            nodeName:'中国',
+            referred:'中',
+            superior:'无',
+            level:'国家',
+            order:1,
+            state:'启用',
+            options: [{
+                value: '1',
+                label: '国家'
+            }, {
+                value: '2',
+                label: '省'
+            }, {
+                value: '3',
+                label: '市'
+            }, {
+                value: '4',
+                label: '县'
+            }, {
+                value: '5',
+                label: '镇'
+            }],
+            treeData: [],
+        }
+    },
+    components:{
+        'tree':tree,
+        'adm-areas-tree':admAreasTree
+    },
+    //初始化
+    created(){
+        this.areasTree();
+    },
+    methods: {
+        areasTree(){
+            let val = {
+                level:1,
+                parentId:0
+            };
+            this.$api.areasTree(val).then(res => {
+                if(res.success == true){
+                    console.log(res.data);
+                    this.treeData = res.data;
+                }else {
+                    console.log('请求失败')
+                }
+            })
         },
-        components:{
-           'tree':tree,
-            'adm-areas-tree':admAreasTree
+        editor() {  //编辑
+            this.editorShow = !this.editorShow;
+            this.detailsShow = !this.detailsShow
         },
-        //初始化
-        created(){
-            this.areasTree();
+        confirmEditor(){//编辑保存
+            this.editorShow = false;
+            this.detailsShow = !this.detailsShow
         },
-        methods: {
-            areasTree(){
-                var val = {
-                    level:1,
-                    parentId:0
-                };
-                this.$api.areasTree(val).then(res => {
-                    if(res.success == true){
-                        console.log(res.data);
-                        this.treeData = res.data;
-                    }else {
-                        console.log('请求失败')
-                    }
-                })
-            },
-            editor() {  //编辑
-                this.editorShow = !this.editorShow;
-                this.detailsShow = !this.detailsShow
-            },
-            confirmEditor(){//编辑保存
-                this.editorShow = false;
-                this.detailsShow = !this.detailsShow
-            },
-            superiorClisk(){//展开收缩自定义下拉
-                this.admTree = !this.admTree
-            },
-            superiorData(data){//自定义下拉选中数据
-                this.superior = data;
-                this.admTree = false
-            }
+        superiorClisk(){//展开收缩自定义下拉
+            this.admTree = !this.admTree
+        },
+        superiorData(data){//自定义下拉选中数据
+            this.superior = data;
+            this.admTree = false
         }
     }
+}
 </script>
 
 <style scoped>

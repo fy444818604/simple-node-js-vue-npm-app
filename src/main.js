@@ -20,26 +20,26 @@ Vue.use(ElementUI);
 Vue.use(VueRouter);
 
 Vue.directive('clickOutSide', {
-	bind(el, binding, vnode) {
-		el.handler = function(e) {
-			if (el.contains(e.target)) {
-				return false
-			}
-			binding.value()
-		}
-		el.stopProp = function(event) {
-			event.stopPropagation()
-		}
-		el.addEventListener('click', el.stopProp)
-		document.body.addEventListener('click', el.handler)
-	},
-	unbind(el, binding) {
-		el.removeEventListener('click', el.stopProp)
-		document.body.removeEventListener('click', el.handler)
-	}
+    bind(el, binding, vnode) {
+        el.handler = function(e) {
+            if (el.contains(e.target)) {
+                return false
+            }
+            binding.value()
+        }
+        el.stopProp = function(event) {
+            event.stopPropagation()
+        }
+        el.addEventListener('click', el.stopProp)
+        document.body.addEventListener('click', el.handler)
+    },
+    unbind(el, binding) {
+        el.removeEventListener('click', el.stopProp)
+        document.body.removeEventListener('click', el.handler)
+    }
 })
 new Vue({
-	router,
-	store,
-	render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount('#app');

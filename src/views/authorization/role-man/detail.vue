@@ -54,20 +54,20 @@
 
 <script>
 export default {
-	data(){
-		return {
-			activeName:"first",
-			tableData:[{id:1,gro:'何司朗',org:'校长办公室'}]
-		}
-	},
-	components:{
-		btnList:()=>import("@/components/btn-list"),
-		page:()=>import("@/components/paging"),
-		baseTitle:()=>import("@/components/title")
-	},
-	methods:{
-		handleClick(){}
-	}
+    data(){
+        return {
+            activeName:"first",
+            tableData:[{id:1,gro:'何司朗',org:'校长办公室'}]
+        }
+    },
+    components:{
+        btnList:()=>import("@/components/btn-list"),
+        page:()=>import("@/components/paging"),
+        baseTitle:()=>import("@/components/title")
+    },
+    methods:{
+        handleClick(){}
+    }
 }
 </script>
 

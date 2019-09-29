@@ -9,28 +9,28 @@ import layer from 'layui-layer'
  * @param {function} callback [弹出层回调函数]
  */
 export const formLayer = (title, src, area, callback) => {
-	let index = layer.open({
-		type: 1,
-		title: title,
-		content: src,
-		area: area,
-		btn: ['确认', '取消'],
-		btnAlign: 'r',
-		resize: false,
-		yes: function(index, layero) {
-			if (callback()) {
-				src.hide();
-				layer.close(index)
-			}
-		},
-		btn2: function(index, layero) {
-			src.hide();
-			layer.close(index)
-		},
-		cancel:function(){
-			src.hide();
-		}
-	})
+    let index = layer.open({
+        type: 1,
+        title: title,
+        content: src,
+        area: area,
+        btn: ['确认', '取消'],
+        btnAlign: 'r',
+        resize: false,
+        yes: function(index, layero) {
+            if (callback()) {
+                src.hide();
+                layer.close(index)
+            }
+        },
+        btn2: function(index, layero) {
+            src.hide();
+            layer.close(index)
+        },
+        cancel:function(){
+            src.hide();
+        }
+    })
 }	
 				
 
@@ -39,18 +39,18 @@ export const formLayer = (title, src, area, callback) => {
  * @param {String} msg [提示内容]
  */
 export const successLayer = (msg) => {
-	let html =
+    let html =
 		`<div class="window-cont"><i class="fy-windows-icon icon-success"></i><p>${msg}</p><button>知道了</button></div>`;
-	let index = layer.open({
-		type: 1,
-		title: false,
-		closeBtn: 0,
-		area: '280px',
-		content: html
-	});
-	document.querySelector('.window-cont>button').addEventListener('click', function() {
-		layer.close(index)
-	})
+    let index = layer.open({
+        type: 1,
+        title: false,
+        closeBtn: 0,
+        area: '280px',
+        content: html
+    });
+    document.querySelector('.window-cont>button').addEventListener('click', function() {
+        layer.close(index)
+    })
 }
 
 /**
@@ -58,18 +58,18 @@ export const successLayer = (msg) => {
  * @param {String} msg [提示内容]
  */
 export const dangerLayer = (msg) => {
-	let html =
+    let html =
 		`<div class="window-cont"><i class="fy-windows-icon icon-danger"></i><p>${msg}</p><button>知道了</button></div>`;
-	let index = layer.open({
-		type: 1,
-		title: false,
-		closeBtn: 0,
-		area: '280px',
-		content: html
-	});
-	document.querySelector('.window-cont>button').addEventListener('click', function() {
-		layer.close(index)
-	})
+    let index = layer.open({
+        type: 1,
+        title: false,
+        closeBtn: 0,
+        area: '280px',
+        content: html
+    });
+    document.querySelector('.window-cont>button').addEventListener('click', function() {
+        layer.close(index)
+    })
 }
 
 /**
@@ -77,18 +77,18 @@ export const dangerLayer = (msg) => {
  * @param {String} msg [提示内容]
  */
 export const errorLayer = (msg) => {
-	let html =
+    let html =
 		`<div class="window-cont"><i class="fy-windows-icon icon-error"></i><p>${msg}</p><button>知道了</button></div>`;
-	let index = layer.open({
-		type: 1,
-		title: false,
-		closeBtn: 0,
-		area: '280px',
-		content: html
-	});
-	document.querySelector('.window-cont>button').addEventListener('click', function() {
-		layer.close(index)
-	})
+    let index = layer.open({
+        type: 1,
+        title: false,
+        closeBtn: 0,
+        area: '280px',
+        content: html
+    });
+    document.querySelector('.window-cont>button').addEventListener('click', function() {
+        layer.close(index)
+    })
 }
 
 /**
@@ -97,32 +97,32 @@ export const errorLayer = (msg) => {
  * @param {Function} callback [确认回调函数]
  */
 export const confirmLayer = (msg, callback) => {
-	let html = `<div class="confirm-cont"><i class="fy-windows-icon icon-confirm"></i><p>${msg}</p></div>`;
-	let index = layer.open({
-		type: 1,
-		title: false,
-		closeBtn: 0,
-		area: '360px',
-		btn: ['确认', '取消'],
-		skin: 'confirm',
-		content: html,
-		yes: function(index, layero) {
-			if (typeof callback == "object") {
-				switch (callback.length) {
-					case 2:
-						callback[0](callback[1]);
-						break;
-					case 3:
-						callback[0](callback[1], callback[2]);
-						break;
-				}
-			} else {
-				callback()
-			}
-			layer.close(index)
-		},
-		btn2: function(index, layero) {
-			layer.close(index)
-		}
-	});
+    let html = `<div class="confirm-cont"><i class="fy-windows-icon icon-confirm"></i><p>${msg}</p></div>`;
+    let index = layer.open({
+        type: 1,
+        title: false,
+        closeBtn: 0,
+        area: '360px',
+        btn: ['确认', '取消'],
+        skin: 'confirm',
+        content: html,
+        yes: function(index, layero) {
+            if (typeof callback == "object") {
+                switch (callback.length) {
+                case 2:
+                    callback[0](callback[1]);
+                    break;
+                case 3:
+                    callback[0](callback[1], callback[2]);
+                    break;
+                }
+            } else {
+                callback()
+            }
+            layer.close(index)
+        },
+        btn2: function(index, layero) {
+            layer.close(index)
+        }
+    });
 }

@@ -44,114 +44,114 @@
 </template>
 
 <script>
-    import stateSwitch from '../../../components/state-switch'
-    import paging from '../../../components/paging'
-    import table from '../../../components/table'
-    import modal from '../../../components/modal'
-    export default {
-        name: "adm-level",
-        data(){
-            return{
-                pageTile:'行政级别设置',
-                pageSize:'',//显示多少页
-                pageCurrent:'',//当前页
-                pageTotal:300,//总条数
-                tableData:[
-                    {
-                        id:1,
-                        level:'1号教学楼',
-                        status:'启用',
+import stateSwitch from '../../../components/state-switch'
+import paging from '../../../components/paging'
+import table from '../../../components/table'
+import modal from '../../../components/modal'
+export default {
+    name: "adm-level",
+    data(){
+        return{
+            pageTile:'行政级别设置',
+            pageSize:'',//显示多少页
+            pageCurrent:'',//当前页
+            pageTotal:300,//总条数
+            tableData:[
+                {
+                    id:1,
+                    level:'1号教学楼',
+                    status:'启用',
 
-                    },
-                    {
-                        id:2,
-                        level:'1号教学楼',
-                        status:'启用',
-
-                    },
-                    {
-                        id:3,
-                        level:'1号教学楼',
-                        status:'启用',
-
-                    },
-                    {
-                        id:4,
-                        level:'1号教学楼',
-                        status:'启用',
-
-                    }
-                ],
-                tableColumn:[
-                    {
-                        prop:'id',
-                        label:'显示顺序'
-                    },
-                    {
-                        prop:'level',
-                        label:'行政级别'
-                    },
-                    {
-                        prop:'status',
-                        label:'状态'
-                    }
-                ],
-                /* dialog */
-                dialog: {
-                    visible:false,
-                    title: '新建行政级别',
                 },
-                admForm:{
-                    level:'',
-                    order:''
+                {
+                    id:2,
+                    level:'1号教学楼',
+                    status:'启用',
+
                 },
-                formRules:{
-                    level:[{required: true, message: '不能为空', trigger: 'blur'}],
-                    order:[{required: true, message: '不能为空', trigger: 'blur'}],
+                {
+                    id:3,
+                    level:'1号教学楼',
+                    status:'启用',
+
+                },
+                {
+                    id:4,
+                    level:'1号教学楼',
+                    status:'启用',
+
                 }
-            }
-        },
-        components: {
-            'state-switch': stateSwitch,
-            'paging':paging,
-            'adm-table':table,
-            'adm-modal':modal
-        },
-        methods: {
-            stateList(state){//状态开关
-                alert(state)
+            ],
+            tableColumn:[
+                {
+                    prop:'id',
+                    label:'显示顺序'
+                },
+                {
+                    prop:'level',
+                    label:'行政级别'
+                },
+                {
+                    prop:'status',
+                    label:'状态'
+                }
+            ],
+            /* dialog */
+            dialog: {
+                visible:false,
+                title: '新建行政级别',
             },
-            SizeChange(pageSize){//显示多少页
-                alert(pageSize)
+            admForm:{
+                level:'',
+                order:''
             },
-            CurrentChange(pageCurrent){//当前页
-                alert(pageCurrent)
-            },
-            //表格操作
-            amdStop(){
-
-            },
-            admEdit(){
-
-            },
-            //modal
-            admClose(){
-
-                this.dialog.visible = false
-            },
-            admSave(){
-                this.$refs.form.validate((valid) => {
-                    if(valid) {
-                        console.log(valid);
-                    }
-                })
-            },
-            //添加弹框
-            admAdd(){
-                this.dialog.visible = true;
+            formRules:{
+                level:[{required: true, message: '不能为空', trigger: 'blur'}],
+                order:[{required: true, message: '不能为空', trigger: 'blur'}],
             }
         }
+    },
+    components: {
+        'state-switch': stateSwitch,
+        'paging':paging,
+        'adm-table':table,
+        'adm-modal':modal
+    },
+    methods: {
+        stateList(state){//状态开关
+            alert(state)
+        },
+        SizeChange(pageSize){//显示多少页
+            alert(pageSize)
+        },
+        CurrentChange(pageCurrent){//当前页
+            alert(pageCurrent)
+        },
+        //表格操作
+        amdStop(){
+
+        },
+        admEdit(){
+
+        },
+        //modal
+        admClose(){
+
+            this.dialog.visible = false
+        },
+        admSave(){
+            this.$refs.form.validate((valid) => {
+                if(valid) {
+                    console.log(valid);
+                }
+            })
+        },
+        //添加弹框
+        admAdd(){
+            this.dialog.visible = true;
+        }
     }
+}
 </script>
 
 <style scoped>

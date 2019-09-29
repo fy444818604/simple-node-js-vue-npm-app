@@ -19,13 +19,13 @@
 </template>
 <script>
 export default {
-  props:{
-    index:{
-      type:Number,
-      default: 5
-    },
-    show:Boolean
-  }
+    props:{
+        index:{
+            type:Number,
+            default: 5
+        },
+        show:Boolean
+    }
 }
 </script>
 <style lang="scss" scoped>

@@ -40,66 +40,66 @@
 <script>
 
 export default {
-  components:{
-    baseTable:()=>import("./../../../components/table"),
-    stateSwitch:() => import("./../../../components/state-switch"),
-    baseTitle:() => import("@/components/title"),
-    btnList:() => import("@/components/btn-list"),
-    page:() => import("@/components/paging")
-  },
-  data(){
-    return {
-      tableData:[        
-        {
-          id:1,
-          name:'1号教学楼',
-          type:'普通教室',
-          desc:'1号教学楼',
-          status:'启用'
-        }],
-      tableColumn:[
-          {
-            prop:'id',
-            label:'显示顺序',
-            align:"center",
-            width:100
-          },
-          { 
-            prop:'type',
-            label:"教室类型",
-            align:"center",
-            width:100
-          },
-          {
-            prop:'desc',
-            align:"center",
-            label:'描述'
-          },
-          {
-            prop:'status',
-            label:'状态',
-            align:"center",
-            width:200
-          }
-        ],
- 
-      /* modal*/
-      formInfo:{
-        type:'',
-        desc:'',
-        order:''
-      },
-      rule:{
-        type:[{required: true, message: '请输入教室类型', trigger: 'blur'}]
-      }
-    }
-  },
-  methods:{
-    handleAdd(){
-      this.$myLayer.formLayer('新建教室类型',$('.room-type-modal'),['422px'])
+    components:{
+        baseTable:()=>import("./../../../components/table"),
+        stateSwitch:() => import("./../../../components/state-switch"),
+        baseTitle:() => import("@/components/title"),
+        btnList:() => import("@/components/btn-list"),
+        page:() => import("@/components/paging")
     },
-    handleSwicthState(val){},
-  }
+    data(){
+        return {
+            tableData:[        
+                {
+                    id:1,
+                    name:'1号教学楼',
+                    type:'普通教室',
+                    desc:'1号教学楼',
+                    status:'启用'
+                }],
+            tableColumn:[
+                {
+                    prop:'id',
+                    label:'显示顺序',
+                    align:"center",
+                    width:100
+                },
+                { 
+                    prop:'type',
+                    label:"教室类型",
+                    align:"center",
+                    width:100
+                },
+                {
+                    prop:'desc',
+                    align:"center",
+                    label:'描述'
+                },
+                {
+                    prop:'status',
+                    label:'状态',
+                    align:"center",
+                    width:200
+                }
+            ],
+ 
+            /* modal*/
+            formInfo:{
+                type:'',
+                desc:'',
+                order:''
+            },
+            rule:{
+                type:[{required: true, message: '请输入教室类型', trigger: 'blur'}]
+            }
+        }
+    },
+    methods:{
+        handleAdd(){
+            this.$myLayer.formLayer('新建教室类型',$('.room-type-modal'),['422px'])
+        },
+        handleSwicthState(val){},
+    }
 }
 </script>
 <style lang="scss" scoped>

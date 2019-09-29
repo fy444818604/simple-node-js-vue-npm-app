@@ -9,18 +9,18 @@
 </template>
 
 <script>
-	import TopHead from '../../../components/res-head'
+import TopHead from '../../../components/res-head'
 	
-	export default {
-		data(){
-			return{
+export default {
+    data(){
+        return{
 				
-			}
-		},
-		components:{
-			'top-head':TopHead
-		}
-	}
+        }
+    },
+    components:{
+        'top-head':TopHead
+    }
+}
 </script>
 
 <style lang="scss" scoped="scoped">

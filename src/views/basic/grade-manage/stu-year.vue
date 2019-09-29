@@ -84,77 +84,77 @@
 </template>
 <script>
 export default {
-  components:{
-    baseTable:()=>import("./../../../components/table"),
-    stateSwitch:() => import("./../../../components/state-switch"),
-    baseTitle:()=>import("@/components/title"),
-    btnList:()=>import("@/components/btn-list"),
-    page:()=>import("@/components/paging")
-  },
-  data(){
-    return {
-      value:'',
-      options:[{label:"阶段一",value:"阶段一"}],
-      tableColumn:[
-        {
-          prop:'id',
-          label:"序号"
-        },
-        {
-          prop:'type',
-          label:"学届名称"
-        },
-        {
-          prop:'desc',
-          label:"入学时间"
+    components:{
+        baseTable:()=>import("./../../../components/table"),
+        stateSwitch:() => import("./../../../components/state-switch"),
+        baseTitle:()=>import("@/components/title"),
+        btnList:()=>import("@/components/btn-list"),
+        page:()=>import("@/components/paging")
+    },
+    data(){
+        return {
+            value:'',
+            options:[{label:"阶段一",value:"阶段一"}],
+            tableColumn:[
+                {
+                    prop:'id',
+                    label:"序号"
+                },
+                {
+                    prop:'type',
+                    label:"学届名称"
+                },
+                {
+                    prop:'desc',
+                    label:"入学时间"
+                }
+            ],
+            tableData:[        
+                {
+                    id:1,
+                    name:'1号教学楼',
+                    type:'普通教室',
+                    desc:'1号教学楼',
+                    status:'启用'
+                }],
+            /* dialog */
+            dialog: {
+                formAdd:{
+                    name:'', //机构
+                    time:'', //时间
+                    stage:'', //阶段
+                    type:'' //学制
+                },
+                formAddRules:{
+                    name:[{required: true, message: '请选择机构', trigger: 'change'}],
+                    time:[{required: true, message: '请选择时间', trigger: 'change'}],
+                    stage:[{required: true, message: '请选择阶段', trigger: 'change'}],
+                    type:[{required: true, message: '请输入学制', trigger: 'blur'}]
+                },
+                formEdit:{
+                    name:'',
+                    one:'',
+                    two:'',
+                    three:''
+                },
+                formEditRules:{
+                    one:[{required: true, message: '请输入第一学年', trigger: 'blur'}],
+                    two:[{required: true, message: '请输入第二学年', trigger: 'blur'}],
+                    three:[{required: true, message: '请输入第三学年', trigger: 'blur'}]
+                }
+            }
         }
-      ],
-      tableData:[        
-        {
-          id:1,
-          name:'1号教学楼',
-          type:'普通教室',
-          desc:'1号教学楼',
-          status:'启用'
-        }],
-      /* dialog */
-      dialog: {
-        formAdd:{
-          name:'', //机构
-          time:'', //时间
-          stage:'', //阶段
-          type:'' //学制
-        },
-        formAddRules:{
-          name:[{required: true, message: '请选择机构', trigger: 'change'}],
-          time:[{required: true, message: '请选择时间', trigger: 'change'}],
-          stage:[{required: true, message: '请选择阶段', trigger: 'change'}],
-          type:[{required: true, message: '请输入学制', trigger: 'blur'}]
-        },
-        formEdit:{
-          name:'',
-          one:'',
-          two:'',
-          three:''
-        },
-        formEditRules:{
-          one:[{required: true, message: '请输入第一学年', trigger: 'blur'}],
-          two:[{required: true, message: '请输入第二学年', trigger: 'blur'}],
-          three:[{required: true, message: '请输入第三学年', trigger: 'blur'}]
-        }
-      }
-    }
-  },
-  methods:{
+    },
+    methods:{
     /* modal */
     /* 增加 */
-    handleAdd() {
-      this.$myLayer.formLayer("新建",$('.stu-yeaer-modal-add'),['422px'])
-    },
-    handleSwicthState(){
+        handleAdd() {
+            this.$myLayer.formLayer("新建",$('.stu-yeaer-modal-add'),['422px'])
+        },
+        handleSwicthState(){
 
+        }
     }
-  }
 }
 </script>
 

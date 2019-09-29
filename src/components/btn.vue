@@ -13,19 +13,19 @@
 
 <script>
 export default {
-  props: {
-    type:{
-      style:String
-    }
-  },
-  methods:{
-    handleCancel(){
-      this.$emit("on-cancel")
+    props: {
+        type:{
+            style:String
+        }
     },
-    handleSave(){
-      this.$emit("on-save")
+    methods:{
+        handleCancel(){
+            this.$emit("on-cancel")
+        },
+        handleSave(){
+            this.$emit("on-save")
+        }
     }
-  }
 }
 </script>
 

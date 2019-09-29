@@ -78,218 +78,218 @@
 </template>
 
 <script>
-	import layer from 'layui-layer'
-	export default {
-		data() {
-			return {
-				loading: true,
-				img: require('@/assets/image/color-picker.png'),
-				bookmarkRecommend: [],
-				bookmarkCommon: [],
-				bookedit: {
-					webInfoId: 1,
-					webInfoIcon: '',
-					webName: '优酷',
-					colorNum: '#3498db',
-					webInfoUrl: 'https://www.baidu.com/',
-					isRecommend: 2
-				},
-				bookmarkSwitch: false,
-				bookmarkIndex: 0,
-				bookmarkLump: [{
-						color: '#1abc9c',
-						active: false
-					},
-					{
-						color: '#2dcc71',
-						active: false
-					},
-					{
-						color: '#33c5c5',
-						active: false
-					},
-					{
-						color: '#3498db',
-						active: true
-					},
-					{
-						color: '#f1c410',
-						active: false
-					},
-					{
-						color: '#e57e22',
-						active: false
-					},
-					{
-						color: '#e74b3d',
-						active: false
-					},
-					{
-						color: 'transparent',
-						active: false
-					}
-				]
-			};
-		},
-		created() {
-			this.bookmarkRecommendFun();
-			this.bookmarkFun();
-		},
-		mounted() {
-			function push(array, ...items) {
-				items.forEach(function(item) {
-					array.push(item);
-					console.log(item);
-				});
-				return array
-			}
+import layer from 'layui-layer'
+export default {
+    data() {
+        return {
+            loading: true,
+            img: require('@/assets/image/color-picker.png'),
+            bookmarkRecommend: [],
+            bookmarkCommon: [],
+            bookedit: {
+                webInfoId: 1,
+                webInfoIcon: '',
+                webName: '优酷',
+                colorNum: '#3498db',
+                webInfoUrl: 'https://www.baidu.com/',
+                isRecommend: 2
+            },
+            bookmarkSwitch: false,
+            bookmarkIndex: 0,
+            bookmarkLump: [{
+                color: '#1abc9c',
+                active: false
+            },
+            {
+                color: '#2dcc71',
+                active: false
+            },
+            {
+                color: '#33c5c5',
+                active: false
+            },
+            {
+                color: '#3498db',
+                active: true
+            },
+            {
+                color: '#f1c410',
+                active: false
+            },
+            {
+                color: '#e57e22',
+                active: false
+            },
+            {
+                color: '#e74b3d',
+                active: false
+            },
+            {
+                color: 'transparent',
+                active: false
+            }
+            ]
+        };
+    },
+    created() {
+        this.bookmarkRecommendFun();
+        this.bookmarkFun();
+    },
+    mounted() {
+        function push(array, ...items) {
+            items.forEach(function(item) {
+                array.push(item);
+                console.log(item);
+            });
+            return array
+        }
 			
-			let obj = { a: { b: 1 } };
-			let { ...x } = obj;
-			// obj.a.b = 2;
-			console.log(x.a.b)
-		},
-		methods: {
-			bookmarkRecommendFun() {
-				this.$post('/api/bookmarkRecommend').then((res) => {
-					this.bookmarkRecommend = res;
-				})
-			},
-			bookmarkFun() {
-				this.$post('/api/bookmark').then((res) => {
-					this.bookmarkCommon = res;
-				})
-			},
-			boormarkEdit() {
-				this.bookmarkSwitch = true;
-			},
-			//关闭书签操作
-			boormarkEditClose() {
-				this.bookmarkSwitch = false;
-			},
-			bookmarkDel(webInfoId) {
-				this.$post('/api/bookmarkRomove', {
-					id: webInfoId
-				}).then((res) => {
-					if (res.code == 200) {
-						this.bookmarkFun();
-						this.$message({
-							message: res.msg,
-							type: 'success'
-						})
-					}
-				})
-			},
-			bookmarkAddLayer(para) {
-				//多窗口模式，层叠置顶
-				var _this = this;
-				if ($('.bookmark-layer').css('display') == 'none') {
-					$('.bookmark-layer').show();
-					this.bookmarkIndex = layer.open({
-						type: 1,
-						title: false,
-						area: ['320px', '372px'],
-						shade: false,
-						scrollbar: false,
-						closeBtn: 0,
-						content: $('.bookmark-layer')
-					});
-					if (para.webName != undefined) {
-						$('.bookmark-layer-title>div').text('编辑');
-						_this.bookedit = para;
-						var array = [];
-						_this.bookmarkLump.map((v, i) => {
-							array.push(v.color)
-						})
-						var index = $.inArray(_this.bookedit.colorNum, array);
-						if (index == -1) {
-							_this.bookmarkLump.map((v, i, n) => {
-								if (i == n.length - 1) {
-									v.active = true
-									v.color = _this.bookedit.colorNum
-								} else {
-									v.active = false
-								}
-							})
-						} else {
-							_this.bookmarkLump.map((v, i) => {
-								if (i == index) {
-									v.active = true
-								} else {
-									v.active = false
-								}
-							})
-						}
-					} else {
-						$('.bookmark-layer-title>div').text('新建');
-						_this.bookedit = {
-							webInfoId: _this.uuid(),
-							webInfoIcon: '',
-							webName: '',
-							colorNum: '#3498db',
-							webInfoUrl: 'https://',
-							isRecommend: 2
-						};
-						_this.bookmarkLump.map((v, i) => {
-							if (v.active) {
-								this.bookedit.colorNum = this.bookmarkLump[i].color
-							}
-						})
-					}
-				}
-			},
-			bookmarkAddLayerClose() {
-				layer.close(this.bookmarkIndex);
-				$('.bookmark-layer').hide();
-			},
-			bookmarkAdd() {
-				this.$post('/api/bookmarkAdd', this.bookedit).then((res) => {
-					if (res.code == 200) {
-						this.bookmarkFun();
-						this.bookmarkAddLayerClose();
-							this.$message({
-							message: res.msg,
-							type: 'success'
-						})
-					}
-				})
-			},
-			colorSelect(index) {
-				if (index != 7) {
-					this.bookmarkLump.map((v, i) => {
-						v.active = false;
-					})
-					this.bookmarkLump[index].active = true;
-					this.bookmarkLump.map((v, i) => {
-						if (v.active) {
-							this.bookedit.colorNum = this.bookmarkLump[i].color
-						}
-					})
-				}
-			},
-			colorChange(val) {
-				this.bookmarkLump.map((v, i) => {
-					v.active = false;
-				})
-				this.bookmarkLump[7].active = true;
-				this.bookmarkLump[7].color = val;
-				this.bookedit.colorNum = val;
-			},
-			uuid() {
-				let s = [];
-				let hexDigits = "0123456789abcdef";
-				for (let i = 0; i < 36; i++) {
-					s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
-				}
-				s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
-				s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
-				s[8] = s[13] = s[18] = s[23] = "-";
+        let obj = { a: { b: 1 } };
+        let { ...x } = obj;
+        // obj.a.b = 2;
+        console.log(x.a.b)
+    },
+    methods: {
+        bookmarkRecommendFun() {
+            this.$post('/api/bookmarkRecommend').then((res) => {
+                this.bookmarkRecommend = res;
+            })
+        },
+        bookmarkFun() {
+            this.$post('/api/bookmark').then((res) => {
+                this.bookmarkCommon = res;
+            })
+        },
+        boormarkEdit() {
+            this.bookmarkSwitch = true;
+        },
+        //关闭书签操作
+        boormarkEditClose() {
+            this.bookmarkSwitch = false;
+        },
+        bookmarkDel(webInfoId) {
+            this.$post('/api/bookmarkRomove', {
+                id: webInfoId
+            }).then((res) => {
+                if (res.code == 200) {
+                    this.bookmarkFun();
+                    this.$message({
+                        message: res.msg,
+                        type: 'success'
+                    })
+                }
+            })
+        },
+        bookmarkAddLayer(para) {
+            //多窗口模式，层叠置顶
+            let _this = this;
+            if ($('.bookmark-layer').css('display') == 'none') {
+                $('.bookmark-layer').show();
+                this.bookmarkIndex = layer.open({
+                    type: 1,
+                    title: false,
+                    area: ['320px', '372px'],
+                    shade: false,
+                    scrollbar: false,
+                    closeBtn: 0,
+                    content: $('.bookmark-layer')
+                });
+                if (para.webName != undefined) {
+                    $('.bookmark-layer-title>div').text('编辑');
+                    _this.bookedit = para;
+                    let array = [];
+                    _this.bookmarkLump.map((v, i) => {
+                        array.push(v.color)
+                    })
+                    let index = $.inArray(_this.bookedit.colorNum, array);
+                    if (index == -1) {
+                        _this.bookmarkLump.map((v, i, n) => {
+                            if (i == n.length - 1) {
+                                v.active = true
+                                v.color = _this.bookedit.colorNum
+                            } else {
+                                v.active = false
+                            }
+                        })
+                    } else {
+                        _this.bookmarkLump.map((v, i) => {
+                            if (i == index) {
+                                v.active = true
+                            } else {
+                                v.active = false
+                            }
+                        })
+                    }
+                } else {
+                    $('.bookmark-layer-title>div').text('新建');
+                    _this.bookedit = {
+                        webInfoId: _this.uuid(),
+                        webInfoIcon: '',
+                        webName: '',
+                        colorNum: '#3498db',
+                        webInfoUrl: 'https://',
+                        isRecommend: 2
+                    };
+                    _this.bookmarkLump.map((v, i) => {
+                        if (v.active) {
+                            this.bookedit.colorNum = this.bookmarkLump[i].color
+                        }
+                    })
+                }
+            }
+        },
+        bookmarkAddLayerClose() {
+            layer.close(this.bookmarkIndex);
+            $('.bookmark-layer').hide();
+        },
+        bookmarkAdd() {
+            this.$post('/api/bookmarkAdd', this.bookedit).then((res) => {
+                if (res.code == 200) {
+                    this.bookmarkFun();
+                    this.bookmarkAddLayerClose();
+                    this.$message({
+                        message: res.msg,
+                        type: 'success'
+                    })
+                }
+            })
+        },
+        colorSelect(index) {
+            if (index != 7) {
+                this.bookmarkLump.map((v, i) => {
+                    v.active = false;
+                })
+                this.bookmarkLump[index].active = true;
+                this.bookmarkLump.map((v, i) => {
+                    if (v.active) {
+                        this.bookedit.colorNum = this.bookmarkLump[i].color
+                    }
+                })
+            }
+        },
+        colorChange(val) {
+            this.bookmarkLump.map((v, i) => {
+                v.active = false;
+            })
+            this.bookmarkLump[7].active = true;
+            this.bookmarkLump[7].color = val;
+            this.bookedit.colorNum = val;
+        },
+        uuid() {
+            let s = [];
+            let hexDigits = "0123456789abcdef";
+            for (let i = 0; i < 36; i++) {
+                s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+            }
+            s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
+            s[19] = hexDigits.substr(s[19] & 0x3 | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
+            s[8] = s[13] = s[18] = s[23] = "-";
 
-				let uuid = s.join("").replace(/-/g, '');
-				return uuid;
-			},
-		}
-	}
+            let uuid = s.join("").replace(/-/g, '');
+            return uuid;
+        },
+    }
+}
 </script>
 
 <style>

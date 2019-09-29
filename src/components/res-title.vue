@@ -7,21 +7,21 @@
 </template>
 <script>
 export default {
-  props:{
-    title:{
-      type:String,
-      required:true
+    props:{
+        title:{
+            type:String,
+            required:true
+        },
+        more:{
+            type:String,
+            default:"更多>"
+        }
     },
-    more:{
-      type:String,
-      default:"更多>"
+    methods:{
+        handleShowMore(){
+            this.$emit("on-more")
+        }
     }
-  },
-  methods:{
-    handleShowMore(){
-      this.$emit("on-more")
-    }
-  }
 }
 </script>
 <style lang="scss" scoped>

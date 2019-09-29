@@ -129,121 +129,121 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                activeName: 'first',
-                //基本信息的表单
-                form: {
-                    institutions: '',
-                    name:'',
-                    every: '',
-                    yearStart: '',
-                    endStart: '',
-                    campus: '',
-                    phase: '',
-                },
-                validation: {
-                    institutions: [
-                        { required: true, message: '不能为空', trigger: 'blur' },
-                        { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-                    ],
-                    name: [
-                        { required: true, message: '不能为空', trigger: 'change' }
-                    ],
-                    every: [
-                        {  required: true, message: '请选择左侧需要修改或添加的选项', trigger: 'change' }
-                    ],
-                    yearStart: [
-                        { required: true, message: '请选择作息时间类型', trigger: 'change' }
-                    ],
-                    endStart: [
-                        { required: true, message: '请选择作息时间类型', trigger: 'change' }
-                    ],
-                    campus: [
-                        { required: true, message: '请选择作息时间类型', trigger: 'change' }
-                    ],
-                },
-                //时间设置的表单
-                ruleForm: {
-                    name: '',
-                    duration: '',
-                    time: '',
-                    order: '',
-                    delivery: false,
-                    type: '',
-                },
-                addData:[
-                    {
-                        name:'第一节',
-                        tie:'09-21'
-                    },
-                    {
-                        name:'第二节',
-                        tie:'09-22'
-                    }
+export default {
+    data() {
+        return {
+            activeName: 'first',
+            //基本信息的表单
+            form: {
+                institutions: '',
+                name:'',
+                every: '',
+                yearStart: '',
+                endStart: '',
+                campus: '',
+                phase: '',
+            },
+            validation: {
+                institutions: [
+                    { required: true, message: '不能为空', trigger: 'blur' },
+                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
                 ],
-                custom:{
-                    name:'示例',
-                    tie:'14:30'
+                name: [
+                    { required: true, message: '不能为空', trigger: 'change' }
+                ],
+                every: [
+                    {  required: true, message: '请选择左侧需要修改或添加的选项', trigger: 'change' }
+                ],
+                yearStart: [
+                    { required: true, message: '请选择作息时间类型', trigger: 'change' }
+                ],
+                endStart: [
+                    { required: true, message: '请选择作息时间类型', trigger: 'change' }
+                ],
+                campus: [
+                    { required: true, message: '请选择作息时间类型', trigger: 'change' }
+                ],
+            },
+            //时间设置的表单
+            ruleForm: {
+                name: '',
+                duration: '',
+                time: '',
+                order: '',
+                delivery: false,
+                type: '',
+            },
+            addData:[
+                {
+                    name:'第一节',
+                    tie:'09-21'
                 },
-                customIndex:'',
-                control:-1,
-                rules: {
-                    name: [
-                        { required: true, message: '不能为空', trigger: 'blur' },
-                        { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-                    ],
-                    duration: [
-                        { required: true, message: '不能为空', trigger: 'change' }
-                    ],
-                    order: [
-                        {  required: true, message: '请选择左侧需要修改或添加的选项', trigger: 'change' }
-                    ],
-                    type: [
-                        { required: true, message: '请选择作息时间类型', trigger: 'change' }
-                    ],
+                {
+                    name:'第二节',
+                    tie:'09-22'
                 }
-            };
+            ],
+            custom:{
+                name:'示例',
+                tie:'14:30'
+            },
+            customIndex:'',
+            control:-1,
+            rules: {
+                name: [
+                    { required: true, message: '不能为空', trigger: 'blur' },
+                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                ],
+                duration: [
+                    { required: true, message: '不能为空', trigger: 'change' }
+                ],
+                order: [
+                    {  required: true, message: '请选择左侧需要修改或添加的选项', trigger: 'change' }
+                ],
+                type: [
+                    { required: true, message: '请选择作息时间类型', trigger: 'change' }
+                ],
+            }
+        };
+    },
+    methods: {
+        //
+        handleClick(tab, event) {
+            console.log(tab, event);
         },
-        methods: {
-            //
-            handleClick(tab, event) {
-                console.log(tab, event);
-            },
-            //提交
-            onSubmit() {
-                console.log('submit!');
-            },
-            submitForm(formName) {
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        alert('submit!');
-                    } else {
-                        console.log('error submit!!');
-                        return false;
-                    }
-                });
-            },
-            resetForm(formName) {
-                this.$refs[formName].resetFields();
-            },
-            //左边li
-            period(item,index){
-                this.control = index;
-            },
-            temSetAdd(){
-               this.addData.push(this.custom);
-            },
-            temSetDell(){
-                if(this.control < 0){
-                    console.log('请选择你想要删除啊的对象')
-                }else {
-                     this.addData.splice(this.control,1);
+        //提交
+        onSubmit() {
+            console.log('submit!');
+        },
+        submitForm(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    alert('submit!');
+                } else {
+                    console.log('error submit!!');
+                    return false;
                 }
+            });
+        },
+        resetForm(formName) {
+            this.$refs[formName].resetFields();
+        },
+        //左边li
+        period(item,index){
+            this.control = index;
+        },
+        temSetAdd(){
+            this.addData.push(this.custom);
+        },
+        temSetDell(){
+            if(this.control < 0){
+                console.log('请选择你想要删除啊的对象')
+            }else {
+                this.addData.splice(this.control,1);
             }
         }
-    };
+    }
+};
 </script>
 
 <style scoped lang="scss">

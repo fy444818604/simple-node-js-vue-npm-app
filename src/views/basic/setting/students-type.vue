@@ -47,108 +47,108 @@
 </template>
 
 <script>
-    import bntList from '../../../components/btn-list'
-    import table from '../../../components/table'
-    import stateSwitch from '../../../components/state-switch'
-    import paging from '../../../components/paging'
-    import modal from '../../../components/modal'
-    export default {
-        name: "students-type",
-        data(){
-            return{
-                pageTile:'生源类型',
-                //按钮
-                model:{
-                    name:'添加',
-                    icon:'icon-add'
-                },
-                //表格
-                tableData:[
-                    {
-                        id:1,
-                        level:'1号教学楼',
-                        describe:'111',
-                        status:'启用',
-
-                    },
-                ],
-                tableColumn:[
-                    {
-                        prop:'id',
-                        label:'显示顺序'
-                    },
-                    {
-                        prop:'level',
-                        label:'类型名称'
-                    },
-                    {
-                        prop:'describe',
-                        label:'描述'
-                    },
-                    {
-                        prop:'status',
-                        label:'状态'
-                    }
-                ],
-                //分页
-                pageSize:'',//显示多少页
-                pageCurrent:'',//当前页
-                pageTotal:300,//总条数
-                //弹框
-                /* dialog */
-                dialog: {
-                    visible:false,
-                    title: '新建',
-                },
-                polForm:{
-                    political:'',
-                    describe:'',
-                    order:''
-                },
-                formRules:{
-                    political:[{required: true, message: '不能为空', trigger: 'blur'}],
-                },
-            }
-        },
-        components:{
-            'bnt-list':bntList,
-            'pol-table':table,
-            'stateSwitch':stateSwitch,
-            'pol-paging':paging,
-            'pol-modal':modal
-        },
-        methods: {
-            //添加
-            polAdd(){
-                this.dialog.visible = true;
+import bntList from '../../../components/btn-list'
+import table from '../../../components/table'
+import stateSwitch from '../../../components/state-switch'
+import paging from '../../../components/paging'
+import modal from '../../../components/modal'
+export default {
+    name: "students-type",
+    data(){
+        return{
+            pageTile:'生源类型',
+            //按钮
+            model:{
+                name:'添加',
+                icon:'icon-add'
             },
             //表格
-            polStop(row){
-                console.log(row)
-            },
-            polEdit(row){
-                console.log(row)
-            },
-            //状态
-            stateList(state){
-                console.log(state)
-            },
+            tableData:[
+                {
+                    id:1,
+                    level:'1号教学楼',
+                    describe:'111',
+                    status:'启用',
+
+                },
+            ],
+            tableColumn:[
+                {
+                    prop:'id',
+                    label:'显示顺序'
+                },
+                {
+                    prop:'level',
+                    label:'类型名称'
+                },
+                {
+                    prop:'describe',
+                    label:'描述'
+                },
+                {
+                    prop:'status',
+                    label:'状态'
+                }
+            ],
             //分页
-            SizeChange(val){
-                console.log(val)
-            },
-            CurrentChange(val){
-                console.log(val)
-            },
+            pageSize:'',//显示多少页
+            pageCurrent:'',//当前页
+            pageTotal:300,//总条数
             //弹框
-            polSave(){
-                this.dialog.visible = false
+            /* dialog */
+            dialog: {
+                visible:false,
+                title: '新建',
             },
-            polClose(){
-                this.dialog.visible = false
+            polForm:{
+                political:'',
+                describe:'',
+                order:''
+            },
+            formRules:{
+                political:[{required: true, message: '不能为空', trigger: 'blur'}],
             },
         }
+    },
+    components:{
+        'bnt-list':bntList,
+        'pol-table':table,
+        'stateSwitch':stateSwitch,
+        'pol-paging':paging,
+        'pol-modal':modal
+    },
+    methods: {
+        //添加
+        polAdd(){
+            this.dialog.visible = true;
+        },
+        //表格
+        polStop(row){
+            console.log(row)
+        },
+        polEdit(row){
+            console.log(row)
+        },
+        //状态
+        stateList(state){
+            console.log(state)
+        },
+        //分页
+        SizeChange(val){
+            console.log(val)
+        },
+        CurrentChange(val){
+            console.log(val)
+        },
+        //弹框
+        polSave(){
+            this.dialog.visible = false
+        },
+        polClose(){
+            this.dialog.visible = false
+        },
     }
+}
 </script>
 
 <style scoped>
