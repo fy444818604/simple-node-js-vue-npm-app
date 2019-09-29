@@ -11,11 +11,9 @@ import 'layui-layer/layer.css';
 import './App.scss';
 import * as api from './request/api';
 import * as myLayer from './assets/javascript/notice';
-import JSONbig from 'json-bigint';
 Vue.prototype.$layer = layer;
 Vue.prototype.$api = api;
 Vue.prototype.$myLayer = myLayer;
-Vue.prototype.$JSONbig = JSONbig;
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
