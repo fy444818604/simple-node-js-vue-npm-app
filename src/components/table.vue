@@ -7,12 +7,13 @@
       width="55">
     </el-table-column>
     <el-table-column
-      v-for="item in tableColumn" 
+      v-for="item in tableColumn"
       :key="item.prop"
       :prop="item.prop"
       :label="item.label"
       :width="item.width"
       :align="item.align"
+      empty-text="暂无数据"
       >
     </el-table-column>
     <el-table-column
@@ -24,7 +25,7 @@
           <i v-if="!scope.row.showBtn" @mouseenter="handleMouseEnter(scope.row)" class="iconfont icon-more"></i>
           <div :class="{single:single}" v-else @mouseleave="handleMouseLeave(scope.row)">
             <span v-if="!single" @click="handleStop(scope.row)">停用</span>
-            <span @click="handleEdit(scope.row)">编辑</span>
+            <span @click="handleEdit(scope)">编辑</span>
           </div>
         </div>
       </template>

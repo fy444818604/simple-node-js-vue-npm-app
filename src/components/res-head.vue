@@ -5,7 +5,7 @@
 				<img src="" alt="">
 			</div>
 			<ul>
-				<li v-for="(item,index) in menuList" :key="index" :class="item.active?'active':''">
+				<li v-for="(item,index) in menuList" :key="index">
 					<router-link :to="item.href">{{item.name}}</router-link>
 				</li>
 			</ul>
@@ -17,47 +17,47 @@
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				menuList: [{
-					name: '首页',
-					href: '/resource/Layout/index',
-					active:false
-				}, {
-					name: '资源',
-					href: '/resource/Layout/resource-list',
-					active:false
-				}, {
-					name: '专辑',
-					href: '/resource/Layout/album',
-					active:false
-				}, {
-					name: '发现',
-					href: '/resource/Layout/discover',
-					active:false
-				}, ]
-			}
-		},
-		created() {
-			this.active(this.$route.path)
-		},
-		watch: {
-			$route(to) {
-				this.active(to.path)
-			}
-		},
-		methods: {
-			active(para) {
-				this.menuList.map((v, i) => {
-					v.active = false;
-					if (v.href == para) {
-						v.active = true;
-					}
-				})
-			},
-		}
-	}
+export default {
+    data() {
+        return {
+            menuList: [{
+                name: '首页',
+                href: '/resource/Layout/index',
+                active: false
+            }, {
+                name: '资源',
+                href: '/resource/Layout/resource-list',
+                active: false
+            }, {
+                name: '专辑',
+                href: '/resource/Layout/album',
+                active: false
+            }, {
+                name: '发现',
+                href: '/resource/Layout/discover',
+                active: false
+            }]
+        }
+    },
+    created() {
+        this.active(this.$route.path)
+    },
+    watch: {
+        $route(to) {
+            this.active(to.path)
+        }
+    },
+    methods: {
+        active(para) {
+            this.menuList.map((v) => {
+                v.active = false;
+                if (v.href == para) {
+                    v.active = true;
+                }
+            })
+        }
+    }
+}
 </script>
 
 <style lang="scss" scoped="scoped">
@@ -87,10 +87,8 @@
 					a {
 						font-size: 16px;
 					}
-				}
 
-				li.active {
-					a {
+					a.router-link-active {
 						color: #4A80F6;
 					}
 				}

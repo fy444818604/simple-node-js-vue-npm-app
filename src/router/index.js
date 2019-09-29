@@ -400,6 +400,26 @@ const equipment = {
 			requireAuth: true
 		},
 	}, {
+		path: '/equipment/Layout/meeting-setting',
+		name: 'meeting-setting',
+		component: (resolve) => {
+			require(['../views/equipment/meeting-setting/index'], resolve)
+		},
+		meta: {
+			title: '会议室设置',
+			requireAuth: true
+		},
+	}, {
+		path: '/equipment/Layout/meeting-setting-edit',
+		name: 'meeting-setting-edit',
+		component: (resolve) => {
+			require(['../views/equipment/meeting-setting/edit'], resolve)
+		},
+		meta: {
+			title: '会议室设置',
+			requireAuth: true
+		},
+	}, {
 		path: '/equipment/Layout/classroom-setting',
 		name: 'classroom-setting',
 		component: (resolve) => {
@@ -488,7 +508,7 @@ const resource = {
 	children:[
 		{
 			path: '/resource/Layout/index',
-			name: 'resource-Layout-index',
+			name: 'index',
 			component: (resolve) => {
 				require(['../views/resource/index/index'], resolve)
 			},

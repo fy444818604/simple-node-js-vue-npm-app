@@ -117,6 +117,7 @@
             areasTree(){
                 var val = {
                     level:1,
+                    parentId:0
                 };
                 this.$api.areasTree(val).then(res => {
                     if(res.success == true){
