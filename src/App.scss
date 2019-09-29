@@ -304,3 +304,11 @@ body,html{
     width: 32px;
     background-position: -1px -94px;
 }
+
+/* 定位 */
+.p-center {
+  position: absolute;
+  left: 50%;
+  top:50%;
+  transform: translate(-50%,-50%);
+}
