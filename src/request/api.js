@@ -9,16 +9,13 @@ import { get, post } from './http'
  * 登录模块接口
  */
 export const apiLogin = params => post('/base/api/auth/loginByUserPwd', params);
-
 /**
  * 基础数据系统接口
  */
-/*行政区域树形接口*/
-export const areasTree = params => get('/base/api/cities/tree/0',params);
-/*
-/!*学区管理分页查询*!/
+/*基础数据*/
+export const areasTree = params => get('/base/api/cities/tree',params);
+//学区管理
 export const school = params => post('/base/api/eduarea/page',params);
-
-
-export default const school = (val) => params => post('/base/api/eduarea/page',params);*/
+export const schoolAdd = params => post('/base/api/eduarea/add',params);
+export const schoolDis = params => post('/base/api/eduarea/update/status',params);
 

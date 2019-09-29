@@ -54,12 +54,10 @@
         methods: {
             handleNodeClick(data) {
                 this.$emit('superiorData',data.label)
-
             }
         }
     };
 </script>
-
 <style scoped>
     .tree{
         height: 100%;
