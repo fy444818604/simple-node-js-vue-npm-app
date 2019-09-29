@@ -22,27 +22,36 @@
 			return {
 				menuList: [{
 					name: '首页',
-					href: '/resource/Layout/index'
+					href: '/resource/Layout/index',
+					active:false
 				}, {
 					name: '资源',
-					href: '/resource/Layout/resource-list'
+					href: '/resource/Layout/resource-list',
+					active:false
 				}, {
 					name: '专辑',
-					href: '/resource/Layout/album'
+					href: '/resource/Layout/album',
+					active:false
 				}, {
 					name: '发现',
-					href: '/resource/Layout/discover'
+					href: '/resource/Layout/discover',
+					active:false
 				}, ]
 			}
 		},
 		created() {
 			this.active(this.$route.path)
 		},
-		methods:{
-			active(para){
-				this.menuList.map((v,i) => {
+		watch: {
+			$route(to) {
+				this.active(to.path)
+			}
+		},
+		methods: {
+			active(para) {
+				this.menuList.map((v, i) => {
 					v.active = false;
-					if(v.href == para){
+					if (v.href == para) {
 						v.active = true;
 					}
 				})
@@ -57,7 +66,8 @@
 		height: 60px;
 		align-items: center;
 		justify-content: space-between;
-		box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.08);
+		box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.08);
+
 		.head-left {
 			display: flex;
 
