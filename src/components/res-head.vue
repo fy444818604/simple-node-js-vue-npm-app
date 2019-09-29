@@ -36,7 +36,7 @@
 					name: '发现',
 					href: '/resource/Layout/discover',
 					active:false
-				}, ]
+				}]
 			}
 		},
 		created() {
