@@ -312,3 +312,9 @@ body,html{
   top:50%;
   transform: translate(-50%,-50%);
 }
+ .p-overflow{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    overflow: hidden;
+ }
