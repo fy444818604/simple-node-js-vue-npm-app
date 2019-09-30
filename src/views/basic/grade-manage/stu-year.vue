@@ -1,7 +1,7 @@
 <!--学届管理-->
 <template>
   <div class="stu-year">
-    
+
     <base-title title="学届管理" border>
       <template slot="btn">
         <btn-list @btn-click="handleAdd" :model="{icon:'icon-add',name:'添加'}"></btn-list>
@@ -32,11 +32,11 @@
 
     <!-- modal one -->
     <div class="stu-yeaer-modal-add">
-     <el-form 
+     <el-form
         style="width:330px;margin:24px auto"
-        ref="formAdd"  
+        ref="formAdd"
         label-width="80px"
-        :rules="dialog.formAddRules" 
+        :rules="dialog.formAddRules"
         :model="dialog.formAdd">
         <el-form-item label="学校" prop="name">
           <el-select v-model="dialog.formAdd.name" style="width:100%">
@@ -62,9 +62,9 @@
     <div class="tu-yeaer-modal-edit">
       <el-form
         style="width:330px;margin:24px auto"
-        ref="formEdit"  
+        ref="formEdit"
         label-width="80px"
-        :rules="dialog.formEditRules" 
+        :rules="dialog.formEditRules"
         :model="dialog.formEdit">
         <el-form-item label="学届名称" prop="name">
           <el-input disabled v-model="dialog.formEdit.name"></el-input>
@@ -109,7 +109,7 @@ export default {
                     label:"入学时间"
                 }
             ],
-            tableData:[        
+            tableData:[
                 {
                     id:1,
                     name:'1号教学楼',
@@ -166,7 +166,7 @@ export default {
       margin-top: 20px;
       margin-bottom: 20px;
       display: flex;
-      align-items: center;      
+      align-items: center;
     }
   }
   .footer {

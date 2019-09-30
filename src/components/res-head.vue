@@ -1,3 +1,4 @@
+<!-- 资源平台头部 -->
 <template>
 	<div class="res-head-container">
 		<div class="head-left">
@@ -67,6 +68,7 @@ export default {
 		align-items: center;
 		justify-content: space-between;
 		box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.08);
+		min-width: 1200px;
 
 		.head-left {
 			display: flex;

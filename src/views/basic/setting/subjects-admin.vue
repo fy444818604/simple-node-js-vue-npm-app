@@ -32,21 +32,19 @@
             @on-save="subSave"
             :visible="dialog.visible">
             <el-form ref="form" :model="subForm" label-width="88px" :rules="formRules">
-                <el-form-item label="科目类型" prop="type">
-                    <el-select v-model="subForm.type" placeholder="请选择活动区域" style="width: 100%" >
-                        <el-option
-                            v-for="item in typeSet"
-                            :label="item.label"
-                            :value="item.val">
-                        </el-option>
+                <el-form-item label="科目类型">
+                    <el-select v-model="subForm.type" placeholder="请选择活动区域" style="width: 100%">
+                        <el-option label="区域一" value="shanghai"></el-option>
+                        <el-option label="区域二" value="beijing"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="科目名称"  prop="name">
                     <el-input v-model="subForm.name"></el-input>
                 </el-form-item>
-                <el-form-item label="学段" prop="period">
-                    <el-select v-model="subForm.period" placeholder="请选择活动区域" style="width: 100%" >
-                        <el-option v-for="item in typeSet" :label="item.label" :value="item.val"></el-option>
+                <el-form-item label="学段">
+                    <el-select v-model="subForm.period" placeholder="请选择活动区域" style="width: 100%">
+                        <el-option label="区域一" value="shanghai"></el-option>
+                        <el-option label="区域二" value="beijing"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="序号" >
@@ -69,119 +67,119 @@ import modal from '../../../components/modal'
 
 export default {
     name: "subjectsAdmin",
-    data(){
-        return{
-            pageTile:'科目管理',
+    data() {
+        return {
+            pageTile: '科目管理',
             //按钮
-            model:{
-                name:'添加',
-                icon:'icon-add'
+            model: {
+                name: '添加',
+                icon: 'icon-add'
             },
             //表格
-            tableData:[
+            tableData: [
                 {
-                    id:1,
-                    level:'1号教学楼',
-                    status:'启用',
+                    id: 1,
+                    level: '1号教学楼',
+                    status: '启用',
 
                 },
                 {
-                    id:2,
-                    level:'1号教学楼',
-                    status:'启用',
+                    id: 2,
+                    level: '1号教学楼',
+                    status: '启用',
 
                 },
                 {
-                    id:3,
-                    level:'1号教学楼',
-                    status:'启用',
+                    id: 3,
+                    level: '1号教学楼',
+                    status: '启用',
 
                 },
                 {
-                    id:4,
-                    level:'1号教学楼',
-                    status:'启用',
+                    id: 4,
+                    level: '1号教学楼',
+                    status: '启用',
 
                 }
             ],
-            tableColumn:[
+            tableColumn: [
                 {
-                    prop:'id',
-                    label:'显示顺序'
+                    prop: 'id',
+                    label: '显示顺序'
                 },
                 {
-                    prop:'level',
-                    label:'行政级别'
+                    prop: 'level',
+                    label: '行政级别'
                 },
                 {
-                    prop:'status',
-                    label:'状态'
+                    prop: 'status',
+                    label: '状态'
                 }
             ],
             //分页
-            pageSize:'',//显示多少页
-            pageCurrent:'',//当前页
-            pageTotal:300,//总条数
+            pageSize: '',//显示多少页
+            pageCurrent: '',//当前页
+            pageTotal: 300,//总条数
             //弹框
             /* dialog */
             dialog: {
-                visible:false,
+                visible: false,
                 title: '新建',
             },
-            subForm:{
-                type:'',
-                name:'',
-                period:'',
-                number:'',
-                describe:''
+            subForm: {
+                type: '',
+                name: '',
+                period: '',
+                number: '',
+                describe: ''
             },
-            formRules:{
-                type:[{required: true, message: '不能为空', trigger: 'blur'}],
-                name:[{required: true, message: '不能为空', trigger: 'blur'}],
-                period:[{required: true, message: '不能为空', trigger: 'blur'}],
+            formRules: {
+                type: [{required: true, message: '不能为空', trigger: 'blur'}],
+                name: [{required: true, message: '不能为空', trigger: 'blur'}],
+                period: [{required: true, message: '不能为空', trigger: 'blur'}],
             },
-            typeSet:[
-                {label:'类型1',val:1},
-                {label:'类型2',val:2},
-                {label:'类型3',val:3}
+            typeSet: [
+                {label: '类型1', val: 1},
+                {label: '类型2', val: 2},
+                {label: '类型3', val: 3}
             ]
         }
     },
-    components:{
-        'bnt-list':bntList,
-        'snb-table':table,
-        'stateSwitch':stateSwitch,
-        'sub-paging':paging,
-        'sub-modal':modal
+    components: {
+        'bnt-list': bntList,
+        'snb-table': table,
+        'stateSwitch': stateSwitch,
+        'sub-paging': paging,
+        'sub-modal': modal
     },
     methods: {
         //添加按钮
-        subAdd(){
+        subAdd() {
             this.dialog.visible = true
         },
         //表格
-        subStop(row){
+        subStop(row) {
             console.log(row)
         },
-        subEdit(row){
+        subEdit(row) {
             console.log(row)
         },
         //状态
-        stateList(state){
+        stateList(state) {
             console.log(state)
         },
         //分页
-        SizeChange(val){
+        SizeChange(val) {
             console.log(val)
         },
-        CurrentChange(val){
+        CurrentChange(val) {
             console.log(val)
         },
         //弹框
-        subSave(){
+        subSave() {
             this.dialog.visible = false
         },
-        subClose(){
+        subClose() {
             this.dialog.visible = false
         },
     }
