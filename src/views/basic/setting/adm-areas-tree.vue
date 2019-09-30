@@ -1,14 +1,13 @@
 <!--下拉框的树-->
 <template>
     <div class="tree">
-        <el-tree :data="data" :props="defaultProps" default-expand-all :expand-on-click-node="false"
-                 @node-click="handleNodeClick"></el-tree>
+            <el-tree :data="data" :props="defaultProps" default-expand-all :expand-on-click-node="false"   @node-click="handleNodeClick"></el-tree>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'adm-areas-tree',
+    name:'adm-areas-tree',
     data() {
         return {
             data: [{
@@ -54,15 +53,15 @@ export default {
     },
     methods: {
         handleNodeClick(data) {
-            this.$emit('superiorData', data.label)
+            this.$emit('superiorData',data.label)
         }
     }
 };
 </script>
 <style scoped>
-    .tree {
+    .tree{
         height: 100%;
-        border-right: 1px solid #e5e7ef;
+        border-right:1px solid #e5e7ef ;
         background: #fff;
     }
 

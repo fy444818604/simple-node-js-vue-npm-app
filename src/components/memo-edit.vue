@@ -44,125 +44,125 @@
 </template>
 
 <script>
-	import 'quill/dist/quill.core.css'
-	import 'quill/dist/quill.snow.css'
-	import 'quill/dist/quill.bubble.css'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 
-	import {
-		quillEditor
-	} from 'vue-quill-editor'
-	export default {
-		name: 'memoEdit',
-		data() {
-			return {
-				colorLump: ['#ffe76e', '#fac58b', '#a1ef9b', '#ffafdf', '#d7afff', '#9fdfff', '#d1d1d1'],
-				editorOption: {
-					modules: {
-						toolbar: [
-							['bold', 'italic', 'underline', 'strike']
-						]
-					},
-					theme: 'snow',
-					placeholder: '写点什么吧！'
-				}
-			}
-		},
-		props: {
-			item: Object,
-			index: Number
-		},
-		components: {
-			quillEditor
-		},
-		mounted() {
+import {
+    quillEditor
+} from 'vue-quill-editor'
+export default {
+    name: 'memoEdit',
+    data() {
+        return {
+            colorLump: ['#ffe76e', '#fac58b', '#a1ef9b', '#ffafdf', '#d7afff', '#9fdfff', '#d1d1d1'],
+            editorOption: {
+                modules: {
+                    toolbar: [
+                        ['bold', 'italic', 'underline', 'strike']
+                    ]
+                },
+                theme: 'snow',
+                placeholder: '写点什么吧！'
+            }
+        }
+    },
+    props: {
+        item: Object,
+        index: Number
+    },
+    components: {
+        quillEditor
+    },
+    mounted() {
 			
-		},
-		methods: {
-			noteColor(para) {
-				const color = [{
-						head: '#ffeb81',
-						body: '#fff3ab'
-					},
-					{
-						head: '#f6ddba',
-						body: '#fdedd5'
-					},
-					{
-						head: '#afeda5',
-						body: '#cbf1c5'
-					},
-					{
-						head: '#ffbbdd',
-						body: '#ffcde5'
-					},
-					{
-						head: '#dbb7ff',
-						body: '#e7cfff'
-					},
-					{
-						head: '#b7dfff',
-						body: '#cde9ff'
-					},
-					{
-						head: '#e5e5e5',
-						body: '#f9f9f9'
-					}
-				]
-				return color[para]
-			},
-			colorClose() {
-				event.currentTarget.style.display = "none";
-				// $(event.currentTarget).hide();
-			},
-			bookmarkDelLayer1() {
-				let dom = $(event.currentTarget).parents(".memo-layer-content").find("#memo-layer-del-1");
-				let height = ($(event.currentTarget).parents(".memo-layer-content").height() - 105) / 2 + "px";
-				let width = ($(event.currentTarget).parents(".memo-layer-content").width() - 290) / 2 + "px";
-				layer.open({
-					type: 1,
-					title: false,
-					area: ['290px', '105px'],
-					offset: [height, width],
-					fixed: false,
-					shade: 0,
-					closeBtn: 0,
-					content: dom,
-					success: function(layero, index) {
-						dom.next().show();
-						dom.show();
-						dom.find('div>button').click(function() {
-							dom.next().hide();
-							dom.hide();
-							layer.close(index);
-						})
-					}
-				});
-			},
-			noteDel(index) {
-				this.closeNote();
-				this.$emit('note-del',index);
-			},
-			menoTitleEdit() {
-				$(event.currentTarget).hide();
-				$(event.currentTarget).next().show();
-			},
-			titleBlur() {
-				$(event.currentTarget).hide();
-				$(event.currentTarget).prev().show();
-			},
-			noteOp() {
-				$(event.currentTarget).parents('.meno-head').siblings('.note-op').show();
-			},
-			closeNote() {
-				layer.close($(event.currentTarget).parents('.layui-layer').attr('times'));
-				// $(event.currentTarget).parents('.memo-layer-content').hide();
-			},
-			colorChoose(index1) {
-				this.item.colorNumber = index1;
-				$(event.currentTarget).parents('.note-op').hide();
-			},
-		}
-	}
+    },
+    methods: {
+        noteColor(para) {
+            const color = [{
+                head: '#ffeb81',
+                body: '#fff3ab'
+            },
+            {
+                head: '#f6ddba',
+                body: '#fdedd5'
+            },
+            {
+                head: '#afeda5',
+                body: '#cbf1c5'
+            },
+            {
+                head: '#ffbbdd',
+                body: '#ffcde5'
+            },
+            {
+                head: '#dbb7ff',
+                body: '#e7cfff'
+            },
+            {
+                head: '#b7dfff',
+                body: '#cde9ff'
+            },
+            {
+                head: '#e5e5e5',
+                body: '#f9f9f9'
+            }
+            ]
+            return color[para]
+        },
+        colorClose() {
+            event.currentTarget.style.display = "none";
+            // $(event.currentTarget).hide();
+        },
+        bookmarkDelLayer1() {
+            let dom = $(event.currentTarget).parents(".memo-layer-content").find("#memo-layer-del-1");
+            let height = ($(event.currentTarget).parents(".memo-layer-content").height() - 105) / 2 + "px";
+            let width = ($(event.currentTarget).parents(".memo-layer-content").width() - 290) / 2 + "px";
+            layer.open({
+                type: 1,
+                title: false,
+                area: ['290px', '105px'],
+                offset: [height, width],
+                fixed: false,
+                shade: 0,
+                closeBtn: 0,
+                content: dom,
+                success: function(layero, index) {
+                    dom.next().show();
+                    dom.show();
+                    dom.find('div>button').click(function() {
+                        dom.next().hide();
+                        dom.hide();
+                        layer.close(index);
+                    })
+                }
+            });
+        },
+        noteDel(index) {
+            this.closeNote();
+            this.$emit('note-del',index);
+        },
+        menoTitleEdit() {
+            $(event.currentTarget).hide();
+            $(event.currentTarget).next().show();
+        },
+        titleBlur() {
+            $(event.currentTarget).hide();
+            $(event.currentTarget).prev().show();
+        },
+        noteOp() {
+            $(event.currentTarget).parents('.meno-head').siblings('.note-op').show();
+        },
+        closeNote() {
+            layer.close($(event.currentTarget).parents('.layui-layer').attr('times'));
+            // $(event.currentTarget).parents('.memo-layer-content').hide();
+        },
+        colorChoose(index1) {
+            this.item.colorNumber = index1;
+            $(event.currentTarget).parents('.note-op').hide();
+        },
+    }
+}
 </script>
 
 <style>

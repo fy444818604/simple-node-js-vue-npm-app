@@ -230,57 +230,57 @@
 </template>
 
 <script>
-	import btnList from '@/components/btn-list'
-	export default {
-		data() {
-			return {
-				activeName: 'third',
-				labelPosition: 'right',
-				active: ['1', '2', '3'],
-				edit: false,
-				edit1: false,
-				teacherName: '林浩阳',
-				userPhoto: require('@/assets/image/user-detail.png'),
-				btnGroup: [{
-					icon: 'icon-enable',
-					name: '启用',
-					alias: 3
-				}, {
-					icon: 'icon-permissions',
-					name: '重置密码',
-					alias: 4
-				}, {
-					icon: 'icon-edit',
-					name: '编辑',
-					alias: 5
-				}],
-				intro: {
-					personal: '哈撒给',
-					record: [{
-						text: '成都希望小学',
-						startTime: '',
-						endTime: ''
-					}],
-					Award: [{
-						text: '2018年市级优秀教师',
-						time: '',
-						pic: ''
-					}]
-				}
-			};
-		},
-		components: {
-			'btn-list': btnList
-		},
-		methods: {
-			handleClick(tab, event) {
-				console.log(tab, event);
-			},
-			btnClick() {
+import btnList from '@/components/btn-list'
+export default {
+    data() {
+        return {
+            activeName: 'third',
+            labelPosition: 'right',
+            active: ['1', '2', '3'],
+            edit: false,
+            edit1: false,
+            teacherName: '林浩阳',
+            userPhoto: require('@/assets/image/user-detail.png'),
+            btnGroup: [{
+                icon: 'icon-enable',
+                name: '启用',
+                alias: 3
+            }, {
+                icon: 'icon-permissions',
+                name: '重置密码',
+                alias: 4
+            }, {
+                icon: 'icon-edit',
+                name: '编辑',
+                alias: 5
+            }],
+            intro: {
+                personal: '哈撒给',
+                record: [{
+                    text: '成都希望小学',
+                    startTime: '',
+                    endTime: ''
+                }],
+                Award: [{
+                    text: '2018年市级优秀教师',
+                    time: '',
+                    pic: ''
+                }]
+            }
+        };
+    },
+    components: {
+        'btn-list': btnList
+    },
+    methods: {
+        handleClick(tab, event) {
+            console.log(tab, event);
+        },
+        btnClick() {
 
-			}
-		}
-	};
+        }
+    }
+};
 </script>
 <style>
 	.el-tabs__header {

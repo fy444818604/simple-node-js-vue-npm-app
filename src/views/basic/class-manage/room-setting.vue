@@ -55,110 +55,110 @@
 </template>
 <script>
 export default {
-  components:{
-    stateSwitch:() => import("@/components/state-switch"),
-    baseTable:()=>import("@/components/table"),
-    slelctTree:() => import("@/components/select-tree"),
-    baseTitle:()=>import("@/components/title"),
-    btnList:()=>import("@/components/btn-list"),
-    page:()=>import("@/components/paging")
-  },
-  data(){
-    return {
-      currentSelect:'xxxx',
-      treeList:[
-        {
-          id: 1,
-          label: '四川省教育厅',
-          children:[
-            {
-              id: 1-1,
-              label: '成都市教育厅',
-              children:[
-                {
-                  id: 1-1-1,
-                  label: '成都xxx中学',
-                }
-              ]
-            },
-            {
-              id: 1-2,
-              label: '雅安市教育厅',
-              children:[
-                {
-                  id: 1-2-1,
-                  label: '雅安yyy中学',
-                }
-              ]
-            },
-            {
-              id: 1-3,
-              label: '绵阳市教育厅',
-              children:[
-                {
-                  id: 1-3-1,
-                  label: '绵阳zzz中学',
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      tableColumn:[
-        {
-          prop:'id',
-          label:'id'
-        },
-        { 
-          prop:'type',
-          label:"教室类型",
-        },
-        {
-          prop:'desc',
-          label:'描述'
-        },
-        {
-          prop:'status',
-          label:'状态'
-        }
-      ],
-      tableData:[
-        {
-          id:1,
-          name:'1号教学楼',
-          type:'xxx',
-          school:'yyy',
-          build:'zzz',
-          title:'成都第X中学',
-          area:'城南校区',
-          desc:'1号教学楼',
-          status:'启用'
-        }
-      ],
-
-      /* dialog */
-      formInfo:{
-        title:'',
-        name:'',
-        area:'',
-        desc:'',
-        order:''
-      },
-      formRules:{
-        title:[{required: true, message: '请选择学校名称', trigger: 'blur'}],
-        name:[{required: true, message: '请输入名称', trigger: 'blur'}],
-        area:[{required: true, message: '请选择所属校区', trigger: 'blur'}],
-      }
-    }
-  },
-  methods:{
-    handleSwicthState(val){
+    components:{
+        stateSwitch:() => import("@/components/state-switch"),
+        baseTable:()=>import("@/components/table"),
+        slelctTree:() => import("@/components/select-tree"),
+        baseTitle:()=>import("@/components/title"),
+        btnList:()=>import("@/components/btn-list"),
+        page:()=>import("@/components/paging")
     },
-    /* dialog */
-    handleAdd(){
-      this.$myLayer.formLayer("新建",$('.room-setting-modal'),['422px'])      
+    data(){
+        return {
+            currentSelect:'xxxx',
+            treeList:[
+                {
+                    id: 1,
+                    label: '四川省教育厅',
+                    children:[
+                        {
+                            id: 1-1,
+                            label: '成都市教育厅',
+                            children:[
+                                {
+                                    id: 1-1-1,
+                                    label: '成都xxx中学',
+                                }
+                            ]
+                        },
+                        {
+                            id: 1-2,
+                            label: '雅安市教育厅',
+                            children:[
+                                {
+                                    id: 1-2-1,
+                                    label: '雅安yyy中学',
+                                }
+                            ]
+                        },
+                        {
+                            id: 1-3,
+                            label: '绵阳市教育厅',
+                            children:[
+                                {
+                                    id: 1-3-1,
+                                    label: '绵阳zzz中学',
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            tableColumn:[
+                {
+                    prop:'id',
+                    label:'id'
+                },
+                { 
+                    prop:'type',
+                    label:"教室类型",
+                },
+                {
+                    prop:'desc',
+                    label:'描述'
+                },
+                {
+                    prop:'status',
+                    label:'状态'
+                }
+            ],
+            tableData:[
+                {
+                    id:1,
+                    name:'1号教学楼',
+                    type:'xxx',
+                    school:'yyy',
+                    build:'zzz',
+                    title:'成都第X中学',
+                    area:'城南校区',
+                    desc:'1号教学楼',
+                    status:'启用'
+                }
+            ],
+
+            /* dialog */
+            formInfo:{
+                title:'',
+                name:'',
+                area:'',
+                desc:'',
+                order:''
+            },
+            formRules:{
+                title:[{required: true, message: '请选择学校名称', trigger: 'blur'}],
+                name:[{required: true, message: '请输入名称', trigger: 'blur'}],
+                area:[{required: true, message: '请选择所属校区', trigger: 'blur'}],
+            }
+        }
+    },
+    methods:{
+        handleSwicthState(val){
+        },
+        /* dialog */
+        handleAdd(){
+            this.$myLayer.formLayer("新建",$('.room-setting-modal'),['422px'])      
+        }
     }
-  }
 }
 </script>
 <style lang="scss" scoped>

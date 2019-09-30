@@ -1,8 +1,8 @@
 $( function() {
-	$( '#authors' ).hover( function(e) {
-		$( '#hire' ).show();
+    $( '#authors' ).hover( function(e) {
+        $( '#hire' ).show();
 
-	}, function(e) {
-		$( '#hire' ).hide();		
-	});
+    }, function(e) {
+        $( '#hire' ).hide();		
+    });
 });

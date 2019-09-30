@@ -46,28 +46,28 @@
 
 <script>
 export default {
-	components:{
-		baseTitle:()=>import("@/components/title"),
-		stateSwitch:()=>import("@/components/state-switch"),
-		btnList:()=>import("@/components/btn-list"),
-		page:()=>import("@/components/paging"),
-		slelctTree:() => import("@/components/select-tree")
-	},
-	data(){
-		return {
-			customData:[				{
-				id:1,
-				name:'xxx',
-				class:'yyy',
-				desc:'180.11',
-				status:'80'
-				}],
-			treeList:[]
-		}
-	},
-	methods:{
-		handleAdd(){}
-	}
+    components:{
+        baseTitle:()=>import("@/components/title"),
+        stateSwitch:()=>import("@/components/state-switch"),
+        btnList:()=>import("@/components/btn-list"),
+        page:()=>import("@/components/paging"),
+        slelctTree:() => import("@/components/select-tree")
+    },
+    data(){
+        return {
+            customData:[				{
+                id:1,
+                name:'xxx',
+                class:'yyy',
+                desc:'180.11',
+                status:'80'
+            }],
+            treeList:[]
+        }
+    },
+    methods:{
+        handleAdd(){}
+    }
 }
 </script>
 

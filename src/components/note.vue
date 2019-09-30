@@ -14,35 +14,35 @@
 </template>
 
 <script>
-	import memo from './memo'
-	import bookmark from './bookmark'
-	export default {
-		data() {
-			return {
-				activeName: 'first'
-			};
-		},
-		components:{
-			'fy-memo':memo,
-			'fy-bookmark':bookmark
-		},
-		methods: {
-			handleClick(tab, event) {
+import memo from './memo'
+import bookmark from './bookmark'
+export default {
+    data() {
+        return {
+            activeName: 'first'
+        };
+    },
+    components:{
+        'fy-memo':memo,
+        'fy-bookmark':bookmark
+    },
+    methods: {
+        handleClick(tab, event) {
 				
-			}
-		},
-		mounted() {
-			var dom = document.getElementsByClassName('el-tabs__nav')[0];
-			var dom1 = document.getElementsByClassName('el-tabs__active-bar')[0];
-			dom.removeChild(dom1);
-			if(!this.$store.state.offsideConfig.memoShow){
-				this.activeName = "second"
-			}
-			if(!this.$store.state.offsideConfig.bookmarkShow){
-				this.activeName = "first"
-			}
-		}
-	};
+        }
+    },
+    mounted() {
+        let dom = document.getElementsByClassName('el-tabs__nav')[0];
+        let dom1 = document.getElementsByClassName('el-tabs__active-bar')[0];
+        dom.removeChild(dom1);
+        if(!this.$store.state.offsideConfig.memoShow){
+            this.activeName = "second"
+        }
+        if(!this.$store.state.offsideConfig.bookmarkShow){
+            this.activeName = "first"
+        }
+    }
+};
 </script>
 
 <style>

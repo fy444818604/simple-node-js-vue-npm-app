@@ -38,51 +38,51 @@
 	</div>
 </template>
 <script>
-	import {mapMutations} from 'vuex';
-	import '../../assets/style/style.css';
-	export default {
-		name: "signin",
-		data() {
-			return {
-				userIcon:require('@/assets/image/user.png'),
-				adminIcon:require('@/assets/image/admin.png'),
-				wordShow:require('@/assets/image/eye.png'),
-				wordHide:require('@/assets/image/eye-close.png'),
-				passwordShow:false,
-				type:1,
-				user: 'administrator',
-				password: '123456789',
-				code:''
-			}
-		},
-		created() {
+import {mapMutations} from 'vuex';
+import '../../assets/style/style.css';
+export default {
+    name: "signin",
+    data() {
+        return {
+            userIcon:require('@/assets/image/user.png'),
+            adminIcon:require('@/assets/image/admin.png'),
+            wordShow:require('@/assets/image/eye.png'),
+            wordHide:require('@/assets/image/eye-close.png'),
+            passwordShow:false,
+            type:1,
+            user: 'administrator',
+            password: '123456789',
+            code:''
+        }
+    },
+    created() {
 
-		},
-		mounted() {
+    },
+    mounted() {
 
-		},
-		methods: {
-			...mapMutations(['changeLogin']),
-			login() {
-				var params = {
-					userName: this.user,
-					password: this.password
-				};
-				this.$api.apiLogin(params).then(res => {
-					if (res.success) {
-						this.changeLogin({
-							Authorization: res.data.userToken.accessToken
-						});
-						this.$router.push({
-							path: '/basic/Layout'
-						});
-					} else {
-						alert('密码错误')
-					}
-				})
-			}
-		}
-	}
+    },
+    methods: {
+        ...mapMutations(['changeLogin']),
+        login() {
+            let params = {
+                userName: this.user,
+                password: this.password
+            };
+            this.$api.apiLogin(params).then(res => {
+                if (res.success) {
+                    this.changeLogin({
+                        Authorization: res.data.userToken.accessToken
+                    });
+                    this.$router.push({
+                        path: '/basic/Layout'
+                    });
+                } else {
+                    alert('密码错误')
+                }
+            })
+        }
+    }
+}
 </script>
 <style scoped lang="css">
 	body {

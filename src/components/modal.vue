@@ -15,18 +15,18 @@
 </template>
 <script>
 export default {
-  props:{
-    visible: Boolean,
-    title:String
-  },
-  methods:{
-    handleClose(){
-      this.$emit("on-close")
+    props:{
+        visible: Boolean,
+        title:String
     },
-    handleSave(){
-      this.$emit("on-save")
+    methods:{
+        handleClose(){
+            this.$emit("on-close")
+        },
+        handleSave(){
+            this.$emit("on-save")
+        }
     }
-  }
 }
 </script>
 

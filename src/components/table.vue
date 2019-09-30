@@ -34,58 +34,58 @@
 </template>
 <script>
 export default {
-  props: {
-    tableData: {
-      type:Array,
-      required:true
+    props: {
+        tableData: {
+            type:Array,
+            required:true
+        },
+        /* 数组里面对象，需要传递prop,label */
+        tableColumn: {
+            type:Array,
+            required:true
+        },
+        stripe: {
+            type:Boolean,
+            default: true
+        },
+        showSelect:Boolean,
+        single:Boolean
     },
-    /* 数组里面对象，需要传递prop,label */
-    tableColumn: {
-      type:Array,
-      required:true
+    data(){
+        return {
+            customData:[]
+        }
     },
-    stripe: {
-      type:Boolean,
-      default: true
+    watch:{
+        tableData:{
+            handler:function(val){
+                this.initTable(val);
+            },
+            immediate:true
+        }
     },
-    showSelect:Boolean,
-    single:Boolean
-  },
-  data(){
-    return {
-      customData:[]
-    }
-  },
-  watch:{
-    tableData:{
-      handler:function(val){
-        this.initTable(val);
-      },
-      immediate:true
-    }
-  },
-  methods:{
+    methods:{
     /* 初始化 table add showBtn */
-    initTable(table){
-      const temp = table.map(item=>Object.assign({},item,{showBtn:false}))
-      this.customData = [...temp]
-    },
-    /* 鼠标移入移除 */
-    handleMouseEnter(row){
-      row.showBtn = true
-      this.customData = [...this.customData]
-    },
-    handleMouseLeave(row){
-      row.showBtn = false
-      this.customData = [...this.customData]
-    },
-    handleStop(row){
-      this.$emit("on-stop",row)
-    },
-    handleEdit(row){
-      this.$emit("on-edit",row)
-    },
-  }
+        initTable(table){
+            const temp = table.map(item=>Object.assign({},item,{showBtn:false}))
+            this.customData = [...temp]
+        },
+        /* 鼠标移入移除 */
+        handleMouseEnter(row){
+            row.showBtn = true
+            this.customData = [...this.customData]
+        },
+        handleMouseLeave(row){
+            row.showBtn = false
+            this.customData = [...this.customData]
+        },
+        handleStop(row){
+            this.$emit("on-stop",row)
+        },
+        handleEdit(row){
+            this.$emit("on-edit",row)
+        },
+    }
 
 }
 </script>

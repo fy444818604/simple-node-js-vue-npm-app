@@ -1,8 +1,10 @@
 <!-- 轮播 carousel -->
 <template>
-  <el-carousel class="base-carousel" height="150px">
+  <el-carousel class="base-carousel" height="360px">
     <el-carousel-item>
-      <div class="item"></div>
+      <div class="item">
+        
+      </div>
     </el-carousel-item>
   </el-carousel>
 </template>

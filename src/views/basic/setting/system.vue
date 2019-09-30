@@ -52,31 +52,31 @@
 </template>
 
 <script>
-    export default {
-        name: "system",
-		data(){
-			return{
-				pageTile:'系统设置',
-				sysName:'系统名称：',
-				sysVal:'基础数据平台',
-				logo:'logo：',
-				version:'系统版本：V1.0.1',
-				online:'在线升级',
-				offline:'离线升级',
-				userKey:'授权用户：',
-				userVal:'成都元素科技',
-				biggestKey:'最大用户数：',
-				biggestVal:'100',
-				highestKey:'最高并发数：',
-				highestVal:'1000',
-				tiemKey:'授权时间：',
-				tiemVal:'2019-09-17'
-			}
-		},
-		created() {
+export default {
+    name: "system",
+    data(){
+        return{
+            pageTile:'系统设置',
+            sysName:'系统名称：',
+            sysVal:'基础数据平台',
+            logo:'logo：',
+            version:'系统版本：V1.0.1',
+            online:'在线升级',
+            offline:'离线升级',
+            userKey:'授权用户：',
+            userVal:'成都元素科技',
+            biggestKey:'最大用户数：',
+            biggestVal:'100',
+            highestKey:'最高并发数：',
+            highestVal:'1000',
+            tiemKey:'授权时间：',
+            tiemVal:'2019-09-17'
+        }
+    },
+    created() {
 
-		},
-    }
+    },
+}
 </script>
 
 <style scoped>

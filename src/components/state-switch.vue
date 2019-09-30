@@ -8,35 +8,35 @@
 </template>
 
 <script>
-    export default {
-        name: "state-switch",
-        data(){
-            return{
-                switchList:[
-                    {
-                        name:'启用',
-                        state:0
-                    },
-                    {
-                        name:'停用',
-                        state:1
-                    },
-                    {
-                        name:'全部',
-                        state:''
-                    }
-                ],
-                activeClass:0
-            }
-        },
-        methods: {
-            switchState(index,item) {
-                var that = this;
-                that.activeClass = index;
-                that.$emit('switchL',item.state)
-            },
+export default {
+    name: "state-switch",
+    data(){
+        return{
+            switchList:[
+                {
+                    name:'启用',
+                    state:0
+                },
+                {
+                    name:'停用',
+                    state:1
+                },
+                {
+                    name:'全部',
+                    state:''
+                }
+            ],
+            activeClass:0
         }
+    },
+    methods: {
+        switchState(index,item) {
+            let that = this;
+            that.activeClass = index;
+            that.$emit('switchL',item.state)
+        },
     }
+}
 </script>
 
 <style scoped>

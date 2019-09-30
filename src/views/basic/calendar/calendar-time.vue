@@ -71,118 +71,118 @@
 </template>
 
 <script>
-    import bntList from '../../../components/btn-list'
-    import stateSwitch from '../../../components/state-switch'
-    import paging from '../../../components/paging'
-    export default {
-        name: "calendar-set",
-        data(){
-            return{
-                pageTile:'作息时间',
-                //按钮
-                model:{
-                    name:'添加',
-                    icon:'icon-add'
-                },
-                tableData: [{
-                    order: '2016-05-02',
-                    name: '王小虎',
-                    startTime: '2016-05-02',
-                    yearTime: '2016-05-02',
-                    yearEndTime: '2016-05-02',
-                    institutions:'一中',
-                    state:'启用'
-                }, {
-                    order: '2016-05-04',
-                    name: '王小虎',
-                    startTime: '2016-05-02',
-                    yearTime: '2016-05-02',
-                    yearEndTime: '2016-05-02',
-                    institutions:'二中',
-                    state:'启用'
+import bntList from '../../../components/btn-list'
+import stateSwitch from '../../../components/state-switch'
+import paging from '../../../components/paging'
+export default {
+    name: "calendar-set",
+    data(){
+        return{
+            pageTile:'作息时间',
+            //按钮
+            model:{
+                name:'添加',
+                icon:'icon-add'
+            },
+            tableData: [{
+                order: '2016-05-02',
+                name: '王小虎',
+                startTime: '2016-05-02',
+                yearTime: '2016-05-02',
+                yearEndTime: '2016-05-02',
+                institutions:'一中',
+                state:'启用'
+            }, {
+                order: '2016-05-04',
+                name: '王小虎',
+                startTime: '2016-05-02',
+                yearTime: '2016-05-02',
+                yearEndTime: '2016-05-02',
+                institutions:'二中',
+                state:'启用'
 
-                }, {
-                    order: '2016-05-01',
-                    name: '王小虎',
-                    startTime: '2016-05-02',
-                    yearTime: '2016-05-02',
-                    yearEndTime: '2016-05-02',
-                    institutions:'三中',
-                    state:'启用'
-                }, {
-                    order: '2016-05-03',
-                    name: '王小虎',
-                    startTime: '2016-05-02',
-                    yearTime: '2016-05-02',
-                    yearEndTime: '2016-05-02',
-                    institutions:'四中',
-                    state:'启用'
-                }],
-                //分页
-                pageSize:'',//显示多少页
-                pageCurrent:'',//当前页
-                pageTotal:300,//总条数
-                //弹框
-                /* dialog */
-                dialog: {
-                    visible:false,
-                    title: '新建',
-                },
-                polForm:{
-                    political:'',
-                    describe:'',
-                    order:''
-                },
-                formRules:{
-                    political:[{required: true, message: '不能为空', trigger: 'blur'}],
-                },
-            }
-        },
-        components:{
-            'bnt-list':bntList,
-            'stateSwitch':stateSwitch,
-            'pol-paging':paging,
-        },
-        methods: {
-            //添加
-            polAdd(){
-                this.dialog.visible = true;
-            },
-            //表格
-            polStop(row){
-                console.log(row)
-            },
-            polEdit(row){
-                console.log(row)
-            },
-            //状态
-            stateList(state){
-                console.log(state)
-            },
+            }, {
+                order: '2016-05-01',
+                name: '王小虎',
+                startTime: '2016-05-02',
+                yearTime: '2016-05-02',
+                yearEndTime: '2016-05-02',
+                institutions:'三中',
+                state:'启用'
+            }, {
+                order: '2016-05-03',
+                name: '王小虎',
+                startTime: '2016-05-02',
+                yearTime: '2016-05-02',
+                yearEndTime: '2016-05-02',
+                institutions:'四中',
+                state:'启用'
+            }],
             //分页
-            SizeChange(val){
-                console.log(val)
+            pageSize:'',//显示多少页
+            pageCurrent:'',//当前页
+            pageTotal:300,//总条数
+            //弹框
+            /* dialog */
+            dialog: {
+                visible:false,
+                title: '新建',
             },
-            CurrentChange(val){
-                console.log(val)
+            polForm:{
+                political:'',
+                describe:'',
+                order:''
             },
-            /* 鼠标移入移除 */
-            handleMouseEnter(row){
-                row.showBtn = true;
-                this.tableData = [...this.tableData]
-            },
-            handleMouseLeave(row){
-                row.showBtn = false;
-                this.tableData = [...this.tableData]
-            },
-            handleStop(row){
-                console.log(row)
-            },
-            handleEdit(row){
-                console.log(row)
+            formRules:{
+                political:[{required: true, message: '不能为空', trigger: 'blur'}],
             },
         }
+    },
+    components:{
+        'bnt-list':bntList,
+        'stateSwitch':stateSwitch,
+        'pol-paging':paging,
+    },
+    methods: {
+        //添加
+        polAdd(){
+            this.dialog.visible = true;
+        },
+        //表格
+        polStop(row){
+            console.log(row)
+        },
+        polEdit(row){
+            console.log(row)
+        },
+        //状态
+        stateList(state){
+            console.log(state)
+        },
+        //分页
+        SizeChange(val){
+            console.log(val)
+        },
+        CurrentChange(val){
+            console.log(val)
+        },
+        /* 鼠标移入移除 */
+        handleMouseEnter(row){
+            row.showBtn = true;
+            this.tableData = [...this.tableData]
+        },
+        handleMouseLeave(row){
+            row.showBtn = false;
+            this.tableData = [...this.tableData]
+        },
+        handleStop(row){
+            console.log(row)
+        },
+        handleEdit(row){
+            console.log(row)
+        },
     }
+}
 </script>
 
 <style lang="scss" scoped>

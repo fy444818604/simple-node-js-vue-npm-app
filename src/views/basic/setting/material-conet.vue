@@ -4,9 +4,9 @@
 </template>
 
 <script>
-    export default {
-        name: "materialVersion"
-    }
+export default {
+    name: "materialVersion"
+}
 </script>
 
 <style scoped>

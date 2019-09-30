@@ -6,25 +6,25 @@
 </template>
 
 <script>
-	export default {
-		name: 'btnList',
-		props: {
-			model: Object
-		},
-		data() {
-			return {
-				list: this.model
-			}
-		},
-		created: function() {
+export default {
+    name: 'btnList',
+    props: {
+        model: Object
+    },
+    data() {
+        return {
+            list: this.model
+        }
+    },
+    created: function() {
 			
-		},
-		methods: {
-			btnClick: function() {
-				this.$emit('btn-click', this.model.alias)
-			}
-		}
-	}
+    },
+    methods: {
+        btnClick: function() {
+            this.$emit('btn-click', this.model.alias)
+        }
+    }
+}
 </script>
 
 <style scoped="scoped">

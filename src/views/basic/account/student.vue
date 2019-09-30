@@ -113,149 +113,149 @@
 </template>
 
 <script>
-	import btnList from '@/components/btn-list'
-	import stateSwitch from '@/components/state-switch'
-	import paging from '@/components/paging'
-	export default {
-		data() {
-			return {
-				btnGroup: [{
-					icon: 'icon-add',
-					name: '添加',
-					alias: 1
-				}, {
-					icon: 'icon-input',
-					name: '导入',
-					alias: 2
-				}, {
-					icon: 'icon-permissions',
-					name: '重置密码',
-					alias: 3
-				}, {
-					icon: 'icon-enable',
-					name: '启用',
-					alias: 4
-				}, {
-					icon: 'icon-stop',
-					name: '停用',
-					alias: 5
-				}],
-				currentSelect: "成都第X中学",
-				defaultProps: {
-					children: 'children',
-					label: 'label'
-				},
-				filterText: '',
-				areaList: [{
-					id: 1,
-					label: '四川省教育厅',
-					children: [{
-							id: 1 - 1,
-							label: '成都市教育厅',
-							children: [{
-								id: 1 - 1 - 1,
-								label: '成都xxx中学',
-							}]
-						},
-						{
-							id: 1 - 2,
-							label: '雅安市教育厅',
-							children: [{
-								id: 1 - 2 - 1,
-								label: '雅安yyy中学',
-							}]
-						}
-					]
-				}],
-				formInline: {
-					user: '',
-					sex: ''
-				},
-				tableData: [{
-					id: 123,
-					num: 1,
-					workNum: 20134490,
-					name: '王志山',
-					sex: 1,
-					org: '元素中学',
-					stage:'初中',
-					grade:'2019级',
-					className:'1班',
-					type:'走读',
-					status: 1,
-				}, {
-					id: 123,
-					num: 1,
-					workNum: 20134490,
-					name: '王志山',
-					sex: 1,
-					org: '元素中学',
-					stage:'初中',
-					grade:'2019级',
-					className:'1班',
-					type:'走读',
-					status: 1,
-				}],
-				multipleSelection: [],
-				pageSize: '', //显示多少页
-				pageCurrent: '', //当前页
-				pageTotal: 300 //总条数
-			}
-		},
-		components: {
-			'btn-list': btnList,
-			'state-switch': stateSwitch,
-			'paging': paging
-		},
-		watch: {
-			filterText(val) {
-				this.$refs.tree.filter(val);
-			}
-		},
-		methods: {
-			btnClick(val) {
+import btnList from '@/components/btn-list'
+import stateSwitch from '@/components/state-switch'
+import paging from '@/components/paging'
+export default {
+    data() {
+        return {
+            btnGroup: [{
+                icon: 'icon-add',
+                name: '添加',
+                alias: 1
+            }, {
+                icon: 'icon-input',
+                name: '导入',
+                alias: 2
+            }, {
+                icon: 'icon-permissions',
+                name: '重置密码',
+                alias: 3
+            }, {
+                icon: 'icon-enable',
+                name: '启用',
+                alias: 4
+            }, {
+                icon: 'icon-stop',
+                name: '停用',
+                alias: 5
+            }],
+            currentSelect: "成都第X中学",
+            defaultProps: {
+                children: 'children',
+                label: 'label'
+            },
+            filterText: '',
+            areaList: [{
+                id: 1,
+                label: '四川省教育厅',
+                children: [{
+                    id: 1 - 1,
+                    label: '成都市教育厅',
+                    children: [{
+                        id: 1 - 1 - 1,
+                        label: '成都xxx中学',
+                    }]
+                },
+                {
+                    id: 1 - 2,
+                    label: '雅安市教育厅',
+                    children: [{
+                        id: 1 - 2 - 1,
+                        label: '雅安yyy中学',
+                    }]
+                }
+                ]
+            }],
+            formInline: {
+                user: '',
+                sex: ''
+            },
+            tableData: [{
+                id: 123,
+                num: 1,
+                workNum: 20134490,
+                name: '王志山',
+                sex: 1,
+                org: '元素中学',
+                stage:'初中',
+                grade:'2019级',
+                className:'1班',
+                type:'走读',
+                status: 1,
+            }, {
+                id: 123,
+                num: 1,
+                workNum: 20134490,
+                name: '王志山',
+                sex: 1,
+                org: '元素中学',
+                stage:'初中',
+                grade:'2019级',
+                className:'1班',
+                type:'走读',
+                status: 1,
+            }],
+            multipleSelection: [],
+            pageSize: '', //显示多少页
+            pageCurrent: '', //当前页
+            pageTotal: 300 //总条数
+        }
+    },
+    components: {
+        'btn-list': btnList,
+        'state-switch': stateSwitch,
+        'paging': paging
+    },
+    watch: {
+        filterText(val) {
+            this.$refs.tree.filter(val);
+        }
+    },
+    methods: {
+        btnClick(val) {
 
-			},
-			filterNode(value, data) {
-				if (!value) return true;
-				return data.label.indexOf(value) !== -1;
-			},
-			handleSelect(value) {
-				if (!value.children) {
-					const {
-						id,
-						label
-					} = value;
-					this.currentSelect = label;
+        },
+        filterNode(value, data) {
+            if (!value) return true;
+            return data.label.indexOf(value) !== -1;
+        },
+        handleSelect(value) {
+            if (!value.children) {
+                const {
+                    id,
+                    label
+                } = value;
+                this.currentSelect = label;
 
-				}
-			},
-			search() {
+            }
+        },
+        search() {
 
-			},
-			toggleSelection(rows) {
-				if (rows) {
-					rows.forEach(row => {
-						this.$refs.multipleTable.toggleRowSelection(row);
-					});
-				} else {
-					this.$refs.multipleTable.clearSelection();
-				}
-			},
-			handleSelectionChange(val) {
-				this.multipleSelection = val;
-			},
-			stateList(state) {
-				alert(state)
-			},
-			SizeChange(pageSize) {
-				alert(pageSize)
-			},
-			CurrentChange(pageCurrent) {
-				alert(pageCurrent)
-			}
-		}
-	}
+        },
+        toggleSelection(rows) {
+            if (rows) {
+                rows.forEach(row => {
+                    this.$refs.multipleTable.toggleRowSelection(row);
+                });
+            } else {
+                this.$refs.multipleTable.clearSelection();
+            }
+        },
+        handleSelectionChange(val) {
+            this.multipleSelection = val;
+        },
+        stateList(state) {
+            alert(state)
+        },
+        SizeChange(pageSize) {
+            alert(pageSize)
+        },
+        CurrentChange(pageCurrent) {
+            alert(pageCurrent)
+        }
+    }
+}
 </script>
 
 <style>

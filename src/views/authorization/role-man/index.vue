@@ -44,16 +44,16 @@
 
 <script>
 export default {
-	components:{
-		btnList:()=>import("@/components/btn-list"),
-		baseTitle:()=>import("@/components/title"),
-		page:()=>import("@/components/paging")
-	},
-	data(){
-		return {
-			tableData:[{id:1,name:'系统管理员',org:'成都第X中学',desc:'系统管理员',number:12}]
-		}
-	}
+    components:{
+        btnList:()=>import("@/components/btn-list"),
+        baseTitle:()=>import("@/components/title"),
+        page:()=>import("@/components/paging")
+    },
+    data(){
+        return {
+            tableData:[{id:1,name:'系统管理员',org:'成都第X中学',desc:'系统管理员',number:12}]
+        }
+    }
 }
 </script>
 

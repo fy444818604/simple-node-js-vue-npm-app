@@ -78,138 +78,138 @@
 </template>
 
 <script>
-	export default {
-		components: {
-			baseTable: () => import("./../../../components/table"),
-			stateSwitch: () => import("./../../../components/state-switch"),
-			slelctTree: () => import("./../../../components/select-tree"),
-			baseTitle:()=>import("@/components/title"),
-			btnList:()=>import("@/components/btn-list"),
-			page:()=>import("@/components/paging")
-		},
-		data() {
-			return {
-				treeList: [{
-					id: 1,
-					label: '四川省教育厅',
-					children: [{
-							id: 1 - 1,
-							label: '成都市教育厅',
-							children: [{
-								id: 1 - 1 - 1,
-								label: '成都xxx中学',
-							}]
-						},
-						{
-							id: 1 - 2,
-							label: '雅安市教育厅',
-							children: [{
-								id: 1 - 2 - 1,
-								label: '雅安yyy中学',
-							}]
-						},
-						{
-							id: 1 - 3,
-							label: '绵阳市教育厅',
-							children: [{
-								id: 1 - 3 - 1,
-								label: '绵阳zzz中学',
-							}]
-						}
-					]
-				}],
-				search: {
-					name: '', //班级名称
-					stage: '', //阶段
-					grade: '', //学届
-					area: '', //建筑
-					stageList: [{
-						value: '',
-						label: "不限"
-					}],
-					gradeList: [{
-						value: '',
-						label: "全部"
-					}],
-					areaList: [{
-						value: '',
-						label: ""
-					}]
-				},
-				tableColumn: [{
-						prop: "id",
-						label: "序号"
-					},
-					{
-						prop: "name",
-						label: "名称"
-					},
-					{
-						prop: "type",
-						label: "类型"
-					},
-					{
-						prop: "desc",
-						label: "描述"
-					},
-					{
-						prop: "status",
-						label: "状态"
-					}
-				],
-				tableData: [{
-					id: 1,
-					name: '1号教学楼',
-					type: '普通教室',
-					desc: '1号教学楼',
-					status: '启用'
-				}],
-				/* dialog */
-				formInfo: {
-					school: '',
-					classYear: '',
-					teacher: '',
-					classRoom: '',
-					className: ''
-				},
-				rules: {
-					school: [{
-						required: true,
-						message: '请选择学校名称',
-						trigger: 'blur'
-					}],
-					classYear: [{
-						required: true,
-						message: '请选择学校名称',
-						trigger: 'blur'
-					}],
-					teacher: [{
-						required: true,
-						message: '请选择学校名称',
-						trigger: 'blur'
-					}],
-					classRoom: [{
-						required: true,
-						message: '请选择学校名称',
-						trigger: 'blur'
-					}],
-					className: [{
-						required: true,
-						message: '请选择学校名称',
-						trigger: 'blur'
-					}],
+export default {
+    components: {
+        baseTable: () => import("./../../../components/table"),
+        stateSwitch: () => import("./../../../components/state-switch"),
+        slelctTree: () => import("./../../../components/select-tree"),
+        baseTitle:()=>import("@/components/title"),
+        btnList:()=>import("@/components/btn-list"),
+        page:()=>import("@/components/paging")
+    },
+    data() {
+        return {
+            treeList: [{
+                id: 1,
+                label: '四川省教育厅',
+                children: [{
+                    id: 1 - 1,
+                    label: '成都市教育厅',
+                    children: [{
+                        id: 1 - 1 - 1,
+                        label: '成都xxx中学',
+                    }]
+                },
+                {
+                    id: 1 - 2,
+                    label: '雅安市教育厅',
+                    children: [{
+                        id: 1 - 2 - 1,
+                        label: '雅安yyy中学',
+                    }]
+                },
+                {
+                    id: 1 - 3,
+                    label: '绵阳市教育厅',
+                    children: [{
+                        id: 1 - 3 - 1,
+                        label: '绵阳zzz中学',
+                    }]
+                }
+                ]
+            }],
+            search: {
+                name: '', //班级名称
+                stage: '', //阶段
+                grade: '', //学届
+                area: '', //建筑
+                stageList: [{
+                    value: '',
+                    label: "不限"
+                }],
+                gradeList: [{
+                    value: '',
+                    label: "全部"
+                }],
+                areaList: [{
+                    value: '',
+                    label: ""
+                }]
+            },
+            tableColumn: [{
+                prop: "id",
+                label: "序号"
+            },
+            {
+                prop: "name",
+                label: "名称"
+            },
+            {
+                prop: "type",
+                label: "类型"
+            },
+            {
+                prop: "desc",
+                label: "描述"
+            },
+            {
+                prop: "status",
+                label: "状态"
+            }
+            ],
+            tableData: [{
+                id: 1,
+                name: '1号教学楼',
+                type: '普通教室',
+                desc: '1号教学楼',
+                status: '启用'
+            }],
+            /* dialog */
+            formInfo: {
+                school: '',
+                classYear: '',
+                teacher: '',
+                classRoom: '',
+                className: ''
+            },
+            rules: {
+                school: [{
+                    required: true,
+                    message: '请选择学校名称',
+                    trigger: 'blur'
+                }],
+                classYear: [{
+                    required: true,
+                    message: '请选择学校名称',
+                    trigger: 'blur'
+                }],
+                teacher: [{
+                    required: true,
+                    message: '请选择学校名称',
+                    trigger: 'blur'
+                }],
+                classRoom: [{
+                    required: true,
+                    message: '请选择学校名称',
+                    trigger: 'blur'
+                }],
+                className: [{
+                    required: true,
+                    message: '请选择学校名称',
+                    trigger: 'blur'
+                }],
 
-				}
-			}
-		},
-		methods: {
-			/* add */
-			handleAdd() {
-				this.$myLayer.formLayer("新建",$('.cla-mates-modal'),['422px'])
-			},
-			handleSwicthState() {},
-		}
-	}
+            }
+        }
+    },
+    methods: {
+        /* add */
+        handleAdd() {
+            this.$myLayer.formLayer("新建",$('.cla-mates-modal'),['422px'])
+        },
+        handleSwicthState() {},
+    }
+}
 </script>
 
 <style lang="scss" scoped>

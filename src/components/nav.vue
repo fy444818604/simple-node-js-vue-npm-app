@@ -17,92 +17,92 @@
 </template>
 
 <script>
-	import '../assets/style/menu.scss';
-	import navItem from './nav-list';
-	export default {
-		name: 'LeftNav',
-		components: {
-			'fy-nav': navItem
-		},
-		props: {
-			'menuData1':Array
-		},
-		data() {
-			return {
-				expend: true,
-				menuData:[],
-				firstpage: '',
-				subhead: '统一门户',
-				num: 0
-			}
-		},
-		created() {
-			this.menuSearch();
-		},
-		methods: {
-			expendChange() {
-				this.expend = !this.expend
-			},
-			menuSearch() {
-				// this.$post('/api/menu1').then(res => {
-				// 	this.menuData = this.getTree(res, 0);
-				// 	this.getFirstMenu(this.menuData[0])
-				// })
-				this.menuData = this.getTree(this.menuData1, 0);
-				// this.getFirstMenu(this.menuData[0])
-			},
-			getTree(list, parentId) {
-				var re = new Array();
-				for (var i = 0; i < list.length; i++) {
-					var pid = list[i].menu_pid;
-					if (pid == parentId) {
-						var child = this.getTree(list, list[i].menu_id);
-						if (child.length > 0) {
-							list[i].children = child;
-						}
-						re.push(list[i]);
-					}
-				}
-				return re;
-			},
-			getFirstMenu(para) {
-				if (para.menu_href) {
-					this.firstpage = para.menu_href
-				} else {
-					this.getFirstMenu(para.children[0])
-				}
-			},
-			jump(url) {
-				this.firstpage = url
-			}
-		},
-		watch: {
-			expend(val) {
-				if (val) {
-					return this.$parent.toggleWidth = '240px'
-				} else {
-					return this.$parent.toggleWidth = '100px'
-				}
-			},
-			firstpage() {
-				this.$router.push({
-					path: this.firstpage
-				})
-			}
-		},
-		computed: {
-			menuConfig() {
-				return this.$store.state.menuConfig;
-			}
-		},
-		mounted() {
-			if (this.expend) {
-				return this.$parent.toggleWidth = '240px'
-			} else {
-				return this.$parent.toggleWidth = '100px'
-			}
-		}
-	}
+import '../assets/style/menu.scss';
+import navItem from './nav-list';
+export default {
+    name: 'LeftNav',
+    components: {
+        'fy-nav': navItem
+    },
+    props: {
+        'menuData1':Array
+    },
+    data() {
+        return {
+            expend: true,
+            menuData:[],
+            firstpage: '',
+            subhead: '统一门户',
+            num: 0
+        }
+    },
+    created() {
+        this.menuSearch();
+    },
+    methods: {
+        expendChange() {
+            this.expend = !this.expend
+        },
+        menuSearch() {
+            // this.$post('/api/menu1').then(res => {
+            // 	this.menuData = this.getTree(res, 0);
+            // 	this.getFirstMenu(this.menuData[0])
+            // })
+            this.menuData = this.getTree(this.menuData1, 0);
+            // this.getFirstMenu(this.menuData[0])
+        },
+        getTree(list, parentId) {
+            let re = new Array();
+            for (let i = 0; i < list.length; i++) {
+                let pid = list[i].menu_pid;
+                if (pid == parentId) {
+                    let child = this.getTree(list, list[i].menu_id);
+                    if (child.length > 0) {
+                        list[i].children = child;
+                    }
+                    re.push(list[i]);
+                }
+            }
+            return re;
+        },
+        getFirstMenu(para) {
+            if (para.menu_href) {
+                this.firstpage = para.menu_href
+            } else {
+                this.getFirstMenu(para.children[0])
+            }
+        },
+        jump(url) {
+            this.firstpage = url
+        }
+    },
+    watch: {
+        expend(val) {
+            if (val) {
+                return this.$parent.toggleWidth = '240px'
+            } else {
+                return this.$parent.toggleWidth = '100px'
+            }
+        },
+        firstpage() {
+            this.$router.push({
+                path: this.firstpage
+            })
+        }
+    },
+    computed: {
+        menuConfig() {
+            return this.$store.state.menuConfig;
+        }
+    },
+    mounted() {
+        if (this.expend) {
+            return this.$parent.toggleWidth = '240px'
+        } else {
+            return this.$parent.toggleWidth = '100px'
+        }
+    }
+}
 </script>
 
 <style lang="scss">

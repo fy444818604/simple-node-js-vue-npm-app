@@ -24,45 +24,45 @@
 </template>
 <script>
 export default {
-  props:{
-    treeList:Array,
-    currentSelect:String,
-    defaultProps:{
-      type: Object,
-      default:function(){
-        return { children: "children", label: "label"}
-      }
+    props:{
+        treeList:Array,
+        currentSelect:String,
+        defaultProps:{
+            type: Object,
+            default:function(){
+                return { children: "children", label: "label"}
+            }
+        }
+    },
+    data(){
+        return {
+            isShow:false,
+            filterText:'',
+        }
+    },
+    watch: {
+        filterText(val) {
+            this.$refs.tree.filter(val);
+        }
+    },
+    methods:{
+        handleSelect(value){
+            if(!value.children) {
+                this.handleHideSelect()
+                this.$emit("on-change",value)
+            }
+        },
+        handleHideSelect(){
+            this.isShow = false
+        },
+        handleShowSelect(){
+            this.isShow = true
+        },
+        filterNode(value, data) {
+            if (!value) return true;
+            return data.label.indexOf(value) !== -1;
+        },
     }
-  },
-  data(){
-    return {
-      isShow:false,
-      filterText:'',
-    }
-  },
-  watch: {
-    filterText(val) {
-      this.$refs.tree.filter(val);
-    }
-  },
-  methods:{
-    handleSelect(value){
-      if(!value.children) {
-        this.handleHideSelect()
-        this.$emit("on-change",value)
-      }
-    },
-    handleHideSelect(){
-      this.isShow = false
-    },
-    handleShowSelect(){
-      this.isShow = true
-    },
-    filterNode(value, data) {
-      if (!value) return true;
-      return data.label.indexOf(value) !== -1;
-    },
-  }
 }
 </script>
 <style lang="scss" scoped>

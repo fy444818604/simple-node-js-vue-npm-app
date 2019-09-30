@@ -253,85 +253,85 @@
 
 <script>
 export default {
-	components:{
-		btnList:()=>import("@/components/btn-list"),
-		// baseBtn:() => import("@/components/btn"),
-		baseTitle:()=>import("@/components/title")
-	},
-	data(){
-		return {
-			activeName:'first',
-			active:3,
-			value: true,
-			/* edit */
-			editPlayForm:{
-				id:'',
-				name:'',
-				ip:'',
-				port:'',
-				account:'',
-				password:'',
-				number:''
-			},
-			editRules: {
-				id:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
-				name:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
-				ip:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
-				port:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
-				account:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
-				password:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
-			},
-			editCameraForm:{
-				name:'',
-				ip:'',
-				port:'',
-				account:'',
-				password:'',
-				number:'',
-				type:'',
-				typeNumber:'',
-				address:''
-			},
-			editCameraRules: {
-				name:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
-				ip:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
-				port:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
-				account:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
-				password:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
-				address:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
-			},
-		}
-	},
-	methods:{
-		handleClick(){},
-		handleSelect(n){
-			this.active = n;
-		},
-		handleAdd(){
-			const that = this
-			this.equipIndex = this.$layer.open({
-				type:1,
-				title:['添加设备',
-				`background-color:#fff;
+    components:{
+        btnList:()=>import("@/components/btn-list"),
+        // baseBtn:() => import("@/components/btn"),
+        baseTitle:()=>import("@/components/title")
+    },
+    data(){
+        return {
+            activeName:'first',
+            active:3,
+            value: true,
+            /* edit */
+            editPlayForm:{
+                id:'',
+                name:'',
+                ip:'',
+                port:'',
+                account:'',
+                password:'',
+                number:''
+            },
+            editRules: {
+                id:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
+                name:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
+                ip:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
+                port:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
+                account:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
+                password:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
+            },
+            editCameraForm:{
+                name:'',
+                ip:'',
+                port:'',
+                account:'',
+                password:'',
+                number:'',
+                type:'',
+                typeNumber:'',
+                address:''
+            },
+            editCameraRules: {
+                name:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
+                ip:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
+                port:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
+                account:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
+                password:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
+                address:[{ required: true, message: '请输入活动名称', trigger: 'blur' }],
+            },
+        }
+    },
+    methods:{
+        handleClick(){},
+        handleSelect(n){
+            this.active = n;
+        },
+        handleAdd(){
+            const that = this
+            this.equipIndex = this.$layer.open({
+                type:1,
+                title:['添加设备',
+                    `background-color:#fff;
 				 border-bottom:none;
 				 text-align:center;
 				 padding:0;font-size:16;position:relative;top:20px;font-weight:Bold;
 				 color:#606266;`],
-				content:$(".add-equipment-modal"),
-				area: ['384px','242px'],
-				cancel:function(){
-					that.$layer.close(that.equipIndex)
-					$('.add-equipment-modal').hide()
-				}
-			})
-		},
-		handleAddPlay(){
-			this.$myLayer.formLayer("新建",$(".create-play-modal"),['422px','554px'])
-		},
-		handleAddCamera(){
-			this.$myLayer.formLayer("新建",$(".create-canmera-modal"), ['422px'])
-		}
-	}
+                content:$(".add-equipment-modal"),
+                area: ['384px','242px'],
+                cancel:function(){
+                    that.$layer.close(that.equipIndex)
+                    $('.add-equipment-modal').hide()
+                }
+            })
+        },
+        handleAddPlay(){
+            this.$myLayer.formLayer("新建",$(".create-play-modal"),['422px','554px'])
+        },
+        handleAddCamera(){
+            this.$myLayer.formLayer("新建",$(".create-canmera-modal"), ['422px'])
+        }
+    }
 }
 </script>
 
