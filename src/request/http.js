@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import axios from 'axios';
-import { Toast } from 'vant';
 import QS from 'qs';
 import store from '../store/index';
 import router from '@/router/index'
@@ -46,7 +45,6 @@ axios.interceptors.response.use(
     },
     // 服务器状态码不是200的情况
     error => {
-        console.log(error)
         if (error.response.status) {
             switch (error.response.status) {
             // 401: 未登录

@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 module.exports = {
     baseUrl: process.env.NODE_ENV === 'production' ?
         '/' : '/',
@@ -13,7 +14,8 @@ module.exports = {
                 $: "jquery",
                 jQuery: "jquery",
                 "windows.jQuery": "jquery"
-            })
+            }),
+			// new BundleAnalyzerPlugin()
         ]
     },
     lintOnSave: undefined,
