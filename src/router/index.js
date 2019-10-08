@@ -494,7 +494,7 @@ const authorization = {
         },
     }]
 }
-
+//资源平台
 const resource = {
     path: '/resource/Layout',
     name: 'resource-Layout',
@@ -552,6 +552,18 @@ const resource = {
         },
     ]
 }
+//预约系统
+const order = {
+	path: '/order/Layout',
+	name: 'order-Layout',
+	component: (resolve) => {
+	    require(['../views/order/layout/layout'], resolve)
+	},
+	meta: {
+	    title: '首页',
+	    requireAuth: true
+	}
+}
 const router = new Router({
     base: './',
     routes: [
@@ -581,7 +593,8 @@ const router = new Router({
         },
         equipment,
         authorization,
-        resource
+        resource,
+		order
     ]
 })
 
