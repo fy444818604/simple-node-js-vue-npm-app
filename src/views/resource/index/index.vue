@@ -46,16 +46,19 @@
         <div class="recommend">
             <div class="recommend-content content-center">
                 <res-title title="精品推荐"></res-title>
-                <res-box></res-box>
-                <res-box></res-box>
-                <res-box></res-box>
-                <res-box></res-box>
-                <res-box></res-box>
-                <res-box></res-box>
-                <res-box></res-box>
-                <res-box></res-box>
-                <res-box></res-box>
-                <res-box></res-box>
+                <div class="recommend-content-wrap">
+                  <res-box></res-box>
+                  <res-box></res-box>
+                  <res-box></res-box>
+                  <res-box></res-box>
+                  <res-box></res-box>
+                  <res-box></res-box>
+                  <res-box></res-box>
+                  <res-box></res-box>
+                  <res-box></res-box>
+                  <res-box></res-box>
+                  <res-box></res-box>
+                </div>
             </div>
         </div>
         <div class="latest">
@@ -197,17 +200,18 @@ export default {
 
     .recommend {
         padding-bottom: 30px;
-
         .recommend-content {
-            display: flex;
-            flex-wrap: wrap;
-            & > div:not(:first-child) {
-                width: 25%;
-            }
-            @media screen and (min-width: 1520px) {
-                & > div:not(:first-child) {
-                    width: 20%;
-                }
+            &-wrap {
+              display: flex;
+              flex-wrap: wrap;
+              & > div {
+                  width: 25%;
+              }
+              @media screen and (min-width: 1520px) {
+                  & > div{
+                      width: 20%;
+                  }
+              } 
             }
         }
     }
@@ -236,9 +240,13 @@ export default {
         .popular-content {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
             & > div:not(:first-child) {
-                width: 20%;
+                width: 25%;
+            }
+            @media screen and (min-width: 1520px) {
+                & > div:not(:first-child) {
+                    width: 20%;
+                }
             }
         }
     }

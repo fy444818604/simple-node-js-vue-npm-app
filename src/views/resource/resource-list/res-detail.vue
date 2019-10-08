@@ -7,17 +7,17 @@
         <div class="main-video-content-video">
           <div class="left">
             <div class="video-wrap">
-              <video 
+              <video
               controls
-              style="width:100%;height:100%;object-fit:contain"
+              style="width:100%;height:100%;object-fit:cover;outline: none"
               src="./../../../assets/movie.mp4">
               </video>
             </div>
             <div class="video-control">
               <div> <i class="iconfont icon-eyes"></i> 135</div>
-              <div>下载</div>
+              <div> <i class="iconfont icon-arrow-1"></i> 下载</div>
               <div> <i class="iconfont icon-heart"></i> 收藏</div>
-              <div>分享</div>
+              <div> <i class="iconfont icon-share"></i> 分享</div>
               <div> <i class="iconfont icon-stars"></i> 4.7</div>
             </div>
           </div>
@@ -32,9 +32,18 @@
             </el-scrollbar>
           </div>
         </div>
-        <!-- <div class="main-video-content-info">
-          <div class="title">初中数学教学大纲</div>
-        </div> -->
+        <div class="main-video-content-info">
+          <div class="title"> 初中数学教学大纲与初中数学知识点总结</div>
+          <div class="info">
+            <div>林明皓</div>
+            <div>成都树德中学</div>
+            <div>2019-09-15</div>
+            <div>初中  一年级上册  人教版  有理数</div>
+          </div>
+          <div class="desc">
+            
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -61,12 +70,6 @@ export default {
           flex: 1;
           .video-wrap {
             height: calc(100% - 65px);
-            // overflow: hidden;
-            video {
-              outline: none;
-              // height: 100%;
-              // width: 100%;
-            }
           }
           .video-control {
             height: 65px;
@@ -103,7 +106,19 @@ export default {
 
       &-info {
         .title {
-
+          font-size: 20px;
+          lineß-height: 24px;
+          margin: 23px 0 12px 0;
+        }
+        .info {
+          display: flex;
+          & > div {
+            line-height: 1;
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid #ccc;
+            &:last-child {border-right: none}
+          }
         }
       }
     }
