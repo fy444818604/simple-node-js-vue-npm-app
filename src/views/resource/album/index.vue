@@ -37,8 +37,13 @@ export default {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        &>div:nth-child(4n+1) {
-            margin-left: 0;
+        & > div {
+          width: 20%;
+        }
+        @media screen and (max-width: 1520px) {
+          & > div {
+            width: 25%;
+          }
         }
     }
 }

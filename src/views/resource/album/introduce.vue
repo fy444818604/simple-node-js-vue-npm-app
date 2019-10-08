@@ -1,78 +1,111 @@
-<!-- 资源详情 -->
+<!-- 专辑详情 -->
 <template>
-  <div class="introduce">
-      <div class="intro-main">
-          <div class="content">
-            <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item>专辑</el-breadcrumb-item>
-                <el-breadcrumb-item>七年级上册系列</el-breadcrumb-item>
-            </el-breadcrumb>
-            <div class="bottom">
-                <div class="cover">
-                    <div class="bg"></div>
-                </div>
-                <div class="info">
-                    <div class="title">七年级上册数学实例举一反三系列</div>
-                    <div class="auth">
-                        <span>杨皓塔</span>
-                        <span>|</span>
-                        <span>成都树德中学</span>
+    <div class="introduce">
+        <div class="intro-main">
+            <div class="content">
+                <el-breadcrumb separator-class="el-icon-arrow-right">
+                    <el-breadcrumb-item>专辑</el-breadcrumb-item>
+                    <el-breadcrumb-item>七年级上册系列</el-breadcrumb-item>
+                </el-breadcrumb>
+                <div class="bottom">
+                    <div class="cover">
+                        <div class="bg"></div>
                     </div>
-                    <div class="basic-info">
-                        <span class="time">2019-10-20</span>
-                        <span>4.7</span>
-                        <span>2582</span>
-                        <span>收藏</span>
-                    </div>
-                    <div class="intro">
-                        <span>简介<i class="el-icon-arrow-down"></i> </span>
-                        <p class="p-overflow">上月中旬，香港海关在机场搜查一名抵港的台湾男子，在他身上搜到面罩、滤罐、胡椒喷雾及“光复香港”的贴纸等，后交给负责反恐情报的警方保安科跟进调查。9月，香港海关又在机场搜查3名抵港的台湾男子，在他们身上查获一批面罩、滤罐和眼罩等物资，已将其数据交给入境处，可能将列入入境管制名单。上月中旬，香港海关在机场搜查一名抵港的台湾男子，在他身上搜到面罩、滤罐、胡椒喷雾及“光复香港”的贴纸等，后交给负责反恐情报的警方保安科跟进调查。9月，香港海关又在机场搜查3名抵港的台湾男子，在他们身上查获一批面罩、滤罐和眼罩等物资，已将其数据交给入境处，可能将列入入境管制名单。上月中旬，香港海关在机场搜查一名抵港的台湾男子，在他身上搜到面罩、滤罐、胡椒喷雾及“光复香港”的贴纸等，后交给负责反恐情报的警方保安科跟进调查。9月，香港海关又在机场搜查3名抵港的台湾男子，在他们身上查获一批面罩、滤罐和眼罩等物资，已将其数据交给入境处，可能将列入入境管制名单。</p>
+                    <div class="info">
+                        <div class="title">七年级上册数学实例举一反三系列</div>
+                        <div class="auth">
+                            <span>杨皓塔</span>
+                            <span>|</span>
+                            <span>成都树德中学</span>
+                        </div>
+                        <div class="basic-info">
+                            <span class="time">2019-10-20</span>
+                            <span> <i class="iconfont icon-stars"></i> 4.7</span>
+                            <span> <i class="iconfont icon-eyes"></i>2582</span>
+                            <span> <i class="iconfont icon-heart"></i>收藏</span>
+                        </div>
+                        <div class="intro">
+                            <span>
+                                简介
+                                <i class="el-icon-arrow-down"></i>
+                            </span>
+                            <p
+                                class="p-overflow"
+                            >他他入入境管他入入境管制名单他入入境管制名单他入入境管制名单制名单他入入境管他入入境管制名单他入入境管制名单他入入境管制名单制名单他入入境管他入入境管制名单他入入境管制名单他入入境管制名单制名单他入入境管他入入境管制名单他入入境管制名单他入入境管制名单制名单入入境管他入入境管制名单他入入境管制名单他入入境管制名单制名单。
+                          
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
-          </div>
-      </div>
+        </div>
 
-      <div class="recommend">
-          <div class="title">
+        <div class="recommend">
+            <div class="content">
+                <div class="title">共计资源112</div>
+                <div class="rec-lists">
+                    <res-box></res-box>
+                    <res-box></res-box>
+                    <res-box></res-box>
+                    <res-box></res-box>
+                    <res-box></res-box>
+                    <res-box></res-box>
+                    <res-box></res-box>
+                    <res-box></res-box>
+                    <res-box></res-box>
+                    <res-box></res-box>
+                    <res-box></res-box>
+                    <res-box></res-box>
+                    <res-box></res-box>
+                    <res-box></res-box>
+                    <res-box></res-box>
+                </div>
+                <resPagination></resPagination>
+            </div>
+        </div>
 
-          </div>
-      </div>
-  </div>
+        <res-footer class="footer"></res-footer>
+    </div>
 </template>
 
 <script>
 export default {
-
-}
+    components: {
+        resBox: () => import("./../../../components/res-box"),
+        resFooter: () => import("@/components/res-footer"),
+        resPagination:()=>import("@/components/res-pagination")
+    }
+};
 </script>
 
 <style lang="scss" scoped>
 .introduce {
     min-width: 1200px;
-    .intro-main{
+    .intro-main {
         background: #fff;
         padding-bottom: 30px;
         .content {
             width: 80%;
-            margin: 0 auto;
+            margin: 30px auto 0;
+            padding-bottom: 30px;
             .bottom {
                 display: flex;
-                justify-content: space-between;
-                margin-top: 15px;
+                margin-top: 30px;
                 .cover {
-                    width: 49%;
-                    border-radius: 10px;
-                    overflow: hidden;
+                    width: 520px;
+                    min-width: 520px;
                     .bg {
-                        height: 0;
-                        padding-bottom: 60%;
-                        background: url('./../../../assets/image/city-1.jpg') no-repeat;
+                        border-radius: 10px;
+                        width: 100%;
+                        height: 290px;
+                        background: url("./../../../assets/image/city-1.jpg")
+                            no-repeat;
                         background-size: 100% 100%;
                     }
                 }
                 .info {
-                    width: 49%;
+                    margin-left: 30px;
+                    width: 50%;
                     .title {
                         font-size: 22px;
                         color: #333;
@@ -98,18 +131,19 @@ export default {
                         margin-top: 30px;
                         position: relative;
                         padding: 20px 15px 10px;
-                        border: 1px solid rgba(144, 147, 153,.2);
+                        border: 1px solid rgba(144, 147, 153, 0.2);
                         border-radius: 4px;
-                        
+
                         p {
                             text-align: justify;
                             line-height: 24px;
+                            min-height: 130px;
                         }
                         span {
                             position: absolute;
                             width: 4rem;
                             background: #fff;
-                            top: -.8rem;
+                            top: -0.8rem;
                             color: #909399;
                             font-size: 16px;
                             i {
@@ -120,6 +154,38 @@ export default {
                 }
             }
         }
+    }
+
+    .recommend {
+        background: #f3f5f7;
+        .content {
+            .title {
+              width: 80%;
+              line-height: 22px;
+              color: #333333;
+              font-size: 16px;
+              padding: 20px 0;
+              margin: 0 auto;
+            }
+            .rec-lists {
+                width: 81.6%;
+                margin: 0 auto;
+                display: flex;
+                flex-wrap: wrap;
+                & > div{
+                    width: 25%;
+                }
+                @media screen and (min-width: 1520px) {
+                    & > div  {
+                        width: 20%;
+                    }
+                }
+            }
+        }
+    }
+
+    .footer {
+      background: #F3F5F7;
     }
 }
 </style>

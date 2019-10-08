@@ -1,9 +1,9 @@
 <template>
     <div class="res-page">
-        <span>首页</span>
+        <!-- <span>首页</span> -->
         <el-pagination layout="prev, pager, next" next-text="下一页" prev-text="上一页" :total="100">
         </el-pagination>
-        <span>尾页</span>
+        <!-- <span>尾页</span> -->
     </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {};
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 40px 0;
+    padding: 40px 0;
 }
 .res-page > span {
     cursor: pointer;
@@ -39,6 +39,7 @@ export default {};
     line-height: 32px;
     border-radius: 50%;
     padding: 0;
+    margin: 0 5px;
 }
 .el-pager li.active {
     color: #fff;

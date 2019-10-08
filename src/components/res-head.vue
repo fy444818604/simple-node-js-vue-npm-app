@@ -3,7 +3,8 @@
 	<div class="res-head-container">
 		<div class="head-left">
 			<div class="logo-contaier">
-				<img src="" alt="">
+				<img src="../assets/image/res-logo.png" alt="">
+				<div>教育资源平台</div>
 			</div>
 			<ul>
 				<li v-for="(item,index) in menuList" :key="index">
@@ -72,12 +73,21 @@ export default {
 
 		.head-left {
 			display: flex;
+			align-items: center;
 
 			.logo-contaier {
 				height: 100%;
 				min-width: 10px;
 				padding-left: 28px;
 				margin-right: 110px;
+				display: flex;
+				align-items: center;
+				
+				div{
+					margin-left: 5px;
+					font-size: 22px;
+					color: #333333;
+				}
 			}
 
 			ul {

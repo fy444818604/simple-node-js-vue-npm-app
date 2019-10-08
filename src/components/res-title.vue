@@ -27,6 +27,7 @@ export default {
 <style lang="scss" scoped>
 .res-title {
   width: 100%;
+  padding: 0 0.8%;
   display: flex;
   justify-content: space-between;
   align-items: center;
