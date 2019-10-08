@@ -3,14 +3,10 @@
     <div class="page-template">
         <!--页面title-->
         <el-row class="school-title">
-            <el-col :span="12">
-                <div class="grid-content bg-purple cha-title">{{ pageTile }}</div>
-            </el-col>
-            <el-col :span="12">
-                <div class="grid-content bg-purple-light">
-                    <bnt-list @btn-click="schoolAdd" :model="{icon:'icon-add',name:'添加'}"></bnt-list>
-                </div>
-            </el-col>
+            <el-col :span="12"><div class="grid-content bg-purple cha-title">{{ pageTile }}</div></el-col>
+            <el-col :span="12"><div class="grid-content bg-purple-light">
+                <bnt-list  @btn-click="schoolAdd" :model="{icon:'icon-add',name:'添加'}"></bnt-list>
+            </div></el-col>
         </el-row>
         <!--查询表单-->
         <div class="school-form">
@@ -19,10 +15,10 @@
         <!--表格-->
         <div class="school-table">
             <school-table
-                    :tableData="tableData"
-                    :tableColumn="tableColumn"
-                    @on-stop="schoolStop"
-                    @on-edit="schoolEdit">
+                :tableData="tableData"
+                :tableColumn="tableColumn"
+                @on-stop="schoolStop"
+                @on-edit="schoolEdit">
             </school-table>
         </div>
         <!--分页/启用/停用-->
@@ -34,22 +30,21 @@
             </el-col>
             <el-col :span="19">
                 <div class="grid-content bg-purple-light">
-                    <school-paging :pageTotal="pageTotal" @handleSizeChange="SizeChange"
-                                   @handleCurrentChange="CurrentChange"></school-paging>
+                    <school-paging :pageTotal="pageTotal" @handleSizeChange="SizeChange" @handleCurrentChange="CurrentChange"></school-paging>
                 </div>
             </el-col>
         </el-row>
         <!--添加弹框-->
         <div class="stu-yeaer-modal-add">
             <div class="modalAdd">
-                <el-form ref="form" :model="schoolForm" label-width="88px" :rules="formRules">
+                <el-form ref="form" :model="schoolForm" label-width="88px" :rules="formRules" id="schoolForm">
                     <el-form-item label="学区名称" prop="name">
                         <el-input v-model="schoolForm.name"></el-input>
                     </el-form-item>
                     <el-form-item label="组织结构" prop="institutions">
                         <div>
-                            <div class="school-structure-top" @click="structureTop">
-                                {{ label }}
+                            <div class="school-structure-top" @click="structureTop" id="labelData">
+                                {{ labelData }}
                             </div>
                             <div class="school-structure-bnt" v-show="structureBnt">
                                 <adm-areas-tree @superiorData="structureT"></adm-areas-tree>
@@ -84,11 +79,12 @@ export default {
             pageCurrent: 1,//当前页
             pageTotal: 0,//总条数
             status: 0,
+            enable:null,
             //表格
             tableData: [],
             tableColumn: [
                 {
-                    prop: 'id',
+                    prop: 'index',
                     label: '显示顺序'
                 },
                 {
@@ -120,7 +116,7 @@ export default {
                 institutions: [{required: true, message: '请选择组织结构', trigger: 'blur'}],
             },
             //自定义下拉框选中数据
-            label: '',
+            labelData: '',
             structureBnt: false
         }
     },
@@ -141,54 +137,79 @@ export default {
             let params = {
                 pageIndex: this.pageCurrent,
                 pageSize: this.pageSize,
-                orgId: 0,
-                status: this.status
+                orgId: '',
+                status: this.status,
             };
             this.$api.school(params).then(res => {
                 if (res.success == true) {
                     //赋值分页总数
-                    this.pageTotal = res.totalDatas;
+                    this.pageTotal = parseInt(res.totalDatas);
+                    let array = [];
+                    let list = res.data;
+                    list.map((item,index)=>{
+                        array.push(
+                            Object.assign({
+                                index:index+1
+                            },item,{indexNum:'str'})
+                        )
+                    });
                     //赋值表格数据
-                    this.tableData = res.data;
+                    this.tableData = array;
                 } else {
-                    console.log('请求失败')
+                    this.$myLayer.errorLayer('失败')
                 }
             })
-        },
-        //保存编辑接口
-        schoolListAdd() {
-            let params = {
-                name: this.schoolForm.name,
-            };
-            this.$api.schoolAdd(params).then(res => {
-                if (res.success == true) {
-                    console.log(res)
-                } else {
-                    console.log('请求失败')
-                }
-            })
-        },
-        //停用接口
-        schoolDis() {
-
         },
         //表格操作
+        enableIf(){
+            if(this.enable != 0){
+                this.enable = 0;
+            }else {
+                this.enable = 1;
+            }
+        },
         schoolStop(row) {//停用
-            console.log(row)
-            this.$myLayer.confirmLayer('确定停用?', function () {
-
-            });
+            let _this = this;
+            _this.enable = row.status;
+            _this.enableIf();
+            let params = {
+                id:row.id,
+                status:_this.enable
+            }
+            this.$api.schoolDis(params).then(res => {
+                if (res.success == true) {
+                    _this.schoolList();
+                    this.$myLayer.successLayer(res.msg)
+                } else {
+                    this.$myLayer.errorLayer(res.msg)
+                }
+            })
         },
         schoolEdit(row) {//编辑
             let editForm = {
                 name: row.row.name,
-                institutions: row.row.orgName,
                 describe: row.row.description,
-                order: row.$index + 1
+                order: row.$index + 1,
+                id:row.row.id,
             };
             this.schoolForm = editForm;
+            let _this = this;
             this.$myLayer.formLayer("编辑", $('.stu-yeaer-modal-add'), ['422px'], function () {
-                this.schoolListAdd();
+                let ediData = {
+                    name:_this.schoolForm.name,
+                    id:row.row.id,
+                    orderIndex:_this.schoolForm.order,
+                    orgId:'1178138607873990657',
+                    description:_this.schoolForm.describe
+                };
+                _this.$api.schoolEdi(ediData).then(res => {
+                    if (res.success == true) {
+                        _this.schoolList();
+                        _this.$myLayer.successLayer(res.msg)
+                    } else {
+                        _this.$myLayer.errorLayer(res.msg)
+                    }
+                })
             })
         },
         //启用/禁用
@@ -207,13 +228,29 @@ export default {
         },
         //添加弹框
         schoolAdd() {
+            let _this = this;
+            document.getElementById('schoolForm').reset();
             this.$myLayer.formLayer("新建", $('.stu-yeaer-modal-add'), ['422px'], function () {
-                this.schoolListAdd()
+                let params = {
+                    name: _this.schoolForm.name,
+                    description:_this.schoolForm.describe,
+                    orderIndex:_this.schoolForm.order,
+                    orgId:'1178138607873990657'
+                };
+                _this.$api.schoolAdd(params).then(res => {
+                    if (res.success == true) {
+                        _this.schoolList();
+                        _this.$myLayer.successLayer(res.msg)
+                    } else {
+                        _this.$myLayer.errorLayer(res.msg)
+                    }
+                })
+
             })
         },
         //添加弹框里面的自定义下拉框
         structureT(label) {
-            this.label = label;
+            this.labelData = label;
             this.structureBnt = false
         },
         structureTop() {
