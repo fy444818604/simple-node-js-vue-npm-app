@@ -1,14 +1,16 @@
 <!-- 预约中心首页 -->
 <template>
 	<div class="container">
-		<el-row>
+		<el-row class="top-statis-list">
 			<el-col :span="8" v-for="(item,index) in statis" :key="index">
 				<div class="top-statis">
 					<div class="top-statis-name">{{item.name}}</div>
 					<div class="top-statis-data">{{item.data}}</div>
+					<img src="../../../assets/image/spume.png" alt="">
 				</div>
 			</el-col>
 		</el-row>
+		<i class="icondaiban iconfont" style="font-weight: 100;"></i>
 	</div>
 </template>
 
@@ -41,9 +43,12 @@ export default {
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			background-color: red;
 			margin: 0 16px;
 			height: 140px;
+
+			&:first-child {
+				background: linear-gradient(to top right, #8EC9F8, #4C84FF);
+			}
 
 			.top-statis-name {
 				color: #FFFFFF;
@@ -55,6 +60,33 @@ export default {
 			.top-statis-data {
 				color: #FFFFFF;
 				font-size: 48px;
+			}
+			
+			img{
+				position: absolute;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				height: 140px;
+				width: 118px;
+			}
+		}
+
+		.top-statis-list {
+			padding-top: 32px;
+			
+			.el-col {
+				&:nth-child(2) {
+					.top-statis {
+						background: linear-gradient(to top right, #FFBE96, #FE7096);
+					}
+				}
+
+				&:nth-child(3) {
+					.top-statis {
+						background: linear-gradient(to top right, #83D9D2, #07CDAE);
+					}
+				}
 			}
 		}
 	}
