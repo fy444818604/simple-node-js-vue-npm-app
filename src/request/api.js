@@ -20,3 +20,8 @@ export const schoolAdd = params => post('/base/api/eduarea/add',params);
 export const schoolEdi = params => post('/base/api/eduarea/update',params);
 export const schoolDis = params => post('/base/api/eduarea/update/status',params);
 
+/**
+ * 资源平台接口
+ */
+
+
