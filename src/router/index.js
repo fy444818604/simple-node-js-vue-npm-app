@@ -540,6 +540,17 @@ const resource = {
             }
         },
         {
+            path: '/resource/Layout/album/id',
+            name: 'album',
+            component: (resolve) => {
+                require(['../views/resource/album/introduce'], resolve)
+            },
+            meta: {
+                title: '专辑',
+                requireAuth: true
+            }
+        },
+        {
             path: '/resource/Layout/discover',
             name: 'discover',
             component: (resolve) => {

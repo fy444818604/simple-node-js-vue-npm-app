@@ -72,10 +72,10 @@
         <div class="album">
             <div class="album-content content-center">
                 <res-title title="精选专辑"></res-title>
-                <res-box :index="4" show></res-box>
-                <res-box :index="4" show></res-box>
-                <res-box :index="4" show></res-box>
-                <res-box :index="4" show></res-box>
+                <res-box show></res-box>
+                <res-box show></res-box>
+                <res-box show></res-box>
+                <res-box show></res-box>
             </div>
         </div>
         <div class="sync">
@@ -98,7 +98,7 @@ export default {
         resTip: () => import("@/components/res-tip"),
         resTitle: () => import("@/components/res-title"),
         resBox: () => import("@/components/res-box"),
-        resFooter: () => import("@/components/res-footer"),
+        resFooter: () => import("@/components/res-footer")
     }
 };
 </script>
@@ -141,13 +141,13 @@ export default {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-             & > div:not(:first-child) {
+            & > div:not(:first-child) {
                 width: 25%;
-              }
+            }
             @media screen and (min-width: 1520px) {
-              & > div:not(:first-child) {
-                width: 20%;
-              }
+                & > div:not(:first-child) {
+                    width: 20%;
+                }
             }
         }
     }
@@ -204,7 +204,7 @@ export default {
             justify-content: space-between;
 
             & > div:not(:first-child) {
-              width: 20%;
+                width: 20%;
             }
         }
     }

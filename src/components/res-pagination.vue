@@ -1,9 +1,9 @@
 <template>
     <div class="res-page">
-        <span>首页</span>
+        <!-- <span>首页</span> -->
         <el-pagination layout="prev, pager, next" next-text="下一页" prev-text="上一页" :total="100">
         </el-pagination>
-        <span>尾页</span>
+        <!-- <span>尾页</span> -->
     </div>
 </template>
 
