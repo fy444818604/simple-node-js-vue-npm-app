@@ -573,7 +573,18 @@ const order = {
 	meta: {
 	    title: '首页',
 	    requireAuth: true
-	}
+	},
+	children:[{
+		path: '/order/Layout/index',
+		name: 'order-Layout-index',
+		component: (resolve) => {
+		    require(['../views/order/index/index'], resolve)
+		},
+		meta: {
+		    title: '首页',
+		    requireAuth: true
+		},
+	}]
 }
 const router = new Router({
     base: './',
