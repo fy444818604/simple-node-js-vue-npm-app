@@ -4,10 +4,13 @@
         <!-- 轮播 -->
         <el-carousel class="base-carousel" height="360px">
             <el-carousel-item>
-                <div class="item"></div>
+                <div class="banner-1"></div>
             </el-carousel-item>
             <el-carousel-item>
-                <div class="item"></div>
+                <div class="banner-2"></div>
+            </el-carousel-item>
+            <el-carousel-item>
+                <div class="banner-3"></div>
             </el-carousel-item>
         </el-carousel>
         <!-- tips -->
@@ -129,10 +132,22 @@ export default {
     min-width: 1200px;
 
     .base-carousel {
-        .item {
+        .banner-1 {
             width: 100%;
             height: 100%;
-            background: url(./../../../assets/image/city-1.jpg) no-repeat;
+            background: url(./../../../assets/image/banner-test-1.jpg) no-repeat;
+            background-size: 100% 100%;
+        }
+        .banner-2 {
+            width: 100%;
+            height: 100%;
+            background: url(./../../../assets/image/banner-test-2.jpg) no-repeat;
+            background-size: 100% 100%;
+        }
+        .banner-3 {
+            width: 100%;
+            height: 100%;
+            background: url(./../../../assets/image/banner-test-3.jpg) no-repeat;
             background-size: 100% 100%;
         }
     }

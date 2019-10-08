@@ -529,6 +529,17 @@ const resource = {
             }
         },
         {
+            path: '/resource/Layout/resource-list/:id',
+            name: 'resource-list',
+            component: (resolve) => {
+                require(['../views/resource/resource-list/res-detail'], resolve)
+            },
+            meta: {
+                title: '资源详情',
+                requireAuth: true
+            }
+        },
+        {
             path: '/resource/Layout/album',
             name: 'album',
             component: (resolve) => {
