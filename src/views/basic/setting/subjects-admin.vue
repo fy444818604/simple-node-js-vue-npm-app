@@ -5,8 +5,7 @@
         <el-row class="sub-title">
             <el-col :span="12"><div class="grid-content bg-purple cha-title">{{ pageTile }}</div></el-col>
             <el-col :span="12"><div class="grid-content bg-purple-light">
-                <bnt-list :model="model" @btn-click="subAdd">
-                </bnt-list>
+                <bnt-list :model="model" @btn-click="subAdd"></bnt-list>
             </div></el-col>
         </el-row>
         <!--表格-->
@@ -26,35 +25,33 @@
             </div></el-col>
         </el-row>
         <!--新建-->
-        <sub-modal
-            :title="dialog.title"
-            @on-close="subClose"
-            @on-save="subSave"
-            :visible="dialog.visible">
-            <el-form ref="form" :model="subForm" label-width="88px" :rules="formRules">
-                <el-form-item label="科目类型">
-                    <el-select v-model="subForm.type" placeholder="请选择活动区域" style="width: 100%">
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="科目名称"  prop="name">
-                    <el-input v-model="subForm.name"></el-input>
-                </el-form-item>
-                <el-form-item label="学段">
-                    <el-select v-model="subForm.period" placeholder="请选择活动区域" style="width: 100%">
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="序号" >
-                    <el-input v-model="subForm.number"></el-input>
-                </el-form-item>
-                <el-form-item label="描述" >
-                    <el-input v-model="subForm.describe"></el-input>
-                </el-form-item>
-            </el-form>
-        </sub-modal>
+        <div class="stu-yeaer-modal-add">
+            <div class="modalAdd">
+                <el-form ref="form" :model="subForm" label-width="88px" :rules="formRules">
+                    <el-form-item label="科目类型">
+                        <el-select v-model="subForm.type" placeholder="请选择活动区域" style="width: 100%">
+                            <el-option label="区域一" value="shanghai"></el-option>
+                            <el-option label="区域二" value="beijing"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="科目名称"  prop="name">
+                        <el-input v-model="subForm.name"></el-input>
+                    </el-form-item>
+                    <el-form-item label="学段">
+                        <el-select  class="xueduan" v-model="subForm.period" placeholder="请选择活动区域" style="width: 100%;z-index: 999999999999">
+                            <el-option label="区域一" value="shanghai"></el-option>
+                            <el-option label="区域二" value="beijing"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="序号" >
+                        <el-input v-model="subForm.number"></el-input>
+                    </el-form-item>
+                    <el-form-item label="描述" >
+                        <el-input v-model="subForm.describe"></el-input>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -63,7 +60,6 @@ import bntList from '../../../components/btn-list'
 import table from '../../../components/table'
 import stateSwitch from '../../../components/state-switch'
 import paging from '../../../components/paging'
-import modal from '../../../components/modal'
 
 export default {
     name: "subjectsAdmin",
@@ -76,56 +72,40 @@ export default {
                 icon: 'icon-add'
             },
             //表格
-            tableData: [
-                {
-                    id: 1,
-                    level: '1号教学楼',
-                    status: '启用',
-
-                },
-                {
-                    id: 2,
-                    level: '1号教学楼',
-                    status: '启用',
-
-                },
-                {
-                    id: 3,
-                    level: '1号教学楼',
-                    status: '启用',
-
-                },
-                {
-                    id: 4,
-                    level: '1号教学楼',
-                    status: '启用',
-
-                }
-            ],
+            tableData: [],
             tableColumn: [
                 {
-                    prop: 'id',
-                    label: '显示顺序'
+                    prop: 'index',
+                    label: '序号'
                 },
                 {
-                    prop: 'level',
-                    label: '行政级别'
+                    prop: 'subjectName',
+                    label: '名称'
                 },
                 {
-                    prop: 'status',
+                    prop: 'subjectTypeText',
+                    label: '科目类型'
+                },
+                {
+                    prop: 'periodIdText',
+                    label: '学段'
+                },
+                {
+                    prop: 'notes',
+                    label: '描述'
+                },
+                {
+                    prop: 'statusText',
                     label: '状态'
                 }
             ],
             //分页
-            pageSize: '',//显示多少页
-            pageCurrent: '',//当前页
-            pageTotal: 300,//总条数
+            pageSize: 10,//显示多少页
+            pageCurrent: 1,//当前页
+            pageTotal: 0,//总条数
+            status: 0,
+            enable:null,
             //弹框
-            /* dialog */
-            dialog: {
-                visible: false,
-                title: '新建',
-            },
             subForm: {
                 type: '',
                 name: '',
@@ -150,42 +130,91 @@ export default {
         'snb-table': table,
         'stateSwitch': stateSwitch,
         'sub-paging': paging,
-        'sub-modal': modal
+    },
+    //初始化
+    created() {
+        this.subjectsList();
     },
     methods: {
+        //分页请求
+        subjectsList(){
+            let params = {
+                pageIndex: this.pageCurrent,
+                pageSize: this.pageSize,
+                status: this.status,
+            };
+            this.$api.subjects(params).then(res => {
+                if (res.success == true) {
+                    //赋值分页总数
+                    this.pageTotal = parseInt(res.totalDatas);
+                    let array = [];
+                    let list = res.data;
+                    list.map((item,index)=>{
+                        array.push(
+                            Object.assign({
+                                index:index+1
+                            },item,{indexNum:'str'})
+                        )
+                    });
+                    //赋值表格数据
+                    this.tableData = array;
+                } else {
+                    this.$myLayer.errorLayer('失败')
+                }
+            })
+        },
         //添加按钮
         subAdd() {
-            this.dialog.visible = true
+            /*document.getElementById('schoolForm').reset();*/
+            this.$myLayer.formLayer("新建", $('.stu-yeaer-modal-add'), ['422px'], function () {
+
+            })
         },
         //表格
-        subStop(row) {
-            console.log(row)
+        enableIf(){
+            if(this.enable != 0){
+                this.enable = 0;
+            }else {
+                this.enable = 1;
+            }
+        },
+        subStop(row) {//停用/禁用
+            let _this = this;
+            _this.enable = row.status;
+            _this.enableIf();
+            let params = {
+                id:row.id,
+                status:_this.enable
+            };
+            this.$api.subjectsDis(params).then(res => {
+                if (res.success == true) {
+                    _this.subjectsList();
+                    this.$myLayer.successLayer(res.msg)
+                } else {
+                    this.$myLayer.errorLayer(res.msg)
+                }
+            })
         },
         subEdit(row) {
             console.log(row)
         },
         //状态
         stateList(state) {
-            console.log(state)
+            this.status = state;
+            this.subjectsList()
         },
         //分页
         SizeChange(val) {
-            console.log(val)
+            this.pageSize = val;
+            this.subjectsList();
         },
         CurrentChange(val) {
-            console.log(val)
-        },
-        //弹框
-        subSave() {
-            this.dialog.visible = false
-        },
-        subClose() {
-            this.dialog.visible = false
+            this.pageCurrent = val;
+            this.subjectsList();
         },
     }
 }
 </script>
-
 <style scoped>
     .page-template{
         padding: 18px 24px;
@@ -197,7 +226,6 @@ export default {
     }
     .sub-title .bg-purple-light{
         text-align: right;
-        padding-right: 24px;
     }
     .sub-bnt{
         margin-top: 14px;
@@ -207,5 +235,15 @@ export default {
     }
     .sub-bnt .bg-purple{
         margin-top: 4px;
+    }
+    .stu-yeaer-modal-add, .tu-yeaer-modal-edit {
+        display: none;
+    }
+    .modalAdd {
+        width: 330px;
+        margin: 24px auto;
+    }
+    .xueduan{
+        z-index: 9999;
     }
 </style>
