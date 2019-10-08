@@ -12,7 +12,7 @@
         </el-carousel>
         <!-- tips -->
         <div class="tips">
-            <div class="tip-content content-center">
+            <div class="tip-content">
                 <resTip>
                     <div>
                         <p>2000</p>
@@ -105,7 +105,7 @@ export default {
 
 <style lang="scss" scoped="scoped">
 .content-center {
-    width: 80%;
+    width: 81.6%;
     margin: 0 auto;
 }
 
@@ -123,6 +123,7 @@ export default {
 
     .tips {
         .tip-content {
+            width: 80%;
             margin: 30px auto;
             display: flex;
             justify-content: space-between;
@@ -140,9 +141,13 @@ export default {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-
-            & > div:nth-child(5n + 2) {
-                margin-left: 0;
+             & > div:not(:first-child) {
+                width: 25%;
+              }
+            @media screen and (min-width: 1520px) {
+              & > div:not(:first-child) {
+                width: 20%;
+              }
             }
         }
     }
@@ -155,9 +160,8 @@ export default {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-
-            & > div:nth-child(5n + 2) {
-                margin-left: 0;
+            & > div:not(:first-child) {
+                width: 20%;
             }
         }
     }
@@ -170,8 +174,8 @@ export default {
             flex-wrap: wrap;
             justify-content: space-between;
 
-            & > div:nth-child(5n + 2) {
-                margin-left: 0;
+            & > div:not(:first-child) {
+                width: 20%;
             }
         }
     }
@@ -185,8 +189,8 @@ export default {
             flex-wrap: wrap;
             justify-content: space-between;
 
-            & > div:nth-child(4n + 2) {
-                margin-left: 0;
+            & > div:not(:first-child) {
+                width: 25%;
             }
         }
     }
@@ -199,8 +203,8 @@ export default {
             flex-wrap: wrap;
             justify-content: space-between;
 
-            & > div:nth-child(5n + 2) {
-                margin-left: 0;
+            & > div:not(:first-child) {
+              width: 20%;
             }
         }
     }

@@ -72,10 +72,11 @@ export default {
     background: #F5F6F8;
     overflow: hidden;
     .main-content {
-        width: 80%;
+        width: 81.6%;
         margin: 0 auto;
     }
     .search-type {
+        padding: 0 0.8%;
         display: flex;
         justify-content: space-between;
         .left {
@@ -127,8 +128,13 @@ export default {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        &>div:nth-child(4n+1) {
-            margin-left: 0;
+        & > div {
+          width: 20%;
+        }
+        @media screen and (max-width: 1520px) {
+          & > div {
+            width: 25%;
+          }
         }
     }
 }

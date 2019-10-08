@@ -1,6 +1,6 @@
 <!-- 资源平台 box -->
 <template>
-    <div class="res-box" :class="[index === 5 ? 'w20' : (index === 4 ? 'w25' : 'w33')]">
+    <div class="res-box">
         <div class="res-bg">
             <div class="play-time">12集</div>
         </div>
@@ -22,17 +22,13 @@
 <script>
 export default {
     props:{
-        index:{
-            type:Number,
-            default: 5
-        },
         show:Boolean
     }
 }
 </script>
 <style lang="scss" scoped>
 .res-box {
-    margin-left: 1%;
+    padding: 0 1%;
     margin-bottom: 20px;
     .res-bg {
         cursor: pointer;
@@ -78,14 +74,5 @@ export default {
             }
         }
     }
-}
-.w20 {
-    width: 19%;
-}
-.w25 {
-    width: 24%;
-}
-.w33 {
-    width: 33%;
 }
 </style>
