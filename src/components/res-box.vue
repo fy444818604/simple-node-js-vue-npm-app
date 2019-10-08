@@ -10,10 +10,10 @@
             <div class="info">
                 <span>朱韶涵</span>
                 <span class="watch-number">
-                    <i class="icon-user iconfont"></i>358
+                    <i class="icon-eyes iconfont"></i>358
                 </span>
                 <span>
-                    <i class="icon-weather1 iconfont"></i>3.5
+                    <i class="icon-stars iconfont"></i>3.5
                 </span>
             </div>
         </div>

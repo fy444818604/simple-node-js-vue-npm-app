@@ -13,15 +13,31 @@
         <!-- tips -->
         <div class="tips">
             <div class="tip-content">
-                <resTip>
-                    <div>
+                <resTip class="tip-1">
+                    <div class="item">
                         <p>2000</p>
                         <p>总计访问量</p>
                     </div>
                 </resTip>
-                <resTip></resTip>
-                <resTip></resTip>
-                <resTip></resTip>
+                <resTip class="tip-2">
+                    <div class="item">
+                        <p>200,585,51</p>
+                        <p>资源总数</p>
+                    </div>
+                </resTip>
+                <resTip class="tip-3">
+                    <div class="item">
+                        <p>+84</p>
+                        <p>本周新增</p>
+                    </div>
+                </resTip>
+                <resTip class="tip-4">
+                    <div class="item">
+                        <p>
+                            <i class="iconfont icon-upload-cloud"></i> 上传资源
+                        </p>
+                    </div>
+                </resTip>
             </div>
         </div>
         <div class="recommend">
@@ -123,13 +139,43 @@ export default {
 
     .tips {
         .tip-content {
-            width: 80%;
+            width: 82%;
             margin: 30px auto;
             display: flex;
             justify-content: space-between;
+            & > div {
+                width: 23%;
+            }
+            .item {
+                p {
+                    color: #fff;
+                    &:first-child {
+                        font-size: 26px;
+                        font-weight: bold;
+                    }
+                    &:last-child {
+                        font-size: 16px;
+                    }
+                }
+            }
 
-            & > div:first-child {
-                margin-left: 0;
+            .tip-1 {
+                background: url(./../../../assets/image/res-index-1.png)
+                    no-repeat;
+                background-size: 100% 100%;
+            }
+            .tip-2 {
+                background: url(./../../../assets/image/res-index-2.png)
+                    no-repeat;
+                background-size: 100% 100%;
+            }
+            .tip-3 {
+                background: url(./../../../assets/image/res-index-3.png)
+                    no-repeat;
+                background-size: 100% 100%;
+            }
+            .tip-4 {
+                background: #409fff;
             }
         }
     }
@@ -140,7 +186,6 @@ export default {
         .recommend-content {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
             & > div:not(:first-child) {
                 width: 25%;
             }
@@ -159,9 +204,13 @@ export default {
         .latest-content {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
             & > div:not(:first-child) {
-                width: 20%;
+                width: 25%;
+            }
+            @media screen and (min-width: 1520px) {
+                & > div:not(:first-child) {
+                    width: 20%;
+                }
             }
         }
     }
@@ -173,7 +222,6 @@ export default {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-
             & > div:not(:first-child) {
                 width: 20%;
             }
@@ -188,7 +236,6 @@ export default {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-
             & > div:not(:first-child) {
                 width: 25%;
             }
@@ -201,10 +248,13 @@ export default {
         .sync-content {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
-
             & > div:not(:first-child) {
-                width: 20%;
+                width: 25%;
+            }
+            @media screen and (min-width: 1520px) {
+                & > div:not(:first-child) {
+                    width: 20%;
+                }
             }
         }
     }

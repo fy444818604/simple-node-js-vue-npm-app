@@ -540,7 +540,7 @@ const resource = {
             }
         },
         {
-            path: '/resource/Layout/album/id',
+            path: '/resource/Layout/album/:id',
             name: 'album',
             component: (resolve) => {
                 require(['../views/resource/album/introduce'], resolve)

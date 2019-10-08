@@ -1,6 +1,6 @@
 <!-- 学校box -->
 <template>
-  <div class="school-box w16">
+  <div class="school-box">
       <div class="bg">
         <div class="title p-center text-overflow">四川理工学院</div>
       </div>
@@ -16,24 +16,17 @@ export default {
 <style lang="scss" scoped>
 .school-box {
     border-radius: 10px;
-    margin-left: 1%;
     margin-bottom: 20px;
-    background: #fff;
+    padding: 0 1%;
     .bg {
         height: 0;
         padding-bottom: 70%;
         position: relative;
-        background: url(./../assets/image/school.jpg) no-repeat center 15px;
+        background: #fff url(./../assets/image/school.jpg) no-repeat center 15px;
         background-size: 45%;
     }
     .title {
         top: 88%;
     }
-}
-.w20{
-    width: 19%;
-}
-.w16{
-    width: 15%;
 }
 </style>
