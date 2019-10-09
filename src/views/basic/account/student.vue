@@ -11,8 +11,7 @@
 					<el-dropdown-menu slot="dropdown">
 						<el-input v-model="filterText">
 						</el-input>
-						<el-tree @node-click="handleSelect" style="width:250px" class="filter-tree" :data="areaList" :props="defaultProps"
-						 :filter-node-method="filterNode" ref="tree">
+						<el-tree @node-click="handleSelect" style="width:250px" class="filter-tree" :data="areaList" :props="defaultProps" :filter-node-method="filterNode" ref="tree">
 						</el-tree>
 					</el-dropdown-menu>
 				</el-dropdown>
@@ -207,12 +206,36 @@ export default {
         'state-switch': stateSwitch,
         'paging': paging
     },
+    created(){
+        this.dictionary();
+        this.studentsList();
+    },
     watch: {
         filterText(val) {
             this.$refs.tree.filter(val);
         }
     },
     methods: {
+    	//性别
+        dictionary(){
+			let params = {
+				"type": [
+					"sex"
+				]
+			};
+			this.$api.dictSelect(params).then(res => {
+				console.log(res)
+
+			})
+        },
+        //list列表
+        studentsList(){
+
+        },
+        //机构查询
+        institutions(){
+
+        },
         btnClick(val) {
 
         },

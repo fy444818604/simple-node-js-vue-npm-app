@@ -10,11 +10,12 @@
 				</div>
 			</el-col>
 		</el-row>
-		<i class="icondaiban iconfont" style="font-weight: 100;"></i>
+		<order-calendar></order-calendar>
 	</div>
 </template>
 
 <script>
+// import calendar from '@/src/components/calendar.vue'
 export default {
     data() {
         return {
@@ -29,7 +30,10 @@ export default {
                 data: 241
             }]
         }
-    }
+    },
+    // components:{
+        // 'order-calendar':calendar
+    // }
 }
 </script>
 

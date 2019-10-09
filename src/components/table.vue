@@ -24,7 +24,10 @@
         <div class="tableColumn-control">
           <i v-if="!scope.row.showBtn" @mouseenter="handleMouseEnter(scope.row)" class="iconfont icon-more"></i>
           <div :class="{single:single}" v-else @mouseleave="handleMouseLeave(scope.row)">
-            <span v-if="!single" @click="handleStop(scope.row)">停用</span>
+            <span v-if="!single" @click="handleStop(scope.row)">
+                <a v-if="scope.row.status == 0">停用</a>
+                <a v-else>启用</a>
+            </span>
             <span @click="handleEdit(scope)">编辑</span>
           </div>
         </div>

@@ -124,7 +124,7 @@ export function get(url, params) {
 export function post(url, params) {
     return new Promise((resolve, reject) => {
         axios.post(url, params,{headers: {
-            'token': localStorage.getItem('Authorization'),
+            'Authorization': localStorage.getItem('Authorization'),
         }})
             .then(res => {
                 resolve(res.data);

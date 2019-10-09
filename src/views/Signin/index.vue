@@ -3,10 +3,16 @@
 		<div id="particles-js">
 			<div class="login">
 				<div class="type-change">
-					<img :src="type == 1?userIcon:adminIcon" alt="">
+					<img @click="nameSwitch(type)" :src="type == 1?adminIcon:userIcon" alt="">
 				</div>
 				<div class="login-top">
-					{{type == 1?'管理员登录':'用户登录'}}
+					{{type == 0?'管理员登录':'用户登录'}}
+				</div>
+				<div class="login-center" v-if="type == 1">
+					<div class="login-center-img"><img src="../../assets/image/name.png" /></div>
+					<div class="login-center-input">
+						<input type="text" name="" value="" placeholder="请输入用户名" v-model="user" />
+					</div>
 				</div>
 				<div class="login-center">
 					<div class="login-center-img"><img src="../../assets/image/name.png" /></div>
@@ -27,7 +33,7 @@
 						<input type="text" name="" value="" placeholder="请输入验证码" v-model="code"/>
 					</div>
 					<div class="code-wrap">
-
+						<img :src="img.checkCodeImageData" alt="">
 					</div>
 				</div>
 				<div class="login-button" @click="login">
@@ -49,14 +55,15 @@ export default {
             wordShow:require('@/assets/image/eye.png'),
             wordHide:require('@/assets/image/eye-close.png'),
             passwordShow:false,
-            type:1,
+            type:0,
             user: 'administrator',
             password: '123456789',
-            code:''
+            code:'',
+            img:'',
         }
     },
     created() {
-
+        this.loginImg();
     },
     mounted() {
 
@@ -66,26 +73,52 @@ export default {
         login() {
             let params = {
                 userName: this.user,
-                password: this.password
+                password: this.password,
+                loginType:this.type,
+                checkCode:this.code,
+                checkCodeSessionId:this.img.checkCodeSessionId
             };
             this.$api.apiLogin(params).then(res => {
+            	console.log(res)
                 if (res.success) {
                     this.changeLogin({
-                        Authorization: res.data.userToken.accessToken
+                        Authorization: 'Bearer ' + res.data.userToken.accessToken
                     });
                     this.$router.push({
                         path: '/basic/Layout'
                     });
                 } else {
-                    alert('密码错误')
+                    this.$myLayer.dangerLayer(res.msg);
+					this.loginImg();
                 }
             })
+        },
+        loginImg(){
+            let params = {};
+            this.$api.loginImg(params).then(res => {
+                if(res.success == true){
+                    this.img = res.data
+                }
+            })
+        },
+        nameSwitch(type){
+            if(type == 0){
+                this.type = 1;
+            }else {
+                this.type = 0;
+            }
         }
     }
 }
 </script>
-<style scoped lang="css">
+<style scoped lang="scss">
 	body {
 		overflow: hidden;
+		.code-wrap{
+			img {
+				width: 100%;
+				height: 100%;
+			}
+		}
 	}
 </style>

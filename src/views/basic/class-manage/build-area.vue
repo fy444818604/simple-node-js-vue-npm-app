@@ -25,7 +25,7 @@
 
         <div class="area-footer">
             <state-switch @switchL="handleSwicthState"></state-switch>
-            <page :pageTotal="22"></page>
+            <page :pageTotal="pageTotal" @handleSizeChange="SizeChange" @handleCurrentChange="CurrentChange"></page>
         </div>
 
         <!-- modal -->
@@ -73,34 +73,28 @@ export default {
     data() {
         const tableColumn = [
             {
-                prop: "id",
+                prop: "orderIndex",
                 label: "显示顺序",
-                align: "center"
             },
             {
                 prop: "name",
                 label: "名称",
-                align: "center"
             },
             {
-                prop: "title",
+                prop: "orgName",
                 label: "所属机构",
-                align: "center"
             },
             {
-                prop: "area",
+                prop: "campusName",
                 label: "校区",
-                align: "center"
             },
             {
-                prop: "desc",
+                prop: "description",
                 label: "描述",
-                align: "center"
             },
             {
-                prop: "status",
+                prop: "statusText",
                 label: "状态",
-                align: "center"
             }
         ];
         return {
@@ -173,16 +167,11 @@ export default {
                     ]
                 }
             ],
-            tableData: [
-                {
-                    id: 1,
-                    name: "1号教学楼",
-                    title: "成都第X中学",
-                    area: "城南校区",
-                    desc: "1号教学楼",
-                    status: "启用"
-                }
-            ],
+            tableData: [],
+            //分页
+            pageSize: 10,//显示多少页
+            pageCurrent: 1,//当前页
+            pageTotal: 0,//总条数
             tableColumn,
             /* switch status */
             status: 0, //状态:0启动、1停用、全部''
@@ -211,7 +200,48 @@ export default {
             }
         };
     },
+    created() {
+        this.areasList();
+    },
     methods: {
+        /*分页查询*/
+        areasList(){
+            let params = {
+                pageIndex: this.pageCurrent,
+                pageSize: this.pageSize,
+                status: this.status,
+                orgId:'1178138607873990657'
+            };
+            this.$api.areaList(params).then(res => {
+                if (res.success == true) {
+                    //赋值分页总数
+                    this.pageTotal = parseInt(res.totalDatas);
+                    let array = [];
+                    let list = res.data;
+                    list.map((item,index)=>{
+                        array.push(
+                            Object.assign({
+                                index:index+1
+                            },item,{indexNum:'str'})
+                        )
+                    });
+                    //赋值表格数据
+                    this.tableData = array;
+                } else {
+                    this.$myLayer.errorLayer('失败')
+                }
+            })
+        },
+        //分页
+        SizeChange(val) {
+            this.pageSize = val;
+            this.areasList();
+        },
+        CurrentChange(val) {
+            this.pageCurrent = val;
+            this.areasList();
+        },
+
         /* 点击选择 filter-tree */
         handleChangeSelect(val) {
             const { id, label } = val;
@@ -219,18 +249,85 @@ export default {
         },
         /* 表格的操作 */
         handleStop(row) {
-            console.log(row);
+            let _this = this;
+            if(row.status != 0){
+                _this.enable = 0;
+            }else {
+                _this.enable = 1;
+            }
+            let params = {
+                id:row.id,
+                status:_this.enable
+            };
+            this.$api.areaDis(params).then(res => {
+                if (res.success == true) {
+                    _this.areasList();
+                    this.$myLayer.successLayer(res.msg)
+                } else {
+                    this.$myLayer.errorLayer(res.msg)
+                }
+            })
         },
+        //编辑
         handleEdit(row) {
-            console.log(row);
+            let _this = this;
+            let data = {
+                campusId:row.row.orgName,
+                name:row.row.name,
+                orderIndex:row.row.orderIndex,
+                description:row.row.description,
+                orgId:row.row.orgId
+            }
+            _this.formInfo = data;
+            this.$myLayer.formLayer("编辑", $(".build-area-mdoal"), ["422px"],function () {
+                let ediData = {
+                    id:row.row.id,
+                    name: _this.formInfo.name,
+                    campusId:'',
+                    orderIndex:_this.formInfo.orderIndex,
+                    orgId:'1178138607873990657',
+                    description:_this.formInfo.description
+                };
+                _this.$api.areaEdi(ediData).then(res => {
+                    if (res.success == true) {
+                        _this.areasList();
+                        _this.$myLayer.successLayer(res.msg)
+                    } else {
+                        _this.$myLayer.errorLayer(res.msg)
+                    }
+                })
+            });
+
         },
         /* 控制状态 */
         handleSwicthState(val) {
             this.status = val;
+            this.areasList();
         },
-        /* 打开弹层 */
+        /* 添加 */
         handleAdd() {
-            this.$myLayer.formLayer("新建", $(".build-area-mdoal"), ["422px"]);
+            let _this = this;
+            this.$myLayer.formLayer("新建", $(".build-area-mdoal"), ["422px"],function () {
+                if(_this.formInfo.name == ''){
+
+                }else {
+                    let params = {
+                        name: _this.formInfo.name,
+                        campusId:'',
+                        orderIndex:_this.formInfo.orderIndex,
+                        orgId:'1178138607873990657',
+                        description:_this.formInfo.description
+                    };
+                    _this.$api.areaAdd(params).then(res => {
+                        if (res.success == true) {
+                            _this.areasList();
+                            _this.$myLayer.successLayer(res.msg)
+                        } else {
+                            _this.$myLayer.errorLayer(res.msg)
+                        }
+                    })
+                }
+            });
         }
     }
 };
