@@ -82,13 +82,14 @@ export default {
             	console.log(res)
                 if (res.success) {
                     this.changeLogin({
-                        Authorization: res.data.userToken.accessToken
+                        Authorization: 'Bearer ' + res.data.userToken.accessToken
                     });
                     this.$router.push({
                         path: '/basic/Layout'
                     });
                 } else {
-                    this.$myLayer.dangerLayer(res.msg)
+                    this.$myLayer.dangerLayer(res.msg);
+					this.loginImg();
                 }
             })
         },
@@ -110,8 +111,14 @@ export default {
     }
 }
 </script>
-<style scoped lang="css">
+<style scoped lang="scss">
 	body {
 		overflow: hidden;
+		.code-wrap{
+			img {
+				width: 100%;
+				height: 100%;
+			}
+		}
 	}
 </style>
