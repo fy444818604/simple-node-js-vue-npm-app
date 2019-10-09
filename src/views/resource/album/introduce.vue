@@ -86,7 +86,8 @@ export default {
         padding-bottom: 30px;
         .content {
             width: 80%;
-            margin: 30px auto 0;
+            margin: 0 auto ;
+            padding-top: 30px;
             padding-bottom: 30px;
             .bottom {
                 display: flex;

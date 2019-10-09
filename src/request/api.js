@@ -50,7 +50,8 @@ export const classSelect  = params => get('/base/api/class/select',params);
 
 
 
-
+//测试接口
+export const test = params => post('http://192.168.38.221:8081/test/getToken',params)
 
 
 
