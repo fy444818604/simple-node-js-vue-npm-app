@@ -79,7 +79,6 @@ export default {
                 checkCodeSessionId:this.img.checkCodeSessionId
             };
             this.$api.apiLogin(params).then(res => {
-            	console.log(res)
                 if (res.success) {
                     this.changeLogin({
                         Authorization: 'Bearer ' + res.data.userToken.accessToken

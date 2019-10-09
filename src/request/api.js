@@ -40,6 +40,15 @@ export const settingList = params => post('/base/api/classroom/page',params);
 export const teachers = params => post('/base/api/userInfo/teacherInfo/list',params);
 //学生账号管理
 export const students = params => post('/base/api/userInfo/studentInfo/list',params);
+export const studentsAdd = params => post('/base/api/userInfo/studentInfo/save',params);
+//机构树
+export const institutions = params => get('/base/api/organizationUnit/all',params);
+//学届管理
+export const learnSelect  = params => get('/base/api/grade/select',params);
+//班级管理
+export const classSelect  = params => get('/base/api/class/select',params);
+
+
 
 
 
