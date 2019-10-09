@@ -29,6 +29,14 @@ export const subjectsEdi = params => post('/base/api/subjectMgr/subjectInfo/upda
 export const subjectsDis = params => get('/base/api/subjectMgr/subjectInfo/setStatusById',params);
 //下拉框字典
 export const dictSelect = params => post('/base/api/dict/select',params);
+//字典分页查询
+export const dictPage = params => post('/base/api/dict/page',params);
+//字典启用停用
+export const dictDis = params => post('/base/api/dict/update/status',params);
+//字典新增
+export const dictAdd = params => post('/base/api/dict/add',params);
+//字典新增
+export const dictEdit = params => post('/base/api/dict/update',params);
 //建筑场所
 export const areaList = params => post('/base/api/buildings/page',params);
 export const areaDis = params => post('/base/api/buildings/update/status',params);
