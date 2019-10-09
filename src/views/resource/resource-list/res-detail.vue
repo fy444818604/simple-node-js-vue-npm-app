@@ -64,10 +64,10 @@
             <div>2019-09-15</div>
             <div>初中  一年级上册  人教版  有理数</div>
           </div>
-          <div class="desc">
+          <div :class="['desc',{'down':descShow === 'down'}]">
             本章内容要求学生正确认识有理数的概念，在实际生活和学习数轴的基础上，理解正负数、相反数、 绝对值的意义所在。重点利用有理数的运算法则解决实际问题.体验数学发展的一个重要原因是生活实际的需要.激发学生学习数学的兴趣，教师培养学生的观察、归纳与概括的能力，使学生建立正确的数感和解决实际问题的能力。教师在讲授本章内容时，应该多创设情境，充分体现学生学习的主体性地位 
             概括的能力，使学生建立正确的数感和解决实际问题的能力
-            <i class="el-icon-arrow-up"></i>
+            <i v-if="true" @click="handleToggleDesc" :class=" descShow === 'down' ? 'el-icon-arrow-down' : 'el-icon-arrow-up'"></i>
           </div>
         </div>
       </div>
@@ -76,12 +76,12 @@
     <!-- home work -->
     <div class="home-work">
       <div class="title">
-        <div class="project active">作业10</div>
-        <div class="p-info">附件7</div>
+        <div @click="handleToggleWorkType('homework')" class="project" :class="{active:workType==='homework'}">作业10</div>
+        <div @click="handleToggleWorkType('attach')" class="p-info" :class="{active:workType==='attach'}">附件7</div>
         <div class="more">更多<i class="el-icon-arrow-down"></i></div>
       </div>
       <!-- home -->
-      <template>
+      <template v-if="workType === 'homework'">
         <div class="project-content">
           <div v-for="n in 10" :key="n" class="item">
             <img src="./../../../assets/image/school.jpg" alt="">
@@ -91,7 +91,14 @@
         </div>
       </template>
       <!-- 附件 -->
-      <template></template>
+      <template v-if="workType === 'attach'">
+        <div  class="attach-content">
+          <div v-for="n in 10" :key="n" class="item">
+            <div class="img-wrap"></div>
+            <div class="desc">七年级上第4课《古代诗 歌四首》.word</div>
+          </div>
+        </div>
+      </template>
     </div>
 
     <!-- 评论 -->
@@ -175,7 +182,20 @@ export default {
   data(){
     return {
       value1:0,
-      text:''
+      text:'',
+      /* 课程描述 收起-展开 */
+      descShow:'down',
+      /* 作业 / 附件  homework attach */ 
+      workType:'homework'
+    }
+  },
+  methods:{
+    /* 切换课程描述-展开/收起 */
+    handleToggleDesc(){
+      this.descShow = this.descShow === 'down' ? 'up' : 'down';
+    },
+    handleToggleWorkType(type){
+      this.workType = type
     }
   }
 }
@@ -262,9 +282,11 @@ export default {
           max-width: 880px;
           text-align: justify;
           color: #909399;
-          // height: 20px;
           overflow: hidden;
           padding-right: 30px;
+          &.down {
+            height: 20px;
+          }
           i {
             position: absolute;
             right: 0;
@@ -293,11 +315,8 @@ export default {
         padding-bottom: 5px;
         cursor: pointer;
       }
-      .p-info {
-        margin-left: 30px;
-        flex: 1;
-      }
-      .more {}
+      .p-info { margin-left: 30px; }
+      .more { flex: 1; text-align: right; }
       .project {}
       .active {
         color: #2695FF;
@@ -324,7 +343,33 @@ export default {
           color: #606266;
           &.name {margin-top: 12px;}
         }
-        
+      }
+    }
+    .attach-content {
+      padding: 15px 0 20px;
+      display: flex;
+      flex-wrap: wrap;
+      .item {
+        width: 12.5%;
+        padding: 0 20px; 
+        text-align: center;
+        margin-bottom: 20px;
+        .img-wrap {
+          width: 100%;
+          height: 0;
+          padding-bottom: 100%;
+          border: 1px solid #D7D7D7;
+          background: url(./../../../assets/image/school.jpg) no-repeat center center;
+          background-size: 80% 80%;
+        }
+        .desc {
+          margin-top: 10px;
+          text-align: left;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          overflow: hidden;     
+        }
       }
     }
 }
