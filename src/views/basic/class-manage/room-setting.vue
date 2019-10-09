@@ -1,7 +1,6 @@
 <!--教室设置-->
 <template>
   <div class="room-setting">
-  
     <base-title title="教室设置">
       <template slot="filterTree">
         <slelct-tree :currentSelect="currentSelect" :treeList="treeList"></slelct-tree>
@@ -12,8 +11,8 @@
     </base-title>
 
     <div class="content">
-      <base-table  
-        :tableData="tableData" 
+      <base-table
+        :tableData="tableData"
         :tableColumn="tableColumn">
       </base-table>
     </div>
@@ -109,7 +108,7 @@ export default {
                     prop:'id',
                     label:'id'
                 },
-                { 
+                {
                     prop:'type',
                     label:"教室类型",
                 },
@@ -151,12 +150,19 @@ export default {
             }
         }
     },
+    created() {
+        this.settingData();
+    },
     methods:{
+        //分页查询
+        settingData(){
+
+        },
         handleSwicthState(val){
         },
         /* dialog */
         handleAdd(){
-            this.$myLayer.formLayer("新建",$('.room-setting-modal'),['422px'])      
+            this.$myLayer.formLayer("新建",$('.room-setting-modal'),['422px'])
         }
     }
 }
@@ -176,5 +182,5 @@ export default {
   .room-setting-modal {
     display: none;
   }
-} 
+}
 </style>

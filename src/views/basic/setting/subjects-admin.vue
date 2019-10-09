@@ -5,7 +5,7 @@
         <el-row class="sub-title">
             <el-col :span="12"><div class="grid-content bg-purple cha-title">{{ pageTile }}</div></el-col>
             <el-col :span="12"><div class="grid-content bg-purple-light">
-                <bnt-list :model="model" @btn-click="subAdd"></bnt-list>
+                <bnt-list :model="model" @btn-click="subAdd('subForm')"></bnt-list>
             </div></el-col>
         </el-row>
         <!--表格-->
@@ -27,34 +27,31 @@
         <!--新建-->
         <div class="stu-yeaer-modal-add">
             <div class="modalAdd">
-                <el-form ref="form" :model="subForm" label-width="88px" :rules="formRules">
-                    <el-form-item label="科目类型">
-                        <el-select v-model="subForm.type" placeholder="请选择活动区域" style="width: 100%">
-                            <el-option label="区域一" value="shanghai"></el-option>
-                            <el-option label="区域二" value="beijing"></el-option>
+                <el-form id="subForm" ref="form" :model="subForm" label-width="88px" :rules="formRules">
+                    <el-form-item label="科目类型" prop="type">
+                        <el-select v-model="subForm.type"  style="width: 100%">
+                            <el-option :label="item.text" :key="item.code" :value="item.code" v-for="item in typeSet"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="科目名称"  prop="name">
-                        <el-input v-model="subForm.name"></el-input>
+                        <el-input v-model="subForm.name" placeholder="请输入"></el-input>
                     </el-form-item>
-                    <el-form-item label="学段">
-                        <el-select  class="xueduan" v-model="subForm.period" placeholder="请选择活动区域" style="width: 100%;z-index: 999999999999">
-                            <el-option label="区域一" value="shanghai"></el-option>
-                            <el-option label="区域二" value="beijing"></el-option>
+                    <el-form-item label="学段" prop="period">
+                        <el-select v-model="subForm.period"  style="width: 100%">
+                            <el-option :label="item.text" :key="item.code" :value="item.code" v-for="item in period"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="序号" >
-                        <el-input v-model="subForm.number"></el-input>
+                        <el-input v-model="subForm.number" placeholder="请输入"></el-input>
                     </el-form-item>
                     <el-form-item label="描述" >
-                        <el-input v-model="subForm.describe"></el-input>
+                        <el-input v-model="subForm.describe" placeholder="请输入"></el-input>
                     </el-form-item>
                 </el-form>
             </div>
         </div>
     </div>
 </template>
-
 <script>
 import bntList from '../../../components/btn-list'
 import table from '../../../components/table'
@@ -114,15 +111,12 @@ export default {
                 describe: ''
             },
             formRules: {
-                type: [{required: true, message: '不能为空', trigger: 'blur'}],
+                type: [{required: true, message: '请选择', trigger: 'blur'}],
                 name: [{required: true, message: '不能为空', trigger: 'blur'}],
-                period: [{required: true, message: '不能为空', trigger: 'blur'}],
+                period: [{required: true, message: '请选择', trigger: 'blur'}],
             },
-            typeSet: [
-                {label: '类型1', val: 1},
-                {label: '类型2', val: 2},
-                {label: '类型3', val: 3}
-            ]
+            typeSet: '',
+            period:'',
         }
     },
     components: {
@@ -134,8 +128,36 @@ export default {
     //初始化
     created() {
         this.subjectsList();
+        this.subjectsType();
+        this.periodType();
     },
     methods: {
+        //科目类型
+        subjectsType(){
+            let params = {
+                'type':[
+                    'subjectType'
+                ]
+            }
+            this.$api.dictSelect(params).then(res => {
+                if (res.success == true) {
+                    this.typeSet = res.data[0].data
+                }
+            })
+        },
+        //学段
+        periodType(){
+            let params = {
+                'type':[
+                    'stage'
+                ]
+            }
+            this.$api.dictSelect(params).then(res => {
+                if (res.success == true) {
+                    this.period = res.data[0].data
+                }
+            })
+        },
         //分页请求
         subjectsList(){
             let params = {
@@ -165,9 +187,28 @@ export default {
         },
         //添加按钮
         subAdd() {
-            /*document.getElementById('schoolForm').reset();*/
+            let _this = this;
+            document.getElementById('subForm').reset();
             this.$myLayer.formLayer("新建", $('.stu-yeaer-modal-add'), ['422px'], function () {
+                if(_this.subForm.type == ''){
 
+                }else {
+                    let params = {
+                        subjectType: _this.subForm.type,
+                        subjectName:_this.subForm.name,
+                        periodId:_this.subForm.period,
+                        notes:_this.subForm.describe,
+                        orderIndex:_this.subForm.number
+                    };
+                    _this.$api.subjectsAdd(params).then(res => {
+                        if (res.success == true) {
+                            _this.schoolList();
+                            _this.$myLayer.successLayer(res.msg)
+                        } else {
+                            _this.$myLayer.errorLayer(res.msg)
+                        }
+                    })
+                }
             })
         },
         //表格
@@ -196,7 +237,8 @@ export default {
             })
         },
         subEdit(row) {
-            console.log(row)
+            console.log(row.row)
+
         },
         //状态
         stateList(state) {
@@ -215,6 +257,11 @@ export default {
     }
 }
 </script>
+<style>
+    .el-select-dropdown{
+        z-index: 999999999!important;
+    }
+</style>
 <style scoped>
     .page-template{
         padding: 18px 24px;
@@ -242,8 +289,5 @@ export default {
     .modalAdd {
         width: 330px;
         margin: 24px auto;
-    }
-    .xueduan{
-        z-index: 9999;
     }
 </style>
