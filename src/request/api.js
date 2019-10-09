@@ -41,7 +41,8 @@ export const teachers = params => post('/base/api/userInfo/teacherInfo/list',par
 //学生账号管理
 export const students = params => post('/base/api/userInfo/studentInfo/list',params);
 
-
+//测试接口
+export const test = params => post('http://192.168.38.221:8081/test/getToken',params)
 
 
 
