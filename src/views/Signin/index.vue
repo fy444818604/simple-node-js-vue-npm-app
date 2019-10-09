@@ -3,7 +3,7 @@
 		<div id="particles-js">
 			<div class="login">
 				<div class="type-change">
-					<img @click="nameSwitch(type)" :src="type == 1?userIcon:adminIcon" alt="">
+					<img @click="nameSwitch(type)" :src="type == 1?adminIcon:userIcon" alt="">
 				</div>
 				<div class="login-top">
 					{{type == 0?'管理员登录':'用户登录'}}
@@ -81,13 +81,14 @@ export default {
             this.$api.apiLogin(params).then(res => {
                 if (res.success) {
                     this.changeLogin({
-                        Authorization: res.data.userToken.accessToken
+                        Authorization: 'Bearer ' + res.data.userToken.accessToken
                     });
                     this.$router.push({
                         path: '/basic/Layout'
                     });
                 } else {
-                    this.$myLayer.dangerLayer(res.msg)
+                    this.$myLayer.dangerLayer(res.msg);
+					this.loginImg();
                 }
             })
         },
@@ -109,8 +110,14 @@ export default {
     }
 }
 </script>
-<style scoped lang="css">
+<style scoped lang="scss">
 	body {
 		overflow: hidden;
+		.code-wrap{
+			img {
+				width: 100%;
+				height: 100%;
+			}
+		}
 	}
 </style>

@@ -44,7 +44,22 @@ export const areaAdd = params => post('/base/api/buildings/add',params);
 export const areaEdi = params => post('/base/api/buildings/update',params);
 //教师设置
 export const settingList = params => post('/base/api/classroom/page',params);
+//教职工账号管理
+export const teachers = params => post('/base/api/userInfo/teacherInfo/list',params);
+//学生账号管理
+export const students = params => post('/base/api/userInfo/studentInfo/list',params);
+export const studentsAdd = params => post('/base/api/userInfo/studentInfo/save',params);
+//机构树
+export const institutions = params => get('/base/api/organizationUnit/all',params);
+//学届管理
+export const learnSelect  = params => get('/base/api/grade/select',params);
+//班级管理
+export const classSelect  = params => get('/base/api/class/select',params);
 
+
+
+//测试接口
+export const test = params => post('http://192.168.38.221:8081/test/getToken',params)
 
 
 

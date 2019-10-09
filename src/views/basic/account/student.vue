@@ -11,8 +11,7 @@
 					<el-dropdown-menu slot="dropdown">
 						<el-input v-model="filterText">
 						</el-input>
-						<el-tree @node-click="handleSelect" style="width:250px" class="filter-tree" :data="areaList" :props="defaultProps"
-						 :filter-node-method="filterNode" ref="tree">
+						<el-tree @node-click="handleSelect" style="width:250px" class="filter-tree" :data="areaList" :props="defaultProps" :filter-node-method="filterNode" ref="tree">
 						</el-tree>
 					</el-dropdown-menu>
 				</el-dropdown>
@@ -27,33 +26,28 @@
 					<el-input v-model="formInline.user" placeholder="请输入账号查询"></el-input>
 				</el-form-item>
 				<el-form-item label="性别:">
-					<el-select v-model="formInline.region" placeholder="不限" style="width: 80px;">
-						<el-option label="男" value="1"></el-option>
-						<el-option label="女" value="2"></el-option>
+					<el-select v-model="formInline.sex" placeholder="不限" style="width: 80px;">
+						<el-option v-for="item in sex" :key="item.code" :label="item.text" :value="item.code"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item label="阶段:">
-					<el-select v-model="formInline.region" placeholder="不限" style="width: 80px;">
-						<el-option label="男" value="1"></el-option>
-						<el-option label="女" value="2"></el-option>
+					<el-select v-model="formInline.stage" placeholder="不限" style="width: 80px;">
+						<el-option v-for="item in stage" :key="item.code" :label="item.text" :value="item.code"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item label="学届">
-					<el-select v-model="formInline.region" placeholder="全部" style="width: 80px;">
-						<el-option label="男" value="1"></el-option>
-						<el-option label="女" value="2"></el-option>
+					<el-select v-model="formInline.learn" placeholder="全部" style="width: 80px;">
+						<el-option v-for="item in learn" :key="item.id" :label="item.name" :value="item.id"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item label="行政班:">
-					<el-select v-model="formInline.region" placeholder="全部" style="width: 80px;">
-						<el-option label="男" value="1"></el-option>
-						<el-option label="女" value="2"></el-option>
+					<el-select v-model="formInline.className" placeholder="全部" style="width: 80px;">
+						<el-option v-for="item in className" :key="item.id" :label="item.name" :value="item.id"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item label="就读类型:">
-					<el-select v-model="formInline.region" placeholder="全部" style="width: 80px;">
-						<el-option label="男" value="1"></el-option>
-						<el-option label="女" value="2"></el-option>
+					<el-select v-model="formInline.attend" placeholder="全部" style="width: 80px;">
+						<el-option v-for="item in attend" :key="item.code" :label="item.text" :value="item.code"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item>
@@ -68,32 +62,27 @@
 			<el-table-column type="index" label="序号" width="120">
 
 			</el-table-column>
-			<el-table-column prop="workNum" label="学号" width="120">
+			<el-table-column prop="workId" label="学号" width="120">
 			</el-table-column>
 			<el-table-column label="姓名">
 				<template slot-scope="scope">
-					<router-link class="main-color" target="_blank" :to="{path:'/basic/student-detail',query:{id:scope.row.id}}">{{scope.row.name}}</router-link>
+					<router-link class="main-color" target="_blank" :to="{path:'/basic/student-detail',query:{id:scope.row.id}}">{{scope.row.userName}}</router-link>
 				</template>
 			</el-table-column>
-			<el-table-column label="性别">
-				<template slot-scope="scope">
-					{{scope.row.sex == 1?'男':'女'}}
-				</template>
+			<el-table-column prop="sexText" label="性别" >
+
 			</el-table-column>
-			<el-table-column prop="org" label="机构">
+			<el-table-column prop="orgName" label="机构">
 			</el-table-column>
-			<el-table-column prop="stage" label="阶段">
+			<el-table-column prop="stageIdText" label="阶段">
 			</el-table-column>
-			<el-table-column prop="grade" label="年级">
+			<el-table-column prop="gradeName" label="年级">
 			</el-table-column>
 			<el-table-column prop="className" label="行政班">
 			</el-table-column>
-			<el-table-column prop="type" label="就读类型">
+			<el-table-column prop="typeOfStudyText" label="就读类型">
 			</el-table-column>
-			<el-table-column label="状态">
-				<template slot-scope="scope">
-					{{scope.row.status == 1?'启用':'停用'}}
-				</template>
+			<el-table-column prop="statusText" label="状态">
 			</el-table-column>
 			<el-table-column prop="id" label="操作" width="60">
 				<template slot-scope="scope">
@@ -108,6 +97,22 @@
 		<div class="flex-between mt20">
 			<state-switch @switchL="stateList"></state-switch>
 			<paging :pageTotal="pageTotal" @handleSizeChange="SizeChange" @handleCurrentChange="CurrentChange"></paging>
+		</div>
+		<!--弹出层-->
+		<div class="stu-yeaer-modal-add">
+			<div class="modalAdd">
+				<el-form ref="form" :model="schoolForm" label-width="88px" :rules="formRules" id="schoolForm">
+					<el-form-item label="学区名称" prop="name">
+						<el-input v-model="schoolForm.name"></el-input>
+					</el-form-item>
+					<el-form-item label="描述">
+						<el-input v-model="schoolForm.describe"></el-input>
+					</el-form-item>
+					<el-form-item label="显示顺序">
+						<el-input v-model="schoolForm.order"></el-input>
+					</el-form-item>
+				</el-form>
+			</div>
 		</div>
 	</div>
 </template>
@@ -143,63 +148,41 @@ export default {
             currentSelect: "成都第X中学",
             defaultProps: {
                 children: 'children',
-                label: 'label'
+                label: 'displayName'
             },
             filterText: '',
-            areaList: [{
-                id: 1,
-                label: '四川省教育厅',
-                children: [{
-                    id: 1 - 1,
-                    label: '成都市教育厅',
-                    children: [{
-                        id: 1 - 1 - 1,
-                        label: '成都xxx中学',
-                    }]
-                },
-                {
-                    id: 1 - 2,
-                    label: '雅安市教育厅',
-                    children: [{
-                        id: 1 - 2 - 1,
-                        label: '雅安yyy中学',
-                    }]
-                }
-                ]
-            }],
+            areaList: [],
             formInline: {
                 user: '',
-                sex: ''
+                sex: '',
+                stage:'',
+                attend:'',
+                learn:'',
+                className:''
             },
-            tableData: [{
-                id: 123,
-                num: 1,
-                workNum: 20134490,
-                name: '王志山',
-                sex: 1,
-                org: '元素中学',
-                stage:'初中',
-                grade:'2019级',
-                className:'1班',
-                type:'走读',
-                status: 1,
-            }, {
-                id: 123,
-                num: 1,
-                workNum: 20134490,
-                name: '王志山',
-                sex: 1,
-                org: '元素中学',
-                stage:'初中',
-                grade:'2019级',
-                className:'1班',
-                type:'走读',
-                status: 1,
-            }],
+            tableData: [],
             multipleSelection: [],
-            pageSize: '', //显示多少页
-            pageCurrent: '', //当前页
-            pageTotal: 300 //总条数
+            pageSize: 10, //显示多少页
+            pageCurrent: 1, //当前页
+            pageTotal: 0, //总条数
+            sex:[],//性别
+            stage:[],//阶段
+            attend:[],//就读类型
+            status:0,//启用停用
+            orgId:'',//机构id
+            learn:[],//学届
+            className:[],//班级
+            //添加弹框
+            schoolForm: {
+                name: '',
+                institutions: '',
+                describe: '',
+                order: ''
+            },
+            formRules: {
+                name: [{required: true, message: '请输入学区名称', trigger: 'blur'}],
+                institutions: [{required: true, message: '请选择组织结构', trigger: 'blur'}],
+            },
         }
     },
     components: {
@@ -207,28 +190,106 @@ export default {
         'state-switch': stateSwitch,
         'paging': paging
     },
+    created(){
+        this.dictionary();
+        this.studentsList();
+        this.institutions();
+    },
     watch: {
         filterText(val) {
             this.$refs.tree.filter(val);
         }
     },
     methods: {
-        btnClick(val) {
+        dictionary(){
+            let sex = {"type": ["sex",'stage','study_type']};
+            this.$api.dictSelect(sex).then(res => {
+                if(res.success == true){
+                    let  i = 0;
+                    for (i = 0; i < res.data.length; i++) {
+                        if(res.data[i].type == 'sex'){
+                            this.sex = res.data[i].data;
+                        }else if(res.data[i].type == 'stage'){
+                            this.stage = res.data[i].data;
+                        }else if(res.data[i].type == 'study_type'){
+                            this.attend = res.data[i].data;
+                        }
+                    }
+                }
+            });
+        },
+        orgQuery(){
+            let learnSelect = {orgId:this.orgId};
+            let classSelect = {orgId:this.orgId};
 
+            this.$api.learnSelect(learnSelect).then(res => {
+                if(res.success == true){
+                    this.learn = res.data
+                }
+            })
+            this.$api.classSelect(classSelect).then(res => {
+                if(res.success == true){
+                    this.className = res.data
+                }
+            })
+        },
+        //list列表
+        studentsList(){
+            let params = {
+                workId:this.formInline.user,
+                sex:this.formInline.sex,
+                stageId:'',
+                classId: '',
+                orgId: '',
+                pageIndex:this.pageCurrent,
+                pageSize:this.pageSize,
+                status:this.status,
+                typeOfStudy:'',
+            };
+            this.$api.students(params).then(res => {
+                if(res.success == true){
+                    this.tableData = res.data;
+                    this.pageTotal = parseInt(res.totalDatas)
+                }
+            })
+        },
+        //机构
+        institutions(){
+            let params = {
+                level :0,
+                onlyOrg :1,
+                parentId :0,
+            };
+            this.$api.institutions(params).then(res => {
+                if(res.success == true){
+                    this.areaList = res.data;
+                }
+            })
+        },
+        studentAdd(){
+            this.$myLayer.formLayer("添加", $('.stu-yeaer-modal-add'), ['422px'], function () {})
+        },
+        btnClick(val) {
+            if(val == 1){
+                this.studentAdd();
+            }else if(val == 2){
+                console.log('导入')
+            }else if(val == 3){
+                console.log('重置密码')
+            }else if(val == 4){
+                console.log('启用')
+            }else {
+                console.log('停用')
+            }
         },
         filterNode(value, data) {
             if (!value) return true;
-            return data.label.indexOf(value) !== -1;
+            return data.displayName.indexOf(value) !== -1;
         },
         handleSelect(value) {
-            if (!value.children) {
-                const {
-                    id,
-                    label
-                } = value;
-                this.currentSelect = label;
-
-            }
+            this.currentSelect = value.displayName;
+            this.orgId = value.id;
+            this.orgQuery();
         },
         search() {
 
@@ -246,13 +307,16 @@ export default {
             this.multipleSelection = val;
         },
         stateList(state) {
-            alert(state)
+            this.status = state;
+            this.studentsList()
         },
         SizeChange(pageSize) {
-            alert(pageSize)
+            this.pageSize = pageSize;
+            this.studentsList()
         },
         CurrentChange(pageCurrent) {
-            alert(pageCurrent)
+            this.pageCurrent = pageCurrent;
+            this.studentsList()
         }
     }
 }
@@ -262,5 +326,12 @@ export default {
 	.weixin-icon {
 		height: 14px;
 		width: 16px;
+	}
+	.stu-yeaer-modal-add, .tu-yeaer-modal-edit {
+		display: none;
+	}
+	.modalAdd {
+		padding: 0px 32px;
+		margin: 24px 0px;
 	}
 </style>

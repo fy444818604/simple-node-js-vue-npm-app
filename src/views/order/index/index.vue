@@ -10,11 +10,14 @@
 				</div>
 			</el-col>
 		</el-row>
-		<i class="icondaiban iconfont" style="font-weight: 100;"></i>
+		<div style="padding: 20px;background-color: #FFFFFF;">
+			<order-calendar :tableData="orderList"></order-calendar>
+		</div>
 	</div>
 </template>
 
 <script>
+import calendar from '../../../components/calendar'
 export default {
     data() {
         return {
@@ -27,8 +30,19 @@ export default {
             }, {
                 name: '累计预约',
                 data: 241
-            }]
+            }],
+			orderList:[
+				{x:1,y:1,record:5,syn:3,meeting:2}
+			]
         }
+    },
+    components: {
+        'order-calendar': calendar
+    },
+    created() {
+        this.$api.test().then(res => {
+            console.log(res)
+        })
     }
 }
 </script>
@@ -61,8 +75,8 @@ export default {
 				color: #FFFFFF;
 				font-size: 48px;
 			}
-			
-			img{
+
+			img {
 				position: absolute;
 				right: 0;
 				top: 0;
@@ -74,7 +88,7 @@ export default {
 
 		.top-statis-list {
 			padding-top: 32px;
-			
+
 			.el-col {
 				&:nth-child(2) {
 					.top-statis {
