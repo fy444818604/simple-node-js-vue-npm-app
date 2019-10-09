@@ -529,6 +529,17 @@ const resource = {
             }
         },
         {
+            path: '/resource/Layout/resource-list/:id',
+            name: 'resource-list',
+            component: (resolve) => {
+                require(['../views/resource/resource-list/res-detail'], resolve)
+            },
+            meta: {
+                title: '资源详情',
+                requireAuth: true
+            }
+        },
+        {
             path: '/resource/Layout/album',
             name: 'album',
             component: (resolve) => {
@@ -573,7 +584,18 @@ const order = {
 	meta: {
 	    title: '首页',
 	    requireAuth: true
-	}
+	},
+	children:[{
+		path: '/order/Layout/index',
+		name: 'order-Layout-index',
+		component: (resolve) => {
+		    require(['../views/order/index/index'], resolve)
+		},
+		meta: {
+		    title: '首页',
+		    requireAuth: true
+		},
+	}]
 }
 const router = new Router({
     base: './',

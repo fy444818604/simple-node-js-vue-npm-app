@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    © 2019 川ICP备 12003892号-11 成都元素科技
+    © 2019 川ICP备 12003892号-11 成都元素科技技术支持
   </div>
 </template>
 

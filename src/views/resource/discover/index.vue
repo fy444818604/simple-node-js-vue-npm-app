@@ -84,9 +84,9 @@ export default {
     }
 
     .nav {
-      position: absolute;
+      position: fixed;
       left: 0;
-      top: 0;
+      top: 60px;
       bottom: 0;
       width: 80px;
       background: #181A1E;

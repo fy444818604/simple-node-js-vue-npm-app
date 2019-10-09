@@ -41,3 +41,8 @@ export const settingList = params => post('/base/api/classroom/page',params);
 
 
 
+/**
+ * 资源平台接口
+ */
+
+

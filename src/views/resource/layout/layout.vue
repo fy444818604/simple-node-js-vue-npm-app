@@ -16,8 +16,11 @@ import TopHead from '../../../components/res-head'
 export default {
     data() {
         return {
-
+            
         }
+    },
+    created() {
+        
     },
     components: {
         'top-head': TopHead

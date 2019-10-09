@@ -4,10 +4,13 @@
         <!-- 轮播 -->
         <el-carousel class="base-carousel" height="360px">
             <el-carousel-item>
-                <div class="item"></div>
+                <div class="banner-1"></div>
             </el-carousel-item>
             <el-carousel-item>
-                <div class="item"></div>
+                <div class="banner-2"></div>
+            </el-carousel-item>
+            <el-carousel-item>
+                <div class="banner-3"></div>
             </el-carousel-item>
         </el-carousel>
         <!-- tips -->
@@ -43,16 +46,19 @@
         <div class="recommend">
             <div class="recommend-content content-center">
                 <res-title title="精品推荐"></res-title>
-                <res-box></res-box>
-                <res-box></res-box>
-                <res-box></res-box>
-                <res-box></res-box>
-                <res-box></res-box>
-                <res-box></res-box>
-                <res-box></res-box>
-                <res-box></res-box>
-                <res-box></res-box>
-                <res-box></res-box>
+                <div class="recommend-content-wrap">
+                  <res-box></res-box>
+                  <res-box></res-box>
+                  <res-box></res-box>
+                  <res-box></res-box>
+                  <res-box></res-box>
+                  <res-box></res-box>
+                  <res-box></res-box>
+                  <res-box></res-box>
+                  <res-box></res-box>
+                  <res-box></res-box>
+                  <res-box></res-box>
+                </div>
             </div>
         </div>
         <div class="latest">
@@ -129,10 +135,22 @@ export default {
     min-width: 1200px;
 
     .base-carousel {
-        .item {
+        .banner-1 {
             width: 100%;
             height: 100%;
-            background: url(./../../../assets/image/city-1.jpg) no-repeat;
+            background: url(./../../../assets/image/banner-test-1.jpg) no-repeat;
+            background-size: 100% 100%;
+        }
+        .banner-2 {
+            width: 100%;
+            height: 100%;
+            background: url(./../../../assets/image/banner-test-2.jpg) no-repeat;
+            background-size: 100% 100%;
+        }
+        .banner-3 {
+            width: 100%;
+            height: 100%;
+            background: url(./../../../assets/image/banner-test-3.jpg) no-repeat;
             background-size: 100% 100%;
         }
     }
@@ -182,17 +200,18 @@ export default {
 
     .recommend {
         padding-bottom: 30px;
-
         .recommend-content {
-            display: flex;
-            flex-wrap: wrap;
-            & > div:not(:first-child) {
-                width: 25%;
-            }
-            @media screen and (min-width: 1520px) {
-                & > div:not(:first-child) {
-                    width: 20%;
-                }
+            &-wrap {
+              display: flex;
+              flex-wrap: wrap;
+              & > div {
+                  width: 25%;
+              }
+              @media screen and (min-width: 1520px) {
+                  & > div{
+                      width: 20%;
+                  }
+              } 
             }
         }
     }
@@ -221,9 +240,13 @@ export default {
         .popular-content {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
             & > div:not(:first-child) {
-                width: 20%;
+                width: 25%;
+            }
+            @media screen and (min-width: 1520px) {
+                & > div:not(:first-child) {
+                    width: 20%;
+                }
             }
         }
     }

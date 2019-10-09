@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="res-boxs">
-                    <res-box v-for="i in 20" :key="i" :index="4"></res-box>
+                    <res-box v-for="i in 20" :key="i"></res-box>
                 </div>
                 <resPagination></resPagination>
             </div>
@@ -45,20 +45,43 @@
         <!-- nav -->
         <div class="nav">
             <ul>
-                <li class="active">
+                <li @click.stop="handleSelectNav(0)" :class="{active:navSelect===0}">
                     <i class="icon-user iconfont"></i>
                     <p>全部</p>
                 </li>
-                <li>
+                <li @click.stop="handleSelectNav(1)" :class="{active:navSelect===1}">
                     <i class="icon-user iconfont"></i>
                     <p>学科</p>
                 </li>
-                <li>
+                <li @click.stop="handleSelectNav(2)" :class="{active:navSelect===2}">
                     <i class="icon-user iconfont"></i>
                     <p>活动</p>
                 </li>
             </ul>
-            <div v-if="true" class="subject"></div>
+            <div v-clickOutSide="handleHideSubNav" v-if="(navSelect === 1 || navSelect === 2) && showSubNav" class="sub-nav">
+              <div class="close"><i @click="showSubNav = false" class="iconfont icon-arrow-header"></i></div>
+              <template v-if="navSelect === 1">
+                <div class="sub">
+                  <el-select value="全部学段" popper-class="popper" style="width:100%;margin-bottom:20px">
+                    <el-option value="x" label="x"></el-option>
+                  </el-select>
+                  <el-select value="全部学科" popper-class="popper" style="width:100%">
+                    <el-option value="x" label="x"></el-option>
+                  </el-select>
+                </div>
+              </template>
+              <template v-if="navSelect === 2">
+                <ul class="active"> 
+                  <li>安全教育</li>
+                  <li>法制教育</li>
+                  <li>艺术节</li>
+                  <li>运动会</li>
+                  <li>少先队活动</li>
+                  <li>共青团活动</li>
+                  <li>班会</li>
+                </ul>
+              </template>
+            </div>
         </div>
     </div>
 </template>
@@ -73,14 +96,26 @@ export default {
     },
     data() {
         return {
-            selectType: 0,
-            active: "all"
+            selectType: 0, // 0-不限类型,2-最新
+            navSelect:0, // 0-all,1-学科,2-活动
+            active:'all', // all-全部课堂,sync-同步课堂
+            showSubNav:true
         };
     },
     methods: {
         handleHideSelect() {
             this.selectType = 0;
+        },
+
+        /* 左边导航 */
+        handleSelectNav(type) {
+          this.navSelect = type
+          this.showSubNav = true
+        },
+        handleHideSubNav(){
+          this.showSubNav = false
         }
+
     }
 };
 </script>
@@ -159,13 +194,13 @@ export default {
     }
 
     .nav {
-        position: absolute;
+        position: fixed;
         left: 0;
-        top: 0;
+        top: 60px;
         bottom: 0;
         width: 80px;
         background: #181a1e;
-        ul {
+        & > ul {
             li {
                 height: 80px;
                 text-align: center;
@@ -183,14 +218,47 @@ export default {
                 }
             }
         }
-        .subject {
+        .sub-nav {
           position: absolute;
           left: 80px;
           top: 0;
           bottom: 0;
           width: 260px;
           background: #22272d;
+          .close {
+            text-align: right;
+            padding: 10px;
+            i {
+              color: #8495AD;
+              transform:rotate(180deg);
+              display: inline-block;
+              cursor: pointer;
+            }
+          }
+          .sub {
+            padding: 20px;
+          }
+          .active {
+            padding: 20px;
+            li {
+              height: 52px;
+              line-height: 52px;
+              text-align: center;
+              cursor: pointer;
+              &:hover {
+                background: rgba(169, 182, 203, 0.1);
+                border-radius: 6px;
+                color: #2695FF;
+              }
+            }
+          }
         }
     }
+}
+</style>
+<style>
+.resource .el-input__inner {
+  background: #22272D;
+  border:1px solid rgba(172, 172, 172, 0.5);
 }
 </style>
