@@ -65,7 +65,7 @@ export default {
       span {
         display: inline-block;
         color: inherit;
-       width: 120px;
+        width: 120px;
         }
       i {
         margin-left: 50px;
