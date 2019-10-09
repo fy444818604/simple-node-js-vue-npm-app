@@ -36,6 +36,11 @@ export const areaAdd = params => post('/base/api/buildings/add',params);
 export const areaEdi = params => post('/base/api/buildings/update',params);
 //教师设置
 export const settingList = params => post('/base/api/classroom/page',params);
+//教职工账号管理
+export const teachers = params => post('/base/api/userInfo/teacherInfo/list',params);
+//学生账号管理
+export const students = params => post('/base/api/userInfo/studentInfo/list',params);
+
 
 
 

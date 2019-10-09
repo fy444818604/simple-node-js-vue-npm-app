@@ -3,7 +3,7 @@
 		<div id="particles-js">
 			<div class="login">
 				<div class="type-change">
-					<img @click="nameSwitch(type)" :src="type == 1?userIcon:adminIcon" alt="">
+					<img @click="nameSwitch(type)" :src="type == 1?adminIcon:userIcon" alt="">
 				</div>
 				<div class="login-top">
 					{{type == 0?'管理员登录':'用户登录'}}
@@ -79,6 +79,7 @@ export default {
                 checkCodeSessionId:this.img.checkCodeSessionId
             };
             this.$api.apiLogin(params).then(res => {
+            	console.log(res)
                 if (res.success) {
                     this.changeLogin({
                         Authorization: res.data.userToken.accessToken
