@@ -16,7 +16,7 @@
 				 class="iconfont icon-arrow-header" :class="swithch?'':'active'"></i></div>
 			 <div class="login-info" v-show="loginInfoShow">
 				<ul>
-					<li>退出登录</li>
+					<li @click="exit">退出登录</li>
 				</ul>
 			 </div>
 		</div>
@@ -60,10 +60,22 @@ export default {
         },
         loginHide(){
             this.loginInfoShow = false;
+        },
+        exit(){
+            let classSelect = {};
+            this.$api.loginExit(classSelect).then(res => {
+                if(res.success == true){
+                    let toke=  localStorage.getItem('Authorization');
+                    localStorage.clear(toke);
+                    this.$router.push({
+                        path: '/signin'
+                    });
+                }
+            });
         }
     },
     mounted() {
-			
+
     }
 }
 </script>
@@ -78,14 +90,14 @@ export default {
 		justify-content: space-between;
 		align-items: center;
 	}
-	
+
 	.user-info{
 		display: flex;
 		align-items: center;
 		margin-right: 18px;
 		overflow: hidden;
 	}
-	
+
 	.login-info{
 		position: absolute;
 		right: 30px;
@@ -95,7 +107,7 @@ export default {
 		width: 120px;
 		box-shadow:0 0 10px #ddd;
 	}
-	
+
 	.login-info>ul>li{
 		padding: 5px 12px;
 		line-height: 33px;
@@ -153,7 +165,7 @@ export default {
 		transform: rotate(180deg);
 		display: inline-block;
 	}
-	
+
 	.icon-arrow-down{
 		transform: rotate(90deg);
 		display: inline-block;

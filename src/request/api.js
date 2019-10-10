@@ -10,6 +10,7 @@ import { get, post } from './http'
  */
 export const apiLogin = params => post('/base/api/auth/loginByUserPwd', params);
 export const loginImg = params => get('/base/api/auth/checkCode/image', params);
+export const loginExit = params => post('/base/api/auth/logout', params);
 /**
  * 基础数据系统接口
  */
@@ -29,6 +30,13 @@ export const subjectsEdi = params => post('/base/api/subjectMgr/subjectInfo/upda
 export const subjectsDis = params => get('/base/api/subjectMgr/subjectInfo/setStatusById',params);
 //下拉框字典
 export const dictSelect = params => post('/base/api/dict/select',params);
+//字典分页查询
+export const dictPage = params => post('/base/api/dict/page',params);
+//字典启用停用
+export const dictDis = params => post('/base/api/dict/update/status',params);
+//字典
+export const dictAdd = params => post('/base/api/dict/add',params);
+export const dictEdit = params => post('/base/api/dict/update',params);
 //建筑场所
 export const areaList = params => post('/base/api/buildings/page',params);
 export const areaDis = params => post('/base/api/buildings/update/status',params);
@@ -40,9 +48,21 @@ export const settingList = params => post('/base/api/classroom/page',params);
 export const teachers = params => post('/base/api/userInfo/teacherInfo/list',params);
 //学生账号管理
 export const students = params => post('/base/api/userInfo/studentInfo/list',params);
+export const studentsAdd = params => post('/base/api/userInfo/studentInfo/save',params);
+export const batStudentsDis = params => post('/base/api/userInfo/studentInfo/setStatusBatch',params);
+export const studentsDis = params => post('/base/api/userInfo/studentInfo/setStatusById',params);
+export const batStudentsExport = params => post('/base/api/userInfo/studentInfo/setStatusBatch',params);
+//机构树
+export const institutions = params => get('/base/api/organizationUnit/all',params);
+//学届管理
+export const learnSelect  = params => get('/base/api/grade/select',params);
+//班级管理
+export const classSelect  = params => get('/base/api/class/select',params);
+
+
 
 //测试接口
-export const test = params => post('http://192.168.38.221:8081/test/getToken',params)
+export const test = params => post('http://192.168.38.221:8081/test/getToken',params);
 
 
 

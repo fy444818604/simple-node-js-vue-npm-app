@@ -4,7 +4,9 @@
         <!--页面title-->
         <el-row class="phase-title">
             <el-col :span="12"><div class="grid-content bg-purple cha-title">{{ pageTile }}</div></el-col>
-            <el-col :span="12"><div class="grid-content bg-purple-light"><i  class="iconfont icon-add"></i></div></el-col>
+            <el-col :span="12"><div class="grid-content bg-purple-light">
+                <bnt-list  @btn-click="dictAdd" :model="{icon:'icon-add',name:'添加'}"></bnt-list>
+            </div></el-col>
         </el-row>
         <!--表格-->
         <phase-table
@@ -24,20 +26,18 @@
             </div></el-col>
         </el-row>
         <!--弹框-->
-        <phase-modal
-            :title="dialog.title"
-            @on-close="phaseClose"
-            @on-save="phaseSave"
-            :visible="dialog.visible">
-            <el-form ref="form" :model="admForm" label-width="88px" :rules="formRules">
-                <el-form-item label="阶段名称"  prop="level">
-                    <el-input v-model="admForm.level"></el-input>
-                </el-form-item>
-                <el-form-item label="描述"  prop="order">
-                    <el-input v-model="admForm.level"></el-input>
-                </el-form-item>
-            </el-form>
-        </phase-modal>
+        <div class="dict-modal-add">
+            <div class="modalAdd">
+                <el-form ref="admForm" :model="admForm" label-width="88px" :rules="formRules" id="modalForm">
+                    <el-form-item label="阶段名称"  prop="text">
+                        <el-input v-model="admForm.text"></el-input>
+                    </el-form-item>
+                    <el-form-item label="描述"  prop="description">
+                        <el-input v-model="admForm.description"></el-input>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -45,58 +45,35 @@
 import table from '../../../components/table'
 import stateSwitch from '../../../components/state-switch'
 import paging from '../../../components/paging'
-import modal from '../../../components/modal'
+import bntList from '../../../components/btn-list'
+
 export default {
     name: "phase-admin",
     data(){
         return{
             pageTile:'学段设置',
-            pageSize:'',//显示多少页
-            pageCurrent:'',//当前页
-            pageTotal:300,//总条数
+            pageSize:10,//显示多少页
+            pageCurrent:1,//当前页
+            pageTotal:0,//总条数
+            status: 0,
+            dictType: "stage",
             //表格
-            tableData:[
-                {
-                    id:1,
-                    school:'1号教学楼',
-                    describe:'学区1',
-                    status:'启用',
-                },
-                {
-                    id:2,
-                    school:'1号教学楼',
-                    describe:'学区1',
-                    status:'启用',
-                },
-                {
-                    id:3,
-                    school:'1号教学楼',
-                    describe:'学区1',
-                    status:'启用',
-
-                },
-                {
-                    id:4,
-                    school:'1号教学楼',
-                    describe:'学区1',
-                    status:'启用',
-                }
-            ],
+            tableData:[],
             tableColumn:[
                 {
-                    prop:'id',
+                    prop:'index',
                     label:'序号'
                 },
                 {
-                    prop:'school',
+                    prop:'text',
                     label:'学段名称'
                 },
                 {
-                    prop:'describe',
+                    prop:'description',
                     label:'描述'
                 },
                 {
-                    prop:'status',
+                    prop:'statusText',
                     label:'状态'
                 }
             ],
@@ -106,11 +83,11 @@ export default {
                 title: '新建',
             },
             admForm:{
-                level:'',
-                order:''
+                text:'',
+                description:''
             },
             formRules:{
-                level:[{required: true, message: '不能为空', trigger: 'blur'}],
+                text:[{required: true, message: '不能为空', trigger: 'blur'}],
             }
         }
     },
@@ -118,33 +95,131 @@ export default {
         'phase-table':table,
         'phase-stateSwitch':stateSwitch,
         'phase-paging':paging,
-        'phase-modal':modal
+        'bnt-list': bntList
+    },
+    //初始化
+    created() {
+        this.phaseList();
     },
     methods: {
-        //表格
-        phaseStop(){
-
+        //分页查询
+        phaseList(){
+            let params = {
+                pageIndex: this.pageCurrent,
+                pageSize: this.pageSize,
+                type: this.dictType,
+                status: this.status
+            };
+            this.$api.dictPage(params).then(res => {
+                if (res.success == true) {
+                    //赋值分页总数
+                    this.pageTotal = parseInt(res.totalDatas);
+                    let array = [];
+                    let list = res.data;
+                    list.map((item,index)=>{
+                        array.push(
+                            Object.assign({
+                                index:index+1
+                            },item,{indexNum:'str'})
+                        )
+                    });
+                    //赋值表格数据
+                    this.tableData = array;
+                } else {
+                    this.$myLayer.errorLayer('失败')
+                }
+            })
         },
-        phaseEdit(){
-
+        //表格
+        phaseStop(row){
+            let _this = this;
+            let params = {
+                id:row.id,
+                status:row.status === 0? 1:0,
+                type: this.dictType
+            };
+            this.$api.dictDis(params).then(res => {
+                if (res.success == true) {
+                    _this.phaseList();
+                    this.$myLayer.successLayer(res.msg)
+                } else {
+                    this.$myLayer.errorLayer(res.msg)
+                }
+            })
+        },
+        phaseEdit(row){
+            let editForm = {
+                text: row.row.text,
+                description: row.row.description
+            };
+            this.admForm = editForm;
+            let _this = this;
+            this.$myLayer.formLayer("编辑", $('.dict-modal-add'), ['422px'], function () {
+                _this.$refs["admForm"].validate((valid) => {
+                    if (valid) {
+                        let ediData = {
+                            text: _this.admForm.text,
+                            description:_this.admForm.description,
+                            type: _this.dictType,
+                            id:row.row.id
+                        };
+                        _this.$api.dictEdit(ediData).then(res => {
+                            if (res.success == true) {
+                                _this.phaseList();
+                                _this.$myLayer.successLayer(res.msg)
+                            } else {
+                                _this.$myLayer.errorLayer(res.msg)
+                            }
+                        })
+                    } else {
+                        return false;
+                    }
+                });
+            })
         },
         //状态
-        phaseSwitch(){
-
+        phaseSwitch(state){
+            this.status = state;
+            this.phaseList();
         },
         //分页
-        SizeChange(){
-
+        SizeChange(pageSize){//显示多少页
+            this.pageSize = pageSize;
+            this.phaseList();
         },
-        CurrentChange(){
-
+        CurrentChange(pageCurrent){//当前页
+            this.pageCurrent = pageCurrent;
+            this.phaseList();
         },
-        //弹框
-        phaseClose(){
-            this.dialog.visible = false
-        },
-        phaseSave(){
-
+        dictAdd(){
+            let _this = this;
+            _this.admForm = {
+                text:'',
+                description:''
+            }
+            document.getElementById('modalForm').reset();
+            // eslint-disable-next-line no-undef
+            this.$myLayer.formLayer("新建", $('.dict-modal-add'), ['422px'], function () {
+                _this.$refs["admForm"].validate((valid) => {
+                    if (valid) {
+                        let params = {
+                            text: _this.admForm.text,
+                            description:_this.admForm.description,
+                            type: _this.dictType
+                        };
+                        _this.$api.dictAdd(params).then(res => {
+                            if (res.success == true) {
+                                _this.phaseList();
+                                _this.$myLayer.successLayer(res.msg)
+                            } else {
+                                _this.$myLayer.errorLayer(res.msg)
+                            }
+                        })
+                    } else {
+                        return false;
+                    }
+                });
+            })
         }
     }
 }
@@ -171,6 +246,13 @@ export default {
     }
     .phase-bnt .bg-purple{
         margin-top: 4px;
+    }
+    .dict-modal-add {
+        display: none;
+    }
+    .modalAdd {
+        padding: 0px 32px;
+        margin: 24px 0px;
     }
 
 </style>

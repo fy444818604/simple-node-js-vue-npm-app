@@ -33,7 +33,7 @@
 						<input type="text" name="" value="" placeholder="请输入验证码" v-model="code"/>
 					</div>
 					<div class="code-wrap">
-						<img :src="img.checkCodeImageData" alt="">
+						<img @click="logINIMG" :src="img.checkCodeImageData" alt="">
 					</div>
 				</div>
 				<div class="login-button" @click="login">
@@ -79,7 +79,6 @@ export default {
                 checkCodeSessionId:this.img.checkCodeSessionId
             };
             this.$api.apiLogin(params).then(res => {
-            	console.log(res)
                 if (res.success) {
                     this.changeLogin({
                         Authorization: 'Bearer ' + res.data.userToken.accessToken
@@ -89,7 +88,7 @@ export default {
                     });
                 } else {
                     this.$myLayer.dangerLayer(res.msg);
-					this.loginImg();
+                    this.loginImg();
                 }
             })
         },
@@ -107,6 +106,9 @@ export default {
             }else {
                 this.type = 0;
             }
+        },
+        logINIMG(){
+            this.loginImg();
         }
     }
 }
