@@ -31,7 +31,12 @@
 <script>
 export default {
     props: {
-        tableData: Object / Array,
+        tableData: {
+            type: Array,
+            default: function(){
+                return []
+            }
+        },
         num: {
             type: Number,
             default: 10
