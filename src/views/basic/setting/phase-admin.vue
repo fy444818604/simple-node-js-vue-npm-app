@@ -131,7 +131,7 @@ export default {
             })
         },
         //启用停用
-        polStop(row){
+        phaseStop(row){
             let opText;
             let newStatus;
             if (row.status === 0) {
@@ -151,7 +151,7 @@ export default {
                 }
                 _this.$api.dictDis(params).then(res => {
                     if (res.success === true) {
-                        _this.dictList();
+                        _this.phaseList();
                         _this.$myLayer.successLayer(res.msg)
                     } else {
                         _this.$myLayer.errorLayer(res.msg)
