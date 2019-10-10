@@ -27,7 +27,7 @@ export default {
                 menu_id: 1,
                 menu_text: '首页',
                 menu_icon: 'icon-home',
-                menu_href: '',
+                menu_href: '/order/Layout/index',
                 menu_pid: 0,
                 menu_target_type: 0
             }, {
@@ -41,7 +41,7 @@ export default {
                 menu_id: 3,
                 menu_text: '课程预约',
                 menu_icon: '',
-                menu_href: '',
+                menu_href: '/order/Layout/course-order',
                 menu_pid: 2,
                 menu_target_type: 0
             }, {
