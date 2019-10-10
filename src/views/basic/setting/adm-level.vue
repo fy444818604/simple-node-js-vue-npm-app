@@ -1,155 +1,252 @@
-<!--行政级别-->
+<!--行政级别设置-->
 <template>
     <div class="page-template">
         <!--页面title-->
-        <el-row class="level-title">
+        <el-row class="pol-title">
             <el-col :span="12"><div class="grid-content bg-purple cha-title">{{ pageTile }}</div></el-col>
-            <el-col :span="12"><div class="grid-content bg-purple-light"><i class="iconfont icon-add" @click="admAdd"></i></div></el-col>
+            <el-col :span="12"><div class="grid-content bg-purple-light">
+                <bnt-list  @btn-click="dictAdd" :model="{icon:'icon-add',name:'添加'}"></bnt-list>
+            </div></el-col>
         </el-row>
         <!--表格-->
-        <div>
-            <adm-table
+        <pol-table
                 :tableData="tableData"
                 :tableColumn="tableColumn"
-                @on-stop="amdStop"
-                @on-edit="admEdit">
-            </adm-table>
-        </div>
+                @on-stop="polStop"
+                @on-edit="polEdit">
+        </pol-table>
         <!--分页/启用/停用-->
-        <el-row class="level-bnt">
+        <el-row class="pol-bnt">
             <el-col :span="5"><div class="grid-content bg-purple cha-title">
-                <state-switch @switchL="stateList"></state-switch>
+                <stateSwitch @switchL="stateSwitch"></stateSwitch>
             </div></el-col>
             <el-col :span="19"><div class="grid-content bg-purple-light">
-                <paging :pageTotal="pageTotal" @handleSizeChange="SizeChange" @handleCurrentChange="CurrentChange"></paging>
+                <pol-paging :pageTotal="pageTotal" @handleSizeChange="SizeChange" @handleCurrentChange="CurrentChange"></pol-paging>
             </div></el-col>
-
         </el-row>
-        <!--添加弹框-->
-        <adm-modal
-                :title="dialog.title"
-                @on-close="admClose"
-                @on-save="admSave"
-                :visible="dialog.visible">
-            <el-form ref="form" :model="admForm" label-width="88px" :rules="formRules">
-                <el-form-item label="行政级别"  prop="level">
-                    <el-input v-model="admForm.level"></el-input>
-                </el-form-item>
-                <el-form-item label="显示顺序"  prop="order">
-                    <el-input v-model="admForm.level"></el-input>
-                </el-form-item>
-            </el-form>
-        </adm-modal>
+        <!--新建-->
+        <div class="dict-modal-add">
+            <div class="modalAdd">
+                <el-form ref="dictForm" :model="dictForm" label-width="88px" :rules="formRules" id="modalForm">
+                    <el-form-item label="行政级别"  prop="text">
+                        <el-input v-model="dictForm.text"></el-input>
+                    </el-form-item>
+                    <el-form-item label="显示顺序"  prop="orderIndex">
+                        <el-input v-model="dictForm.orderIndex"></el-input>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
+import bntList from '../../../components/btn-list'
+import table from '../../../components/table'
 import stateSwitch from '../../../components/state-switch'
 import paging from '../../../components/paging'
-import table from '../../../components/table'
-import modal from '../../../components/modal'
 export default {
     name: "adm-level",
     data(){
         return{
             pageTile:'行政级别设置',
-            pageSize:'',//显示多少页
-            pageCurrent:'',//当前页
-            pageTotal:300,//总条数
-            tableData:[
-                {
-                    id:1,
-                    level:'1号教学楼',
-                    status:'启用',
-
-                },
-                {
-                    id:2,
-                    level:'1号教学楼',
-                    status:'启用',
-
-                },
-                {
-                    id:3,
-                    level:'1号教学楼',
-                    status:'启用',
-
-                },
-                {
-                    id:4,
-                    level:'1号教学楼',
-                    status:'启用',
-
-                }
-            ],
+            //按钮
+            model:{
+                name:'添加',
+                icon:'icon-add'
+            },
+            //表格
+            tableData:[],
             tableColumn:[
                 {
-                    prop:'id',
+                    prop:'orderIndex',
                     label:'显示顺序'
                 },
                 {
-                    prop:'level',
+                    prop:'text',
                     label:'行政级别'
                 },
                 {
-                    prop:'status',
+                    prop:'statusText',
                     label:'状态'
                 }
             ],
+            //分页
+            pageSize:10,//显示多少页
+            pageCurrent:1,//当前页
+            pageTotal:0,//总条数
+            status: 0,
+            dictType: "area_level",
+            //弹框
             /* dialog */
             dialog: {
                 visible:false,
-                title: '新建行政级别',
+                title: '新建',
             },
-            admForm:{
-                level:'',
-                order:''
+            dictForm:{
+                text:'',
+                orderIndex:''
             },
             formRules:{
-                level:[{required: true, message: '不能为空', trigger: 'blur'}],
-                order:[{required: true, message: '不能为空', trigger: 'blur'}],
-            }
+                text:[{required: true, message: '不能为空', trigger: 'blur'}],
+                orderIndex:[{pattern: /^[0-9]+$/, message: '只能输入数字', trigger: 'change'}]
+            },
         }
     },
-    components: {
-        'state-switch': stateSwitch,
-        'paging':paging,
-        'adm-table':table,
-        'adm-modal':modal
+    components:{
+        'bnt-list':bntList,
+        'pol-table':table,
+        'stateSwitch':stateSwitch,
+        'pol-paging':paging
+    },
+    //初始化
+    created() {
+        this.dictList();
     },
     methods: {
-        stateList(state){//状态开关
-            alert(state)
-        },
-        SizeChange(pageSize){//显示多少页
-            alert(pageSize)
-        },
-        CurrentChange(pageCurrent){//当前页
-            alert(pageCurrent)
-        },
-        //表格操作
-        amdStop(){
-
-        },
-        admEdit(){
-
-        },
-        //modal
-        admClose(){
-
-            this.dialog.visible = false
-        },
-        admSave(){
-            this.$refs.form.validate((valid) => {
-                if(valid) {
-                    console.log(valid);
+        //分页查询
+        dictList(){
+            let params = {
+                pageIndex: this.pageCurrent,
+                pageSize: this.pageSize,
+                type: this.dictType,
+                status: this.status
+            };
+            this.$api.dictPage(params).then(res => {
+                if (res.success == true) {
+                    //赋值分页总数
+                    this.pageTotal = parseInt(res.totalDatas);
+                    let array = [];
+                    let list = res.data;
+                    list.map((item,index)=>{
+                        array.push(
+                            Object.assign({
+                                index:index+1
+                            },item,{indexNum:'str'})
+                        )
+                    });
+                    //赋值表格数据
+                    this.tableData = array;
+                } else {
+                    this.$myLayer.errorLayer('失败')
                 }
             })
         },
-        //添加弹框
-        admAdd(){
-            this.dialog.visible = true;
-        }
+        //添加
+        dictAdd(){
+            let _this = this;
+            _this.dictForm = {
+                text:'',
+                orderIndex:''
+            };
+            document.getElementById('modalForm').reset();
+            // eslint-disable-next-line no-undef
+            this.$myLayer.formLayer("新建", $('.dict-modal-add'), ['422px'], function () {
+                _this.$refs["dictForm"].validate((valid) => {
+                    if (valid) {
+                        let params = {
+                            text: _this.dictForm.text,
+                            orderIndex:_this.dictForm.orderIndex,
+                            type: _this.dictType
+                        };
+                        _this.$api.dictAdd(params).then(res => {
+                            if (res.success == true) {
+                                _this.dictList();
+                                // TODO 关闭弹窗
+                                _this.$myLayer.successLayer(res.msg)
+                            } else {
+                                _this.$myLayer.errorLayer(res.msg)
+                            }
+                        })
+                    } else {
+                        return false;
+                    }
+                });
+            })
+        },
+        //启用停用
+        polStop(row){
+            let opText;
+            let newStatus;
+            if (row.status === 0) {
+                opText = "停用";
+                newStatus = 1;
+            } else {
+                opText = "启用";
+                newStatus = 0;
+            }
+            let _this = this;
+
+            this.$myLayer.confirmLayer("确认"+opText+"该行政级别", function () {
+                let params = {
+                    id:row.id,
+                    status:newStatus,
+                    type: _this.dictType
+                }
+                _this.$api.dictDis(params).then(res => {
+                    if (res.success === true) {
+                        _this.dictList();
+                        _this.$myLayer.successLayer(res.msg)
+                    } else {
+                        _this.$myLayer.errorLayer(res.msg)
+                    }
+                })
+            });
+
+        },
+        //编辑
+        polEdit(row){
+            let editForm = {
+                text: row.row.text,
+                orderIndex: row.row.orderIndex
+            };
+            this.dictForm = editForm;
+            let _this = this;
+            this.$myLayer.formLayer("编辑", $('.dict-modal-add'), ['422px'], function () {
+                _this.$refs["dictForm"].validate((valid) => {
+                    if (valid) {
+                        let ediData = {
+                            text: _this.dictForm.text,
+                            orderIndex:_this.dictForm.orderIndex,
+                            type: _this.dictType,
+                            id:row.row.id
+                        };
+                        _this.$api.dictEdit(ediData).then(res => {
+                            if (res.success == true) {
+                                _this.dictList();
+                                // TODO 关闭弹窗
+                                _this.$myLayer.successLayer(res.msg)
+                            } else {
+                                _this.$myLayer.errorLayer(res.msg)
+                            }
+                        })
+                    } else {
+                        return false;
+                    }
+                });
+            })
+        },
+        //状态
+        stateSwitch(state){
+            this.status = state;
+            this.dictList();
+        },
+        //分页
+        SizeChange(pageSize){//显示多少页
+            this.pageSize = pageSize;
+            this.dictList();
+        },
+        CurrentChange(pageCurrent){//当前页
+            this.pageCurrent = pageCurrent;
+            this.dictList();
+        },
+        //弹框
+        polSave(){
+            this.dialog.visible = false
+        },
+        polClose(){
+            this.dialog.visible = false
+        },
     }
 }
 </script>
@@ -158,28 +255,29 @@ export default {
     .page-template{
         padding: 18px 24px;
     }
-    .level-title{
+    .pol-title{
         height: 32px;
         border-bottom: 1px solid #e5e7ef;
         margin-bottom: 26px;
     }
-    .level-title .bg-purple-light{
+    .pol-title .bg-purple-light{
         text-align: right;
         padding-right: 24px;
     }
-    .level-bnt{
+    .pol-bnt{
         margin-top: 14px;
     }
-    .level-bnt .bg-purple-light{
+    .pol-bnt .bg-purple-light{
         text-align: right;
     }
-    .level-bnt .bg-purple{
+    .pol-bnt .bg-purple{
         margin-top: 4px;
     }
-
-    item__label:before {
-        content: "*";
-        color: #f56c6c;
-        margin-right: 4px;
+    .dict-modal-add {
+        display: none;
+    }
+    .modalAdd {
+        padding: 0px 32px;
+        margin: 24px 0px;
     }
 </style>
