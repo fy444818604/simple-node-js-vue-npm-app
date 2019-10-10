@@ -81,9 +81,11 @@ export default {
 <style lang="scss" scoped>
 .introduce {
     min-width: 1200px;
+    overflow: hidden;
     .intro-main {
         background: #fff;
         padding-bottom: 30px;
+        margin-top: 10px;
         .content {
             width: 80%;
             margin: 0 auto ;
