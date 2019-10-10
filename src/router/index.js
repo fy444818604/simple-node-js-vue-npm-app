@@ -540,6 +540,17 @@ const resource = {
             }
         },
         {
+            path: '/resource/Layout/resource-list/upload/res',
+            name: 'resource-list',
+            component: (resolve) => {
+                require(['../views/resource/resource-list/upload-res'], resolve)
+            },
+            meta: {
+                title: '上传资源',
+                requireAuth: true
+            }
+        },
+        {
             path: '/resource/Layout/album',
             name: 'album',
             component: (resolve) => {

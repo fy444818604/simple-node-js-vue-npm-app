@@ -73,103 +73,106 @@
       </div>
     </div>
 
-    <!-- home work -->
-    <div class="home-work">
-      <div class="title">
-        <div @click="handleToggleWorkType('homework')" class="project" :class="{active:workType==='homework'}">作业10</div>
-        <div @click="handleToggleWorkType('attach')" class="p-info" :class="{active:workType==='attach'}">附件7</div>
-        <div class="more">更多<i class="el-icon-arrow-down"></i></div>
+    <div style="background:#f3f5f7;overflow:hidden">
+      <!-- home work -->
+      <div class="home-work">
+        <div class="title">
+          <div @click="handleToggleWorkType('homework')" class="project" :class="{active:workType==='homework'}">作业10</div>
+          <div @click="handleToggleWorkType('attach')" class="p-info" :class="{active:workType==='attach'}">附件7</div>
+          <div class="more">更多<i class="el-icon-arrow-down"></i></div>
+        </div>
+        <!-- home -->
+        <template v-if="workType === 'homework'">
+          <div class="project-content">
+            <div v-for="n in 10" :key="n" class="item">
+              <div class="img-box"></div>
+              <div class="name text-overflow">宋冠玲</div>
+              <div class="text-overflow">成都七中（林荫校区）</div>
+            </div>
+          </div>
+        </template>
+        <!-- 附件 -->
+        <template v-if="workType === 'attach'">
+          <div  class="attach-content">
+            <div v-for="n in 10" :key="n" class="item">
+              <div class="img-wrap"></div>
+              <div class="desc">七年级上第4课《古代诗 歌四首》.word</div>
+            </div>
+          </div>
+        </template>
       </div>
-      <!-- home -->
-      <template v-if="workType === 'homework'">
-        <div class="project-content">
-          <div v-for="n in 10" :key="n" class="item">
-            <img src="./../../../assets/image/school.jpg" alt="">
-            <div class="name text-overflow">宋冠玲</div>
-            <div class="text-overflow">成都七中（林荫校区）</div>
-          </div>
-        </div>
-      </template>
-      <!-- 附件 -->
-      <template v-if="workType === 'attach'">
-        <div  class="attach-content">
-          <div v-for="n in 10" :key="n" class="item">
-            <div class="img-wrap"></div>
-            <div class="desc">七年级上第4课《古代诗 歌四首》.word</div>
-          </div>
-        </div>
-      </template>
-    </div>
 
-    <!-- 评论 -->
-    <div class="comments">
-        <div class="comments-content">
-          <div class="main">
-            <div class="comments-box">
-              <div class="rate"><span>资源评分:</span><el-rate v-model="value1"></el-rate></div>
-              <div class="content">
-                <el-input
-                  disabled
-                  :rows="2"
-                  resize="none"
-                  type="textarea"
-                  placeholder="说点什么"
-                  v-model="text"
-                  maxlength="200"
-                >
-                </el-input>
-                <div class="comments-control">
-                  <span>0/200</span>
-                  <span class="comments-btn">发布</span>
+      <!-- 评论 -->
+      <div class="comments">
+          <div class="comments-content">
+            <div class="main">
+              <div class="comments-box">
+                <div class="rate"><span>资源评分:</span><el-rate v-model="value1"></el-rate></div>
+                <div class="content">
+                  <el-input
+                    disabled
+                    :rows="2"
+                    resize="none"
+                    type="textarea"
+                    placeholder="说点什么"
+                    v-model="text"
+                    maxlength="200"
+                  >
+                  </el-input>
+                  <div class="comments-control">
+                    <span>0/200</span>
+                    <span class="comments-btn">发布</span>
+                  </div>
                 </div>
               </div>
+              <!-- 开启评论 -->
+              <template v-if="true">
+                <div class="comments-list">
+                  <div class="title">全部评论 <span>36</span> </div>
+                  <resCommendBox></resCommendBox>
+                  <resCommendBox></resCommendBox>
+                </div>
+              </template>
+              <!-- 关闭评论 -->
+              <template v-else>
+                <div class="close-commend">
+                  <i class="iconfont iconpinglun_kong"></i>
+                  <span>主人在神游，评论已关闭</span>
+                </div>
+              </template>
             </div>
-            <!-- 开启评论 -->
+            <!-- 更多评论 评论过多 且 没有关闭评论 -->
             <template v-if="false">
-              <div class="comments-list">
-                <div class="title">全部评论 <span>36</span> </div>
-                <resCommendBox></resCommendBox>
-              </div>
-            </template>
-            <!-- 关闭评论 -->
-            <template>
-              <div class="close-commend">
-                <i class="iconfont iconpinglun_kong"></i>
-                <span>主人在神游，评论已关闭</span>
+              <div class="more-commend">
+                  查看更多评论
               </div>
             </template>
           </div>
-          <!-- 更多评论 评论过多 且 没有关闭评论 -->
-          <template v-if="false">
-            <div class="more-commend">
-                查看更多评论
+  
+        <div class="comments-info">
+          <div class="comments-info-active">
+            <div class="active-info p-center">
+              <p class="name">教研活动</p>
+              <p class="btn">发起调研</p>
             </div>
-          </template>
-        </div>
- 
-      <div class="comments-info">
-        <div class="comments-info-active">
-          <div class="active-info p-center">
-            <p class="name">教研活动</p>
-            <p class="btn">发起调研</p>
           </div>
-        </div>
-        <div class="comments-res">
-          <div class="title">相关资源</div>
-          <ul class="content">
-            <li v-for="n in 6" :key="n">
-              <div class="img-wrap">
-                <img src="./../../../assets/image/res-index-1.png" alt="">
-                <div class="time">3分6秒</div>
-              </div>
-              <p>初初的利初的利用数学系用步学初初的利用数学系中同步学初初的利用数学系中同习</p>
-            </li>
-          </ul>
+          <div class="comments-res">
+            <div class="title">相关资源</div>
+            <ul class="content">
+              <li v-for="n in 6" :key="n">
+                <div class="img-wrap">
+                  <img src="./../../../assets/image/res-index-1.png" alt="">
+                  <div class="time">3分6秒</div>
+                </div>
+                <p>初初的利初的利用数学系用步学初初的利用数学系中同步学初初的利用数学系中同习</p>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
 
-    <res-footer></res-footer>
+      <res-footer></res-footer>
+    </div>
   </div>
 </template>
 
@@ -203,13 +206,14 @@ export default {
 
 <style lang="scss" scoped>
 .res-detail {
-  background: #f3f5f7;
+  padding-top: 10px;
   .main-video{
     background: #fff;
     padding: 30px 0;
     .main-video-content {
-      width: 80%;
-      min-width: 1200px;
+      // width: 80%;
+      // min-width: 1200px;
+      width: 1200px;
       margin: 0 auto;
       &-video {
         display: flex; height: 650px;
@@ -302,8 +306,9 @@ export default {
 
 /* home work */
 .home-work {
-    width: 80%;
-    min-width: 1200px;
+    // width: 80%;
+    // min-width: 1200px;
+    width: 1200px;
     background: #fff;
     margin: 20px auto 0;
     .title {
@@ -331,15 +336,15 @@ export default {
       .item {
         width: 12.5%;
         padding: 0 20px;
-        text-align: center;
         margin-bottom: 20px;
-        img {
-          width: 100px;
-          height: 100px;
-          border-radius: 6px;
+        .img-box {
+          width: 100%;
+          height: 0;
+          padding-bottom: 100%;
+          background: url(./../../../assets/image/school.jpg) no-repeat center center;
+          background-size: 80% 80%;
         }
         div {
-          text-align: left;
           color: #606266;
           &.name {margin-top: 12px;}
         }
@@ -375,8 +380,9 @@ export default {
 }
 
 .comments {
-  width: 80%;
-  min-width: 1200px;
+  // width: 80%;
+  // min-width: 1200px;
+  width: 1200px;
   margin: 20px auto 65px;
   display: flex;
   .comments-content {
