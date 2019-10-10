@@ -21,7 +21,7 @@
 			</div>
 		</div>
 		<div class="pt20">
-			<el-form :inline="true" :model="formInline" class="demo-form-inline">
+			<el-form ref="queForm" :inline="true" :model="formInline" class="demo-form-inline">
 				<el-form-item>
 					<el-input v-model="formInline.user" placeholder="请输入账号查询"></el-input>
 				</el-form-item>
@@ -51,8 +51,8 @@
 					</el-select>
 				</el-form-item>
 				<el-form-item>
-					<button class="primary-btn" @click="search">查询</button>
-					<button class="clear-btn" @click="search">清空</button>
+					<button class="primary-btn" @click="search(1)">查询</button>
+					<button class="clear-btn" @click="search(2)">清空</button>
 				</el-form-item>
 			</el-form>
 		</div>
@@ -86,11 +86,14 @@
 			</el-table-column>
 			<el-table-column prop="id" label="操作" width="60">
 				<template slot-scope="scope">
-					<i class="iconfont icon-more"></i>
-					<!-- <ul>
-						<li>停用</li>
+					<i class="iconfont icon-more"   @mouseenter="enter(scope.row)" @mouseleave="leave()"></i>
+					<ul class="tableOpe" v-show="seen&&scope.row.id==current">
+						<li @click="disable(scope.row)">
+							<span v-if="scope.row.status == 0">停用</span>
+							<span v-else>启用</span>
+						</li>
 						<li>编辑</li>
-					</ul>-->
+					</ul>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -101,7 +104,7 @@
 		<!--弹出层-->
 		<div class="stu-yeaer-modal-add">
 			<div class="modalAdd">
-				<el-form ref="form" :model="addForm" label-width="88px" :rules="formRules" id="schoolForm">
+				<el-form ref="addForm" :model="addForm" label-width="88px" :rules="formRules" id="schoolForm">
 					<el-form-item label="学校" prop="school" >
 							<el-input
 									v-model="filterText"
@@ -116,8 +119,8 @@
 										:props="defaultProps"
 										default-expand-all
 										:filter-node-method="filterNode"
+										@node-click="addIns"
 										ref="tree">
-
 								</el-tree>
 							</div>
 					</el-form-item>
@@ -151,7 +154,7 @@
 					<el-form-item label="名族" prop="national">
 						<el-select v-model="addForm.national" placeholder="请选择" style="width: 100%">
 							<el-option
-									v-for="item in sex"
+									v-for="item in nationData"
 									:key="item.code"
 									:label="item.text"
 									:value="item.code">
@@ -160,16 +163,6 @@
 					</el-form-item>
 					<el-form-item label="身份证号" prop="identity">
 						<el-input v-model="addForm.identity" placeholder="请输入"></el-input>
-					</el-form-item>
-					<el-form-item label="民族" prop="national">
-						<el-select v-model="addForm.national" placeholder="请选择" style="width: 100%">
-							<el-option
-									v-for="item in nationData"
-									:key="item.code"
-									:label="item.text"
-									:value="item.code">
-							</el-option>
-						</el-select>
 					</el-form-item>
 					<el-form-item label="就读类型" prop="attType">
 						<el-select v-model="addForm.attType" placeholder="请选择" style="width: 100%">
@@ -200,7 +193,7 @@ export default {
                 alias: 1
             }, {
                 icon: 'icon-input',
-                name: '导入',
+                name: '导出',
                 alias: 2
             }, {
                 icon: 'icon-permissions',
@@ -224,11 +217,11 @@ export default {
             areaList: [],
             formInline: {
                 user: '',
-                sex: '',
-                stage:'',
-                attend:'',
-                learn:'',
-                className:''
+                sex: null,
+                stage:null,
+                attend:null,
+                learn:null,
+                className:null
             },
             isshow:false,
             tableData: [],
@@ -254,18 +247,22 @@ export default {
                 sex:'',
                 national:'',
                 identity:'',
-                attType:''
+                attType:'',
+                addInsIs:''
             },
             formRules: {
-                school: [{required: true, message: '请选择学校', trigger: 'blur'}],
-                className: [{required: true, message: '请选择班级', trigger: 'blur'}],
+               /* school: [{required: true, message: '请选择学校', trigger: 'blur'}],*/
+                className: [{required: true, message: '请选择班级', trigger: 'change'}],
                 student: [{required: true, message: '请输入学号', trigger: 'blur'}],
                 name:[{required: true, message: '请输入姓名', trigger: 'blur'}],
-                sex:[{required: true, message: '请选择姓名', trigger: 'blur'}],
-                national:[{required: true, message: '请选择名族', trigger: 'blur'}],
+                sex:[{required: true, message: '请选择姓名', trigger: 'change'}],
+                national:[{required: true, message: '请选择名族', trigger: 'change'}],
                 identity:[{required: true, message: '请输入身份证号码', trigger: 'blur'}],
-                attType:[{required: true, message: '请输入身份证号码', trigger: 'blur'}],
+                attType:[{required: true, message: '请选择类型', trigger: 'change'}],
             },
+            seen:false,
+            current:0,
+            patState:null
         }
     },
     components: {
@@ -280,7 +277,6 @@ export default {
     },
     watch: {
         filterText(val) {
-            this.isshow = true;
             this.$refs.tree.filter(val);
         }
     },
@@ -305,14 +301,17 @@ export default {
             });
         },
         orgQuery(){
-            let learnSelect = {orgId:this.orgId};
-            let classSelect = {orgId:this.orgId};
-
+            let learnSelect = {
+                orgId:this.orgId,
+            };
+            let classSelect = {
+                orgId:this.orgId,
+            };
             this.$api.learnSelect(learnSelect).then(res => {
                 if(res.success == true){
                     this.learn = res.data
                 }
-            })
+            });
             this.$api.classSelect(classSelect).then(res => {
                 if(res.success == true){
                     this.className = res.data
@@ -331,6 +330,7 @@ export default {
                 pageSize:this.pageSize,
                 status:this.status,
                 typeOfStudy:this.formInline.attend,
+                gradeName:this.formInline.learn
             };
             this.$api.students(params).then(res => {
                 if(res.success == true){
@@ -349,15 +349,58 @@ export default {
             this.$api.institutions(params).then(res => {
                 if(res.success == true){
                     this.areaList = res.data;
+
                 }
             })
         },
         studentAdd(){
             let _this = this;
             this.$myLayer.formLayer("添加", $('.stu-yeaer-modal-add'), ['422px'], function () {
-
+                _this.$refs["addForm"].validate((valid) => {
+                    if (valid) {
+                        let params = {
+                            "coreClassmembers":{
+                                classId:_this.addForm.className
+                            },
+                            orgId: _this.orgId,
+                            workId:_this.addForm.student,
+                            userName:_this.addForm.name,
+                            sex: _this.addForm.sex,
+                            nationality: _this.addForm.national,
+                            idCard: _this.addForm.identity,
+                            typeOfStudy: _this.addForm.attType,
+                        };
+                        _this.$api.studentsAdd(params).then(res => {
+                            if (res.success == true) {
+                                _this.$myLayer.successLayer(res.msg)
+                            } else {
+                                _this.$myLayer.errorLayer(res.msg)
+                            }
+                        })
+                    } else {
+                        return false;
+                    }
+                });
 
             })
+        },
+        disable(row){
+            console.log(row)
+        },
+        enter(row){
+            console.log(row)
+            this.seen = true;
+            this.current = row.id;
+        },
+        leave(){
+            this.seen = false;
+            this.current = null;
+        },
+        addIns(val){
+            this.filterText = val.displayName;
+            this.orgId = val.id;
+            this.orgQuery();
+            this.isshow = false;
         },
         handleNodeClick(data) {
             console.log(data);
@@ -366,13 +409,40 @@ export default {
             if(val == 1){
                 this.studentAdd();
             }else if(val == 2){
-                console.log('导入')
+                console.log('导出')
             }else if(val == 3){
                 console.log('重置密码')
             }else if(val == 4){
-                console.log('启用')
+                let id = 0;
+                this.patState = id;
+                this.batchenable();
             }else {
-                console.log('停用')
+                let id = 1;
+                this.patState = id;
+                this.batchenable();
+            }
+        },
+        batchenable(){
+            let userIds = [];
+            let i = 0;
+            for (i = 0; i < this.multipleSelection.length; i++) {
+                userIds.push(this.multipleSelection[i].id)
+            }
+            let params = {
+                "status": this.patState,
+                "userIds": userIds
+            };
+            if(userIds.length == 0){
+                this.$myLayer.errorLayer('至少选择一条数据')
+            }else {
+                this.$api.batStudentsDis(params).then(res => {
+                    if (res.success == true) {
+                        this.$myLayer.successLayer(res.msg)
+                        this.studentsList();
+                    } else {
+                        this.$myLayer.errorLayer(res.msg)
+                    }
+                })
             }
         },
         filterNode(value, data) {
@@ -383,9 +453,17 @@ export default {
             this.currentSelect = value.displayName;
             this.orgId = value.id;
             this.orgQuery();
-        },
-        search() {
             this.studentsList();
+        },
+        search(val) {
+            let _this = this;
+            if(val == 1){
+                _this.studentsList();
+            }
+            else {
+                _this.$refs['queForm'].resetFields();
+            }
+
         },
         toggleSelection(rows) {
             if (rows) {
@@ -446,5 +524,13 @@ export default {
 		box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
 		z-index: 9999999;
 		overflow: auto;
+	}
+</style>
+<style scoped>
+	.tableOpe{
+		display: flex;
+	}
+	.tableOpe li{
+		width: 50px;
 	}
 </style>
