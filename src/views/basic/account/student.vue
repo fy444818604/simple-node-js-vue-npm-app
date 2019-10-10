@@ -90,7 +90,7 @@
 					<!-- <ul>
 						<li>停用</li>
 						<li>编辑</li>
-					</ul> -->
+					</ul>-->
 				</template>
 			</el-table-column>
 		</el-table>
@@ -101,15 +101,85 @@
 		<!--弹出层-->
 		<div class="stu-yeaer-modal-add">
 			<div class="modalAdd">
-				<el-form ref="form" :model="schoolForm" label-width="88px" :rules="formRules" id="schoolForm">
-					<el-form-item label="学区名称" prop="name">
-						<el-input v-model="schoolForm.name"></el-input>
+				<el-form ref="form" :model="addForm" label-width="88px" :rules="formRules" id="schoolForm">
+					<el-form-item label="学校" prop="school" >
+							<el-input
+									v-model="filterText"
+									placeholder="请选择或输入"
+									@click.stop>
+								<i slot="suffix" @click="isgow" class="iconfont icon-apartment"></i>
+							</el-input>
+							<div class="el-div-tree" v-if="isshow">
+								<el-tree
+										class="filter-tree"
+										:data="areaList"
+										:props="defaultProps"
+										default-expand-all
+										:filter-node-method="filterNode"
+										ref="tree">
+
+								</el-tree>
+							</div>
 					</el-form-item>
-					<el-form-item label="描述">
-						<el-input v-model="schoolForm.describe"></el-input>
+					<el-form-item label="班级" prop="className">
+						<el-select v-model="addForm.className" placeholder="请选择" style="width: 100%">
+							<el-option
+									v-for="item in className"
+									:key="item.id"
+									:label="item.name"
+									:value="item.id">
+							</el-option>
+						</el-select>
 					</el-form-item>
-					<el-form-item label="显示顺序">
-						<el-input v-model="schoolForm.order"></el-input>
+
+					<el-form-item label="学号" prop="student">
+						<el-input v-model="addForm.student" placeholder="请输入"></el-input>
+					</el-form-item>
+					<el-form-item label="姓名" prop="name">
+						<el-input v-model="addForm.name" placeholder="请输入"></el-input>
+					</el-form-item>
+					<el-form-item label="性别" prop="sex">
+						<el-select v-model="addForm.sex" placeholder="请选择" style="width: 100%">
+							<el-option
+									v-for="item in sex"
+									:key="item.code"
+									:label="item.text"
+									:value="item.code">
+							</el-option>
+						</el-select>
+					</el-form-item>
+					<el-form-item label="名族" prop="national">
+						<el-select v-model="addForm.national" placeholder="请选择" style="width: 100%">
+							<el-option
+									v-for="item in sex"
+									:key="item.code"
+									:label="item.text"
+									:value="item.code">
+							</el-option>
+						</el-select>
+					</el-form-item>
+					<el-form-item label="身份证号" prop="identity">
+						<el-input v-model="addForm.identity" placeholder="请输入"></el-input>
+					</el-form-item>
+					<el-form-item label="民族" prop="national">
+						<el-select v-model="addForm.national" placeholder="请选择" style="width: 100%">
+							<el-option
+									v-for="item in nationData"
+									:key="item.code"
+									:label="item.text"
+									:value="item.code">
+							</el-option>
+						</el-select>
+					</el-form-item>
+					<el-form-item label="就读类型" prop="attType">
+						<el-select v-model="addForm.attType" placeholder="请选择" style="width: 100%">
+							<el-option
+									v-for="item in attend"
+									:key="item.code"
+									:label="item.text"
+									:value="item.code">
+							</el-option>
+						</el-select>
 					</el-form-item>
 				</el-form>
 			</div>
@@ -160,6 +230,7 @@ export default {
                 learn:'',
                 className:''
             },
+            isshow:false,
             tableData: [],
             multipleSelection: [],
             pageSize: 10, //显示多少页
@@ -168,20 +239,32 @@ export default {
             sex:[],//性别
             stage:[],//阶段
             attend:[],//就读类型
+            nationData:[],//民族
             status:0,//启用停用
             orgId:'',//机构id
             learn:[],//学届
             className:[],//班级
             //添加弹框
-            schoolForm: {
-                name: '',
-                institutions: '',
-                describe: '',
-                order: ''
+            addForm: {
+                school:'',
+                className: '',
+                student: '',
+                name:'',
+                order: '',
+                sex:'',
+                national:'',
+                identity:'',
+                attType:''
             },
             formRules: {
-                name: [{required: true, message: '请输入学区名称', trigger: 'blur'}],
-                institutions: [{required: true, message: '请选择组织结构', trigger: 'blur'}],
+                school: [{required: true, message: '请选择学校', trigger: 'blur'}],
+                className: [{required: true, message: '请选择班级', trigger: 'blur'}],
+                student: [{required: true, message: '请输入学号', trigger: 'blur'}],
+                name:[{required: true, message: '请输入姓名', trigger: 'blur'}],
+                sex:[{required: true, message: '请选择姓名', trigger: 'blur'}],
+                national:[{required: true, message: '请选择名族', trigger: 'blur'}],
+                identity:[{required: true, message: '请输入身份证号码', trigger: 'blur'}],
+                attType:[{required: true, message: '请输入身份证号码', trigger: 'blur'}],
             },
         }
     },
@@ -197,12 +280,13 @@ export default {
     },
     watch: {
         filterText(val) {
+            this.isshow = true;
             this.$refs.tree.filter(val);
         }
     },
     methods: {
         dictionary(){
-            let sex = {"type": ["sex",'stage','study_type']};
+            let sex = {"type": ["sex",'stage','study_type','nation']};
             this.$api.dictSelect(sex).then(res => {
                 if(res.success == true){
                     let  i = 0;
@@ -213,6 +297,8 @@ export default {
                             this.stage = res.data[i].data;
                         }else if(res.data[i].type == 'study_type'){
                             this.attend = res.data[i].data;
+                        }else if(res.data[i].type == 'nation'){
+                            this.nationData = res.data[i].data;
                         }
                     }
                 }
@@ -238,13 +324,13 @@ export default {
             let params = {
                 workId:this.formInline.user,
                 sex:this.formInline.sex,
-                stageId:'',
-                classId: '',
-                orgId: '',
+                stageId:this.formInline.stage,
+                classId: this.formInline.className,
+                orgId: this.orgId,
                 pageIndex:this.pageCurrent,
                 pageSize:this.pageSize,
                 status:this.status,
-                typeOfStudy:'',
+                typeOfStudy:this.formInline.attend,
             };
             this.$api.students(params).then(res => {
                 if(res.success == true){
@@ -267,7 +353,14 @@ export default {
             })
         },
         studentAdd(){
-            this.$myLayer.formLayer("添加", $('.stu-yeaer-modal-add'), ['422px'], function () {})
+            let _this = this;
+            this.$myLayer.formLayer("添加", $('.stu-yeaer-modal-add'), ['422px'], function () {
+
+
+            })
+        },
+        handleNodeClick(data) {
+            console.log(data);
         },
         btnClick(val) {
             if(val == 1){
@@ -292,7 +385,7 @@ export default {
             this.orgQuery();
         },
         search() {
-
+            this.studentsList();
         },
         toggleSelection(rows) {
             if (rows) {
@@ -317,12 +410,19 @@ export default {
         CurrentChange(pageCurrent) {
             this.pageCurrent = pageCurrent;
             this.studentsList()
+        },
+        isgow(){
+            this.isshow = !this.isshow
         }
     }
 }
 </script>
 
 <style>
+	.el-select-dropdown{
+		z-index: 999999999!important;
+		width: auto;
+	}
 	.weixin-icon {
 		height: 14px;
 		width: 16px;
@@ -333,5 +433,18 @@ export default {
 	.modalAdd {
 		padding: 0px 32px;
 		margin: 24px 0px;
+
+	}
+	.el-div-tree{
+		position: absolute;
+		top:45px;
+		width: 100%;
+		background-color: #fff;
+		border: 1px solid #ebeef5;
+		border-radius: 4px;
+		-webkit-box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+		box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+		z-index: 9999999;
+		overflow: auto;
 	}
 </style>
