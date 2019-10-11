@@ -58,6 +58,11 @@ export const institutions = params => get('/base/api/organizationUnit/all',param
 export const learnSelect  = params => get('/base/api/grade/select',params);
 //班级管理
 export const classSelect  = params => get('/base/api/class/select',params);
+//校历
+export const calendarPage = params => post('/base/api/schoolCalendar/page',params);
+export const calendarDis = params => post('/base/api/schoolCalendar/update/status',params);
+export const calendarAdd = params => post('/base/api/schoolCalendar/add',params);
+export const calendarEdit = params => post('/base/api/schoolCalendar/update',params);
 
 
 

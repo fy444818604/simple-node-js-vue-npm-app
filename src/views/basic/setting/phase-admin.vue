@@ -212,7 +212,7 @@ export default {
                 text:'',
                 description:''
             }
-            document.getElementById('modalForm').reset();
+
             // eslint-disable-next-line no-undef
             this.$myLayer.formLayer("新建", $('.dict-modal-add'), ['422px'], function () {
                 _this.$refs["admForm"].validate((valid) => {

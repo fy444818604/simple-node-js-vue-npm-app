@@ -148,7 +148,7 @@ export default {
                 description:'',
                 orderIndex:''
             };
-            document.getElementById('modalForm').reset();
+
             // eslint-disable-next-line no-undef
             this.$myLayer.formLayer("新建", $('.dict-modal-add'), ['422px'], function () {
                 _this.$refs["dictForm"].validate((valid) => {
