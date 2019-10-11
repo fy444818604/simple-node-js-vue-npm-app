@@ -390,7 +390,7 @@ const basic = {
 			}
 		},
 		{
-			path: '/basic/Layout/student/:id',
+			path: '/basic/Layout/student',
 			name: 'student',
 			component: resolve => {
 				require(['../views/basic/account/student'], resolve)
@@ -670,7 +670,7 @@ const router = new Router({
 		signin,
 		basic,
 		{
-			path: '/basic/teacher-detail',
+			path: '/basic/teacher-detail/:id',
 			name: 'teacher-detail',
 			component: resolve => {
 				require(['../views/basic/account/teacher-detail'], resolve)
@@ -681,7 +681,7 @@ const router = new Router({
 			}
 		},
 		{
-			path: '/basic/student-detail',
+			path: '/basic/student-detail/:id',
 			name: 'student-detail',
 			component: resolve => {
 				require(['../views/basic/account/student-detail'], resolve)
