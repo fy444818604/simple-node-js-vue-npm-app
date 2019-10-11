@@ -26,8 +26,7 @@ const basic = {
 		title: '首页',
 		requireAuth: true
 	},
-	children: [
-		{
+	children: [{
 			path: '/basic/Layout/system',
 			name: 'system',
 			component: resolve => {
@@ -414,8 +413,7 @@ const equipment = {
 		title: '首页',
 		requireAuth: true
 	},
-	children: [
-		{
+	children: [{
 			path: '/equipment/Layout/mcu',
 			name: 'mcu',
 			component: resolve => {
@@ -494,8 +492,7 @@ const authorization = {
 		title: '首页',
 		requireAuth: true
 	},
-	children: [
-		{
+	children: [{
 			path: '/authorization/Layout/role-man',
 			name: 'role-man',
 			component: resolve => {
@@ -552,8 +549,7 @@ const resource = {
 		title: '首页',
 		requireAuth: true
 	},
-	children: [
-		{
+	children: [{
 			path: '/resource/Layout/index',
 			name: 'index',
 			component: resolve => {
@@ -632,8 +628,7 @@ const order = {
 		title: '首页',
 		requireAuth: true
 	},
-	children: [
-		{
+	children: [{
 			path: '/order/Layout/index',
 			name: 'order-Layout-index',
 			component: resolve => {
@@ -652,6 +647,17 @@ const order = {
 			},
 			meta: {
 				title: '课程预约',
+				requireAuth: true
+			}
+		},
+		{
+			path: '/order/Layout/course-order-add',
+			name: 'order-Layout-course-order-add',
+			component: resolve => {
+				require(['../views/order/orders/course-add'], resolve)
+			},
+			meta: {
+				title: '课程预约添加',
 				requireAuth: true
 			}
 		}

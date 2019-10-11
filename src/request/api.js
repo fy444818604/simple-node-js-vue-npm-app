@@ -50,7 +50,8 @@ export const teachers = params => post('/base/api/userInfo/teacherInfo/list',par
 export const students = params => post('/base/api/userInfo/studentInfo/list',params);
 export const studentsAdd = params => post('/base/api/userInfo/studentInfo/save',params);
 export const batStudentsDis = params => post('/base/api/userInfo/studentInfo/setStatusBatch',params);
-export const studentsDis = params => post('/base/api/userInfo/studentInfo/setStatusById',params);
+export const batPassword = params => post('/base/api/userInfo/studentInfo/resetPasswordBatch',params);
+export const studentsDis = params => get('/base/api/userInfo/studentInfo/setStatusById',params);
 export const batStudentsExport = params => post('/base/api/userInfo/studentInfo/setStatusBatch',params);
 //机构树
 export const institutions = params => get('/base/api/organizationUnit/all',params);
