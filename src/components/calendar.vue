@@ -22,12 +22,19 @@
 							<li>会议:{{isData(item,item1).meeting}}</li>
 						</ul>
 					</div>
+					<div class="course-add" v-if="!isData(item,item1)&&type==2">
+						<i class="iconfont icon-add"></i>
+					</div>
 					<div class="course-detail" v-if="isData(item,item1)&&type==2" :style="{'background-color':isData(item,item1).type==1?'rgba(76,132,255,.15)':'rgba(253,164,35,.15)'}">
 						<div>{{isData(item,item1).name}}</div>
 						<div>{{isData(item,item1).subject}}</div>
 						<div>{{isData(item,item1).school}}-{{isData(item,item1).author}}</div>
 						<div>{{isData(item,item1).time}}</div>
 						<div class="third-cor" :class="isData(item,item1).state==1?'no-start':isData(item,item1).state==2?'starting':'end'"></div>
+						<div class="course-jump">
+							<i class="iconfont icon-list-1"></i>
+							<i class="iconfont icon-list-1" v-if="isData(item,item1).state==2"></i>
+						</div>
 					</div>
 				</td>
 			</tr>
@@ -193,6 +200,24 @@ export default {
 			tr {
 				td {
 					border: 1px dashed #E4E7ED !important;
+					
+					&:hover .course-add{
+						display: flex;
+					}
+					
+					.course-add{
+						width: 100%;
+						height: 100%;
+						display: none;
+						justify-content: center;
+						align-items: center;
+						background-color: #EBEEF5;
+						
+						i{
+							color: #909399;
+							font-size: 40px;
+						}
+					}
 
 					&:first-child {
 						background-color: #F6F8FA;
@@ -233,12 +258,33 @@ export default {
 					.course-detail {
 						padding: 14px;
 						position: relative;
+						
+						&:hover .course-jump{
+							display: flex;
+						}
 
 						div {
 							text-overflow: ellipsis;
 							overflow: hidden;
 							white-space: nowrap;
 							line-height: 24px;
+						}
+						
+						.course-jump{
+							position: absolute;
+							left: 0;
+							right: 0;
+							top: 0;
+							bottom: 0;
+							background-color: rgba(0,0,0,.56);
+							display: none;
+							justify-content: space-around;
+							align-items: center;
+							
+							i{
+								color: #FFFFFF;
+								font-size: 28px;
+							}
 						}
 					}
 				}
