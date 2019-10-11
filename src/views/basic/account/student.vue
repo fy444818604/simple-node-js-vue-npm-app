@@ -84,13 +84,13 @@
 			</el-table-column>
 			<el-table-column prop="statusText" label="状态">
 			</el-table-column>
-			<el-table-column prop="id" label="操作" width="60">
+			<el-table-column prop="id" label="操作" width="120">
 				<template slot-scope="scope">
-					<i class="iconfont icon-more"   @mouseenter="enter(scope.row)" @mouseleave="leave()"></i>
-					<ul class="tableOpe" v-show="seen&&scope.row.id==current">
-						<li @click="disable(scope.row)">
-							<span v-if="scope.row.status == 0">停用</span>
-							<span v-else>启用</span>
+					<i class="iconfont icon-more"   @mouseenter="enter(scope.row)" ></i>
+					<ul class="tableOpe" v-show="seen&&scope.row.id==current" @mouseleave="leave(scope.row)">
+						<li>
+							<span v-if="scope.row.status == 0" @click="disable(scope.row,1)">停用</span>
+							<span v-else @click="disable(scope.row,0)">启用</span>
 						</li>
 						<li>编辑</li>
 					</ul>
@@ -179,7 +179,6 @@
 		</div>
 	</div>
 </template>
-
 <script>
 import btnList from '@/components/btn-list'
 import stateSwitch from '@/components/state-switch'
@@ -250,6 +249,7 @@ export default {
                 attType:'',
                 addInsIs:''
             },
+
             formRules: {
                /* school: [{required: true, message: '请选择学校', trigger: 'blur'}],*/
                 className: [{required: true, message: '请选择班级', trigger: 'change'}],
@@ -258,11 +258,11 @@ export default {
                 sex:[{required: true, message: '请选择姓名', trigger: 'change'}],
                 national:[{required: true, message: '请选择名族', trigger: 'change'}],
                 identity:[{required: true, message: '请输入身份证号码', trigger: 'blur'}],
-                attType:[{required: true, message: '请选择类型', trigger: 'change'}],
             },
             seen:false,
             current:0,
-            patState:null
+            patState:null,
+            disableVal:0
         }
     },
     components: {
@@ -384,17 +384,27 @@ export default {
 
             })
         },
-        disable(row){
-            console.log(row)
+        disable(row,val){
+            let params = {
+                id:row.id,
+                status:val
+            };
+            this.$api.studentsDis(params).then(res => {
+                if (res.success == true) {
+                    this.$myLayer.successLayer(res.msg)
+                    this.studentsList();
+                } else {
+                    this.$myLayer.errorLayer(res.msg)
+                }
+            })
         },
         enter(row){
-            console.log(row)
             this.seen = true;
             this.current = row.id;
         },
-        leave(){
+        leave(row){
             this.seen = false;
-            this.current = null;
+            this.current = row.id;
         },
         addIns(val){
             this.filterText = val.displayName;
@@ -411,7 +421,7 @@ export default {
             }else if(val == 2){
                 console.log('导出')
             }else if(val == 3){
-                console.log('重置密码')
+                this.resetPassword();
             }else if(val == 4){
                 let id = 0;
                 this.patState = id;
@@ -443,6 +453,28 @@ export default {
                         this.$myLayer.errorLayer(res.msg)
                     }
                 })
+            }
+        },
+        resetPassword(){
+            let _this = this;
+            let id = [];
+            let i = 0;
+            for (i = 0; i < this.multipleSelection.length; i++) {
+                let ids = {
+                    "userInfoId":this.multipleSelection[i].id
+                };
+                id.push(ids);
+            }
+            if(id.length == ''){
+                _this.$myLayer.errorLayer('至少选择一条数据')
+            }else {
+                let params =id;
+                _this.$api.batPassword(params).then(res => {
+                    if(res.success == true){
+                        _this.$myLayer.successLayer(res.msg)
+                    }
+                })
+
             }
         },
         filterNode(value, data) {
@@ -511,7 +543,6 @@ export default {
 	.modalAdd {
 		padding: 0px 32px;
 		margin: 24px 0px;
-
 	}
 	.el-div-tree{
 		position: absolute;

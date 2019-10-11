@@ -24,7 +24,7 @@
 					<order-time></order-time>
 				</div>
 			</div>
-			<order-calendar></order-calendar>
+			<order-calendar :tableData="courseData" :type="2"></order-calendar>
 		</div>
 	</div>
 </template>
@@ -43,9 +43,12 @@ export default {
                 color:'#B7BBC3',text:'已结束'
             }],
             type:[{
-                color:'#4C84FF',text:'同步课'
+                color:'rgba(76,132,255,.15)',text:'同步课'
             },{
-                color:'#FDA423',text:'录播课'
+                color:'rgba(253,164,35,.15)',text:'录播课'
+            }],
+            courseData:[{
+                x:2,y:2,name:'生物组织与细胞力学',subject:'生物',school:'成都七中',author:'龙飞',time:'8:40-9:20',state:3,type:1
             }]
         }
     },

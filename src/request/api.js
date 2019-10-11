@@ -50,7 +50,8 @@ export const teachers = params => post('/base/api/userInfo/teacherInfo/list',par
 export const students = params => post('/base/api/userInfo/studentInfo/list',params);
 export const studentsAdd = params => post('/base/api/userInfo/studentInfo/save',params);
 export const batStudentsDis = params => post('/base/api/userInfo/studentInfo/setStatusBatch',params);
-export const studentsDis = params => post('/base/api/userInfo/studentInfo/setStatusById',params);
+export const batPassword = params => post('/base/api/userInfo/studentInfo/resetPasswordBatch',params);
+export const studentsDis = params => get('/base/api/userInfo/studentInfo/setStatusById',params);
 export const batStudentsExport = params => post('/base/api/userInfo/studentInfo/setStatusBatch',params);
 //机构树
 export const institutions = params => get('/base/api/organizationUnit/all',params);
@@ -58,6 +59,11 @@ export const institutions = params => get('/base/api/organizationUnit/all',param
 export const learnSelect  = params => get('/base/api/grade/select',params);
 //班级管理
 export const classSelect  = params => get('/base/api/class/select',params);
+//校历
+export const calendarPage = params => post('/base/api/schoolCalendar/page',params);
+export const calendarDis = params => post('/base/api/schoolCalendar/update/status',params);
+export const calendarAdd = params => post('/base/api/schoolCalendar/add',params);
+export const calendarEdit = params => post('/base/api/schoolCalendar/update',params);
 
 
 
