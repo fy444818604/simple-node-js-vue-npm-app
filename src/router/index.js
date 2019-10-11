@@ -587,6 +587,17 @@ const resource = {
 			}
 		},
 		{
+			path: '/resource/Layout/resource-list/edit/:id',
+			name: 'resource-list',
+			component: resolve => {
+				require(['../views/resource/resource-list/edit-res'], resolve)
+			},
+			meta: {
+				title: '资源编辑',
+				requireAuth: true
+			}
+		},
+		{
 			path: '/resource/Layout/album',
 			name: 'album',
 			component: resolve => {
