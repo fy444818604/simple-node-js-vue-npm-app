@@ -625,6 +625,17 @@ const resource = {
 				title: '发现',
 				requireAuth: true
 			}
+		},
+		{
+			path: '/resource/Layout/upload-res',
+			name: 'upload-res',
+			component: resolve => {
+				require(['../views/resource/resource-list/upload-res'], resolve)
+			},
+			meta: {
+				title: '资源上传',
+				requireAuth: true
+			}
 		}
 	]
 }
