@@ -660,6 +660,28 @@ const order = {
 				title: '课程预约添加',
 				requireAuth: true
 			}
+		},
+		{
+			path: '/order/Layout/my',
+			name: 'order-Layout-my',
+			component: resolve => {
+				require(['../views/order/my/index'], resolve)
+			},
+			meta: {
+				title: '我的',
+				requireAuth: true
+			}
+		},
+		{
+			path: '/order/Layout/setting',
+			name: 'order-Layout-setting',
+			component: resolve => {
+				require(['../views/order/setting/index'], resolve)
+			},
+			meta: {
+				title: '设置',
+				requireAuth: true
+			}
 		}
 	]
 }
