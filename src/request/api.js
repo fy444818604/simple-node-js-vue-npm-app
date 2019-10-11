@@ -52,7 +52,7 @@ export const studentsAdd = params => post('/base/api/userInfo/studentInfo/save',
 export const batStudentsDis = params => post('/base/api/userInfo/studentInfo/setStatusBatch',params);
 export const batPassword = params => post('/base/api/userInfo/studentInfo/resetPasswordBatch',params);
 export const studentsDis = params => get('/base/api/userInfo/studentInfo/setStatusById',params);
-export const batStudentsExport = params => post('/base/api/userInfo/studentInfo/setStatusBatch',params);
+export const batStudentsExport = params => post('/base/api/userInfo/studentInfo/exportExcel',params);
 //机构树
 export const institutions = params => get('/base/api/organizationUnit/all',params);
 //学届管理

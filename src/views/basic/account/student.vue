@@ -249,7 +249,6 @@ export default {
                 attType:'',
                 addInsIs:''
             },
-
             formRules: {
                /* school: [{required: true, message: '请选择学校', trigger: 'blur'}],*/
                 className: [{required: true, message: '请选择班级', trigger: 'change'}],
@@ -258,6 +257,7 @@ export default {
                 sex:[{required: true, message: '请选择姓名', trigger: 'change'}],
                 national:[{required: true, message: '请选择名族', trigger: 'change'}],
                 identity:[{required: true, message: '请输入身份证号码', trigger: 'blur'}],
+                attType:[{required: true, message: '请选择就读类型', trigger: 'change'}],
             },
             seen:false,
             current:0,
@@ -398,6 +398,27 @@ export default {
                 }
             })
         },
+		stuExport(){
+			let params = {
+				workId:this.formInline.user,
+				sex:this.formInline.sex,
+				stageId:this.formInline.stage,
+				classId: this.formInline.className,
+				orgId: this.orgId,
+				pageIndex:this.pageCurrent,
+				pageSize:this.pageSize,
+				status:this.status,
+				typeOfStudy:this.formInline.attend,
+				gradeName:this.formInline.learn
+			};
+			this.$api.batStudentsExport(params).then(res => {
+				if(res.success == true){
+					this.$myLayer.successLayer(res.msg)
+				}else {
+					this.$myLayer.errorLayer(res.msg)
+				}
+			})
+		},
         enter(row){
             this.seen = true;
             this.current = row.id;
@@ -419,7 +440,7 @@ export default {
             if(val == 1){
                 this.studentAdd();
             }else if(val == 2){
-                console.log('导出')
+                this.stuExport();
             }else if(val == 3){
                 this.resetPassword();
             }else if(val == 4){

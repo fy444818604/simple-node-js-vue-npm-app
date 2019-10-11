@@ -273,7 +273,7 @@ export default {
         'btn-list': btnList
     },
     created(){
-        console.log(this.$route.params)
+        console.log(this.$route.query.id)
     },
     methods: {
         handleClick(tab, event) {
