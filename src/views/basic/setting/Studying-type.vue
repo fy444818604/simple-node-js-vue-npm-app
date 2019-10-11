@@ -148,7 +148,7 @@ export default {
                 description:'',
                 orderIndex:''
             };
-
+            this.$refs["dictForm"].resetFields();
             // eslint-disable-next-line no-undef
             this.$myLayer.formLayer("新建", $('.dict-modal-add'), ['422px'], function () {
                 _this.$refs["dictForm"].validate((valid) => {
@@ -206,6 +206,7 @@ export default {
         },
         //编辑
         polEdit(row){
+            this.$refs["dictForm"].resetFields();
             let editForm = {
                 text: row.row.text,
                 description: row.row.description,
