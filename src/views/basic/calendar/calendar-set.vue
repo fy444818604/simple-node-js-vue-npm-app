@@ -396,7 +396,7 @@ export default {
                 startDate: ''
             };
             _this.orgSelectText = '';
-
+            this.$refs["addForm"].resetFields();
             // eslint-disable-next-line no-undef
             this.$myLayer.formLayer("新建", $('.pol-modal-add'), ['422px'], function () {
                 _this.$refs["addForm"].validate((valid) => {
@@ -452,6 +452,7 @@ export default {
             });
         },
         polEdit(row){
+            this.$refs["editForm"].resetFields();
             let editForm = {
                 holidayDate: row.row.holidayDate,
                 orgId: row.row.orgId,
