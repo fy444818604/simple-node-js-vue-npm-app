@@ -134,8 +134,7 @@ export default {
         padding: 0 0.8%;
         display: flex;
         justify-content: space-between;
-        .left {
-            span {
+        .left span {
                 display: inline-block;
                 background: #dcdee3;
                 border-radius: 15px;
@@ -146,8 +145,8 @@ export default {
                     color: #ffffff;
                     background: #8f9399;
                 }
-            }
         }
+
         .right {
             & > div {
                 display: inline-block;
@@ -195,56 +194,34 @@ export default {
 
     .nav {
         position: fixed;
-        left: 0;
-        top: 60px;
-        bottom: 0;
-        width: 80px;
+        left: 0; top: 60px;
+        bottom: 0; width: 80px;
         background: #181a1e;
-        & > ul {
-            li {
-                height: 80px;
-                text-align: center;
-                padding: 15px 0;
-                cursor: pointer;
-                &.active {
-                    background: #22272d;
-                    i,
-                    p {
-                        color: #2695ff;
-                    }
-                }
-                i {
-                    font-size: 30px;
-                }
-            }
+        & > ul li { height: 80px; text-align: center;
+          padding: 15px 0; cursor: pointer;
+          p {color: #a9b6cb}
+          &.active { background: #22272d; i, p { color: #2695ff; } }
+          i { font-size: 30px; }
         }
         .sub-nav {
           position: absolute;
-          left: 80px;
-          top: 0;
-          bottom: 0;
-          width: 260px;
+          left: 80px; top: 0;
+          bottom: 0; width: 260px;
           background: #22272d;
           .close {
-            text-align: right;
-            padding: 10px;
+            text-align: right; padding: 10px;
             i {
-              color: #8495AD;
-              transform:rotate(180deg);
-              display: inline-block;
-              cursor: pointer;
+              color: #8495AD; transform:rotate(180deg);
+              display: inline-block; cursor: pointer;
             }
           }
-          .sub {
-            padding: 20px;
-          }
+          .sub { padding: 20px; }
           .active {
             padding: 20px;
             li {
-              height: 52px;
-              line-height: 52px;
-              text-align: center;
-              cursor: pointer;
+              height: 52px; line-height: 52px;
+              text-align: center; cursor: pointer;
+              color: #A9B6CB;
               &:hover {
                 background: rgba(169, 182, 203, 0.1);
                 border-radius: 6px;

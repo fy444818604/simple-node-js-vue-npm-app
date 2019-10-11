@@ -148,7 +148,7 @@ export default {
                 description:'',
                 orderIndex:''
             };
-            document.getElementById('modalForm').reset();
+
             // eslint-disable-next-line no-undef
             this.$myLayer.formLayer("新建", $('.dict-modal-add'), ['422px'], function () {
                 _this.$refs["dictForm"].validate((valid) => {
@@ -162,6 +162,7 @@ export default {
                         _this.$api.dictAdd(params).then(res => {
                             if (res.success == true) {
                                 _this.dictList();
+                                // TODO 关闭弹窗
                                 _this.$myLayer.successLayer(res.msg)
                             } else {
                                 _this.$myLayer.errorLayer(res.msg)
@@ -173,23 +174,37 @@ export default {
                 });
             })
         },
-        //表格
+        //启用停用
         polStop(row){
-            let _this = this;
-            let params = {
-                id:row.id,
-                status:row.status === 0? 1:0,
-                type: this.dictType
+            let opText;
+            let newStatus;
+            if (row.status === 0) {
+                opText = "停用";
+                newStatus = 1;
+            } else {
+                opText = "启用";
+                newStatus = 0;
             }
-            this.$api.dictDis(params).then(res => {
-                if (res.success == true) {
-                    _this.dictList();
-                    this.$myLayer.successLayer(res.msg)
-                } else {
-                    this.$myLayer.errorLayer(res.msg)
+            let _this = this;
+
+            this.$myLayer.confirmLayer("确认"+opText+"该类型", function () {
+                let params = {
+                    id:row.id,
+                    status:newStatus,
+                    type: _this.dictType
                 }
-            })
+                _this.$api.dictDis(params).then(res => {
+                    if (res.success === true) {
+                        _this.dictList();
+                        _this.$myLayer.successLayer(res.msg)
+                    } else {
+                        _this.$myLayer.errorLayer(res.msg)
+                    }
+                })
+            });
+
         },
+        //编辑
         polEdit(row){
             let editForm = {
                 text: row.row.text,
@@ -211,6 +226,7 @@ export default {
                         _this.$api.dictEdit(ediData).then(res => {
                             if (res.success == true) {
                                 _this.dictList();
+                                // TODO 关闭弹窗
                                 _this.$myLayer.successLayer(res.msg)
                             } else {
                                 _this.$myLayer.errorLayer(res.msg)
