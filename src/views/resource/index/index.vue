@@ -47,17 +47,17 @@
             <div class="recommend-content content-center">
                 <res-title title="精品推荐"></res-title>
                 <div class="recommend-content-wrap">
-                  <res-box></res-box>
-                  <res-box></res-box>
-                  <res-box></res-box>
-                  <res-box></res-box>
-                  <res-box></res-box>
-                  <res-box></res-box>
-                  <res-box></res-box>
-                  <res-box></res-box>
-                  <res-box></res-box>
-                  <res-box></res-box>
-                  <res-box></res-box>
+                    <res-box></res-box>
+                    <res-box></res-box>
+                    <res-box></res-box>
+                    <res-box></res-box>
+                    <res-box></res-box>
+                    <res-box></res-box>
+                    <res-box></res-box>
+                    <res-box></res-box>
+                    <res-box></res-box>
+                    <res-box></res-box>
+                    <res-box></res-box>
                 </div>
             </div>
         </div>
@@ -121,6 +121,12 @@ export default {
         resTitle: () => import("@/components/res-title"),
         resBox: () => import("@/components/res-box"),
         resFooter: () => import("@/components/res-footer")
+    },
+    filters:{
+      /* 格式化数字 */
+      toThousand(num){
+        return (num || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+      }
     }
 };
 </script>
@@ -133,7 +139,6 @@ export default {
 
 .res-index {
     min-width: 1200px;
-
     .base-carousel {
         .banner-1 {
             width: 100%;
@@ -199,19 +204,19 @@ export default {
     }
 
     .recommend {
-        padding-bottom: 30px;
+        padding-bottom: 50px;
         .recommend-content {
-            &-wrap {
-              display: flex;
-              flex-wrap: wrap;
-              & > div {
-                  width: 25%;
-              }
-              @media screen and (min-width: 1520px) {
-                  & > div{
-                      width: 20%;
-                  }
-              } 
+            .recommend-content-wrap {
+                display: flex;
+                flex-wrap: wrap;
+                & > div {
+                    width: 25%;
+                }
+                @media screen and (min-width: 1520px) {
+                    & > div {
+                        width: 20%;
+                    }
+                }
             }
         }
     }
@@ -219,7 +224,6 @@ export default {
     .latest {
         background: #f7f8fb;
         padding-bottom: 30px;
-
         .latest-content {
             display: flex;
             flex-wrap: wrap;
@@ -254,7 +258,6 @@ export default {
     .album {
         background: #f7f8fb;
         padding-bottom: 30px;
-
         .album-content {
             display: flex;
             flex-wrap: wrap;
@@ -267,7 +270,6 @@ export default {
 
     .sync {
         padding-bottom: 30px;
-
         .sync-content {
             display: flex;
             flex-wrap: wrap;

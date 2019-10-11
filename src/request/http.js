@@ -108,6 +108,9 @@ export function get(url, params) {
     return new Promise((resolve, reject) => {
         axios.get(url, {
             params: params,
+            headers:{
+                'Authorization': localStorage.getItem('Authorization')
+            }
         }).then(res => {
             resolve(res.data);
         }).catch(err => {

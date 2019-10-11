@@ -21,13 +21,13 @@ module.exports = {
     lintOnSave: undefined,
     devServer: {
         // proxy: {
-        // 	'/base': {
+        // 	'/api': {
         // 		// target: 'http://api.xiaoyangedu.com',
-        // 		target: 'http://192.168.38.100:8088',
+        // 		target: 'http://192.168.10.86:8081',
         // 		ws: true,
         // 		changeOrigin: true,
         // 		pathRewrite: {
-        // 			'^/base': '/base', // rewrite path
+        // 			'^/api': '/api', // rewrite path
         // 		}
         // 	}
         // }
