@@ -13,14 +13,28 @@
 		<tbody>
 			<tr v-for="(item,index) in num">
 				<td>第{{index+1}}节</td>
-				<td v-for="(item1,index1) in 7">
-					<div class="count" v-if="isData(item,item1)" :style="{'background-color':`rgba(76,132,255,${0.1*(isData(item,item1).record + isData(item,item1).syn + isData(item,item1).meeting)})`}">
+				<td v-for="(item1,index1) in 7" :style="{'height':type==1?'52px':'120px'}">
+					<div class="count" v-if="isData(item,item1)&&type==1" :style="{'background-color':`rgba(76,132,255,${0.1*(isData(item,item1).record + isData(item,item1).syn + isData(item,item1).meeting)})`}">
 						{{isData(item,item1).record + isData(item,item1).syn + isData(item,item1).meeting}}
 						<ul>
 							<li>录播:{{isData(item,item1).record}}</li>
 							<li>同步:{{isData(item,item1).syn}}</li>
 							<li>会议:{{isData(item,item1).meeting}}</li>
 						</ul>
+					</div>
+					<div class="course-add" v-if="!isData(item,item1)&&type==2">
+						<i class="iconfont icon-add"></i>
+					</div>
+					<div class="course-detail" v-if="isData(item,item1)&&type==2" :style="{'background-color':isData(item,item1).type==1?'rgba(76,132,255,.15)':'rgba(253,164,35,.15)'}">
+						<div>{{isData(item,item1).name}}</div>
+						<div>{{isData(item,item1).subject}}</div>
+						<div>{{isData(item,item1).school}}-{{isData(item,item1).author}}</div>
+						<div>{{isData(item,item1).time}}</div>
+						<div class="third-cor" :class="isData(item,item1).state==1?'no-start':isData(item,item1).state==2?'starting':'end'"></div>
+						<div class="course-jump">
+							<i class="iconfont icon-list-1"></i>
+							<i class="iconfont icon-list-1" v-if="isData(item,item1).state==2"></i>
+						</div>
 					</div>
 				</td>
 			</tr>
@@ -33,13 +47,17 @@ export default {
     props: {
         tableData: {
             type: Array,
-            default: function(){
+            default: function() {
                 return []
             }
         },
         num: {
             type: Number,
             default: 10
+        },
+        type: {
+            type: Number,
+            default: 1
         }
     },
     data() {
@@ -58,16 +76,30 @@ export default {
             let date = new Date();
             return date;
         },
-        timeWeek:function(){
+        timeWeek: function() {
             let index;
-            switch (this.nowTime.getDay()){
-            case 0:index = 7;break;
-            case 1:index = 1;break;
-            case 2:index = 2;break;
-            case 3:index = 3;break;
-            case 4:index = 4;break;
-            case 5:index = 5;break;
-            case 6:index = 6;break;
+            switch (this.nowTime.getDay()) {
+            case 0:
+                index = 7;
+                break;
+            case 1:
+                index = 1;
+                break;
+            case 2:
+                index = 2;
+                break;
+            case 3:
+                index = 3;
+                break;
+            case 4:
+                index = 4;
+                break;
+            case 5:
+                index = 5;
+                break;
+            case 6:
+                index = 6;
+                break;
             }
             return index;
         }
@@ -86,23 +118,23 @@ export default {
             this.weekList = _date
         },
         monday(date) {
-            let complete = date.getDay(); 
-            let _nowTime = date.getTime(); 
+            let complete = date.getDay();
+            let _nowTime = date.getTime();
             return new Date(_nowTime - (complete - 1) * this.oneDayLong)
         },
         isWeek() {
             let value = false;
-            if (new Date(this.current).getTime() - this.oneDayLong / 3 - this.monday(this.nowTime).getTime() > - this.oneDayLong) {
+            if (new Date(this.current).getTime() - this.oneDayLong / 3 - this.monday(this.nowTime).getTime() > -this.oneDayLong) {
                 if (new Date(this.current).getTime() - this.monday(this.nowTime).getTime() < this.oneDayLong * 6) {
                     value = true
                 }
             }
             return value;
         },
-        isData(para,para1) {
+        isData(para, para1) {
             let value = false;
             this.tableData.map(v => {
-                if(v.x == para&&v.y == para1){
+                if (v.x == para && v.y == para1) {
                     value = v;
                 }
             })
@@ -119,52 +151,93 @@ export default {
 </script>
 
 <style lang="scss" scoped="scoped">
+	.third-cor {
+		width: 0;
+		height: 0;
+		border-width: 8px;
+		border-style: solid;
+		transform: rotate(45deg);
+		position: absolute;
+		left: -8px;
+		top: -8px;
+	}
+	
+	.no-start {
+		border-color: transparent rgb(76, 132, 255) transparent transparent;
+	}
+	
+	.starting {
+		border-color: transparent rgb(94, 203, 61) transparent transparent;
+	}
+	
+	.end {
+		border-color: transparent rgb(183, 187, 195) transparent transparent;
+	}
+
 	.table {
 		width: 100%;
 		border-spacing: 0;
 		border-collapse: collapse;
 		table-layout: fixed;
-		
-		td{
+
+		td {
 			height: 52px;
 			text-align: center;
 		}
-		
+
 		thead {
 			td {
 				color: #939399;
 				background-color: #F6F8FA;
-				
-				&.date-active{
+
+				&.date-active {
 					background-color: #EBEEF5;
 				}
 			}
 		}
-		
-		tbody{
-			tr{
-				td{
-					border: 1px dashed #E4E7ED!important;
+
+		tbody {
+			tr {
+				td {
+					border: 1px dashed #E4E7ED !important;
 					
-					&:first-child{
-						background-color: #F6F8FA;
-						opacity: 1;
-						border:none!important;
+					&:hover .course-add{
+						display: flex;
 					}
 					
-					.count{
+					.course-add{
+						width: 100%;
+						height: 100%;
+						display: none;
+						justify-content: center;
+						align-items: center;
+						background-color: #EBEEF5;
+						
+						i{
+							color: #909399;
+							font-size: 40px;
+						}
+					}
+
+					&:first-child {
+						background-color: #F6F8FA;
+						opacity: 1;
+						border: none !important;
+					}
+
+					.count {
 						width: 100%;
 						height: 100%;
 						color: #FFFFFF;
 						font-size: 18px;
 						line-height: 51px;
 						position: relative;
-						
-						&:hover ul{
+
+						&:hover ul {
 							display: block;
 						}
-						
-						ul{
+
+						ul {
 							position: absolute;
 							left: -4px;
 							bottom: 40px;
@@ -174,10 +247,43 @@ export default {
 							height: 86px;
 							padding-top: 7px;
 							display: none;
-							
-							li{
+
+							li {
 								color: #FFFFFF;
 								line-height: 24px;
+							}
+						}
+					}
+
+					.course-detail {
+						padding: 14px;
+						position: relative;
+						
+						&:hover .course-jump{
+							display: flex;
+						}
+
+						div {
+							text-overflow: ellipsis;
+							overflow: hidden;
+							white-space: nowrap;
+							line-height: 24px;
+						}
+						
+						.course-jump{
+							position: absolute;
+							left: 0;
+							right: 0;
+							top: 0;
+							bottom: 0;
+							background-color: rgba(0,0,0,.56);
+							display: none;
+							justify-content: space-around;
+							align-items: center;
+							
+							i{
+								color: #FFFFFF;
+								font-size: 28px;
 							}
 						}
 					}
