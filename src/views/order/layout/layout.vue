@@ -55,7 +55,7 @@ export default {
                 menu_id: 5,
                 menu_text: '我的',
                 menu_icon: 'icon-user',
-                menu_href: '',
+                menu_href: '/order/Layout/my',
                 menu_pid: 0,
                 menu_target_type: 0
             }, {
@@ -83,7 +83,7 @@ export default {
                 menu_id: 8,
                 menu_text: '设置',
                 menu_icon: 'icon-setup',
-                menu_href: '',
+                menu_href: '/order/Layout/setting',
                 menu_pid: 0,
                 menu_target_type: 0
             }]

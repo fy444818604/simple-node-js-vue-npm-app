@@ -102,6 +102,12 @@ export default {
                 syn: 3,
                 meeting: 2
             },{
+                x: 8,
+                y: 4,
+                record: 1,
+                syn: 2,
+                meeting: 1
+            },{
                 x: 2,
                 y: 2,
                 record: 0,

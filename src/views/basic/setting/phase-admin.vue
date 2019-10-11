@@ -130,24 +130,39 @@ export default {
                 }
             })
         },
-        //表格
+        //启用停用
         phaseStop(row){
+            let opText;
+            let newStatus;
+            if (row.status === 0) {
+                opText = "停用";
+                newStatus = 1;
+            } else {
+                opText = "启用";
+                newStatus = 0;
+            }
             let _this = this;
-            let params = {
-                id:row.id,
-                status:row.status === 0? 1:0,
-                type: this.dictType
-            };
-            this.$api.dictDis(params).then(res => {
-                if (res.success == true) {
-                    _this.phaseList();
-                    this.$myLayer.successLayer(res.msg)
-                } else {
-                    this.$myLayer.errorLayer(res.msg)
+
+            this.$myLayer.confirmLayer("确认"+opText+"该类型", function () {
+                let params = {
+                    id:row.id,
+                    status:newStatus,
+                    type: _this.dictType
                 }
-            })
+                _this.$api.dictDis(params).then(res => {
+                    if (res.success === true) {
+                        _this.phaseList();
+                        _this.$myLayer.successLayer(res.msg)
+                    } else {
+                        _this.$myLayer.errorLayer(res.msg)
+                    }
+                })
+            });
+
         },
+        //编辑
         phaseEdit(row){
+            this.$refs["admForm"].resetFields();
             let editForm = {
                 text: row.row.text,
                 description: row.row.description
@@ -166,6 +181,7 @@ export default {
                         _this.$api.dictEdit(ediData).then(res => {
                             if (res.success == true) {
                                 _this.phaseList();
+                                // TODO 关闭弹窗
                                 _this.$myLayer.successLayer(res.msg)
                             } else {
                                 _this.$myLayer.errorLayer(res.msg)
@@ -197,7 +213,7 @@ export default {
                 text:'',
                 description:''
             }
-            document.getElementById('modalForm').reset();
+            this.$refs["admForm"].resetFields();
             // eslint-disable-next-line no-undef
             this.$myLayer.formLayer("新建", $('.dict-modal-add'), ['422px'], function () {
                 _this.$refs["admForm"].validate((valid) => {
@@ -210,6 +226,7 @@ export default {
                         _this.$api.dictAdd(params).then(res => {
                             if (res.success == true) {
                                 _this.phaseList();
+                                // TODO 关闭弹窗
                                 _this.$myLayer.successLayer(res.msg)
                             } else {
                                 _this.$myLayer.errorLayer(res.msg)

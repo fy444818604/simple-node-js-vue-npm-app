@@ -3,10 +3,33 @@
     <div class="page-template">
         <!--页面title-->
         <el-row class="pol-title">
-            <el-col :span="12"><div class="grid-content bg-purple cha-title">{{ pageTile }}</div></el-col>
+            <el-col :span="12">
+                <div class="grid-content bg-purple cha-title">
+                    <span>{{ pageTile }}</span>
+                    <span style="margin-left: 22px; font-weight: normal;">
+                        <el-dropdown trigger="click" placement="bottom">
+                                <span class="el-dropdown-link">
+                                    {{currentSelect}}<i class="el-icon-arrow-down el-icon--right"></i>
+                                </span>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-input v-model="filterText">
+                                </el-input>
+                                <el-tree
+                                        @node-click="handleSelect"
+                                        style="width:250px"
+                                        class="filter-tree"
+                                        :data="orgData"
+                                        :props="defaultProps"
+                                        :filter-node-method="filterNode"
+                                        ref="tree">
+                                </el-tree>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </span>
+                </div>
+            </el-col>
             <el-col :span="12"><div class="grid-content bg-purple-light">
-                <bnt-list :model="model" @btn-click="polAdd">
-                </bnt-list>
+                <bnt-list  @btn-click="calendarAdd" :model="{icon:'icon-add',name:'添加'}"></bnt-list>
             </div></el-col>
         </el-row>
         <!--表格-->
@@ -25,24 +48,112 @@
                 <pol-paging :pageTotal="pageTotal" @handleSizeChange="SizeChange" @handleCurrentChange="CurrentChange"></pol-paging>
             </div></el-col>
         </el-row>
-<!--        &lt;!&ndash;新建&ndash;&gt;
-        <pol-modal
-                :title="dialog.title"
-                @on-close="polClose"
-                @on-save="polSave"
-                :visible="dialog.visible">
-            <el-form ref="form" :model="polForm" label-width="88px" :rules="formRules">
-                <el-form-item label="政治面貌"  prop="political">
-                    <el-input v-model="polForm.political"></el-input>
-                </el-form-item>
-                <el-form-item label="描述" >
-                    <el-input v-model="polForm.describe"></el-input>
-                </el-form-item>
-                <el-form-item label="显示顺序" >
-                    <el-input v-model="polForm.order"></el-input>
-                </el-form-item>
-            </el-form>
-        </pol-modal>-->
+        <!--新增弹窗-->
+        <div class="pol-modal-add">
+            <div class="modalAdd">
+                <el-form ref="addForm" :model="polForm" label-width="88px" :rules="formRules">
+                    <el-form-item label="机构" prop="orgId" >
+                        <el-input
+                                v-model="orgSelectText"
+                                placeholder="请选择或输入"
+                                @click.stop>
+                            <i slot="suffix" @click="isShow" class="iconfont icon-apartment"></i>
+                        </el-input>
+                        <div class="el-div-tree" v-if="orgSelectIsShow">
+                            <el-tree
+                                @node-click="handleOrgSelect"
+                                class="filter-tree"
+                                :props="defaultProps"
+                                :filter-node-method="filterOrgSelectNode"
+                                ref="orgSelect"
+                                :data="orgData">
+                            </el-tree>
+                        </div>
+                    </el-form-item>
+                    <el-form-item label="学年" prop="schoolYear">
+                        <el-select v-model="polForm.schoolYear" @focus="setSelectMinWidth" placeholder="请选择" style="width: 100%">
+                            <el-option :style="{'min-width': selectMinWidth + 2 + 'px'}"
+                                    v-for="item in schoolYear"
+                                    :key="item.code"
+                                    :label="item.text"
+                                    :value="item.code">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="学期" prop="schoolTerm">
+                        <el-select v-model="polForm.schoolTerm" @focus="setSelectMinWidth" placeholder="请选择" style="width: 100%">
+                            <el-option :style="{'min-width': selectMinWidth + 2 + 'px'}"
+                                    v-for="item in schoolTerm"
+                                    :key="item.code"
+                                    :label="item.text"
+                                    :value="item.code">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="开学时间" prop="startDate">
+                        <el-date-picker
+                                style="width: 100%"
+                                v-model="polForm.startDate"
+                                type="date"
+                                value-format="yyyy-MM-dd"
+                                placeholder="选择日期">
+                        </el-date-picker>
+                    </el-form-item>
+                    <el-form-item label="放假时间" prop="holidayDate">
+                        <el-date-picker
+                                style="width: 100%"
+                                v-model="polForm.holidayDate"
+                                type="date"
+                                value-format="yyyy-MM-dd"
+                                placeholder="选择日期">
+                        </el-date-picker>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </div>
+        <!--修改弹窗-->
+        <div class="pol-modal-edit">
+            <div class="modalEdit">
+                <el-form ref="editForm" :model="polForm" label-width="88px" :rules="formRules">
+                    <el-form-item label="机构" prop="orgId" >
+                        <el-input
+                                v-model="orgSelectText"
+                                placeholder="请选择或输入"
+                                @click.stop>
+                            <i slot="suffix" @click="isShow" class="iconfont icon-apartment"></i>
+                        </el-input>
+                        <div class="el-div-tree" v-if="orgSelectIsShow">
+                            <el-tree
+                                    @node-click="handleOrgSelect"
+                                    class="filter-tree"
+                                    :props="defaultProps"
+                                    :filter-node-method="filterOrgSelectNode"
+                                    ref="orgSelect"
+                                    :data="orgData">
+                            </el-tree>
+                        </div>
+                    </el-form-item>
+                    <el-form-item label="开学时间" prop="startDate">
+                        <el-date-picker
+                                style="width: 100%"
+                                v-model="polForm.startDate"
+                                type="date"
+                                value-format="yyyy-MM-dd"
+                                placeholder="选择日期">
+                        </el-date-picker>
+                    </el-form-item>
+                    <el-form-item label="放假时间" prop="holidayDate">
+                        <el-date-picker
+                                style="width: 100%"
+                                v-model="polForm.holidayDate"
+                                type="date"
+                                value-format="yyyy-MM-dd"
+                                placeholder="选择日期">
+                        </el-date-picker>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -63,64 +174,88 @@ export default {
                 icon:'icon-add'
             },
             //表格
-            tableData:[
-                {
-                    id:1,
-                    level:'1号教学楼',
-                    describe:'111',
-                    status:'启用',
-
-                },
-            ],
+            tableData:[],
             tableColumn:[
                 {
-                    prop:'id',
+                    prop:'index',
                     label:'序号'
                 },
                 {
-                    prop:'level',
+                    prop:'orgName',
                     label:'机构'
                 },
                 {
-                    prop:'year',
+                    prop:'schoolYear',
                     label:'学年'
                 },
                 {
-                    prop:'semester',
+                    prop:'schoolTermText',
                     label:'学期'
                 },
                 {
-                    prop:'schoolTime',
+                    prop:'startDate',
                     label:'开学时间'
                 },
                 {
-                    prop:' vacationTime',
+                    prop:'holidayDate',
                     label:'放假时间'
                 },
-
                 {
-                    prop:'status',
+                    prop:'statusText',
                     label:'状态'
                 }
             ],
             //分页
-            pageSize:'',//显示多少页
-            pageCurrent:'',//当前页
-            pageTotal:300,//总条数
+            pageSize:10,//显示多少页
+            pageCurrent:1,//当前页
+            pageTotal:0,//总条数
+            status: 0,
             //弹框
             /* dialog */
             dialog: {
                 visible:false,
                 title: '新建',
             },
+
+            // ******* 左上角机构下拉参数 start *******
+            orgData:[],
+            // 当前机构id
+            orgId: '',
+            // 下拉菜单显示值
+            currentSelect: "请选择机构",
+            // 机构下拉菜单的数据
+            areaList: [],
+            // 机构下拉菜单的数据格式定义
+            defaultProps: {
+                children: 'children',
+                label: 'displayName',
+                isLeaf: 'isLeaf'
+            },
+            filterText: '',
+            // ******* 左上角机构下拉参数 end *******
+
+            // ******* 弹出框中用到的参数 start *******
+            schoolYear:[],
+            schoolTerm:[],
             polForm:{
-                political:'',
-                describe:'',
-                order:''
+                orgId: '',
+                schoolYear: '',
+                schoolTerm: '',
+                startDate: '',
+                holidayDate: ''
             },
             formRules:{
-                political:[{required: true, message: '不能为空', trigger: 'blur'}],
+                orgId:[{required: true, message: '机构不能为空', trigger: 'blur'}],
+                schoolYear:[{required: true, message: '学年不能为空', trigger: 'blur'}],
+                schoolTerm:[{required: true, message: '学期不能为空', trigger: 'blur'}],
+                startDate:[{required: true, message: '开学时间不能为空', trigger: 'blur'}],
+                holidayDate:[{required: true, message: '放假时间不能为空', trigger: 'blur'}],
             },
+            orgSelectText: '',
+            orgSelectIsShow: false,
+            // 弹窗的下拉框宽度
+            selectMinWidth:0
+            // ******* 弹出框中用到的参数 end *******
         }
     },
     components:{
@@ -130,28 +265,241 @@ export default {
         'pol-paging':paging,
         /* 'pol-modal':modal*/
     },
+    watch: {
+        filterText(val) {
+            this.$refs.tree.filter(val);
+        },
+        orgSelectText(val) {
+            if (this.$refs.orgSelect) {
+                this.$refs.orgSelect.filter(val);
+            }
+        }
+
+    },
+    created(){
+        this.dictionary();
+        this.queryOrg();
+    },
     methods: {
+        // 设置弹窗中下拉框的最小宽度
+        setSelectMinWidth(val){
+            let target = val.srcElement ? val.srcElement : val.target;
+            this.selectMinWidth = target.clientWidth;
+        },
+        // 加载字典
+        dictionary(){
+            let sex = {"type": ["school_year",'school_term']};
+            this.$api.dictSelect(sex).then(res => {
+                if(res.success == true){
+                    let  i = 0;
+                    for (i = 0; i < res.data.length; i++) {
+                        if(res.data[i].type == 'school_year'){
+                            this.schoolYear = res.data[i].data;
+                        }else if(res.data[i].type == 'school_term'){
+                            this.schoolTerm = res.data[i].data;
+                        }
+                    }
+                }
+            });
+        },
+        //分页查询
+        calendarList(){
+            if (this.orgId === '') {
+                return;
+            }
+            let params = {
+                pageIndex: this.pageCurrent,
+                pageSize: this.pageSize,
+                orgId: this.orgId,
+                status: this.status
+            };
+            this.$api.calendarPage(params).then(res => {
+                if (res.success == true) {
+                    //赋值分页总数
+                    this.pageTotal = parseInt(res.totalDatas);
+                    let array = [];
+                    let list = res.data;
+                    list.map((item,index)=>{
+                        array.push(
+                            Object.assign({
+                                index:index+1
+                            },item,{indexNum:'str'})
+                        )
+                    });
+                    //赋值表格数据
+                    this.tableData = array;
+                } else {
+                    this.$myLayer.errorLayer('失败')
+                }
+            })
+        },
+
+        // ******* 左上角机构下拉触发方法 start *******
+        //点击机构节点事件
+        handleSelect(value) {
+            this.currentSelect = value.displayName;
+            this.orgId = value.id;
+            this.calendarList();
+        },
+        //过滤节点
+        filterNode(value, data) {
+            if (!value) return true;
+            return data.displayName.indexOf(value) !== -1;
+        },
+        //机构
+        queryOrg(){
+            let params = {
+                level : 0,
+                onlyOrg :1,
+                parentId : 0,
+            };
+            this.$api.institutions(params).then(res => {
+                if(res.success == true){
+                    // this.areaList = res.data;
+                    if (res.data.length > 0) {
+                        res.data.forEach((item) => {
+                            item.isLeaf = !item.next; // 是否是叶子节点
+                        })
+                        this.orgData = res.data;
+                    }
+                }
+            })
+        },
+        // ******* 左上角机构下拉触发方法 end *******
+
+        // ******* 弹框中的机构下拉触发方法 start *******
+        // 点击节点事件
+        handleOrgSelect(value){
+            this.polForm.orgId = value.id;
+            this.orgSelectText = value.displayName;
+            this.isShow();
+        },
+        // 过滤节点
+        filterOrgSelectNode(value, data){
+            if (!value) return true;
+            return data.displayName.indexOf(value) !== -1;
+        },
+        // 显示切换
+        isShow(){
+            this.orgSelectIsShow = !this.orgSelectIsShow
+        },
+        // ******* 弹框中的机构下拉触发方法 end *******
+
         //添加
-        polAdd(){
-            this.dialog.visible = true;
+        calendarAdd(){
+            let _this = this;
+            _this.polForm = {
+                holidayDate: '',
+                orgId: '',
+                schoolTerm: '',
+                schoolYear: '',
+                startDate: ''
+            };
+            _this.orgSelectText = '';
+            this.$refs["addForm"].resetFields();
+            // eslint-disable-next-line no-undef
+            this.$myLayer.formLayer("新建", $('.pol-modal-add'), ['422px'], function () {
+                _this.$refs["addForm"].validate((valid) => {
+                    if (valid) {
+                        let params = {
+                            holidayDate: _this.polForm.holidayDate,
+                            orgId: _this.polForm.orgId,
+                            schoolTerm: _this.polForm.schoolTerm,
+                            schoolYear: _this.polForm.schoolYear,
+                            startDate: _this.polForm.startDate
+                        };
+                        _this.$api.calendarAdd(params).then(res => {
+                            if (res.success == true) {
+                                _this.calendarList();
+                                // TODO 关闭弹窗
+                                _this.$myLayer.successLayer(res.msg)
+                            } else {
+                                _this.$myLayer.errorLayer(res.msg)
+                            }
+                        })
+                    } else {
+                        return false;
+                    }
+                });
+            })
         },
         //表格
         polStop(row){
-            console.log(row)
+            let opText;
+            let newStatus;
+            if (row.status === 0) {
+                opText = "停用";
+                newStatus = 1;
+            } else {
+                opText = "启用";
+                newStatus = 0;
+            }
+            let _this = this;
+
+            this.$myLayer.confirmLayer("确认"+opText+"该校历", function () {
+                let params = {
+                    id:row.id,
+                    status:newStatus
+                }
+                _this.$api.calendarDis(params).then(res => {
+                    if (res.success === true) {
+                        _this.calendarList();
+                        _this.$myLayer.successLayer(res.msg)
+                    } else {
+                        _this.$myLayer.errorLayer(res.msg)
+                    }
+                })
+            });
         },
         polEdit(row){
-            console.log(row)
+            this.$refs["editForm"].resetFields();
+            let editForm = {
+                holidayDate: row.row.holidayDate,
+                orgId: row.row.orgId,
+                schoolTerm: row.row.schoolTerm,
+                schoolYear: row.row.schoolYear,
+                startDate: row.row.startDate
+            };
+            let _this = this;
+            this.orgSelectText = row.row.orgName;
+            this.polForm = editForm;
+            this.$myLayer.formLayer("修改", $('.pol-modal-edit'), ['422px'], function () {
+                _this.$refs["editForm"].validate((valid) => {
+                    if (valid) {
+                        let params = {
+                            holidayDate: _this.polForm.holidayDate,
+                            orgId: _this.polForm.orgId,
+                            startDate: _this.polForm.startDate,
+                            id:row.row.id
+                        };
+                        _this.$api.calendarEdit(params).then(res => {
+                            if (res.success == true) {
+                                _this.calendarList();
+                                // TODO 关闭弹窗
+                                _this.$myLayer.successLayer(res.msg)
+                            } else {
+                                _this.$myLayer.errorLayer(res.msg)
+                            }
+                        })
+                    } else {
+                        return false;
+                    }
+                });
+            })
         },
         //状态
         stateList(state){
-            console.log(state)
+            this.status = state;
+            this.calendarList();
         },
         //分页
-        SizeChange(val){
-            console.log(val)
+        SizeChange(pageSize){//显示多少页
+            this.pageSize = pageSize;
+            this.calendarList();
         },
-        CurrentChange(val){
-            console.log(val)
+        CurrentChange(pageCurrent){//当前页
+            this.pageCurrent = pageCurrent;
+            this.calendarList();
         },
         /*    //弹框
             polSave(){
@@ -163,7 +511,12 @@ export default {
     }
 }
 </script>
-
+<style>
+    .el-select-dropdown,.el-picker-panel{
+        z-index: 999999999!important;
+        width: auto;
+    }
+</style>
 <style scoped>
     .page-template{
         padding: 18px 24px;
@@ -185,5 +538,25 @@ export default {
     }
     .pol-bnt .bg-purple{
         margin-top: 4px;
+    }
+    .pol-modal-add,.pol-modal-edit {
+        display: none;
+    }
+    .modalAdd,.modalEdit {
+        padding: 0px 32px;
+        margin: 24px 0px;
+    }
+    .el-div-tree{
+        position: absolute;
+        top:45px;
+        width: 100%;
+        background-color: #fff;
+        border: 1px solid #ebeef5;
+        border-radius: 4px;
+        -webkit-box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+        box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+        z-index: 9999999;
+        overflow: auto;
+        height: 130px;
     }
 </style>

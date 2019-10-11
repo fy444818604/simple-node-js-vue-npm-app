@@ -5,8 +5,7 @@
         <el-row class="pol-title">
             <el-col :span="12"><div class="grid-content bg-purple cha-title">{{ pageTile }}</div></el-col>
             <el-col :span="12"><div class="grid-content bg-purple-light">
-                <bnt-list :model="model" @btn-click="polAdd">
-                </bnt-list>
+                <bnt-list  @btn-click="dictAdd" :model="{icon:'icon-add',name:'添加'}"></bnt-list>
             </div></el-col>
         </el-row>
         <!--表格-->
@@ -19,30 +18,28 @@
         <!--分页/启用/停用-->
         <el-row class="pol-bnt">
             <el-col :span="5"><div class="grid-content bg-purple cha-title">
-                <stateSwitch @switchL="stateList"></stateSwitch>
+                <stateSwitch @switchL="stateSwitch"></stateSwitch>
             </div></el-col>
             <el-col :span="19"><div class="grid-content bg-purple-light">
                 <pol-paging :pageTotal="pageTotal" @handleSizeChange="SizeChange" @handleCurrentChange="CurrentChange"></pol-paging>
             </div></el-col>
         </el-row>
         <!--新建-->
-        <pol-modal
-                :title="dialog.title"
-                @on-close="polClose"
-                @on-save="polSave"
-                :visible="dialog.visible">
-            <el-form ref="form" :model="polForm" label-width="88px" :rules="formRules">
-                <el-form-item label="学位名称"  prop="political">
-                    <el-input v-model="polForm.political"></el-input>
-                </el-form-item>
-                <el-form-item label="描述" >
-                    <el-input v-model="polForm.describe"></el-input>
-                </el-form-item>
-                <el-form-item label="显示顺序" >
-                    <el-input v-model="polForm.order"></el-input>
-                </el-form-item>
-            </el-form>
-        </pol-modal>
+        <div class="dict-modal-add">
+            <div class="modalAdd">
+                <el-form ref="dictForm" :model="dictForm" label-width="88px" :rules="formRules" id="modalForm">
+                    <el-form-item label="学位名称"  prop="text">
+                        <el-input v-model="dictForm.text"></el-input>
+                    </el-form-item>
+                    <el-form-item label="描述" prop="description">
+                        <el-input v-model="dictForm.description"></el-input>
+                    </el-form-item>
+                    <el-form-item label="显示顺序"  prop="orderIndex">
+                        <el-input v-model="dictForm.orderIndex"></el-input>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -51,7 +48,6 @@ import bntList from '../../../components/btn-list'
 import table from '../../../components/table'
 import stateSwitch from '../../../components/state-switch'
 import paging from '../../../components/paging'
-import modal from '../../../components/modal'
 export default {
     name: "degree-set",
     data(){
@@ -63,50 +59,45 @@ export default {
                 icon:'icon-add'
             },
             //表格
-            tableData:[
-                {
-                    id:1,
-                    level:'1号教学楼',
-                    describe:'111',
-                    status:'启用',
-
-                },
-            ],
+            tableData:[],
             tableColumn:[
                 {
-                    prop:'id',
+                    prop:'orderIndex',
                     label:'显示顺序'
                 },
                 {
-                    prop:'level',
+                    prop:'text',
                     label:'学位名称'
                 },
                 {
-                    prop:'describe',
+                    prop:'description',
                     label:'描述'
                 },
                 {
-                    prop:'status',
+                    prop:'statusText',
                     label:'状态'
                 }
             ],
             //分页
-            pageSize:'',//显示多少页
-            pageCurrent:'',//当前页
-            pageTotal:300,//总条数
+            pageSize:10,//显示多少页
+            pageCurrent:1,//当前页
+            pageTotal:0,//总条数
+            status: 0,
+            dictType: "academic_degree",
             //弹框
             /* dialog */
             dialog: {
                 visible:false,
                 title: '新建',
             },
-            polForm:{
-                political:'',
-                describe:'',
-                order:''
+            dictForm:{
+                text:'',
+                description:'',
+                orderIndex:''
             },
             formRules:{
-                political:[{required: true, message: '不能为空', trigger: 'blur'}],
+                text:[{required: true, message: '不能为空', trigger: 'blur'}],
+                orderIndex:[{pattern: /^[0-9]+$/, message: '只能输入数字', trigger: 'change'}]
             },
         }
     },
@@ -114,39 +105,154 @@ export default {
         'bnt-list':bntList,
         'pol-table':table,
         'stateSwitch':stateSwitch,
-        'pol-paging':paging,
-        'pol-modal':modal
+        'pol-paging':paging
+    },
+    //初始化
+    created() {
+        this.dictList();
     },
     methods: {
+        //分页查询
+        dictList(){
+            let params = {
+                pageIndex: this.pageCurrent,
+                pageSize: this.pageSize,
+                type: this.dictType,
+                status: this.status
+            };
+            this.$api.dictPage(params).then(res => {
+                if (res.success === true) {
+                    //赋值分页总数
+                    this.pageTotal = parseInt(res.totalDatas);
+                    let array = [];
+                    let list = res.data;
+                    list.map((item,index)=>{
+                        array.push(
+                            Object.assign({
+                                index:index+1
+                            },item,{indexNum:'str'})
+                        )
+                    });
+                    //赋值表格数据
+                    this.tableData = array;
+                } else {
+                    this.$myLayer.errorLayer('失败')
+                }
+            })
+        },
         //添加
-        polAdd(){
-            this.dialog.visible = true;
+        dictAdd(){
+            let _this = this;
+            _this.dictForm = {
+                text:'',
+                description:'',
+                orderIndex:''
+            };
+            this.$refs["dictForm"].resetFields();
+            // eslint-disable-next-line no-undef
+            this.$myLayer.formLayer("新建", $('.dict-modal-add'), ['422px'], function () {
+                _this.$refs["dictForm"].validate((valid) => {
+                    if (valid) {
+                        let params = {
+                            text: _this.dictForm.text,
+                            description:_this.dictForm.description,
+                            orderIndex:_this.dictForm.orderIndex,
+                            type: _this.dictType
+                        };
+                        _this.$api.dictAdd(params).then(res => {
+                            if (res.success === true) {
+                                _this.dictList();
+                                // TODO 关闭弹窗
+                                _this.$myLayer.successLayer(res.msg);
+                            } else {
+                                _this.$myLayer.errorLayer(res.msg);
+                            }
+                        })
+                    } else {
+                        return false;
+                    }
+                });
+            })
         },
-        //表格
+        //启用停用
         polStop(row){
-            console.log(row)
+            let opText;
+            let newStatus;
+            if (row.status === 0) {
+                opText = "停用";
+                newStatus = 1;
+            } else {
+                opText = "启用";
+                newStatus = 0;
+            }
+            let _this = this;
+
+            this.$myLayer.confirmLayer("确认"+opText+"该学位", function () {
+                let params = {
+                    id:row.id,
+                    status:newStatus,
+                    type: _this.dictType
+                }
+                _this.$api.dictDis(params).then(res => {
+                    if (res.success === true) {
+                        _this.dictList();
+                        _this.$myLayer.successLayer(res.msg)
+                    } else {
+                        _this.$myLayer.errorLayer(res.msg)
+                    }
+                })
+            });
+
         },
+        //编辑
         polEdit(row){
-            console.log(row)
+            this.$refs["dictForm"].resetFields();
+            let editForm = {
+                text: row.row.text,
+                description: row.row.description,
+                orderIndex: row.row.orderIndex
+            };
+            this.dictForm = editForm;
+            let _this = this;
+            this.$myLayer.formLayer("编辑", $('.dict-modal-add'), ['422px'], function () {
+                _this.$refs["dictForm"].validate((valid) => {
+                    if (valid) {
+                        let ediData = {
+                            text: _this.dictForm.text,
+                            description:_this.dictForm.description,
+                            orderIndex:_this.dictForm.orderIndex,
+                            type: _this.dictType,
+                            id:row.row.id
+                        };
+                        _this.$api.dictEdit(ediData).then(res => {
+                            if (res.success === true) {
+                                _this.dictList();
+                                // TODO 关闭弹窗
+                                _this.$myLayer.successLayer(res.msg)
+                            } else {
+                                _this.$myLayer.errorLayer(res.msg)
+                            }
+                        })
+                    } else {
+                        return false;
+                    }
+                });
+            })
         },
         //状态
-        stateList(state){
-            console.log(state)
+        stateSwitch(state){
+            this.status = state;
+            this.dictList();
         },
         //分页
-        SizeChange(val){
-            console.log(val)
+        SizeChange(pageSize){//显示多少页
+            this.pageSize = pageSize;
+            this.dictList();
         },
-        CurrentChange(val){
-            console.log(val)
-        },
-        //弹框
-        polSave(){
-            this.dialog.visible = false
-        },
-        polClose(){
-            this.dialog.visible = false
-        },
+        CurrentChange(pageCurrent){//当前页
+            this.pageCurrent = pageCurrent;
+            this.dictList();
+        }
     }
 }
 </script>
@@ -172,5 +278,12 @@ export default {
     }
     .pol-bnt .bg-purple{
         margin-top: 4px;
+    }
+    .dict-modal-add {
+        display: none;
+    }
+    .modalAdd {
+        padding: 0px 32px;
+        margin: 24px 0px;
     }
 </style>
