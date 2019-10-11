@@ -583,6 +583,17 @@ const resource = {
 			}
 		},
 		{
+			path: '/resource/Layout/resource-list/edit/:id',
+			name: 'resource-list',
+			component: resolve => {
+				require(['../views/resource/resource-list/edit-res'], resolve)
+			},
+			meta: {
+				title: '资源编辑',
+				requireAuth: true
+			}
+		},
+		{
 			path: '/resource/Layout/album',
 			name: 'album',
 			component: resolve => {
@@ -658,6 +669,28 @@ const order = {
 			},
 			meta: {
 				title: '课程预约添加',
+				requireAuth: true
+			}
+		},
+		{
+			path: '/order/Layout/my',
+			name: 'order-Layout-my',
+			component: resolve => {
+				require(['../views/order/my/index'], resolve)
+			},
+			meta: {
+				title: '我的',
+				requireAuth: true
+			}
+		},
+		{
+			path: '/order/Layout/setting',
+			name: 'order-Layout-setting',
+			component: resolve => {
+				require(['../views/order/setting/index'], resolve)
+			},
+			meta: {
+				title: '设置',
 				requireAuth: true
 			}
 		}

@@ -245,6 +245,7 @@ export default {
             li {
               border-bottom: 1px solid #323232;
               padding: 10px 0;
+              color: #c7c7c7;
             }
           }
         }
