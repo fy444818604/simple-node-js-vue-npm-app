@@ -46,6 +46,11 @@ export const areaEdi = params => post('/base/api/buildings/update',params);
 export const settingList = params => post('/base/api/classroom/page',params);
 //教职工账号管理
 export const teachers = params => post('/base/api/userInfo/teacherInfo/list',params);
+export const teachersAdd = params => post('/base/api/userInfo/teacherInfo/save',params);
+export const teachersPassword = params => post('/base/api/userInfo/teacherInfo/resetPasswordBatch',params);
+export const teachersDis = params => post('/base/api/userInfo/teacherInfo/setStatusBatch',params);
+export const teachersDisT = params => get('/base/api/userInfo/teacherInfo/setStatusById',params);
+
 //学生账号管理
 export const students = params => post('/base/api/userInfo/studentInfo/list',params);
 export const studentsAdd = params => post('/base/api/userInfo/studentInfo/save',params);
@@ -53,6 +58,7 @@ export const batStudentsDis = params => post('/base/api/userInfo/studentInfo/set
 export const batPassword = params => post('/base/api/userInfo/studentInfo/resetPasswordBatch',params);
 export const studentsDis = params => get('/base/api/userInfo/studentInfo/setStatusById',params);
 export const batStudentsExport = params => post('/base/api/userInfo/studentInfo/exportExcel',params);
+export const studentsDetails = params => get('/base/api/userInfo/studentInfo/getInfoById',params);
 //机构树
 export const institutions = params => get('/base/api/organizationUnit/all',params);
 //学届管理
