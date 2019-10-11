@@ -272,6 +272,9 @@ export default {
     components: {
         'btn-list': btnList
     },
+    created(){
+        console.log(this.$route.params)
+    },
     methods: {
         handleClick(tab, event) {
             console.log(tab, event);
