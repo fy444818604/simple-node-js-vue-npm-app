@@ -234,6 +234,7 @@ import btnList from '@/components/btn-list'
 export default {
     data() {
         return {
+			userId:'',
             activeName: 'third',
             labelPosition: 'right',
             active: ['1', '2', '3'],
@@ -273,9 +274,21 @@ export default {
         'btn-list': btnList
     },
     created(){
-        console.log(this.$route.params)
+    	this.userId = this.$route.query.id;
+		this.studentsDetails()
     },
     methods: {
+		studentsDetails(){
+			let params = {
+				id :this.userId,
+			};
+			this.$api.studentsDetails(params).then(res => {
+				if (res.success == true) {
+					console.log(res)
+					this.teacherName = res.data.userName
+				}
+			})
+		},
         handleClick(tab, event) {
             console.log(tab, event);
         },
