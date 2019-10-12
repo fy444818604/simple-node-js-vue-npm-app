@@ -280,7 +280,7 @@ export default {
             console.log(tab, event);
         },
         btnClick() {
-
+			console.log(123)
         }
     }
 };
@@ -403,6 +403,7 @@ export default {
 		position: absolute;
 		right: 30px;
 		top: 10px;
+		z-index: 9999;
 	}
 
 	.detail-line>li>div:first-child {

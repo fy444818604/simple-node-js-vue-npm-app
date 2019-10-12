@@ -12,10 +12,30 @@
 				</div>
 			</el-col>
 		</el-row>
+		<div style="padding: 32px 16px;">
+			<div class="box">
+				<div class="flex-between mb32">
+					<div class="lumps">
+						<ul>
+							<li v-for="(item,index) in type">
+								<div class="order-lump" :style="{'background':`linear-gradient(to right, ${item.color}, ${item.color1})`}"></div>
+								<div>{{item.name}}</div>
+							</li>
+						</ul>
+					</div>
+					<div>
+						<order-time></order-time>
+					</div>
+				</div>
+				<order-calendar :type="3" :tableData="myCalendar"></order-calendar>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script>
+import calendar from '../../../components/calendar'
+import time from '../../../components/time-selected'
 export default {
     data(){
         return {
@@ -28,13 +48,37 @@ export default {
             }, {
                 name: '视频会议',
                 data: 24
-            }]
+            }],
+            type:[{
+                name:'同步课堂',
+                color:'#4C84FF',
+                color1:'#8EC9F8'
+            },{
+                name:'录播课程',
+                color:'#FDA423',
+                color1:'#FEDB73'
+            },{
+                name:'视频会议',
+                color:'#B7BBC3',
+                color1:'#D4D7DE'
+            }],
+			myCalendar:[{
+				x:1,y:1,type:1,name:'把学生当成自己的孩子培养',time:'16:00-16:40',syc:true,state:1
+			}]
         }
+    },
+    components: {
+        'order-calendar': calendar,
+        'order-time': time
     }
 }
 </script>
 
 <style lang="scss" scoped="scoped">
+	.mb32{
+		margin-bottom: 32px;
+		align-items: center;
+	}
 	.container {
 		padding: 0 16px;
 		background-color: #F1F3F8;
@@ -58,6 +102,26 @@ export default {
 			border-radius: 6px;
 			padding: 22px 24px;
 			width: 100%;
+			
+			.lumps{
+				ul{
+					display: flex;
+					li{
+						display: flex;
+						margin-right: 22px;
+						.order-lump{
+							width: 24px;
+							height: 16px;
+							border-radius: 4px;
+							margin-right: 13px;
+						}
+						
+						div{
+							color: #909399;
+						}
+					}
+				}
+			}
 		}
 		
 		
