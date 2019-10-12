@@ -357,7 +357,6 @@ export default {
             })
         },
         studentAdd(){
-
             let _this = this;
 			_this.$refs['addForm'].resetFields();
             this.$myLayer.formLayer("添加", $('.stu-yeaer-modal-add'), ['422px'], function () {
@@ -378,6 +377,7 @@ export default {
                         _this.$api.studentsAdd(params).then(res => {
                             if (res.success == true) {
                                 _this.$myLayer.successLayer(res.msg)
+								_this.studentsList();
                             } else {
                                 _this.$myLayer.errorLayer(res.msg)
                             }
@@ -435,17 +435,14 @@ export default {
 			row.showBtn = true
 		},
 		handleMouseLeave(row){
-			console.log(row)
 			row.showBtn = false
 		},
         addIns(val){
             this.filterText = val.displayName;
+			this.orgId = val.id;
             this.addForm.school = val.id;
             this.orgQuery();
             this.isshow = false;
-        },
-        handleNodeClick(data) {
-            console.log(data);
         },
         btnClick(val) {
             if(val == 1){

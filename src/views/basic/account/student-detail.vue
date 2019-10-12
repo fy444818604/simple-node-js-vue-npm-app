@@ -7,10 +7,11 @@
 		</div>
 		<div class="detail-tab-container" @click.stop>
 			<div class="btnGroup" >
-				<btn-list @btn-click="btnClick(item)" v-for="(item,index) in btnGroup" :key="index" :model="item" ></btn-list>
+				<btn-list v-show="!edit" @btn-click="btnClick(item)" v-for="(item,index) in btnGroup" :key="index" :model="item" ></btn-list>
+                <btn-list v-show="edit" @btn-click="baoClick(item)" v-for="(item,index) in btnGroupT" :key="index" :model="item" ></btn-list>
 			</div>
 			<el-tabs v-model="activeName" @tab-click="handleClick">
-				<el-tab-pane label="基本信息" name="first">
+				<el-tab-pane label="基本信息" name="third">
 					<div class="flex">
 						<div style="padding-left: 20px;">
 							<div>
@@ -293,7 +294,7 @@
 						</li>
 					</ul>
 				</el-tab-pane>
-				<el-tab-pane label="家长信息" name="third">
+				<el-tab-pane label="家长信息" name="first">
 					<div class="detail-card-title">
 						<img :src="require('@/assets/image/name.png')" alt="">
 						<div>家长1</div>
@@ -347,7 +348,12 @@ export default {
             btnGroup: [ {
                 icon: 'icon-edit',
                 name: '编辑',
-                alias: 5
+                alias: 1
+            }],
+            btnGroupT: [ {
+                icon: 'icon-save',
+                name: '保存',
+                alias: 1
             }],
             intro: {
                 personal: '哈撒给',
@@ -360,8 +366,6 @@ export default {
                     text: '2018年市级优秀教师',
                     time: '',
                     pic: '',
-
-
                 }]
             },
 			leftData:{
@@ -387,6 +391,7 @@ export default {
 				detailedAddress:'',
 				securityLevel:''
 			},
+            staId:'',
 			//字典数据
 			sex:[],//性别
 			stage:[],//阶段
@@ -439,8 +444,9 @@ export default {
 			};
 			this.$api.studentsDetails(params).then(res => {
 				if (res.success == true) {
-					console.log(res)
-					this.teacherName = res.data.userName
+                    this.staId = res.data.id;
+                    console.log(this.staId);
+					this.teacherName = res.data.userName;
 					this.baseForm = {
 							workId:res.data.workId,
 							userName:res.data.userName,
@@ -464,16 +470,72 @@ export default {
 						reason:res.data.reason,
 						notes:res.data.notes
 					};
-					console.log(this.leftData)
+					this.studentsParents();
 				}
-			})
+			});
+
+
 		},
+        studentsParents(){
+            let studentsParents = {
+                integer :this.staId
+            };
+            this.$api.studentsParents(studentsParents).then(res => {
+                if (res.success == true) {
+                    console.log(res)
+                }
+            })
+        },
         handleClick(tab, event) {
             console.log(tab, event);
         },
-        btnClick() {
-			console.log(123)
+        btnClick(val) {
+            if(val.alias  == 1){
+                this.edit = true;
+            }
+        },
+        baoClick(val){
+            if(this.baseForm.workId == ''){
+                this.$myLayer.errorLayer('学号不能为空')
+            }else if(this.baseForm.userName == ''){
+                this.$myLayer.errorLayer('姓名不能为空')
+            }else if(this.baseForm.sex == ''){
+                this.$myLayer.errorLayer('性别不能为空')
+            }else if(this.baseForm.nationality){
+                this.$myLayer.errorLayer('名族不能为空')
+            }else if(this.baseForm.idCard){
+                this.$myLayer.errorLayer('身份证号码不能为空')
+            }else if(this.baseForm.this.baseForm.idCard){
+                this.$myLayer.errorLayer('班级不能为空')
+            }else {
+                let params = {
+                    workId:this.baseForm.workId,
+                    userName:this.baseForm.userName,
+                    sex:this.baseForm.sex,
+                    joinTime:this.baseForm.joinTime,
+                    nationality:this.baseForm.nationality,
+                    birthday:this.baseForm.birthday,
+                    age:this.baseForm.age,
+                    idCard:this.baseForm.idCard,
+                   /* classId:'',
+                    typeOfStudy:'',
+                    enrollmentType:this.data.coreUserWorkInfo.enrollmentTypeText,
+                    originType:this.data.coreUserWorkInfo.originTypeText,
+                    area:this.data.registeredPermanentAddressLocusDetail,
+                    home:this.data.registeredPermanentAddressLocusId,
+                    detailedAddress:this.data.detailedAddress,
+                    securityLevel:this.data.securityLevel*/
+                };
+                this.$api.studentsUpdate(params).then(res => {
+                    if(res.success == true){
+                        this.$myLayer.successLayer(res.msg)
+                    }else {
+                        this.$myLayer.errorLayer(res.msg)
+                    }
+                })
+            }
         }
+
     }
 };
 </script>
@@ -505,22 +567,18 @@ export default {
 		display: flex;
 		align-items: center;
 	}
-
 	.detail-name {
 		margin-right: 8px;
 		font-size: 20px;
 		color: #303133;
 		font-weight: bold;
 	}
-
 	.el-tabs {
 		padding-left: 20px;
 	}
-
 	.detail-tab-container {
 		position: relative;
 	}
-
 	.replenish-line {
 		height: 1px;
 		width: 20px;
@@ -529,60 +587,49 @@ export default {
 		top: 39px;
 		background-color: #E5E7EF;
 	}
-
 	.user-photo {
 		width: 200px;
 		height: 200px;
 		margin-top: 20px;
 	}
-
 	.detail-status>li {
 		display: flex;
 		margin-bottom: 15px;
 	}
-
 	.detail-status>li>label {
 		margin-right: 5px;
 	}
-
 	.detail-table {
 		width: 100%;
 		margin-left: 20px;
 		border-left: 1px solid #E5E7EF;
 		min-height: calc(100vh - 102px);
 	}
-
 	.el-tabs__header {
 		margin-bottom: 0;
 	}
-
 	.detail-table-title {
 		display: flex;
 		align-items: center;
 	}
-
 	.detail-table-title>img {
 		width: 14px;
 		height: 14px;
 		margin-right: 5px;
 	}
-
 	.detail-table-title {
 		padding-left: 13px;
 	}
-
 	.detail-table-list>li {
 		display: flex;
 		border-top: 1px solid #E5E7EF;
 		height: 44px;
 		align-items: center;
 	}
-
 	.detail-table-list>li>div:first-child {
 		padding-left: 32px;
 		width: 25%;
 	}
-
 	.detail-table-list>li>div:nth-child(2) {
 		background-color: #F7F7F7;
 		width: 100%;
@@ -590,35 +637,29 @@ export default {
 		line-height: 44px;
 		padding-left: 10px;
 	}
-
 	.btnGroup {
 		position: absolute;
 		right: 30px;
 		top: 10px;
 		z-index: 9999;
 	}
-
 	.detail-line>li>div:first-child {
 		padding-left: 43px;
 	}
-
 	.detail-line>li:last-child {
 		border-bottom: 1px solid #E5E5Ef;
 	}
-
 	.detail-card-title {
 		display: flex;
 		height: 44px;
 		align-items: center;
 		padding-left: 20px;
 	}
-
 	.detail-card-title img {
 		width: 16px;
 		height: 16px;
 		margin-right: 5px;
 	}
-
 	.icon-picture {
 		color: #4A80F6;
 		font-size: 20px;
