@@ -695,6 +695,17 @@ const order = {
 			}
 		},
 		{
+			path: '/order/Layout/course-search',
+			name: 'order-Layout-course-search',
+			component: resolve => {
+				require(['../views/order/search/course-search'], resolve)
+			},
+			meta: {
+				title: '课程查询',
+				requireAuth: true
+			}
+		},
+		{
 			path: '/order/Layout/setting',
 			name: 'order-Layout-setting',
 			component: resolve => {

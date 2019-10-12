@@ -22,7 +22,7 @@
 							<li>会议:{{isData(item,item1).meeting}}</li>
 						</ul>
 					</div>
-					<div class="course-add" v-if="!isData(item,item1)&&type==2">
+					<div class="course-add" v-if="!isData(item,item1)&&add">
 						<i class="iconfont icon-add"></i>
 					</div>
 					<div class="course-detail" v-if="isData(item,item1)&&type==2" :style="{'background-color':isData(item,item1).type==1?'rgba(76,132,255,.15)':'rgba(253,164,35,.15)'}">
@@ -36,7 +36,7 @@
 							<i class="iconfont icon-list-1" v-if="isData(item,item1).state==2"></i>
 						</div>
 					</div>
-					<div class="my-calendar" v-if="isData(item,item1)&&type==3">
+					<div class="my-calendar" v-if="isData(item,item1)&&type==3" :class="isData(item,item1).type==1?'bg1':isData(item,item1).type==2?'bg2':'bg3'">
 						<div class="my-calendar-name">{{isData(item,item1).name}}</div>
 						<div class="flex-between">
 							<div class="my-calendar-time">{{isData(item,item1).time}}</div>
@@ -45,6 +45,16 @@
 						<div class="course-jump">
 							<i class="iconfont icon-list-1"></i>
 							<i class="iconfont icon-list-1" v-if="isData(item,item1).state==2"></i>
+						</div>
+					</div>
+					<div class="school-detail" v-if="isData(item,item1)&&type==4">
+						<ul>
+							<li></li>
+						</ul>
+						<div>
+							<ul>
+								<li></li>
+							</ul>
 						</div>
 					</div>
 				</td>
@@ -69,6 +79,10 @@
 			type: {
 				type: Number,
 				default: 1
+			},
+			add: {
+				type:Boolean,
+				default:false
 			}
 		},
 		data() {
@@ -244,12 +258,6 @@
 						}
 					}
 
-					// &:first-child {
-					// 	background-color: #F6F8FA;
-					// 	opacity: 1;
-					// 	border: none !important;
-					// }
-
 					.count {
 						width: 100%;
 						height: 100%;
@@ -317,6 +325,37 @@
 						margin: 10px;
 						position: relative;
 						border-radius: 4px;
+						width: calc(100% - 20px);
+						height: calc(100% - 20px);
+						padding: 12px 8px;
+
+						.my-calendar-name {
+							text-align: left;
+							height: 40px;
+							text-overflow: -o-ellipsis-lastline;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							display: -webkit-box;
+							-webkit-line-clamp: 2;
+							line-clamp: 2;
+							-webkit-box-orient: vertical;
+						}
+
+						* {
+							color: #FFFFFF;
+						}
+
+						&.bg1 {
+							background: linear-gradient(to right, rgb(76, 132, 255), rgb(142, 201, 248));
+						}
+
+						&.bg2 {
+							background: linear-gradient(to right, rgb(253, 164, 35), rgb(254, 219, 115));
+						}
+
+						&.bg3 {
+							background: linear-gradient(to right, rgb(183, 187, 195), rgb(212, 215, 222));
+						}
 
 						&:hover .course-jump {
 							display: flex;
