@@ -55,7 +55,7 @@ export default {
                 menu_id: 5,
                 menu_text: '我的',
                 menu_icon: 'icon-user',
-                menu_href: '',
+                menu_href: '/order/Layout/my',
                 menu_pid: 0,
                 menu_target_type: 0
             }, {
@@ -69,21 +69,21 @@ export default {
                 menu_id: 7,
                 menu_text: '课程查询',
                 menu_icon: '',
-                menu_href: '',
+                menu_href: '/order/Layout/course-search',
                 menu_pid: 6,
                 menu_target_type: 0
             }, {
-                menu_id: 7,
+                menu_id: 8,
                 menu_text: '会议查询',
                 menu_icon: '',
                 menu_href: '',
                 menu_pid: 6,
                 menu_target_type: 0
             }, {
-                menu_id: 8,
+                menu_id: 9,
                 menu_text: '设置',
                 menu_icon: 'icon-setup',
-                menu_href: '',
+                menu_href: '/order/Layout/setting',
                 menu_pid: 0,
                 menu_target_type: 0
             }]

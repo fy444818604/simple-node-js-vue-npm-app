@@ -162,6 +162,7 @@ export default {
         },
         //编辑
         phaseEdit(row){
+            this.$refs["admForm"].resetFields();
             let editForm = {
                 text: row.row.text,
                 description: row.row.description
@@ -212,7 +213,7 @@ export default {
                 text:'',
                 description:''
             }
-
+            this.$refs["admForm"].resetFields();
             // eslint-disable-next-line no-undef
             this.$myLayer.formLayer("新建", $('.dict-modal-add'), ['422px'], function () {
                 _this.$refs["admForm"].validate((valid) => {

@@ -1,18 +1,12 @@
-<!-- 课程预约 -->
+<!-- 课程查询 -->
 <template>
 	<div class="container">
 		<div class="course-title">
-			<div>课程预约</div>
+			<div>课程查询</div>
 		</div>
 		<div class="box">
 			<div class="flex-between">
 				<div class="flex">
-					<ul class="state-wrap flex">
-						<li v-for="item in state" class="flex">
-							<div class="state-lump" :style="{'background':item.color}"></div>
-							<div>{{item.text}}</div>
-						</li>
-					</ul>
 					<ul class="type-wrap flex">
 						<li v-for="item in type" class="flex">
 							<div class="type-lump" :style="{'background':item.color}"></div>
@@ -24,7 +18,7 @@
 					<order-time></order-time>
 				</div>
 			</div>
-			<order-calendar :add="true" :tableData="courseData" :type="2"></order-calendar>
+			<order-calendar :tableData="courseData" :type="2"></order-calendar>
 		</div>
 	</div>
 </template>
@@ -35,17 +29,12 @@ import time from '../../../components/time-selected'
 export default {
     data(){
         return {
-            state:[{
-                color:'#4C84FF',text:'未开始'
-            },{
-                color:'#5ECB3D',text:'进行中'
-            },{
-                color:'#B7BBC3',text:'已结束'
-            }],
             type:[{
-                color:'rgba(76,132,255,.15)',text:'同步课'
+                color:'rgba(76,132,255,.15)',text:'同步课堂主讲'
             },{
-                color:'rgba(253,164,35,.15)',text:'录播课'
+                color:'rgba(76,132,255,.1)',text:'同步课堂听讲'
+            },{
+                color:'rgba(253,164,35,.15)',text:'录播课程'
             }],
             courseData:[{
                 x:2,y:2,name:'生物组织与细胞力学',subject:'生物',school:'成都七中',author:'龙飞',time:'8:40-9:20',state:3,type:1
