@@ -5,9 +5,9 @@
 			<div class="detail-name">{{teacherName}}</div>
 			<div>学生</div>
 		</div>
-		<div class="detail-tab-container">
-			<div class="btnGroup">
-				<btn-list v-for="(item,index) in btnGroup" :key="index" :model="item" @btn-click="btnClick"></btn-list>
+		<div class="detail-tab-container" @click.stop>
+			<div class="btnGroup" >
+				<btn-list @btn-click="bntClck(item)" v-for="(item,index) in btnGroup" :key="index" :model="item" ></btn-list>
 			</div>
 			<el-tabs v-model="activeName" @tab-click="handleClick">
 				<el-tab-pane label="基本信息" name="first">
@@ -19,15 +19,15 @@
 							<ul class="detail-status">
 								<li>
 									<label>状态:</label>
-									<div>停用</div>
+									<div >{{ leftData.status }}</div>
 								</li>
 								<li>
 									<label>理由:</label>
-									<div>停用</div>
+									<div >{{ leftData.reason }}</div>
 								</li>
 								<li>
 									<label>备注:</label>
-									<div>停用</div>
+									<div >{{ leftData.notes }}</div>
 								</li>
 							</ul>
 						</div>
@@ -42,60 +42,139 @@
 									</template>
 									<ul class="detail-table-list">
 										<li>
-											<div>学号</div>
-											<div>2018012545</div>
+											<div><span v-show="edit" style="color: red">*</span>学号</div>
+											<div>
+												<span v-show="!edit">{{baseForm.workId}}</span>
+												<el-input v-show="edit"  v-model="baseForm.workId" style="width:30%"></el-input>
+											</div>
 										</li>
 										<li>
-											<div>姓名</div>
-											<div>2018012545</div>
+											<div><span v-show="edit" style="color: red">*</span>姓名</div>
+											<div>
+												<span v-show="!edit">{{baseForm.userName}}</span>
+												<el-input v-show="edit"  v-model="baseForm.userName" style="width:30%"></el-input>
+											</div>
 										</li>
 										<li>
-											<div>性别</div>
-											<div>2018012545</div>
+											<div><span v-show="edit" style="color: red">*</span>性别</div>
+											<div>
+												<span v-show="!edit">{{baseForm.sex}}</span>
+												<el-select v-show="edit" v-model="baseForm.sex" style="width:30%">
+													<el-option
+															v-for="item in sex"
+															:key="item.code"
+															:label="item.text"
+															:value="item.code">
+													</el-option>
+												</el-select>
+											</div>
 										</li>
 										<li>
-											<div>民族</div>
-											<div>2018012545</div>
+											<div><span v-show="edit" style="color: red">*</span>名族</div>
+											<div>
+												<span v-show="!edit">{{baseForm.nationality}}</span>
+												<el-select v-show="edit" v-model="baseForm.nationality" style="width:30%">
+													<el-option
+															v-for="item in nationData"
+															:key="item.code"
+															:label="item.text"
+															:value="item.code">
+													</el-option>
+												</el-select>
+											</div>
 										</li>
 										<li>
 											<div>出生日期</div>
-											<div>2018012545</div>
+											<div>
+												<span v-show="!edit">{{baseForm.birthday}}</span>
+												<el-input v-show="edit" :disabled="true" v-model="baseForm.birthday" style="width:30%"></el-input>
+											</div>
 										</li>
 										<li>
 											<div>年龄</div>
-											<div>2018012545</div>
+											<div>
+												<span v-show="!edit">{{baseForm.age}}</span>
+												<el-input v-show="edit" :disabled="true" v-model="baseForm.age" style="width:30%"></el-input>
+											</div>
 										</li>
 										<li>
-											<div>身份证号</div>
-											<div>2018012545</div>
+											<div><span v-show="edit" style="color: red">*</span>身份证号</div>
+											<div>
+												<span v-show="!edit">{{baseForm.idCard}}</span>
+												<el-input v-show="edit"  v-model="baseForm.idCard" style="width:30%"></el-input>
+											</div>
 										</li>
 										<li>
-											<div>班级</div>
-											<div>2018012545</div>
+											<div><span v-show="edit" style="color: red">*</span>班级</div>
+											<div>
+												<span v-show="!edit">{{baseForm.classId}}</span>
+												<el-select v-show="edit" v-model="baseForm.classId" style="width:30%">
+													<el-option label="男" value="1"></el-option>
+													<el-option label="女" value="2"></el-option>
+												</el-select>
+											</div>
 										</li>
 										<li>
 											<div>就读类型</div>
-											<div>2018012545</div>
+											<div>
+												<span v-show="!edit">{{baseForm.typeOfStudy}}</span>
+												<el-select v-show="edit" v-model="baseForm.typeOfStudy" style="width:30%">
+													<el-option
+															v-for="item in attend"
+															:key="item.code"
+															:label="item.text"
+															:value="item.code">
+													</el-option>
+												</el-select>
+											</div>
 										</li>
 										<li>
 											<div>政治面貌</div>
-											<div>2018012545</div>
+											<div>
+												<span v-show="!edit">{{baseForm.politicalAttitudes}}</span>
+												<el-select v-show="edit" v-model="baseForm.politicalAttitudes" style="width:30%">
+													<el-option
+															v-for="item in attitudes"
+															:key="item.code"
+															:label="item.text"
+															:value="item.code">
+													</el-option>
+												</el-select>
+											</div>
 										</li>
 										<li>
 											<div>加入时间</div>
-											<div>2018012545</div>
+											<div>
+												<span v-show="!edit">{{baseForm.joinTime}}</span>
+												<el-date-picker
+														v-show="edit"
+														v-model="baseForm.joinTime"
+														type="datetime"
+														placeholder="选择日期时间" style="width:30%">
+												</el-date-picker>
+
+											</div>
 										</li>
 										<li>
 											<div>户口所在地</div>
-											<div>2018012545</div>
+											<div>
+												<span v-show="!edit">{{baseForm.home}}</span>
+												<el-input v-show="edit"  v-model="baseForm.home" style="width:30%"></el-input>
+											</div>
 										</li>
 										<li>
 											<div>住址区域</div>
-											<div>2018012545</div>
+											<div>
+												<span v-show="!edit">{{baseForm.area}}</span>
+												<el-input v-show="edit"  v-model="baseForm.area" style="width:30%"></el-input>
+											</div>
 										</li>
 										<li>
 											<div>详细地址</div>
-											<div>2018012545</div>
+											<div>
+												<span v-show="!edit">{{baseForm.detailedAddress}}</span>
+												<el-input v-show="edit" v-model="baseForm.detailedAddress" style="width:30%"></el-input>
+											</div>
 										</li>
 									</ul>
 								</el-collapse-item>
@@ -109,11 +188,31 @@
 									<ul class="detail-table-list">
 										<li>
 											<div>招生类型</div>
-											<div>春季</div>
+											<div>
+												<span v-show="!edit">{{baseForm.enrollmentType}}</span>
+												<el-select v-show="edit" v-model="baseForm.enrollmentType" style="width:30%" >
+													<el-option
+															v-for="item in recruit"
+															:key="item.code"
+															:label="item.text"
+															:value="item.code">
+													</el-option>
+												</el-select>
+											</div>
 										</li>
 										<li>
 											<div>生源类型</div>
-											<div>应届毕业生</div>
+											<div>
+												<span v-show="!edit">{{baseForm.originType}}</span>
+												<el-select v-show="edit" v-model="baseForm.originType" style="width:30%">
+													<el-option
+															v-for="item in source"
+															:key="item.code"
+															:label="item.text"
+															:value="item.code">
+													</el-option>
+												</el-select>
+											</div>
 										</li>
 									</ul>
 								</el-collapse-item>
@@ -127,7 +226,10 @@
 									<ul class="detail-table-list">
 										<li>
 											<div>账号安全等级</div>
-											<div>0</div>
+											<div>
+												<span v-show="!edit">{{baseForm.securityLevel}}</span>
+												<el-input v-show="edit" v-model="baseForm.securityLevel" style="width:30%"></el-input>
+											</div>
 										</li>
 									</ul>
 								</el-collapse-item>
@@ -242,15 +344,7 @@ export default {
             edit1: false,
             teacherName: '林浩阳',
             userPhoto: require('@/assets/image/user-detail.png'),
-            btnGroup: [{
-                icon: 'icon-enable',
-                name: '启用',
-                alias: 3
-            }, {
-                icon: 'icon-permissions',
-                name: '重置密码',
-                alias: 4
-            }, {
+            btnGroup: [ {
                 icon: 'icon-edit',
                 name: '编辑',
                 alias: 5
@@ -265,9 +359,42 @@ export default {
                 Award: [{
                     text: '2018年市级优秀教师',
                     time: '',
-                    pic: ''
+                    pic: '',
+
+
                 }]
-            }
+            },
+			leftData:{
+				status:'',
+				reason:'',
+				notes:''
+			},
+			baseForm:{
+				workId:'',
+				userName:'',
+				sex:'',
+				joinTime:'',
+				nationality:'',
+				birthday:'',
+				age:'',
+				idCard:'',
+				classId:'',
+				typeOfStudy:'',
+				enrollmentType:'',
+				originType:'',
+				area:'',
+				home:'',
+				detailedAddress:'',
+				securityLevel:''
+			},
+			//字典数据
+			sex:[],//性别
+			stage:[],//阶段
+			attend:[],//就读类型
+			nationData:[],//名族
+			attitudes:[],//政治面貌
+			recruit:[],//招生
+			source:[],//生源
         };
     },
     components: {
@@ -275,9 +402,37 @@ export default {
     },
     created(){
     	this.userId = this.$route.query.id;
-		this.studentsDetails()
+		this.studentsDetails();
+		this.dictionary();
     },
     methods: {
+    	//字典
+		dictionary(){
+			let sex = {"type": ["sex",'stage','study_type','nation','political_attitudes','recruit_student_type','student_source_type']};
+			this.$api.dictSelect(sex).then(res => {
+				if(res.success == true){
+					let  i = 0;
+					for (i = 0; i < res.data.length; i++) {
+						if(res.data[i].type == 'sex'){
+							this.sex = res.data[i].data;
+						}else if(res.data[i].type == 'stage'){
+							this.stage = res.data[i].data;
+						}else if(res.data[i].type == 'study_type'){
+							this.attend = res.data[i].data;
+						}else if(res.data[i].type == 'nation'){
+							this.nationData = res.data[i].data;
+						}else  if(res.data[i].type == 'political_attitudes'){
+							this.attitudes = res.data[i].data
+						}else  if(res.data[i].type == 'recruit_student_type'){
+							this.recruit = res.data[i].data
+						}else  if(res.data[i].type == 'student_source_type'){
+							this.source = res.data[i].data
+						}
+					}
+				}
+			});
+		},
+    	//学生详情
 		studentsDetails(){
 			let params = {
 				id :this.userId,
@@ -286,15 +441,40 @@ export default {
 				if (res.success == true) {
 					console.log(res)
 					this.teacherName = res.data.userName
+					this.baseForm = {
+							workId:res.data.workId,
+							userName:res.data.userName,
+							sex:res.data.sexText,
+							joinTime:res.data.joinTime,
+							nationality:res.data.nationalityText,
+							birthday:res.data.birthday,
+							age:res.data.age,
+							idCard:res.data.idCard,
+							classId:'',
+							typeOfStudy:'',
+							enrollmentType:res.data.coreUserWorkInfo.enrollmentTypeText,
+							originType:res.data.coreUserWorkInfo.originTypeText,
+							area:res.data.registeredPermanentAddressLocusDetail,
+							home:res.data.registeredPermanentAddressLocusId,
+							detailedAddress:res.data.detailedAddress,
+							securityLevel:res.data.securityLevel
+					};
+					this.leftData={
+						status:res.data.statusText,
+						reason:res.data.reason,
+						notes:res.data.notes
+					};
+					console.log(this.leftData)
 				}
 			})
 		},
         handleClick(tab, event) {
             console.log(tab, event);
         },
-        btnClick() {
+		bntClck(){
+			console.log(1)
+		}
 
-        }
     }
 };
 </script>
