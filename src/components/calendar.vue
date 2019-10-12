@@ -64,129 +64,129 @@
 </template>
 
 <script>
-	export default {
-		props: {
-			tableData: {
-				type: Array,
-				default: function() {
-					return []
-				}
-			},
-			num: {
-				type: Number,
-				default: 10
-			},
-			type: {
-				type: Number,
-				default: 1
-			},
-			add: {
-				type:Boolean,
-				default:false
-			}
-		},
-		data() {
-			return {
-				weekDays: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天'],
-				weekList: [],
-				oneDayLong: 24 * 60 * 60 * 1000,
-				current: Object
-			}
-		},
-		created() {
-			this.current = this.nowTime;
-		},
-		computed: {
-			nowTime() {
-				let date = new Date();
-				return date;
-			},
-			timeWeek: function() {
-				let index;
-				switch (this.nowTime.getDay()) {
-					case 0:
-						index = 7;
-						break;
-					case 1:
-						index = 1;
-						break;
-					case 2:
-						index = 2;
-						break;
-					case 3:
-						index = 3;
-						break;
-					case 4:
-						index = 4;
-						break;
-					case 5:
-						index = 5;
-						break;
-					case 6:
-						index = 6;
-						break;
-				}
-				return index;
-			}
-		},
-		methods: {
-			weekListDay(date) {
-				let _date = [];
-				let monday = this.monday(date);
-				for (let i = 1; i < 8; i++) {
-					let month = new Date(monday - (1 - i) * this.oneDayLong).getMonth() + 1;
-					let _month = month >= 10 ? month : "0" + month;
-					let day = new Date(monday - (1 - i) * this.oneDayLong).getDate();
-					let _day = day >= 10 ? day : "0" + day;
-					_date.push(_month + "-" + _day);
-				}
-				this.weekList = _date
-			},
-			monday(date) {
-				let complete = date.getDay();
-				let _nowTime = date.getTime();
-				return new Date(_nowTime - (complete - 1) * this.oneDayLong)
-			},
-			isWeek() {
-				let value = false;
-				if (new Date(this.current).getTime() - this.oneDayLong / 3 - this.monday(this.nowTime).getTime() > -this.oneDayLong) {
-					if (new Date(this.current).getTime() - this.monday(this.nowTime).getTime() < this.oneDayLong * 6) {
-						value = true
-					}
-				}
-				return value;
-			},
-			isData(para, para1) {
-				let value = false;
-				this.tableData.map(v => {
-					if (v.x == para && v.y == para1) {
-						value = v;
-					}
-				})
-				return value;
-			},
-			tdHeight(type) {
-				let height = '52px'
-				switch (type) {
-					case 2:
-						height = '120px'
-						break;
-					case 3:
-						height = '100px'
-						break;
-					default:
-						break;
-				}
-				return height;
-			}
-		},
-		watch: {
-			current: function(val) {
-				this.weekListDay(new Date(val))
-				this.isWeek()
-			}
-		}
-	}
+export default {
+    props: {
+        tableData: {
+            type: Array,
+            default: function() {
+                return []
+            }
+        },
+        num: {
+            type: Number,
+            default: 10
+        },
+        type: {
+            type: Number,
+            default: 1
+        },
+        add: {
+            type: Boolean,
+            default: false
+        }
+    },
+    data() {
+        return {
+            weekDays: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天'],
+            weekList: [],
+            oneDayLong: 24 * 60 * 60 * 1000,
+            current: Object
+        }
+    },
+    created() {
+        this.current = this.nowTime;
+    },
+    computed: {
+        nowTime() {
+            let date = new Date();
+            return date;
+        },
+        timeWeek: function() {
+            let index;
+            switch (this.nowTime.getDay()) {
+            case 0:
+                index = 7;
+                break;
+            case 1:
+                index = 1;
+                break;
+            case 2:
+                index = 2;
+                break;
+            case 3:
+                index = 3;
+                break;
+            case 4:
+                index = 4;
+                break;
+            case 5:
+                index = 5;
+                break;
+            case 6:
+                index = 6;
+                break;
+            }
+            return index;
+        }
+    },
+    methods: {
+        weekListDay(date) {
+            let _date = [];
+            let monday = this.monday(date);
+            for (let i = 1; i < 8; i++) {
+                let month = new Date(monday - (1 - i) * this.oneDayLong).getMonth() + 1;
+                let _month = month >= 10 ? month : "0" + month;
+                let day = new Date(monday - (1 - i) * this.oneDayLong).getDate();
+                let _day = day >= 10 ? day : "0" + day;
+                _date.push(_month + "-" + _day);
+            }
+            this.weekList = _date
+        },
+        monday(date) {
+            let complete = date.getDay();
+            let _nowTime = date.getTime();
+            return new Date(_nowTime - (complete - 1) * this.oneDayLong)
+        },
+        isWeek() {
+            let value = false;
+            if (new Date(this.current).getTime() - this.oneDayLong / 3 - this.monday(this.nowTime).getTime() > -this.oneDayLong) {
+                if (new Date(this.current).getTime() - this.monday(this.nowTime).getTime() < this.oneDayLong * 6) {
+                    value = true
+                }
+            }
+            return value;
+        },
+        isData(para, para1) {
+            let value = false;
+            this.tableData.map(v => {
+                if (v.x == para && v.y == para1) {
+                    value = v;
+                }
+            })
+            return value;
+        },
+        tdHeight(type) {
+            let height = '52px'
+            switch (type) {
+            case 2:
+                height = '120px'
+                break;
+            case 3:
+                height = '100px'
+                break;
+            default:
+                break;
+            }
+            return height;
+        }
+    },
+    watch: {
+        current: function(val) {
+            this.weekListDay(new Date(val))
+            this.isWeek()
+        }
+    }
+}
 </script>
 
 <style lang="scss" scoped="scoped">
@@ -200,15 +200,15 @@
 		left: -8px;
 		top: -8px;
 	}
-	
+
 	.no-start {
 		border-color: transparent rgb(76, 132, 255) transparent transparent;
 	}
-	
+
 	.starting {
 		border-color: transparent rgb(94, 203, 61) transparent transparent;
 	}
-	
+
 	.end {
 		border-color: transparent rgb(183, 187, 195) transparent transparent;
 	}
@@ -239,20 +239,20 @@
 			tr {
 				td {
 					border: 1px dashed #E4E7ED !important;
-					
-					&:hover .course-add{
+
+					&:hover .course-add {
 						display: flex;
 					}
-					
-					.course-add{
+
+					.course-add {
 						width: 100%;
 						height: 100%;
 						display: none;
 						justify-content: center;
 						align-items: center;
 						background-color: #EBEEF5;
-						
-						i{
+
+						i {
 							color: #909399;
 							font-size: 40px;
 						}
@@ -291,8 +291,8 @@
 					.course-detail {
 						padding: 14px;
 						position: relative;
-						
-						&:hover .course-jump{
+
+						&:hover .course-jump {
 							display: flex;
 						}
 
@@ -302,17 +302,18 @@
 							white-space: nowrap;
 							line-height: 24px;
 						}
-						
-						.course-jump{
+
+						.course-jump {
 							position: absolute;
 							left: 0;
 							right: 0;
 							top: 0;
 							bottom: 0;
-							background-color: rgba(0,0,0,.56);
+							background-color: rgba(0, 0, 0, .56);
 							display: none;
 							justify-content: space-around;
 							align-items: center;
+
 							i {
 								color: #FFFFFF;
 								font-size: 28px;
