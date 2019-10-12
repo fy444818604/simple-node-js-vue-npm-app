@@ -3,7 +3,7 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<td>{{new Date(current).getFullYear()}}</td>
+				<td v-if="type!=2">{{new Date(current).getFullYear()}}</td>
 				<td v-for="(item,index) in 7" :class="timeWeek == item&&isWeek()?'date-active':''">
 					<p>{{weekDays[index]}}</p>
 					<p>{{weekList[index]}}</p>
@@ -12,7 +12,7 @@
 		</thead>
 		<tbody>
 			<tr v-for="(item,index) in num">
-				<td>第{{index+1}}节</td>
+				<td v-if="type!=2" :style="{'background':'#F6F8FA','border':'none!important'}">第{{index+1}}节</td>
 				<td v-for="(item1,index1) in 7" :style="{'height':type==1?'52px':'120px'}">
 					<div class="count" v-if="isData(item,item1)&&type==1" :style="{'background-color':`rgba(76,132,255,${0.1*(isData(item,item1).record + isData(item,item1).syn + isData(item,item1).meeting)})`}">
 						{{isData(item,item1).record + isData(item,item1).syn + isData(item,item1).meeting}}
@@ -36,7 +36,6 @@
 							<i class="iconfont icon-list-1" v-if="isData(item,item1).state==2"></i>
 						</div>
 					</div>
-<<<<<<< HEAD
 					<div class="my-calendar" v-if="isData(item,item1)&&type==3" :class="isData(item,item1).type==1?'bg1':isData(item,item1).type==2?'bg2':'bg3'">
 						<div class="my-calendar-name">{{isData(item,item1).name}}</div>
 						<div class="flex-between">
@@ -58,8 +57,6 @@
 							</ul>
 						</div>
 					</div>
-=======
->>>>>>> c6221c5e0587c646dc331bd4bc93443e0546f652
 				</td>
 			</tr>
 		</tbody>
@@ -67,7 +64,6 @@
 </template>
 
 <script>
-<<<<<<< HEAD
 	export default {
 		props: {
 			tableData: {
@@ -191,113 +187,6 @@
 			}
 		}
 	}
-=======
-export default {
-    props: {
-        tableData: {
-            type: Array,
-            default: function() {
-                return []
-            }
-        },
-        num: {
-            type: Number,
-            default: 10
-        },
-        type: {
-            type: Number,
-            default: 1
-        }
-    },
-    data() {
-        return {
-            weekDays: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天'],
-            weekList: [],
-            oneDayLong: 24 * 60 * 60 * 1000,
-            current: Object
-        }
-    },
-    created() {
-        this.current = this.nowTime;
-    },
-    computed: {
-        nowTime() {
-            let date = new Date();
-            return date;
-        },
-        timeWeek: function() {
-            let index;
-            switch (this.nowTime.getDay()) {
-            case 0:
-                index = 7;
-                break;
-            case 1:
-                index = 1;
-                break;
-            case 2:
-                index = 2;
-                break;
-            case 3:
-                index = 3;
-                break;
-            case 4:
-                index = 4;
-                break;
-            case 5:
-                index = 5;
-                break;
-            case 6:
-                index = 6;
-                break;
-            }
-            return index;
-        }
-    },
-    methods: {
-        weekListDay(date) {
-            let _date = [];
-            let monday = this.monday(date);
-            for (let i = 1; i < 8; i++) {
-                let month = new Date(monday - (1 - i) * this.oneDayLong).getMonth() + 1;
-                let _month = month >= 10 ? month : "0" + month;
-                let day = new Date(monday - (1 - i) * this.oneDayLong).getDate();
-                let _day = day >= 10 ? day : "0" + day;
-                _date.push(_month + "-" + _day);
-            }
-            this.weekList = _date
-        },
-        monday(date) {
-            let complete = date.getDay();
-            let _nowTime = date.getTime();
-            return new Date(_nowTime - (complete - 1) * this.oneDayLong)
-        },
-        isWeek() {
-            let value = false;
-            if (new Date(this.current).getTime() - this.oneDayLong / 3 - this.monday(this.nowTime).getTime() > -this.oneDayLong) {
-                if (new Date(this.current).getTime() - this.monday(this.nowTime).getTime() < this.oneDayLong * 6) {
-                    value = true
-                }
-            }
-            return value;
-        },
-        isData(para, para1) {
-            let value = false;
-            this.tableData.map(v => {
-                if (v.x == para && v.y == para1) {
-                    value = v;
-                }
-            })
-            return value;
-        }
-    },
-    watch: {
-        current: function(val) {
-            this.weekListDay(new Date(val))
-            this.isWeek()
-        }
-    }
-}
->>>>>>> c6221c5e0587c646dc331bd4bc93443e0546f652
 </script>
 
 <style lang="scss" scoped="scoped">
@@ -369,15 +258,6 @@ export default {
 						}
 					}
 
-<<<<<<< HEAD
-=======
-					&:first-child {
-						background-color: #F6F8FA;
-						opacity: 1;
-						border: none !important;
-					}
-
->>>>>>> c6221c5e0587c646dc331bd4bc93443e0546f652
 					.count {
 						width: 100%;
 						height: 100%;
@@ -433,8 +313,6 @@ export default {
 							display: none;
 							justify-content: space-around;
 							align-items: center;
-<<<<<<< HEAD
-
 							i {
 								color: #FFFFFF;
 								font-size: 28px;
@@ -494,10 +372,6 @@ export default {
 							align-items: center;
 
 							i {
-=======
-							
-							i{
->>>>>>> c6221c5e0587c646dc331bd4bc93443e0546f652
 								color: #FFFFFF;
 								font-size: 28px;
 							}
