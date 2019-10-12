@@ -7,7 +7,7 @@
 		</div>
 		<div class="detail-tab-container" @click.stop>
 			<div class="btnGroup" >
-				<btn-list @btn-click="bntClck(item)" v-for="(item,index) in btnGroup" :key="index" :model="item" ></btn-list>
+				<btn-list @btn-click="btnClick(item)" v-for="(item,index) in btnGroup" :key="index" :model="item" ></btn-list>
 			</div>
 			<el-tabs v-model="activeName" @tab-click="handleClick">
 				<el-tab-pane label="基本信息" name="first">
@@ -471,10 +471,9 @@ export default {
         handleClick(tab, event) {
             console.log(tab, event);
         },
-		bntClck(){
-			console.log(1)
-		}
-
+        btnClick() {
+			console.log(123)
+        }
     }
 };
 </script>
@@ -596,6 +595,7 @@ export default {
 		position: absolute;
 		right: 30px;
 		top: 10px;
+		z-index: 9999;
 	}
 
 	.detail-line>li>div:first-child {
