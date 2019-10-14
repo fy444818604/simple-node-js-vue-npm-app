@@ -8,7 +8,7 @@
 </template>
 <script>
 export default {
-  props:['bg']
+    props:['bg']
 }
 </script>
 <style lang="scss" scoped>
@@ -19,8 +19,6 @@ export default {
   min-height: 66px;
   border-radius: 10px;
   flex-shrink: 0;
-  // width: 24%;
-  // margin-left: 1%;
   margin: 0 1%;
   padding-bottom: 8%;
   .t-content {

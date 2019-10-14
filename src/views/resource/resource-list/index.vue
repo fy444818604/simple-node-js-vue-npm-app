@@ -21,7 +21,6 @@
                                 <li>其他</li>
                             </ul>
                         </div>
-
                         <div class="status">
                             <span @click.stop="selectType=2">
                                 最新
@@ -72,7 +71,7 @@
               </template>
               <template v-if="navSelect === 2">
                 <ul class="active"> 
-                  <li>安全教育</li>
+                  <li class="text-overflow">安全教育安全教育安全教育安全教育</li>
                   <li>法制教育</li>
                   <li>艺术节</li>
                   <li>运动会</li>
@@ -106,16 +105,14 @@ export default {
         handleHideSelect() {
             this.selectType = 0;
         },
-
         /* 左边导航 */
         handleSelectNav(type) {
-          this.navSelect = type
-          this.showSubNav = true
+            this.navSelect = type;
+            this.showSubNav = true
         },
         handleHideSubNav(){
-          this.showSubNav = false
+            this.showSubNav = false
         }
-
     }
 };
 </script>
@@ -219,6 +216,7 @@ export default {
           .active {
             padding: 20px;
             li {
+              padding: 0 20px;
               height: 52px; line-height: 52px;
               text-align: center; cursor: pointer;
               color: #A9B6CB;
