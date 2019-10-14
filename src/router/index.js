@@ -551,7 +551,7 @@ const resource = {
     },
     children: [{
         path: '/resource/Layout/index',
-        name: 'index',
+        name: 'resource-index',
         component: resolve => {
             require(['../views/resource/index/index'], resolve)
         },
@@ -685,6 +685,30 @@ const order = {
     ]
 }
 
+//统一门户
+const index = {
+	path: '/index',
+	name: 'index-layout',
+	component: resolve => {
+	    require(['../views/index/layout'], resolve)
+	},
+	meta: {
+	    title: '首页',
+	    requireAuth: true
+	},
+	children:[{
+		path: '/Layout/index',
+		name: 'index',
+		component: resolve => {
+		    require(['../views/index/index'], resolve)
+		},
+		meta: {
+		    title: '首页',
+		    requireAuth: true
+		}
+	}]
+}
+
 
 const router = new Router({
     base: './',
@@ -717,7 +741,8 @@ const router = new Router({
         equipment,
         authorization,
         resource,
-        order
+        order,
+		index
     ]
 })
 
