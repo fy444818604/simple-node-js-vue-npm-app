@@ -107,11 +107,16 @@
 										</li>
 										<li>
 											<div><span v-show="edit" style="color: red">*</span>班级</div>
+
 											<div>
 												<span v-show="!edit">{{baseForm.classId}}</span>
 												<el-select v-show="edit" v-model="baseForm.classId" style="width:30%">
-													<el-option label="男" value="1"></el-option>
-													<el-option label="女" value="2"></el-option>
+                                                    <el-option
+                                                            v-for="item in learn"
+                                                            :key="item.code"
+                                                            :label="item.text"
+                                                            :value="item.code">
+                                                    </el-option>
 												</el-select>
 											</div>
 										</li>
@@ -392,6 +397,7 @@ export default {
 				securityLevel:''
 			},
             staId:'',
+            classId:'',
 			//字典数据
 			sex:[],//性别
 			stage:[],//阶段
@@ -400,6 +406,7 @@ export default {
 			attitudes:[],//政治面貌
 			recruit:[],//招生
 			source:[],//生源
+            learn:[],//班级
         };
     },
     components: {
@@ -409,6 +416,7 @@ export default {
     	this.userId = this.$route.query.id;
 		this.studentsDetails();
 		this.dictionary();
+		this.classNid();
     },
     methods: {
     	//字典
@@ -444,8 +452,9 @@ export default {
 			};
 			this.$api.studentsDetails(params).then(res => {
 				if (res.success == true) {
+				    console.log(res)
                     this.staId = res.data.id;
-                    console.log(this.staId);
+                    this.classId = res.data.coreClassmembers.classId;
 					this.teacherName = res.data.userName;
 					this.baseForm = {
 							workId:res.data.workId,
@@ -456,8 +465,8 @@ export default {
 							birthday:res.data.birthday,
 							age:res.data.age,
 							idCard:res.data.idCard,
-							classId:'',
-							typeOfStudy:'',
+							classId:res.data.coreClassmembers.classId,
+							typeOfStudy:res.data.typeOfStudyText,
 							enrollmentType:res.data.coreUserWorkInfo.enrollmentTypeText,
 							originType:res.data.coreUserWorkInfo.originTypeText,
 							area:res.data.registeredPermanentAddressLocusDetail,
@@ -473,9 +482,8 @@ export default {
 					this.studentsParents();
 				}
 			});
-
-
 		},
+        //家长详情
         studentsParents(){
             let studentsParents = {
                 integer :this.staId
@@ -485,6 +493,19 @@ export default {
                     console.log(res)
                 }
             })
+        },
+        //查询班级下拉
+        classNid(){
+            let learnSelect = {
+                orgId:this.classId,
+            };
+            this.$api.learnSelect(learnSelect).then(res => {
+                console.log(res);
+                if(res.success == true){
+                    console.log(res)
+                    this.learn = res.data
+                }
+            });
         },
         handleClick(tab, event) {
             console.log(tab, event);
@@ -501,11 +522,11 @@ export default {
                 this.$myLayer.errorLayer('姓名不能为空')
             }else if(this.baseForm.sex == ''){
                 this.$myLayer.errorLayer('性别不能为空')
-            }else if(this.baseForm.nationality){
+            }else if(this.baseForm.nationality == ''){
                 this.$myLayer.errorLayer('名族不能为空')
-            }else if(this.baseForm.idCard){
+            }else if(this.baseForm.idCard == ''){
                 this.$myLayer.errorLayer('身份证号码不能为空')
-            }else if(this.baseForm.this.baseForm.idCard){
+            }else if(this.baseForm.this.baseForm.idCard == ''){
                 this.$myLayer.errorLayer('班级不能为空')
             }else {
                 let params = {
