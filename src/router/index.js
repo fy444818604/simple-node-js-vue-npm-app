@@ -742,7 +742,18 @@ const router = new Router({
         authorization,
         resource,
         order,
-		index
+		index,
+		{
+		    path: '/Layout/index/notice-detail',
+		    name: 'notice-detail',
+		    component: resolve => {
+		        require(['../views/index/notice-detail'], resolve)
+		    },
+		    meta: {
+		        title: '通知&新闻详情',
+		        requireAuth: true
+		    }
+		}
     ]
 })
 
