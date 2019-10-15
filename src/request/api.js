@@ -50,7 +50,9 @@ export const teachersAdd = params => post('/base/api/userInfo/teacherInfo/save',
 export const teachersPassword = params => post('/base/api/userInfo/teacherInfo/resetPasswordBatch',params);
 export const teachersDis = params => post('/base/api/userInfo/teacherInfo/setStatusBatch',params);
 export const teachersDisT = params => get('/base/api/userInfo/teacherInfo/setStatusById',params);
-
+export const teachersDetails = params => get('/base/api/userInfo/teacherInfo/getInfoById',params);
+export const teachersSelect = params => get('/base/api/userInfo/teacherInfo/getKeyAndValue',params);
+export const teacherSdetAdd = params => post('/base/api/userInfo/teacherInfo/update',params);
 //学生账号管理
 export const students = params => post('/base/api/userInfo/studentInfo/list',params);
 export const studentsAdd = params => post('/base/api/userInfo/studentInfo/save',params);
@@ -59,6 +61,8 @@ export const batPassword = params => post('/base/api/userInfo/studentInfo/resetP
 export const studentsDis = params => get('/base/api/userInfo/studentInfo/setStatusById',params);
 export const batStudentsExport = params => post('/base/api/userInfo/studentInfo/exportExcel',params);
 export const studentsDetails = params => get('/base/api/userInfo/studentInfo/getInfoById',params);
+export const studentsParents = params => get('/base/api/userInfo/studentInfo/getParentInfoByUserId',params);
+export const studentsUpdate = params => post('/base/api/userInfo/studentInfo/update',params);
 //机构树
 export const institutions = params => get('/base/api/organizationUnit/all',params);
 //查询学校下的校区
