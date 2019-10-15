@@ -174,9 +174,7 @@ export default {
             // 当前机构id
             orgId: '',
 
-            // ******* 左上角机构下拉参数 start *******
-            rootId: '0',
-            // ******* 左上角机构下拉参数 end *******
+            rootId: '0',// TODO 根机构应该过滤为当前登录用户的机构
         }
     },
     components:{
@@ -188,7 +186,6 @@ export default {
     },
     created(){
         this.dictionary();
-        this.queryOrg();
     },
     methods: {// 加载字典
         dictionary(){
@@ -268,26 +265,6 @@ export default {
         orgSelect(val) {
             this.orgId = val.id;
             this.calendarTimeList();
-        },
-        //机构
-        queryOrg(){
-            let params = {
-                level : 0,
-                onlyOrg :1,
-                parentId : 0, // TODO 根机构应该过滤为当前登录用户的机构
-            };
-            this.$api.institutions(params).then(res => {
-                if(res.success === true){
-                    // this.areaList = res.data;
-                    if (res.data.length > 0) {
-                        res.data.forEach((item) => {
-                            item.isLeaf = !item.next; // 是否是叶子节点
-                        });
-                        this.orgData = res.data;
-                        this.polForm.campusId = [];
-                    }
-                }
-            })
         },
         // ******* 弹框中触发方法 start *******
         // 设置弹窗中下拉框的最小宽度
