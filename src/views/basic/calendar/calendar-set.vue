@@ -7,24 +7,7 @@
                 <div class="grid-content bg-purple cha-title">
                     <span>{{ pageTile }}</span>
                     <span style="margin-left: 22px; font-weight: normal;">
-                        <el-dropdown trigger="click" placement="bottom">
-                                <span class="el-dropdown-link">
-                                    {{currentSelect}}<i class="el-icon-arrow-down el-icon--right"></i>
-                                </span>
-                            <el-dropdown-menu slot="dropdown">
-                                <el-input v-model="filterText">
-                                </el-input>
-                                <el-tree
-                                        @node-click="handleSelect"
-                                        style="width:250px"
-                                        class="filter-tree"
-                                        :data="orgData"
-                                        :props="defaultProps"
-                                        :filter-node-method="filterNode"
-                                        ref="tree">
-                                </el-tree>
-                            </el-dropdown-menu>
-                        </el-dropdown>
+                        <org-menu :rootId="rootId" @node-select="orgSelect"></org-menu>
                     </span>
                 </div>
             </el-col>
@@ -53,22 +36,7 @@
             <div class="modalAdd">
                 <el-form ref="addForm" :model="polForm" label-width="88px" :rules="formRules">
                     <el-form-item label="机构" prop="orgId" >
-                        <el-input
-                                v-model="orgSelectText"
-                                placeholder="请选择或输入"
-                                @click.stop>
-                            <i slot="suffix" @click="isShow" class="iconfont icon-apartment"></i>
-                        </el-input>
-                        <div class="el-div-tree" v-if="orgSelectIsShow">
-                            <el-tree
-                                @node-click="handleOrgSelect"
-                                class="filter-tree"
-                                :props="defaultProps"
-                                :filter-node-method="filterOrgSelectNode"
-                                ref="orgSelect"
-                                :data="orgData">
-                            </el-tree>
-                        </div>
+                        <org-select :rootId="rootId" :initText="orgSelectText" :refreshText="refreshText" @node-select="handleOrgSelect"></org-select>
                     </el-form-item>
                     <el-form-item label="学年" prop="schoolYear">
                         <el-select v-model="polForm.schoolYear" @focus="setSelectMinWidth" placeholder="请选择" style="width: 100%">
@@ -116,22 +84,7 @@
             <div class="modalEdit">
                 <el-form ref="editForm" :model="polForm" label-width="88px" :rules="formRules">
                     <el-form-item label="机构" prop="orgId" >
-                        <el-input
-                                v-model="orgSelectText"
-                                placeholder="请选择或输入"
-                                @click.stop>
-                            <i slot="suffix" @click="isShow" class="iconfont icon-apartment"></i>
-                        </el-input>
-                        <div class="el-div-tree" v-if="orgSelectIsShow">
-                            <el-tree
-                                    @node-click="handleOrgSelect"
-                                    class="filter-tree"
-                                    :props="defaultProps"
-                                    :filter-node-method="filterOrgSelectNode"
-                                    ref="orgSelect"
-                                    :data="orgData">
-                            </el-tree>
-                        </div>
+                        <org-select :rootId="rootId" :initText="orgSelectText" :refreshText="refreshText" @node-select="handleOrgSelect"></org-select>
                     </el-form-item>
                     <el-form-item label="开学时间" prop="startDate">
                         <el-date-picker
@@ -162,6 +115,9 @@ import bntList from '../../../components/btn-list'
 import table from '../../../components/table'
 import stateSwitch from '../../../components/state-switch'
 import paging from '../../../components/paging'
+import orgMenu from "../../../components/org-menu"
+import orgSelect from "../../../components/org-select"
+import {isOrg} from "../../../assets/javascript/orgType.js"
 /*import modal from '../../../components/modal'*/
 export default {
     name: "calendar-set",
@@ -216,22 +172,11 @@ export default {
                 visible:false,
                 title: '新建',
             },
-
-            // ******* 左上角机构下拉参数 start *******
-            orgData:[],
             // 当前机构id
             orgId: '',
-            // 下拉菜单显示值
-            currentSelect: "请选择机构",
-            // 机构下拉菜单的数据
-            areaList: [],
-            // 机构下拉菜单的数据格式定义
-            defaultProps: {
-                children: 'children',
-                label: 'displayName',
-                isLeaf: 'isLeaf'
-            },
-            filterText: '',
+
+            // ******* 左上角机构下拉参数 start *******
+            rootId: '0',
             // ******* 左上角机构下拉参数 end *******
 
             // ******* 弹出框中用到的参数 start *******
@@ -251,8 +196,15 @@ export default {
                 startDate:[{required: true, message: '开学时间不能为空', trigger: 'blur'}],
                 holidayDate:[{required: true, message: '放假时间不能为空', trigger: 'blur'}],
             },
+            // 机构下拉菜单的数据格式定义
+            defaultProps: {
+                children: 'children',
+                label: 'displayName',
+                isLeaf: 'isLeaf'
+            },
             orgSelectText: '',
-            orgSelectIsShow: false,
+            refreshText: false,
+            orgData:[],
             // 弹窗的下拉框宽度
             selectMinWidth:0
             // ******* 弹出框中用到的参数 end *******
@@ -263,22 +215,14 @@ export default {
         'pol-table':table,
         'stateSwitch':stateSwitch,
         'pol-paging':paging,
+        'org-menu':orgMenu,
+        'org-select':orgSelect,
         /* 'pol-modal':modal*/
     },
     watch: {
-        filterText(val) {
-            this.$refs.tree.filter(val);
-        },
-        orgSelectText(val) {
-            if (this.$refs.orgSelect) {
-                this.$refs.orgSelect.filter(val);
-            }
-        }
-
     },
     created(){
         this.dictionary();
-        this.queryOrg();
     },
     methods: {
         // 设置弹窗中下拉框的最小宽度
@@ -336,52 +280,20 @@ export default {
 
         // ******* 左上角机构下拉触发方法 start *******
         //点击机构节点事件
-        handleSelect(value) {
-            this.currentSelect = value.displayName;
+        orgSelect(value) {
             this.orgId = value.id;
             this.calendarList();
         },
-        //过滤节点
-        filterNode(value, data) {
-            if (!value) return true;
-            return data.displayName.indexOf(value) !== -1;
-        },
-        //机构
-        queryOrg(){
-            let params = {
-                level : 0,
-                onlyOrg :1,
-                parentId : 0,
-            };
-            this.$api.institutions(params).then(res => {
-                if(res.success == true){
-                    // this.areaList = res.data;
-                    if (res.data.length > 0) {
-                        res.data.forEach((item) => {
-                            item.isLeaf = !item.next; // 是否是叶子节点
-                        })
-                        this.orgData = res.data;
-                    }
-                }
-            })
-        },
         // ******* 左上角机构下拉触发方法 end *******
-
         // ******* 弹框中的机构下拉触发方法 start *******
         // 点击节点事件
-        handleOrgSelect(value){
-            this.polForm.orgId = value.id;
-            this.orgSelectText = value.displayName;
-            this.isShow();
-        },
-        // 过滤节点
-        filterOrgSelectNode(value, data){
-            if (!value) return true;
-            return data.displayName.indexOf(value) !== -1;
-        },
-        // 显示切换
-        isShow(){
-            this.orgSelectIsShow = !this.orgSelectIsShow
+        handleOrgSelect(value, callback){
+            if(isOrg(value.unitAttr)) { // 可选的机构类型
+                this.polForm.orgId = value.id;
+                callback(true);
+            } else {
+                this.$myLayer.errorLayer("请选择机构");
+            }
         },
         // ******* 弹框中的机构下拉触发方法 end *******
 
@@ -462,6 +374,7 @@ export default {
             };
             let _this = this;
             this.orgSelectText = row.row.orgName;
+            this.refreshText = !this.refreshText;
             this.polForm = editForm;
             this.$myLayer.formLayer("修改", $('.pol-modal-edit'), ['422px'], function () {
                 _this.$refs["editForm"].validate((valid) => {
