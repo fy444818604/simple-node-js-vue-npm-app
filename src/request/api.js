@@ -65,6 +65,8 @@ export const studentsParents = params => get('/base/api/userInfo/studentInfo/get
 export const studentsUpdate = params => post('/base/api/userInfo/studentInfo/update',params);
 //机构树
 export const institutions = params => get('/base/api/organizationUnit/all',params);
+//查询学校下的校区
+export const campusBySchool = params => get('/base/api/organizationUnit/schoolAreas',params);
 //学届管理
 export const learnSelect  = params => get('/base/api/grade/select',params);
 //班级管理
@@ -74,7 +76,12 @@ export const calendarPage = params => post('/base/api/schoolCalendar/page',param
 export const calendarDis = params => post('/base/api/schoolCalendar/update/status',params);
 export const calendarAdd = params => post('/base/api/schoolCalendar/add',params);
 export const calendarEdit = params => post('/base/api/schoolCalendar/update',params);
-
+//作息时间
+export const calendarTimePage = params => post('/base/api/workRest/page',params);
+export const calendarTimeDis = params => post('/base/api/workRest/update/status',params);
+export const calendarTimeById = params => get('/base/api/workRest/getById',params);
+export const calendarTimeAdd = params => post('/base/api/workRest/add',params);
+export const calendarTimeEdit = params => post('/base/api/workRest/update',params);
 
 
 //测试接口
