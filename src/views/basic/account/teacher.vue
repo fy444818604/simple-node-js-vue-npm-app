@@ -65,7 +65,7 @@
 			</el-table-column>
 			<el-table-column label="状态">
 				<template slot-scope="scope">
-					{{scope.row.status == 1?'启用':'停用'}}
+					{{scope.row.statusText == 1?'停用':'启用'}}
 				</template>
 			</el-table-column>
 			<el-table-column prop="id" label="操作" width="60">
@@ -332,6 +332,7 @@ export default {
 		addIns(val){
 			this.filterText = val.displayName;
 			this.addForm.school = val.id;
+			this.orgId = val.id;
 			this.isshow = false;
 		},
 		//添加请求
