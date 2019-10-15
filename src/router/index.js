@@ -709,6 +709,30 @@ const index = {
 	}]
 }
 
+//个人中心
+const personal = {
+	path: '/personal/layout',
+	name: 'personal-layout',
+	component: resolve => {
+	    require(['../views/personal/layout/layout'], resolve)
+	},
+	meta: {
+	    title: '首页',
+	    requireAuth: true
+	},
+	children:[{
+		path: '/personal/layout/index',
+		name: 'personal-index',
+		component: resolve => {
+		    require(['../views/personal/person/index'], resolve)
+		},
+		meta: {
+		    title: '个人中心',
+		    requireAuth: true
+		}
+	}]
+}
+
 
 const router = new Router({
     base: './',
@@ -753,7 +777,8 @@ const router = new Router({
 		        title: '通知&新闻详情',
 		        requireAuth: true
 		    }
-		}
+		},
+		personal
     ]
 })
 
