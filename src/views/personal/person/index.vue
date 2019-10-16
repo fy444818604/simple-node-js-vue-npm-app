@@ -77,10 +77,10 @@ export default {
   data(){
     return {
       photoList:[
-        {url:require('@/assets/image/组1.jpg'),title:'揭秘王牌武器，洞察科学揭秘王牌武器，洞察科学'},
-        {url:require('@/assets/image/组2.jpg'),title:'初中新概念二册精讲'},
-        {url:require('@/assets/image/组3.jpg'),title:'自然拼读新手提升班'},
-        {url:require('@/assets/image/组4.jpg'),title:'初一科学名师精讲课程'},
+        {url:require('@/assets/image/photo1.jpg'),title:'揭秘王牌武器，洞察科学揭秘王牌武器，洞察科学'},
+        {url:require('@/assets/image/photo2.jpg'),title:'初中新概念二册精讲'},
+        {url:require('@/assets/image/photo3.jpg'),title:'自然拼读新手提升班'},
+        {url:require('@/assets/image/photo4.jpg'),title:'初一科学名师精讲课程'},
       ],
       fixed:false,
       scrollNum:0

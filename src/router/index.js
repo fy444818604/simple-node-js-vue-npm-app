@@ -638,6 +638,86 @@ const resource = {
     }
     ]
 }
+// 同步课堂
+const synclass = {
+    path:'/sync/Layout',
+    name:'sync-Layout',
+    component: resolve => {
+        require(['../views/synclass/layout/layout'], resolve)
+    },
+    meta: {
+        title: '首页',
+        requireAuth: true
+    },
+    children:[
+        {
+            path:'/sync/Layout/index',
+            name: 'sync-Layout-index',
+            component: resolve => {
+                require(['../views/synclass/index/index'], resolve)
+            },
+            meta: {
+                title: '首页',
+                requireAuth: true
+            } 
+        },
+        {
+            path:'/sync/Layout/school',
+            name: 'sync-Layout-school',
+            component: resolve => {
+                require(['../views/synclass/school/index'], resolve)
+            },
+            meta: {
+                title: '学校课表',
+                requireAuth: true
+            } 
+        },
+        {
+            path:'/sync/Layout/my',
+            name: 'sync-Layout-my',
+            component: resolve => {
+                require(['../views/synclass/my/index'], resolve)
+            },
+            meta: {
+                title: '我的课表',
+                requireAuth: true
+            } 
+        },
+        {
+            path:'/sync/Layout/video',
+            name: 'sync-Layout-video',
+            component: resolve => {
+                require(['../views/synclass/video/index'], resolve)
+            },
+            meta: {
+                title: '视频中心',
+                requireAuth: true
+            } 
+        },
+        {
+            path:'/sync/Layout/live',
+            name: 'sync-Layout-live',
+            component: resolve => {
+                require(['../views/synclass/live/index'], resolve)
+            },
+            meta: {
+                title: '同步课直播',
+                requireAuth: true
+            } 
+        },
+        {
+            path:'/sync/Layout/static',
+            name: 'sync-Layout-static',
+            component: resolve => {
+                require(['../views/synclass/static/index'], resolve)
+            },
+            meta: {
+                title: '数据统计',
+                requireAuth: true
+            } 
+        },
+    ]
+}
 //预约系统
 const order = {
     path: '/order/Layout',
@@ -766,7 +846,8 @@ const router = new Router({
         authorization,
         resource,
         order,
-		index,
+    index,
+    synclass,
 		{
 		    path: '/Layout/index/notice-detail',
 		    name: 'notice-detail',
