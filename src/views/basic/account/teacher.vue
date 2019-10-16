@@ -184,27 +184,7 @@ export default {
                 user: '',
                 sex: ''
             },
-            tableData: [{
-                id: 123,
-                num: 1,
-                workNum: 20134490,
-                name: '王志山',
-                sex: 1,
-                org: '元素中学',
-                telphone: 15155552222,
-                weixin: 1,
-                status: 1,
-            }, {
-                id: 123,
-                num: 1,
-                workNum: 20134490,
-                name: '王志山',
-                sex: 1,
-                org: '元素中学',
-                telphone: 15155552222,
-                weixin: 0,
-                status: 2,
-            }],
+            tableData: [],
             multipleSelection: [],
             pageSize: 10, //显示多少页
             pageCurrent: 1, //当前页

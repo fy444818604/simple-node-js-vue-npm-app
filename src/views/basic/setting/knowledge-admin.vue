@@ -5,17 +5,58 @@
         <el-row class="kno-title">
             <el-col :span="12"><div class="grid-content bg-purple cha-title">{{ pageTile }}</div></el-col>
             <el-col :span="12"><div class="grid-content bg-purple-light">
-                <bnt-list :model="model" @btn-click="knoAdd">
-                </bnt-list>
+                <bnt-list :model="model" @btn-click="knoAdd"></bnt-list>
+                <bnt-list :model="modela" @btn-click="knoAdd"></bnt-list>
+                <bnt-list :model="modelb" @btn-click="knoAdd"></bnt-list>
+                <bnt-list :model="modelc" @btn-click="knoAdd"></bnt-list>
             </div></el-col>
         </el-row>
+        <!--查询-->
+        <div>
+            <el-form ref="formInline"  :inline="true" :model="formInline" class="demo-form-inline">
+                <el-form-item>
+                    <el-input v-model="formInline.account" placeholder="请输入账号查询"></el-input>
+                </el-form-item>
+                <el-form-item label="学科:">
+                    <el-select v-model="formInline.discipline" placeholder="不限" style="width: 200px;">
+                        <el-option v-for="item in discipline" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item>
+                    <button class="primary-btn" @click="search(1)">查询</button>
+                    <button class="clear-btn" @click="search(2)">清空</button>
+                </el-form-item>
+            </el-form>
+        </div>
         <!--表格-->
-        <kno-table
-                :tableData="tableData"
-                :tableColumn="tableColumn"
-                @on-stop="knoStop"
-                @on-edit="knoEdit">
-        </kno-table>
+        <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%"  @mouseenter="handleSelectionChange(scope.row)">
+            <el-table-column type="selection" width="55">
+            </el-table-column>
+            <el-table-column type="index" label="序号" width="120">
+            </el-table-column>
+            <el-table-column prop="pointsName" label="名称" width="120">
+            </el-table-column>
+            <el-table-column label="科目" prop="subjectIdName">
+            </el-table-column>
+            <el-table-column prop="periodIdText" label="学段" >
+            </el-table-column>
+            <el-table-column prop="notes" label="备注">
+            </el-table-column>
+            <el-table-column prop="statusText" label="状态">
+            </el-table-column>
+            <el-table-column prop="id" label="操作" width="80px">
+                <template slot-scope="scope"  >
+                    <i v-if="!scope.row.showBtn" class="iconfont icon-more" @mouseenter="handleMouseEnter(scope.row)"></i>
+                    <ul class="tableOpe"  v-else @mouseleave="handleMouseLeave(scope.row)">
+                        <li>
+                            <span v-if="scope.row.status == 0" @click="disable(scope.row,1)">停用</span>
+                            <span v-else @click="disable(scope.row,0)">启用</span>
+                        </li>
+                        <li>编辑</li>
+                    </ul>
+                </template>
+            </el-table-column>
+        </el-table>
         <!--分页/启用/停用-->
         <el-row class="kno-bnt">
             <el-col :span="5"><div class="grid-content bg-purple cha-title">
@@ -51,7 +92,6 @@
 
 <script>
 import bntList from '../../../components/btn-list'
-import table from '../../../components/table'
 import stateSwitch from '../../../components/state-switch'
 import paging from '../../../components/paging'
 import modal from '../../../components/modal'
@@ -65,33 +105,21 @@ export default {
                 name:'添加',
                 icon:'icon-add'
             },
+            modela:{
+                name:'导入',
+                icon:'icon-input'
+            },
+            modelb:{
+                name:'启用',
+                icon:'icon-enable'
+            },
+            modelc:{
+                name:'禁用',
+                icon:'icon-stop'
+            },
             //表格
-            tableData:[
-                {
-                    id:1,
-                    level:'1号教学楼',
-                    status:'启用',
-
-                },
-                {
-                    id:2,
-                    level:'1号教学楼',
-                    status:'启用',
-
-                },
-                {
-                    id:3,
-                    level:'1号教学楼',
-                    status:'启用',
-
-                },
-                {
-                    id:4,
-                    level:'1号教学楼',
-                    status:'启用',
-
-                }
-            ],
+            tableData:[],
+            multipleSelection: [],
             tableColumn:[
                 {
                     prop:'id',
@@ -106,10 +134,17 @@ export default {
                     label:'状态'
                 }
             ],
+            //查询表单
+            formInline:{
+                account:'',
+                discipline:''
+            },
+            discipline:[],
             //分页
-            pageSize:'',//显示多少页
-            pageCurrent:'',//当前页
-            pageTotal:300,//总条数
+            pageSize:10,//显示多少页
+            pageCurrent:1,//当前页
+            pageTotal:0,//总条数
+            status:0,//状态
             //弹框
             /* dialog */
             dialog: {
@@ -131,33 +166,78 @@ export default {
     },
     components:{
         'bnt-list':bntList,
-        'kno-table':table,
         'stateSwitch':stateSwitch,
         'kno-paging':paging,
         'kno-modal':modal
     },
+    created() {
+        this.knowList();
+        this.subjectSelect();
+    },
     methods: {
+        //学科下拉框数据
+        subjectSelect(){
+            let params = {};
+            this.$api.subjectSelect(params).then(res => {
+                if (res.success == true) {
+                    let  i = 0;
+                    for (i = 0; i < res.data.length; i++) {
+                        res.data[i].showBtn = false;
+                    }
+                    this.discipline = res.data;
+                }
+            })
+        },
+        //分页查询
+        knowList(){
+            let params = {
+                pageIndex: this.pageCurrent,
+                pageSize: this.pageSize,
+                /*status: this.status,*/
+                pointsName:this.formInline.account,
+                subjectId:this.formInline.discipline
+            };
+            this.$api.knowledge(params).then(res => {
+                if (res.success == true) {
+                    console.log(res)
+                    //赋值分页总数
+                    this.pageTotal = parseInt(res.totalDatas);
+                    this.tableData = res.data;
+                }
+            })
+        },
         //添加
         knoAdd(){
             this.dialog.visible = true;
         },
         //表格
-        knoStop(row){
-            console.log(row)
+        disable(row,val){
+
         },
-        knoEdit(row){
-            console.log(row)
+        //查询
+        search(val){
+            if(val == 1){
+                this.knowList();
+            }else {
+                this.formInline ={
+                    account:'',
+                    discipline:''
+                }
+            }
         },
         //状态
         stateList(state){
-            console.log(state)
+            this.status = state;
+            this.knowList();
         },
         //分页
         SizeChange(val){
-            console.log(val)
+            this.pageSize = val;
+            this.knowList();
         },
         CurrentChange(val){
-            console.log(val)
+            this.pageCurrent = val;
+            this.knowList();
         },
         //弹框
         knoSave(){
@@ -166,8 +246,17 @@ export default {
         knoClose(){
             this.dialog.visible = false
         },
+        /* 鼠标移入移除 */
+        handleMouseEnter(row){
+            row.showBtn = true
+        },
+        handleMouseLeave(row){
+            row.showBtn = false
+        },
+        handleSelectionChange(val) {
+            this.multipleSelection = val;
+        },
     }
-
 }
 </script>
 
@@ -182,7 +271,6 @@ export default {
     }
     .kno-title .bg-purple-light{
         text-align: right;
-        padding-right: 24px;
     }
     .kno-bnt{
         margin-top: 14px;

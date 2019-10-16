@@ -106,12 +106,14 @@
 			<div class="modalAdd">
 				<el-form ref="addForm" :model="addForm" label-width="88px" :rules="formRules" id="schoolForm">
 					<el-form-item label="学校" prop="school" >
-							<el-input
-									v-model="filterText"
-									placeholder="请选择或输入"
-									@click.stop>
-								<i slot="suffix" @click="isgow" class="iconfont icon-apartment"></i>
-							</el-input>
+							<div @click="isgow">
+								<el-input
+										v-model="filterText"
+										placeholder="请选择或输入"
+										@click.stop>
+									<i slot="suffix"  class="iconfont icon-apartment"></i>
+								</el-input>
+							</div>
 							<div class="el-div-tree" v-if="isshow">
 								<el-tree
 										class="filter-tree"

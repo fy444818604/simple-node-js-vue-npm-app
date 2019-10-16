@@ -27,7 +27,7 @@
         <!--新建-->
         <div class="stu-yeaer-modal-add">
             <div class="modalAdd">
-                <el-form id="subForm" ref="form" :model="subForm" label-width="88px" :rules="formRules">
+                <el-form id="subForm" ref="subForm" :model="subForm" label-width="88px" :rules="formRules">
                     <el-form-item label="科目类型" prop="type">
                         <el-select v-model="subForm.type"  style="width: 100%">
                             <el-option :label="item.text" :key="item.code" :value="item.code" v-for="item in typeSet"></el-option>
@@ -37,8 +37,13 @@
                         <el-input v-model="subForm.name" placeholder="请输入"></el-input>
                     </el-form-item>
                     <el-form-item label="学段" prop="period">
-                        <el-select v-model="subForm.period"  style="width: 100%">
-                            <el-option :label="item.text" :key="item.code" :value="item.code" v-for="item in period"></el-option>
+                        <el-select v-model="subForm.period" multiple placeholder="请选择" style="width: 100%">
+                            <el-option
+                                    v-for="item in period"
+                                    :key="item.code"
+                                    :label="item.text"
+                                    :value="item.code">
+                            </el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="序号" >
@@ -72,7 +77,7 @@ export default {
             tableData: [],
             tableColumn: [
                 {
-                    prop: 'index',
+                    prop: 'orderIndex',
                     label: '序号'
                 },
                 {
@@ -106,14 +111,14 @@ export default {
             subForm: {
                 type: '',
                 name: '',
-                period: '',
+                period:'',
                 number: '',
                 describe: ''
             },
             formRules: {
-                type: [{required: true, message: '请选择', trigger: 'blur'}],
+                type: [{required: true, message: '请选择', trigger: 'change'}],
                 name: [{required: true, message: '不能为空', trigger: 'blur'}],
-                period: [{required: true, message: '请选择', trigger: 'blur'}],
+                period: [{type: 'array', required: true, message: '请选择', trigger: 'change' }],
             },
             typeSet: '',
             period:'',
@@ -188,27 +193,35 @@ export default {
         //添加按钮
         subAdd() {
             let _this = this;
-            document.getElementById('subForm').reset();
+            _this.$refs['subForm'].resetFields();
             this.$myLayer.formLayer("新建", $('.stu-yeaer-modal-add'), ['422px'], function () {
-                if(_this.subForm.type == ''){
-
-                }else {
-                    let params = {
-                        subjectType: _this.subForm.type,
-                        subjectName:_this.subForm.name,
-                        periodId:_this.subForm.period,
-                        notes:_this.subForm.describe,
-                        orderIndex:_this.subForm.number
-                    };
-                    _this.$api.subjectsAdd(params).then(res => {
-                        if (res.success == true) {
-                            _this.schoolList();
-                            _this.$myLayer.successLayer(res.msg)
-                        } else {
-                            _this.$myLayer.errorLayer(res.msg)
-                        }
-                    })
+                let  i = 0;
+                let periodId = '';
+                for (i = 0; i <_this.subForm.period.length; i++) {
+                    periodId+=_this.subForm.period[i]+','
                 }
+                let newStr=(periodId.substring(periodId.length-1)==',')?periodId.substring(0,periodId.length-1):periodId;
+                _this.$refs['subForm'].validate((valid) => {
+                    if (valid) {
+                        let params = {
+                            subjectType: _this.subForm.type,
+                            subjectName:_this.subForm.name,
+                            periodId:newStr,
+                            notes:_this.subForm.describe,
+                            orderIndex:_this.subForm.number
+                        };
+                        _this.$api.subjectsAdd(params).then(res => {
+                            if (res.success == true) {
+                                _this.subjectsList();
+                                _this.$myLayer.successLayer(res.msg)
+                            } else {
+                                _this.$myLayer.errorLayer(res.msg)
+                            }
+                        })
+                    } else {
+                        return false;
+                    }
+                });
             })
         },
         //表格
@@ -237,8 +250,43 @@ export default {
             })
         },
         subEdit(row) {
-            console.log(row.row)
-
+            let _this = this;
+            let periodIdE = row.row.periodId;
+            this.subForm.name = row.row.subjectName;
+            this.subForm.type = row.row.subjectType;
+            this.subForm.number = row.row.orderIndex;
+            this.subForm.describe = row.row.notes;
+            this.subForm.period = periodIdE.split(",");
+            this.$myLayer.formLayer("编辑", $('.stu-yeaer-modal-add'), ['422px'], function () {
+                let  i = 0;
+                let periodId = '';
+                for (i = 0; i <_this.subForm.period.length; i++) {
+                    periodId+=_this.subForm.period[i]+','
+                }
+                let newStr=(periodId.substring(periodId.length-1)==',')?periodId.substring(0,periodId.length-1):periodId;
+                _this.$refs['subForm'].validate((valid) => {
+                    if (valid) {
+                        let params = {
+                            id:row.row.id,
+                            subjectType: _this.subForm.type,
+                            subjectName:_this.subForm.name,
+                            notes:_this.subForm.describe,
+                            orderIndex:_this.subForm.number,
+                            periodId:newStr,
+                        };
+                        _this.$api.subjectsEdi(params).then(res => {
+                            if (res.success == true) {
+                                _this.subjectsList();
+                                _this.$myLayer.successLayer(res.msg)
+                            } else {
+                                _this.$myLayer.errorLayer(res.msg)
+                            }
+                        })
+                    } else {
+                        return false;
+                    }
+                });
+            });
         },
         //状态
         stateList(state) {

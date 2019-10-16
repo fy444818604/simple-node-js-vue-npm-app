@@ -21,13 +21,19 @@ export const school = params => post('/base/api/eduarea/page',params);
 export const schoolAdd = params => post('/base/api/eduarea/add',params);
 export const schoolEdi = params => post('/base/api/eduarea/update',params);
 export const schoolDis = params => post('/base/api/eduarea/update/status',params);
-//学段管理
-export const phase = params => post('/base/api/grade/page',params);
 //科目管理
 export const subjects = params => post('/base/api/subjectMgr/subjectInfo/list',params);
 export const subjectsAdd = params => post('/base/api/subjectMgr/subjectInfo/save',params);
 export const subjectsEdi = params => post('/base/api/subjectMgr/subjectInfo/update',params);
 export const subjectsDis = params => get('/base/api/subjectMgr/subjectInfo/setStatusById',params);
+export const subjectSelect = params => get('/base/api/subjectMgr/subjectInfo/getKeyAndValue',params);
+//教材版本
+export const phase = params => post('/base/api/subjectMgr/textbookVersions/list',params);
+export const phaseState = params => get('/base/api/subjectMgr/textbookVersions/setStatusById',params);
+export const phaseAdd = params => post('/base/api/subjectMgr/textbookVersions/save',params);
+export const phaseEdi = params => post('/base/api/subjectMgr/textbookVersions/update',params);
+//知识点管理
+export const knowledge = params => post('/base/api/subjectMgr/points/list',params);
 //下拉框字典
 export const dictSelect = params => post('/base/api/dict/select',params);
 //字典分页查询

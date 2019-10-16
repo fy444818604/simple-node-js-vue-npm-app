@@ -10,7 +10,33 @@
         </el-row>
         <!--查询表单-->
         <div class="school-form">
-
+            <el-form :inline="true" :model="formInline" class="demo-form-inline">
+                <el-form-item label="组织结构" prop="institutions">
+                    <div @click="queryStructureTop">
+                        <el-input
+                                v-model="queryFilterText"
+                                placeholder="请选择或输入"
+                                @click.stop>
+                            <i slot="suffix"  class="iconfont icon-apartment"></i>
+                        </el-input>
+                    </div>
+                    <div class="el-div-tree" v-if="queryStruct">
+                        <el-tree
+                                class="filter-tree"
+                                :data="labelData"
+                                :props="defaultProps"
+                                default-expand-all
+                                :filter-node-method="filterNode"
+                                @node-click="queryAddIns"
+                                ref="tree">
+                        </el-tree>
+                    </div>
+                </el-form-item>
+                <el-form-item>
+                    <button class="primary-btn" @click="search(1)">查询</button>
+                    <button class="clear-btn" @click="search(2)">清空</button>
+                </el-form-item>
+            </el-form>
         </div>
         <!--表格-->
         <div class="school-table">
@@ -37,25 +63,36 @@
         <!--添加弹框-->
         <div class="stu-yeaer-modal-add">
             <div class="modalAdd">
-                <el-form ref="form" :model="schoolForm" label-width="88px" :rules="formRules" id="schoolForm">
+                <el-form ref="schoolForm" :model="schoolForm" label-width="88px" :rules="formRules" >
                     <el-form-item label="学区名称" prop="name">
                         <el-input v-model="schoolForm.name"></el-input>
                     </el-form-item>
                     <el-form-item label="组织结构" prop="institutions">
-                        <div>
-                            <div class="school-structure-top" @click="structureTop" id="labelData">
-                                {{ labelData }}
-                            </div>
-                            <div class="school-structure-bnt" v-show="structureBnt">
-                                <adm-areas-tree @superiorData="structureT"></adm-areas-tree>
-                            </div>
+                        <div @click="structureTop">
+                            <el-input
+                                    v-model="filterText"
+                                    placeholder="请选择或输入"
+                                    @click.stop>
+                                <i slot="suffix"  class="iconfont icon-apartment"></i>
+                            </el-input>
+                        </div>
+                        <div class="el-div-tree" v-if="structureBnt">
+                            <el-tree
+                                    class="filter-tree"
+                                    :data="labelData"
+                                    :props="defaultProps"
+                                    default-expand-all
+                                    :filter-node-method="filterNode"
+                                    @node-click="addIns"
+                                    ref="tree">
+                            </el-tree>
                         </div>
                     </el-form-item>
                     <el-form-item label="描述">
                         <el-input v-model="schoolForm.describe"></el-input>
                     </el-form-item>
                     <el-form-item label="显示顺序">
-                        <el-input v-model="schoolForm.order"></el-input>
+                        <el-input v-model="schoolForm.orderIndex"></el-input>
                     </el-form-item>
                 </el-form>
             </div>
@@ -67,7 +104,6 @@
 import table from '../../../components/table'
 import stateSwitch from '../../../components/state-switch'
 import paging from '../../../components/paging'
-import admAreasTree from './adm-areas-tree'
 import bntList from '../../../components/btn-list'
 
 export default {
@@ -80,11 +116,15 @@ export default {
             pageTotal: 0,//总条数
             status: 0,
             enable:null,
+            defaultProps: {
+                children: 'children',
+                label: 'displayName'
+            },
             //表格
             tableData: [],
             tableColumn: [
                 {
-                    prop: 'index',
+                    prop: 'orderIndex',
                     label: '显示顺序'
                 },
                 {
@@ -106,38 +146,62 @@ export default {
             ],
             //添加弹框
             schoolForm: {
-                name: '',
-                institutions: '',
-                describe: '',
-                order: ''
+                name:'',
+                id:'',
+                orderIndex:'',
+                orgId:'',
+                description:'',
+                institutions:''
             },
             formRules: {
                 name: [{required: true, message: '请输入学区名称', trigger: 'blur'}],
                 institutions: [{required: true, message: '请选择组织结构', trigger: 'blur'}],
             },
+            formInline: {},
             //自定义下拉框选中数据
             labelData: '',
-            structureBnt: false
+            structureBnt: false,
+            queryStruct:false,
+            filterText: '',
+            queryFilterText:'',
+            orgId:'',
+            queryOrgId:''
         }
     },
     components: {
         'school-table': table,
         'school-stateSwitch': stateSwitch,
         'school-paging': paging,
-        'adm-areas-tree': admAreasTree,
         'bnt-list': bntList
     },
     //初始化
     created() {
         this.schoolList();
+        this.institutions();
+    },
+    watch: {
+        filterText(val) {
+            if(this.$refs.tree){
+                this.$refs.tree.filter(val);
+            }
+        },
+        queryFilterText(val){
+            if(val){
+                this.$refs.tree.filter(val);
+            }
+        }
     },
     methods: {
+        filterNode(value, data) {
+            if (!value) return true;
+            return data.displayName.indexOf(value) !== -1;
+        },
         //分页数据请求
         schoolList() {
             let params = {
                 pageIndex: this.pageCurrent,
                 pageSize: this.pageSize,
-                orgId: '',
+                orgId: this.queryOrgId,
                 status: this.status,
             };
             this.$api.school(params).then(res => {
@@ -186,11 +250,11 @@ export default {
             })
         },
         schoolEdit(row) {//编辑
+            this.filterText = row.row.orgName;
             let editForm = {
                 name: row.row.name,
                 describe: row.row.description,
-                order: row.$index + 1,
-                id:row.row.id,
+                orderIndex: row.row.orderIndex,
             };
             this.schoolForm = editForm;
             let _this = this;
@@ -198,8 +262,8 @@ export default {
                 let ediData = {
                     name:_this.schoolForm.name,
                     id:row.row.id,
-                    orderIndex:_this.schoolForm.order,
-                    orgId:'1178138607873990657',
+                    orderIndex:_this.schoolForm.orderIndex,
+                    orgId:_this.orgId,
                     description:_this.schoolForm.describe
                 };
                 _this.$api.schoolEdi(ediData).then(res => {
@@ -229,33 +293,74 @@ export default {
         //添加弹框
         schoolAdd() {
             let _this = this;
-            document.getElementById('schoolForm').reset();
+            _this.$refs['schoolForm'].resetFields();
+            _this.filterText = '';
             this.$myLayer.formLayer("新建", $('.stu-yeaer-modal-add'), ['422px'], function () {
-                let params = {
-                    name: _this.schoolForm.name,
-                    description:_this.schoolForm.describe,
-                    orderIndex:_this.schoolForm.order,
-                    orgId:'1178138607873990657'
-                };
-                _this.$api.schoolAdd(params).then(res => {
-                    if (res.success == true) {
-                        _this.schoolList();
-                        _this.$myLayer.successLayer(res.msg)
+                _this.$refs['schoolForm'].validate((valid) => {
+                    if (valid) {
+                        let params = {
+                            name: _this.schoolForm.name,
+                            description:_this.schoolForm.describe,
+                            orderIndex:_this.schoolForm.order,
+                            orgId:_this.orgId
+                        };
+                        _this.$api.schoolAdd(params).then(res => {
+                            if (res.success == true) {
+                                _this.schoolList();
+                                _this.$myLayer.successLayer(res.msg)
+                            } else {
+                                _this.$myLayer.errorLayer(res.msg)
+                            }
+                        })
                     } else {
-                        _this.$myLayer.errorLayer(res.msg)
+                        return false;
                     }
-                })
+
+                });
 
             })
         },
         //添加弹框里面的自定义下拉框
-        structureT(label) {
-            this.labelData = label;
-            this.structureBnt = false
-        },
         structureTop() {
-            this.structureBnt = true
+            this.structureBnt = !this.structureBnt
+        },
+        queryStructureTop(){
+            this.queryStruct = !this.queryStruct
+        },
+        //机构树
+        institutions(){
+            let params = {
+                level :0,
+                onlyOrg :1,
+                parentId :0,
+            };
+            this.$api.institutions(params).then(res => {
+                if(res.success == true){
+                    this.labelData = res.data;
+                }
+            })
+        },
+        addIns(val){
+            this.filterText = val.displayName;
+            this.orgId = val.id;
+            this.schoolForm.institutions = val.id;
+            this.structureBnt = false;
+        },
+        queryAddIns(val){
+            this.queryFilterText = val.displayName;
+            this.queryOrgId = val.id;
+            this.queryStruct = false;
+        },
+        //查询
+        search(val){
+            if(val == 1){
+                this.schoolList();
+            }else {
+                this.queryFilterText = '';
+                this.queryOrgId = '';
+            }
         }
+
     }
 }
 </script>
@@ -271,9 +376,6 @@ export default {
     .school-title .bg-purple-light {
         text-align: right;
     }
-    .school-table {
-        margin-top: 25px;
-    }
     .school-bnt {
         margin-top: 14px;
     }
@@ -283,32 +385,27 @@ export default {
     .school-bnt .bg-purple {
         margin-top: 4px;
     }
-    .school-structure-top {
-        width: 100%;
-        height: 36px;
-        border: 1px solid #dcdfe6;
-        border-radius: 4px;
-        padding: 0 15px;
-    }
-    .school-structure-bnt {
-        width: 100%;
-        height: 125px;
-        position: absolute;
-        top: 42px;
-        left: 0px;
-        z-index: 9999;
-        border: 1px solid #e4e7ed;
-        overflow: auto;
-        border-radius: 4px;
-        background-color: #fff;
-        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
-        box-sizing: border-box;
-    }
+
     .stu-yeaer-modal-add, .tu-yeaer-modal-edit {
         display: none;
     }
     .modalAdd {
         padding: 0px 32px;
         margin: 24px 0px;
+    }
+    .el-div-tree{
+        position: absolute;
+        top:45px;
+        width: 100%;
+        background-color: #fff;
+        border: 1px solid #ebeef5;
+        border-radius: 4px;
+        -webkit-box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+        box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+        z-index: 9999999!important;
+        overflow: auto;
+    }
+    .school-form{
+        padding-top: 20px;
     }
 </style>
