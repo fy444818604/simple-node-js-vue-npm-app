@@ -20,7 +20,7 @@
             </el-table-column>
             <el-table-column label="姓名">
                 <template slot-scope="scope">
-                    <router-link class="main-color" target="_blank" :to="{path:'/basic/teacher-detail',query:{id:scope.row.id}}">{{scope.row.name}}</router-link>
+                    <span class="main-color" style="cursor: pointer;" @click="polEdit(scope.row)">{{scope.row.name}}</span>
                 </template>
             </el-table-column>
             <el-table-column prop="dayStartTime" label="每天起始时间">
@@ -187,7 +187,8 @@ export default {
     created(){
         this.dictionary();
     },
-    methods: {// 加载字典
+    methods: {
+        // 加载字典
         dictionary(){
             let _this = this;
             let sex = {"type": ["stage"]};
@@ -356,70 +357,7 @@ export default {
             });
         },
         polEdit(row){
-            let _this = this;
-            let params = {
-                id: row.id
-            };
-            _this.$api.calendarTimeById(params).then(res => {
-                if (res.success === true) {
-                    _this.orgSelectText = "";
-                    _this.$refs["polForm"].resetFields();
-                    let stageCodes = [];
-                    if (res.data.stages && res.data.stages.length > 0) {
-                        res.data.stages.forEach(function(item) {
-                            stageCodes.push(item.stageCode);
-                        });
-                    };
-                    let _campuses = [];
-                    if (res.data.campuses && res.data.campuses.length > 0) {
-                        res.data.campuses.forEach(function(item) {
-                            _campuses.push(item.campusId);
-                        });
-                    };
-                    _this.polForm = {
-                        orgId:res.data.orgId,
-                        name:res.data.name,
-                        dayStartTime:res.data.dayStartTime,
-                        yearStartDate: res.data.yearStartDate,
-                        yearEndDate: res.data.yearEndDate,
-                        stageCode: stageCodes,
-                        campusId: _campuses
-                    };
-                    _this.queryCampus(false);
-                    _this.orgSelectText = res.data.orgName;
-                    _this.refreshText = !_this.refreshText;
-                    this.$myLayer.formLayer("修改", $('.pol-modal-add'), ['472px'], function () {
-                        _this.$refs["polForm"].validate((valid) => {
-                            if (valid) {
-                                let params = {
-                                    id: row.id,
-                                    orgId: _this.polForm.orgId,
-                                    name: _this.polForm.name,
-                                    dayStartTime: _this.polForm.dayStartTime,
-                                    yearStartDate: _this.polForm.yearStartDate,
-                                    yearEndDate: _this.polForm.yearEndDate,
-                                    campusId: _this.polForm.campusId,
-                                    stageCode: _this.polForm.stageCode
-                                };
-                                _this.$api.calendarTimeEdit(params).then(res => {
-                                    if (res.success === true) {
-                                        _this.calendarTimeList();
-                                        // TODO 关闭弹窗
-                                        _this.$myLayer.successLayer(res.msg)
-                                    } else {
-                                        _this.$myLayer.errorLayer(res.msg)
-                                    }
-                                })
-                            } else {
-                                return false;
-                            }
-                        });
-                    })
-                } else {
-                    _this.$myLayer.errorLayer(res.msg)
-                }
-            });
-
+            this.$router.push({path:'/basic/Layout/calendar-detail',query:{id:row.id}});
         },
         //状态
         stateList(state){

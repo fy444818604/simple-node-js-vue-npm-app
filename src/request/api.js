@@ -82,6 +82,7 @@ export const calendarTimeDis = params => post('/base/api/workRest/update/status'
 export const calendarTimeById = params => get('/base/api/workRest/getById',params);
 export const calendarTimeAdd = params => post('/base/api/workRest/add',params);
 export const calendarTimeEdit = params => post('/base/api/workRest/update',params);
+export const calendarTimeSetAdd = params => post('/base/api/workRestTime/add',params);
 
 
 //测试接口
