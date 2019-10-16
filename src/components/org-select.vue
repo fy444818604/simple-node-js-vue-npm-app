@@ -27,11 +27,12 @@ export default {
         rootId: String, // 树的根节点id
         initText: String, // 初始显示文字
         refreshText: Boolean,
+        onlyOrg:Number
     },
     data() {
         return {
             // 机构下拉的数据
-            orgData: [], 
+            orgData: [],
             // 机构下拉的数据格式定义
             defaultProps: {
                 children: 'children',
@@ -43,6 +44,7 @@ export default {
             showText: "",
             defaultText: "",
             orgId:"",
+            onlyOrgT:1,
         }
     },
     watch: {
@@ -57,9 +59,15 @@ export default {
         refreshText() {
             this.defaultText = this.initText;
             this.showText = this.initText;
+        },
+        rootId() {
+            this.queryOrg();
         }
     },
     created: function() {
+        if(this.onlyOrg != undefined){
+            this.onlyOrgT = 0;
+        }
         this.queryOrg();
     },
     methods: {
@@ -67,7 +75,7 @@ export default {
         queryOrg(){
             let params = {
                 level : 0,
-                onlyOrg :1,
+                onlyOrg :this.onlyOrgT,
                 parentId : this.rootId
             };
             this.$api.institutions(params).then(res => {
@@ -108,7 +116,6 @@ export default {
     }
 }
 </script>
-
 <style scoped="scoped">
     .el-div-tree{
         position: absolute;
@@ -121,6 +128,6 @@ export default {
         box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
         z-index: 9999999;
         overflow: auto;
-        height: 130px;
+        max-height: 130px;
     }
 </style>
