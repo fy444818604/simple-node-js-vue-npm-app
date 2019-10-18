@@ -113,6 +113,6 @@ export default {
 </style>
 <style lang="scss">
 .setting {
-  .el-input__inner {border: 1px solid #E4E7ED;padding-left: 5px!important;}
+  .el-input__inner {padding-left: 5px!important;}
 }
 </style>
