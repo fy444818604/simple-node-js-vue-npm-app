@@ -21,6 +21,7 @@ export const school = params => post('/base/api/eduarea/page',params);
 export const schoolAdd = params => post('/base/api/eduarea/add',params);
 export const schoolEdi = params => post('/base/api/eduarea/update',params);
 export const schoolDis = params => post('/base/api/eduarea/update/status',params);
+export const schoolSelect = params => get('/base/api/eduarea/getSelectByOrgId',params);
 //科目管理
 export const subjects = params => post('/base/api/subjectMgr/subjectInfo/list',params);
 export const subjectsAdd = params => post('/base/api/subjectMgr/subjectInfo/save',params);
@@ -76,6 +77,8 @@ export const studentsUpdate = params => post('/base/api/userInfo/studentInfo/upd
 //机构树
 export const institutions = params => get('/base/api/organizationUnit/all',params);
 export const insAdd = params => post('/base/api/organizationUnit/add',params);
+export const insQin = params => get('/base/api/organizationUnit/get',params);
+export const insEdit = params => post('/base/api/organizationUnit/update',params);
 //查询学校下的校区
 export const campusBySchool = params => get('/base/api/organizationUnit/schoolAreas',params);
 //学届管理
@@ -87,6 +90,7 @@ export const calendarPage = params => post('/base/api/schoolCalendar/page',param
 export const calendarDis = params => post('/base/api/schoolCalendar/update/status',params);
 export const calendarAdd = params => post('/base/api/schoolCalendar/add',params);
 export const calendarEdit = params => post('/base/api/schoolCalendar/update',params);
+export const calendarSelect = params => get('/base/api/schoolCalendar/select',params);
 //作息时间
 export const calendarTimePage = params => post('/base/api/workRest/page',params);
 export const calendarTimeDis = params => post('/base/api/workRest/update/status',params);
@@ -94,7 +98,11 @@ export const calendarTimeById = params => get('/base/api/workRest/getById',param
 export const calendarTimeAdd = params => post('/base/api/workRest/add',params);
 export const calendarTimeEdit = params => post('/base/api/workRest/update',params);
 export const calendarTimeSetAdd = params => post('/base/api/workRestTime/add',params);
-
+//学届
+export const learn  = params => post('/base/api/grade/page',params);
+export const learnAdd  = params => post('/base/api/grade/add',params);
+export const learnEdit  = params => post('/base/api/grade/update',params);
+export const learnDis  = params => post('/base/api/grade/update/status',params);
 
 //测试接口
 export const test = params => post('http://192.168.38.221:8081/test/getToken',params);
