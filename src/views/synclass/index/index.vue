@@ -10,7 +10,7 @@
             <span class="p-center">3</span>
           </div>
         </el-col>
-      </el-row>
+      </el-row> 
     </div>
 
     <div class="container">
@@ -28,9 +28,7 @@
               <p>30</p>
             </div>
             <div class="rank-wrap">
-              <div class="title">
-                学校开课排名
-              </div>
+              <div class="title"> 学校开课排名 </div>
               <ul>
                 <li v-for="i in 8" :key="i">
                   <div class="info">

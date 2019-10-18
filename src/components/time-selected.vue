@@ -18,14 +18,14 @@ export default {
 </script>
 
 <style>
-	.el-icon-date{
+	.time-selected-wrap .el-icon-date{
 		display: none;
 	}
-	.el-date-editor--date{
+	.time-selected-wrap .el-date-editor--date{
 		width: 78px!important;
 		padding: 0!important;
 	}
-	.el-input__inner{
+	.time-selected-wrap .el-input__inner{
 		padding: 0!important;
 		border: none;
 	}
