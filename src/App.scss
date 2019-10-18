@@ -232,7 +232,9 @@ body,html{
 .el-scrollbar__wrap{
 	height: calc(100% + 17px);
 }
-
+.el-scrollbar__view {
+  height: 100%;
+}
 .window-cont {
     text-align: center;
 }

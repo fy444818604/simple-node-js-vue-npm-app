@@ -1,17 +1,26 @@
 <!--视频中心-->
 <template>
-  <div class="school">
+  <div class="video">
     <div class="title">视频中心</div>
     <div class="container">
       <div class="nav-wrap">
         <div class="nav">
           <div class="title">教材选择</div>
+          <el-select value="x" style="width:100%;margin-bottom:16px">
+            <el-option value="xx" label="xx"></el-option>
+          </el-select>
+          <el-select value="x" style="width:100%">
+            <el-option value="xx" label="xx"></el-option>
+          </el-select>
         </div>
       </div>
       <div class="content-wrap">
         <div class="content">
           <div class="search">
-            <el-input style="width:320px" v-model="val" placeholder="请输入关键字搜索"></el-input>
+            <el-input style="width:320px"
+              v-model="val" 
+              suffix-icon="el-icon-search"
+              placeholder="请输入关键字搜索"></el-input>
             <ul>
               <li class="active">全部</li>
               <li>学科</li>
@@ -62,8 +71,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.school {padding: 32px;}
-.school > .title {color: #55595C;font-weight: bold;line-height: 1}
+.video {padding: 32px;}
+.video > .title {color: #55595C;font-weight: bold;line-height: 1}
 .container {margin-top: 20px;}
 .container {
   display: flex;
@@ -72,16 +81,17 @@ export default {
     margin-right: 30px;
   }
   .nav{
+    min-height: 760px;
     background: #fff;
     border-radius: 6px;
     padding: 23px;
-    .title {color: #55595C;line-height: 1;font-weight: bold}
+    .title {color: #55595C;line-height: 1;font-weight: bold;margin-bottom: 37px}
   }
   .content-wrap { flex: 1; }
   .content-wrap .content {
     .search {display: flex;align-items: center;padding: 0 10px;justify-content: space-between;}
     .search ul {display: flex;}
-    .search ul li {text-align: center;margin-left: 8px;width: 52px;height: 28px;line-height: 28px;}
+    .search ul li {cursor: pointer;text-align: center;margin-left: 8px;width: 52px;height: 28px;line-height: 28px;}
     .search ul li.active {color: #fff;background:#4C84FF;border-radius: 14px;}
     .res-box {
       display: flex;
@@ -117,4 +127,16 @@ export default {
   .page-wrap .page {display: inline-block;}
 }
 
+</style>
+<style>
+.video .search .el-input input{
+  background: #F1F3F8;
+  border-radius: 18px;
+  border: 1px solid #DCDFE6;
+}
+.video .search .el-input__icon {
+  width: 35px;
+  font-size: 20px;
+  line-height: 37px;
+}
 </style>

@@ -706,6 +706,28 @@ const synclass = {
             } 
         },
         {
+            path:'/sync/Layout/live/detail',
+            name: 'sync-Layout-detail',
+            component: resolve => {
+                require(['../views/synclass/live/detail'], resolve)
+            },
+            meta: {
+                title: '同步课直播',
+                requireAuth: true
+            } 
+        },
+        {
+            path:'/sync/Layout/live/project',
+            name: 'sync-Layout-project',
+            component: resolve => {
+                require(['../views/synclass/live/project'], resolve)
+            },
+            meta: {
+                title: '同步课作业',
+                requireAuth: true
+            } 
+        },
+        {
             path:'/sync/Layout/static',
             name: 'sync-Layout-static',
             component: resolve => {
@@ -713,6 +735,17 @@ const synclass = {
             },
             meta: {
                 title: '数据统计',
+                requireAuth: true
+            } 
+        },
+        {
+            path:'/sync/Layout/setting',
+            name: 'sync-Layout-setting',
+            component: resolve => {
+                require(['../views/synclass/setting/index'], resolve)
+            },
+            meta: {
+                title: '系统设置',
                 requireAuth: true
             } 
         },
