@@ -360,7 +360,7 @@ export default {
         },
         studentAdd(){
             let _this = this;
-			_this.$refs['addForm'].resetFields();
+            _this.$refs['addForm'].resetFields();
             this.$myLayer.formLayer("添加", $('.stu-yeaer-modal-add'), ['422px'], function () {
                 _this.$refs["addForm"].validate((valid) => {
                     if (valid) {
@@ -595,11 +595,4 @@ export default {
 		overflow: auto;
 	}
 </style>
-<style scoped>
-	.tableOpe{
 
-	}
-	.tableOpe li{
-
-	}
-</style>

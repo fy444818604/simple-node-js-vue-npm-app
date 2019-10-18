@@ -1,7 +1,7 @@
 <template>
     <div class="tree">
         <div class="tree-top">
-            <el-tree :data="treeData" :props="defaultProps" default-expand-all :expand-on-click-node="false"   @node-click="handleNodeClick"></el-tree>
+            <el-tree :data="treeData" :props="defaultProps" default-expand-all :expand-on-click-node="false"  @node-click="handleNodeClick"></el-tree>
         </div>
         <div class="tree-bnt">
             <el-switch
@@ -16,22 +16,19 @@
 <script>
 export default {
     name:'tree',
-    props: ['treeData'],
+    props: ['treeData','defaultProps'],
     data() {
         return {
             stateSwitch:false,
-            defaultProps: {
-                children: 'children',
-                label: 'name'
-            }
+
         };
     },
     methods: {
         handleNodeClick(data) {
-            console.log(data.id);
+            this.$emit("list-Tree",data)
         },
         switchChange(val){ //开关监听
-            console.log(val)
+            this.$emit("tree-switch",val)
         }
     }
 };

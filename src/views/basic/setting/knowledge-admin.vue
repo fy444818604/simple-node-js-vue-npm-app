@@ -5,10 +5,10 @@
         <el-row class="kno-title">
             <el-col :span="12"><div class="grid-content bg-purple cha-title">{{ pageTile }}</div></el-col>
             <el-col :span="12"><div class="grid-content bg-purple-light">
-                <bnt-list :model="model" @btn-click="knoAdd"></bnt-list>
-                <bnt-list :model="modela" @btn-click="knoAdd"></bnt-list>
-                <bnt-list :model="modelb" @btn-click="knoAdd"></bnt-list>
-                <bnt-list :model="modelc" @btn-click="knoAdd"></bnt-list>
+                <bnt-list :model="model" @btn-click="knoAdd(1)"></bnt-list>
+                <bnt-list :model="modela" @btn-click="knoAdd(2)"></bnt-list>
+                <bnt-list :model="modelb" @btn-click="knoAdd(3)"></bnt-list>
+                <bnt-list :model="modelc" @btn-click="knoAdd(4)"></bnt-list>
             </div></el-col>
         </el-row>
         <!--查询-->
@@ -29,7 +29,7 @@
             </el-form>
         </div>
         <!--表格-->
-        <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%"  @mouseenter="handleSelectionChange(scope.row)">
+        <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%"  @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55">
             </el-table-column>
             <el-table-column type="index" label="序号" width="120">
@@ -52,7 +52,7 @@
                             <span v-if="scope.row.status == 0" @click="disable(scope.row,1)">停用</span>
                             <span v-else @click="disable(scope.row,0)">启用</span>
                         </li>
-                        <li>编辑</li>
+                        <li @click="konEditor(scope.row)">编辑</li>
                     </ul>
                 </template>
             </el-table-column>
@@ -67,26 +67,28 @@
             </div></el-col>
         </el-row>
         <!--新建-->
-        <kno-modal
-                :title="dialog.title"
-                @on-close="knoClose"
-                @on-save="knoSave"
-                :visible="dialog.visible">
-            <el-form ref="form" :model="honForm" label-width="88px" :rules="formRules">
-                <el-form-item label="名称"  prop="name">
-                    <el-input v-model="honForm.name"></el-input>
-                </el-form-item>
-                <el-form-item label="学段"  prop="period">
-                    <el-input v-model="honForm.period"></el-input>
-                </el-form-item>
-                <el-form-item label="科目"  prop="subjects">
-                    <el-input v-model="honForm.subjectsT"></el-input>
-                </el-form-item>
-                <el-form-item label="备注" >
-                    <el-input v-model="honForm.note"></el-input>
-                </el-form-item>
-            </el-form>
-        </kno-modal>
+        <div class="stu-yeaer-modal-add">
+            <div class="modalAdd">
+                <el-form ref="honForm" :model="honForm" label-width="88px" :rules="formRules">
+                    <el-form-item label="名称"  prop="name">
+                        <el-input v-model="honForm.name"></el-input>
+                    </el-form-item>
+                    <el-form-item label="学段"  prop="period">
+                        <el-select v-model="honForm.period" placeholder="请选择" style="width: 100%" @focus="setSelectMinWidth">
+                            <el-option :style="{'min-width': selectMinWidth + 2 + 'px'}"  v-for="item in phase" :key="item.code" :label="item.text" :value="item.code"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="学科"  prop="subjects">
+                        <el-select v-model="honForm.subjects" placeholder="请选择" style="width:100%;" @focus="setSelectMinWidth">
+                            <el-option :style="{'min-width': selectMinWidth + 2 + 'px'}" v-for="item in discipline" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="备注" >
+                        <el-input v-model="honForm.note"></el-input>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -94,7 +96,6 @@
 import bntList from '../../../components/btn-list'
 import stateSwitch from '../../../components/state-switch'
 import paging from '../../../components/paging'
-import modal from '../../../components/modal'
 export default {
     name: "knowledgeAdmin",
     data(){
@@ -147,10 +148,6 @@ export default {
             status:0,//状态
             //弹框
             /* dialog */
-            dialog: {
-                visible:false,
-                title: '新建',
-            },
             honForm:{
                 name:'',
                 period:'',
@@ -158,32 +155,51 @@ export default {
                 note:''
             },
             formRules:{
-                name:[{required: true, message: '不能为空', trigger: 'blur'}],
-                period:[{required: true, message: '不能为空', trigger: 'blur'}],
-                subjects:[{required: true, message: '不能为空', trigger: 'blur'}],
+                name:[{required: true, message: '请输入名称', trigger: 'blur'}],
+                period:[{required: true, message: '请选择学段', trigger: 'change'}],
+                subjects:[{required: true, message: '请选择学科', trigger: 'change'}],
             },
+            phase:[],//阶段字典数据
+            selectMinWidth:0,//弹框下拉框宽度
+            patState:null,//批量启用禁用
+            sinState:null,//单个启用禁用
         }
     },
     components:{
         'bnt-list':bntList,
         'stateSwitch':stateSwitch,
         'kno-paging':paging,
-        'kno-modal':modal
     },
     created() {
         this.knowList();
         this.subjectSelect();
+        this.dictionary();
     },
     methods: {
+        // 设置弹窗中下拉框的最小宽度
+        setSelectMinWidth(val){
+            let target = val.srcElement ? val.srcElement : val.target;
+            this.selectMinWidth = target.clientWidth;
+        },
+        //字典
+        dictionary(){
+            let sex = {"type": ['stage']};
+            this.$api.dictSelect(sex).then(res => {
+                if(res.success == true){
+                    let  i = 0;
+                    for (i = 0; i < res.data.length; i++) {
+                        if(res.data[i].type == 'stage'){
+                            this.phase = res.data[i].data;
+                        }
+                    }
+                }
+            });
+        },
         //学科下拉框数据
         subjectSelect(){
             let params = {};
             this.$api.subjectSelect(params).then(res => {
                 if (res.success == true) {
-                    let  i = 0;
-                    for (i = 0; i < res.data.length; i++) {
-                        res.data[i].showBtn = false;
-                    }
                     this.discipline = res.data;
                 }
             })
@@ -193,13 +209,16 @@ export default {
             let params = {
                 pageIndex: this.pageCurrent,
                 pageSize: this.pageSize,
-                /*status: this.status,*/
+                status: this.status,
                 pointsName:this.formInline.account,
                 subjectId:this.formInline.discipline
             };
             this.$api.knowledge(params).then(res => {
                 if (res.success == true) {
-                    console.log(res)
+                    let  i = 0;
+                    for (i = 0; i < res.data.length; i++) {
+                        res.data[i].showBtn = false;
+                    }
                     //赋值分页总数
                     this.pageTotal = parseInt(res.totalDatas);
                     this.tableData = res.data;
@@ -207,11 +226,141 @@ export default {
             })
         },
         //添加
-        knoAdd(){
-            this.dialog.visible = true;
+        knoAdd(val){
+            if(val == 1){
+                this.dataAdd();
+            }else if(val == 2){
+                console.log('导入')
+            }else if(val == 3){
+                this.patState = {
+                    status:0,
+                    text:'确定启用所选项'
+                };
+                this.batState();
+            }else if(val == 4){
+                this.patState = {
+                    status:1,
+                    text:'确定停用所选项'
+                };
+                this.batState();
+            }
         },
-        //表格
+        //批量停启用
+        batState(){
+            let _this = this;
+            let userIds = [];
+            let i = 0;
+            for (i = 0; i < _this.multipleSelection.length; i++) {
+                userIds.push(_this.multipleSelection[i].id)
+            }
+            let params = {
+                "status": _this.patState.status,
+                "pointIds": userIds
+            };
+            if(userIds.length == 0){
+                _this.$myLayer.errorLayer('至少选择一条数据')
+            }else {
+                _this.$myLayer.confirmLayer(_this.patState.text,function () {
+                    _this.$api.knowledgeState(params).then(res => {
+                        if (res.success == true) {
+                            _this.$myLayer.successLayer(res.msg)
+                            _this.knowList();
+                        } else {
+                            _this.$myLayer.errorLayer(res.msg)
+                        }
+                    })
+                })
+
+            }
+        },
+        //单个停用
         disable(row,val){
+            let _this = this;
+            if(val == 1){
+                _this.sinState = {
+                    status:1,
+                    text:'确定停用该类型'
+                };
+
+            }else {
+                _this.sinState = {
+                    status:0,
+                    text:'确定起用该类型'
+                };
+            }
+            let params = {
+                id : row.id,
+                status : _this.sinState.status
+            };
+            _this.$myLayer.confirmLayer(_this.sinState.text,function () {
+                _this.$api.knowSinState(params).then(res => {
+                    if (res.success == true) {
+                        _this.$myLayer.successLayer(res.msg)
+                        _this.knowList();
+                    } else {
+                        _this.$myLayer.errorLayer(res.msg)
+                    }
+                })
+            })
+        },
+        //添加
+        dataAdd(){
+            let _this = this;
+            _this.$refs['honForm'].resetFields();
+            this.$myLayer.formLayer("添加", $('.stu-yeaer-modal-add'), ['422px'], function () {
+                _this.$refs['honForm'].validate((valid) => {
+                    if (valid) {
+                        let ediData = {
+                            pointsName:_this.honForm.name,
+                            periodId:_this.honForm.period,
+                            subjectId:_this.honForm.subjects,
+                            notes:_this.honForm.note,
+                        };
+                        _this.$api.knowledgeAdd(ediData).then(res => {
+                            if (res.success == true) {
+                                _this.knowList();
+                                _this.$myLayer.successLayer(res.msg)
+                            } else {
+                                _this.$myLayer.errorLayer(res.msg)
+                            }
+                        })
+                    } else {
+                        return false;
+                    }
+                });
+            })
+        },
+        //编辑
+        konEditor(row){
+            console.log(row)
+            let _this = this;
+            _this.honForm.name = row.pointsName;
+            _this.honForm.period = row.periodId;
+            _this.honForm.subjects = row.subjectId;
+            _this.honForm.note = row.notes;
+            this.$myLayer.formLayer("编辑", $('.stu-yeaer-modal-add'), ['422px'], function () {
+                _this.$refs['honForm'].validate((valid) => {
+                    if (valid) {
+                        let ediData = {
+                            id:row.id,
+                            pointsName:_this.honForm.name,
+                            periodId:_this.honForm.period,
+                            subjectId:_this.honForm.subjects,
+                            notes:_this.honForm.note,
+                        };
+                        _this.$api.knowEdi(ediData).then(res => {
+                            if (res.success == true) {
+                                _this.knowList();
+                                _this.$myLayer.successLayer(res.msg)
+                            } else {
+                                _this.$myLayer.errorLayer(res.msg)
+                            }
+                        })
+                    } else {
+                        return false;
+                    }
+                });
+            })
 
         },
         //查询
@@ -239,12 +388,8 @@ export default {
             this.pageCurrent = val;
             this.knowList();
         },
-        //弹框
-        knoSave(){
-            this.dialog.visible = false
-        },
-        knoClose(){
-            this.dialog.visible = false
+        handleSelectionChange(val) {
+            this.multipleSelection = val;
         },
         /* 鼠标移入移除 */
         handleMouseEnter(row){
@@ -253,12 +398,15 @@ export default {
         handleMouseLeave(row){
             row.showBtn = false
         },
-        handleSelectionChange(val) {
-            this.multipleSelection = val;
-        },
     }
 }
 </script>
+<style>
+    .el-select-dropdown,.el-picker-panel{
+        z-index: 999999999!important;
+        width: auto;
+    }
+</style>
 
 <style scoped>
     .page-template{
@@ -280,6 +428,13 @@ export default {
     }
     .kno-bnt .bg-purple{
         margin-top: 4px;
+    }
+    .stu-yeaer-modal-add, .tu-yeaer-modal-edit {
+        display: none;
+    }
+    .modalAdd {
+        padding: 0px 32px;
+        margin: 24px 0px;
     }
 
 </style>

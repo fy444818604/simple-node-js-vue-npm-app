@@ -34,6 +34,10 @@ export const phaseAdd = params => post('/base/api/subjectMgr/textbookVersions/sa
 export const phaseEdi = params => post('/base/api/subjectMgr/textbookVersions/update',params);
 //知识点管理
 export const knowledge = params => post('/base/api/subjectMgr/points/list',params);
+export const knowledgeAdd = params => post('/base/api/subjectMgr/points/save',params);
+export const knowledgeState = params => post('/base/api/subjectMgr/points/setStatusBatch',params);
+export const knowSinState = params => get('/base/api/subjectMgr/points/setStatusById',params);
+export const knowEdi = params => post('/base/api/subjectMgr/points/update',params);
 //下拉框字典
 export const dictSelect = params => post('/base/api/dict/select',params);
 //字典分页查询
@@ -71,6 +75,7 @@ export const studentsParents = params => get('/base/api/userInfo/studentInfo/get
 export const studentsUpdate = params => post('/base/api/userInfo/studentInfo/update',params);
 //机构树
 export const institutions = params => get('/base/api/organizationUnit/all',params);
+export const insAdd = params => post('/base/api/organizationUnit/add',params);
 //查询学校下的校区
 export const campusBySchool = params => get('/base/api/organizationUnit/schoolAreas',params);
 //学届管理
