@@ -28,7 +28,7 @@
       <div class="logo">
         <span>系统logo:</span>
         <div class="upload-wrap">
-          <input type="file">
+          <input @change="handleFile" type="file" name="file">
         </div>
       </div>
       <div class="save">保存</div>
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data(){
     return {
@@ -44,6 +45,20 @@ export default {
       value:false,
       value1:false,
       checked:false
+    }
+  },
+  mounted(){
+    // let formData = new FormData();
+    // formData.append('file','')
+    // axios.post("http://192.168.38.221:8097/uploadFile/upload.do")
+  },
+  methods:{
+    handleFile(e) {
+      let fromData = new FormData();
+      fromData.append("file",e.target.files[0]);
+      axios.post("http://192.168.38.221:8097/uploadFile/upload.do",fromData).then(res => {
+        console.log(res);
+      })
     }
   }
 }

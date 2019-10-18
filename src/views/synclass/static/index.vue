@@ -62,7 +62,7 @@
                 </el-table-column>
                 <el-table-column
                   prop="address"
-                   align="center"
+                  align="center"
                   label="地址">
                 </el-table-column>
               </el-table>

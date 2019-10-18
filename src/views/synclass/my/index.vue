@@ -9,6 +9,7 @@
             <div class="top">
               <timeSelect class="time-select"></timeSelect>
             </div>
+            <syn-calendar></syn-calendar>
           </div>
         </el-col>
       </el-row>
@@ -19,7 +20,8 @@
 <script>
 export default {
   components:{
-    timeSelect:() => import("@/components/time-selected")
+    timeSelect:() => import("@/components/time-selected"),
+    synCalendar:() => import("@/components/calendar")
   }
 }
 </script>
@@ -33,7 +35,7 @@ export default {
     border-radius: 6px;
     padding: 23px;
     padding-top: 13px;
-    .top {text-align: center;}
+    .top {text-align: center;margin-bottom: 37px}
     .top .time-select {display: inline-block;margin: 0;}
   }
 }
