@@ -39,12 +39,12 @@
     <div class="nav">
 
       <div @click="handleSelectNav('school')" :class="{active:navSelect === 'school'}">
-        <i class="icon-user iconfont"></i>
+        <i class="icon-solid-shcool iconfont"></i>
         <p>学校</p>
       </div>
 
       <div @click="handleSelectNav('teacher')" :class="{active:navSelect === 'teacher'}">
-        <i class="icon-user iconfont"></i>
+        <i class="icon-solid-user iconfont"></i>
         <p>教师</p>
       </div>
 

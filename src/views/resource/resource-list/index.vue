@@ -45,15 +45,15 @@
         <div class="nav">
             <ul>
                 <li @click.stop="handleSelectNav(0)" :class="{active:navSelect===0}">
-                    <i class="icon-user iconfont"></i>
+                    <i class="iconfont icon-solid-other"></i>
                     <p>全部</p>
                 </li>
                 <li @click.stop="handleSelectNav(1)" :class="{active:navSelect===1}">
-                    <i class="icon-user iconfont"></i>
+                    <i class="iconfont icon-solid-book"></i>
                     <p>学科</p>
                 </li>
                 <li @click.stop="handleSelectNav(2)" :class="{active:navSelect===2}">
-                    <i class="icon-user iconfont"></i>
+                    <i class="iconfont icon-solid-flag"></i>
                     <p>活动</p>
                 </li>
             </ul>

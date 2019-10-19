@@ -312,7 +312,7 @@ export default {
           },
           tips:[
             {icon:'icon-apartment',title:'接入系统',number:'4',color:'#684EE6'},
-            {icon:'iconxuexiao',title:'学校总数',number:'123',color:'#0A83FF'},
+            {icon:'icon-school',title:'学校总数',number:'123',color:'#0A83FF'},
             {icon:'icon-video',title:'录播教室',number:'200',color:'#FA821D'},
             {icon:'icon-user',title:'注册教师',number:'420',color:'#30B89D'},
           ]

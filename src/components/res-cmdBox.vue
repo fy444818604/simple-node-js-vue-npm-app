@@ -17,7 +17,7 @@
             </p>
             <div class="time">
                 <span>2019-05-25</span>
-                <i class="iconfont icon-initiate"></i>
+                <i class="iconfont icon-chat"></i>
             </div>
             <!-- 点击评论 -->
             <template v-if="false">
@@ -48,7 +48,7 @@
                             >回复 李胜利：先看第一段再看联系第二段看容易理解一些先看第一段再看联系第二段看容易理解一些先看第一段再看联系第二段看容易理解一些先看第一段再看联系第二段看容易理解一些</div>
                             <div class="time">
                                 <span>2019-05-25</span>
-                                <i class="iconfont icon-initiate"></i>
+                                <i class="iconfont icon-chat"></i>
                             </div>
                             <!-- 点击评论 -->
                             <template v-if="true">
