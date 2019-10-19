@@ -35,7 +35,7 @@ export default {
         },
         {
           path:"/sync/Layout/live",
-          icon:'icon-live',
+          icon:'icon-video2',
           content:'同步课堂直播'
         },
         {
