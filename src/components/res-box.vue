@@ -34,10 +34,12 @@ export default {
         cursor: pointer;
         height: 0;
         position: relative;
+        top:0;
         border-radius: 8px;
         padding-bottom: 56%;
         background: url(./../assets/image/city-1.jpg) no-repeat;
         background-size: 100% 100%;
+        transition: all .1s linear;
         .play-time {
             position: absolute;
             right: 10px;
@@ -48,12 +50,18 @@ export default {
             background: rgba(0, 0, 0, 0.4);
         }
     }
+    .res-bg:hover {
+      top:-6px;
+      
+    }
     .content {
         .title {
             font-size: 16px;
             color: #333333;
             line-height: 40px;
+            cursor: pointer;
         }
+        .title:hover {color: #4A80F6}
         .show {
             color: #909399;
             font-size: 14px;
@@ -67,7 +75,8 @@ export default {
         .info {
             font-size: 14px;
             span {
-                color: #8f9399;
+              color: #8F9399;
+              i {vertical-align: middle;margin-right: 3px;color:#8F9399}
             }
             .watch-number {
                 margin: 0 10px;
