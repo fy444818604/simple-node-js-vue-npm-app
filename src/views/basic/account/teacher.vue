@@ -188,7 +188,7 @@ export default {
             multipleSelection: [],
             pageSize: 10, //显示多少页
             pageCurrent: 1, //当前页
-            pageTotal: 300, //总条数
+            pageTotal: 0, //总条数
 			orgId:'',//机构id
 			isshow:false,//机构显示隐藏
 			sex:'',//字典性别
