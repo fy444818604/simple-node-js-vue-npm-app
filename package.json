@@ -9,7 +9,7 @@
 		"analyz": "NODE_ENV=production npm_config_report=true npm run build"
 	},
 	"dependencies": {
-		"axios": "^0.18.0",
+		"axios": "^0.18.1",
 		"css-loader": "^3.0.0",
 		"echarts": "^4.3.0",
 		"layui-layer": "^1.0.9",
