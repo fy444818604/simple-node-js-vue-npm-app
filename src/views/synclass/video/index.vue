@@ -9,9 +9,17 @@
           <el-select value="x" style="width:100%;margin-bottom:16px">
             <el-option value="xx" label="xx"></el-option>
           </el-select>
-          <el-select value="x" style="width:100%">
+          <el-select value="x" style="width:100%;margin-bottom:23px">
             <el-option value="xx" label="xx"></el-option>
           </el-select>
+          <el-scrollbar style="height:calc(100% - 172px)">
+            <sync-tree></sync-tree>
+            <sync-tree></sync-tree>
+            <sync-tree></sync-tree>
+            <sync-tree></sync-tree>
+            <sync-tree></sync-tree>
+            <sync-tree></sync-tree>
+          </el-scrollbar>
         </div>
       </div>
       <div class="content-wrap">
@@ -59,7 +67,8 @@
 
 export default {
   components:{
-    page:() => import("@/components/paging")
+    page:() => import("@/components/res-pagination"),
+    syncTree:() => import("@/components/sync-tree"),
   },
 
   data(){
@@ -71,17 +80,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.video {padding: 32px;}
+.video {padding: 32px;height: 100%}
 .video > .title {color: #55595C;font-weight: bold;line-height: 1}
 .container {margin-top: 20px;}
 .container {
   display: flex;
+  height: calc(100% - 34px);
   .nav-wrap {
     flex-basis: 280px;
     margin-right: 30px;
   }
   .nav{
-    min-height: 760px;
+    height: 100%;
     background: #fff;
     border-radius: 6px;
     padding: 23px;
@@ -123,7 +133,7 @@ export default {
       span {color: #909399;line-height: 44px;margin-right: 20px;}
     }
   }
-  .page-wrap {text-align: right;margin-top: 24px;}
+  .page-wrap {text-align: right;}
   .page-wrap .page {display: inline-block;}
 }
 
