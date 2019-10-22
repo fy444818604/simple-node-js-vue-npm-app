@@ -9,7 +9,6 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'npm install'
-				sh './jenkins/scripts/build.sh'
             }
         }
     }
