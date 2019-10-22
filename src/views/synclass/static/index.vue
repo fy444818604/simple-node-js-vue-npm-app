@@ -81,7 +81,7 @@
 <script>
 export default {
   components:{
-    page:() => import("@/components/paging")
+     page:() => import("@/components/res-pagination"),
   },
   data(){
     return {
@@ -108,6 +108,39 @@ export default {
         date: '2016-05-03',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1516 弄'
+      },
+      {
+        date: '2016-05-02',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1518 弄'
+      }, {
+        date: '2016-05-04',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1517 弄'
+      }, {
+        date: '2016-05-01',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1519 弄'
+      }, {
+        date: '2016-05-03',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1516 弄'
+      },{
+        date: '2016-05-02',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1518 弄'
+      }, {
+        date: '2016-05-04',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1517 弄'
+      }, {
+        date: '2016-05-01',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1519 弄'
+      }, {
+        date: '2016-05-03',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1516 弄'
       }]
     }
   }
@@ -117,7 +150,7 @@ export default {
 <style lang="scss" scoped>
 .static {padding: 32px;}
 .static > .title {color: #55595C;font-weight: bold;line-height: 1}
-.container {margin-top: 24px;}
+.container {margin-top: 24px;height: calc(100% - 38px);}
 .container > .header {display: flex;justify-content: space-between;align-items: center;}
 .header .nav {
   ul li {
@@ -139,7 +172,7 @@ i {color: inherit}}
   margin-top: 24px;
   padding: 24px 24px 34px;
   border-radius: 6px;
-  background: rgba(255,255,255,1);
+  background: #fff;
   box-shadow: 0px 5px 20px 0px rgba(23,38,71,0.05);
 } 
 .container .main .main-header {
@@ -147,6 +180,6 @@ i {color: inherit}}
   align-items: center;
   margin-bottom: 24px;
 }
-.page-wrap {text-align: right;margin-top: 66px;}
+.page-wrap {text-align: right;}
 .page-wrap .page {display: inline-block;}
 </style>

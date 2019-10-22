@@ -573,7 +573,7 @@ const resource = {
     },
     {
         path: '/resource/Layout/resource-list/:id',
-        name: 'resource-list',
+        name: 'resource-detail',
         component: resolve => {
             require(['../views/resource/resource-list/res-detail'], resolve)
         },
@@ -584,7 +584,7 @@ const resource = {
     },
     {
         path: '/resource/Layout/resource-list/edit/:id',
-        name: 'resource-list',
+        name: 'resource-edit',
         component: resolve => {
             require(['../views/resource/resource-list/edit-res'], resolve)
         },
@@ -594,7 +594,7 @@ const resource = {
         }
     }, {
         path: '/resource/Layout/resource-list/upload/:id',
-        name: 'resource-list',
+        name: 'resource-upload',
         component: resolve => {
             require(['../views/resource/resource-list/upload-res'], resolve)
         },
@@ -616,7 +616,7 @@ const resource = {
     },
     {
         path: '/resource/Layout/album/:id',
-        name: 'album',
+        name: 'album-detail',
         component: resolve => {
             require(['../views/resource/album/introduce'], resolve)
         },
@@ -879,6 +879,75 @@ const personal = {
 	}]
 }
 
+//直播中心
+const liveCenter = {
+	path: '/liveCenter/layout',
+	name: 'liveCenter-layout',
+	component: resolve => {
+	    require(['../views/liveCenter/layout/layout'], resolve)
+	},
+	meta: {
+	    title: '首页',
+	    requireAuth: true
+  },
+  children:[
+    {
+      path:'/liveCenter/Layout/index',
+      name:'live-index',
+      component: resolve => {
+        require(['../views/liveCenter/index/index'], resolve)
+      },
+      meta: {
+          title: '首页',
+          requireAuth: true
+      },
+    },
+    {
+      path:'/liveCenter/Layout/living',
+      name:'living-index',
+      component: resolve => {
+        require(['../views/liveCenter/living/index'], resolve)
+      },
+      meta: {
+          title: '正在直播',
+          requireAuth: true
+      },
+    },
+    {
+      path:'/liveCenter/Layout/livebroad',
+      name:'livebroad-index',
+      component: resolve => {
+        require(['../views/liveCenter/livebroad/index'], resolve)
+      },
+      meta: {
+          title: '直播预告',
+          requireAuth: true
+      },
+    },
+    {
+      path:'/liveCenter/Layout/liveSetting',
+      name:'liveSetting-index',
+      component: resolve => {
+        require(['../views/liveCenter/liveSetting/index'], resolve)
+      },
+      meta: {
+          title: '直播设置',
+          requireAuth: true
+      },
+    },
+    {
+      path:'/liveCenter/Layout/systemSetting',
+      name:'systemSetting-index',
+      component: resolve => {
+        require(['../views/liveCenter/systemSetting/index'], resolve)
+      },
+      meta: {
+          title: '系统设置',
+          requireAuth: true
+      },
+    }
+  ]
+}
 
 const router = new Router({
     base: './',
@@ -914,6 +983,7 @@ const router = new Router({
         order,
     index,
     synclass,
+    liveCenter,
 		{
 		    path: '/Layout/index/notice-detail',
 		    name: 'notice-detail',
