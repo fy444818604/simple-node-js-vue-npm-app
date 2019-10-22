@@ -288,15 +288,17 @@ export default {
                     if (valid) {
                         let params = {
                             id:val.row.id,
-                            orgId:parseInt(_this.dialog.formAdd.rootId),
+                            orgId:_this.dialog.formAdd.rootId,
                             schoolCalendarId:_this.dialog.formAdd.time,
-                            stageId:parseInt(_this.dialog.formAdd.stage),
-                            schoolSystem:parseInt(_this.dialog.formAdd.type)
+                            stageId:_this.dialog.formAdd.stage,
+                            schoolSystem:_this.dialog.formAdd.type
                         };
                         _this.$api.learnEdit(params).then(res => {
                             if(res.success == true){
                                 _this.$myLayer.successLayer(res.msg);
                                 _this.learnList();
+                            }else {
+                                _this.$myLayer.errorLayer(res.msg)
                             }
                         })
                     } else {
