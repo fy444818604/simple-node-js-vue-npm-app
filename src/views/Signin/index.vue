@@ -9,9 +9,12 @@
 					{{type == 0?'管理员登录':'用户登录'}}
 				</div>
 				<div class="login-center" v-if="type == 1">
-					<div class="login-center-img"><img src="../../assets/image/name.png" /></div>
-					<div class="login-center-input">
-						<input type="text" name="" value="" placeholder="请输入用户名" v-model="user" />
+					<div class="login-center-img"><img src="../../assets/image/log-school.png" /></div>
+					<div class="login-center-input" @click="schoolClick()">
+						<input type="text" name="" value="" placeholder="请选择学校"  v-model="treeInput"/>
+						<div class="login-school" v-show="loginSchool">
+							<el-tree :data="treeData" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
+						</div>
 					</div>
 				</div>
 				<div class="login-center">
@@ -56,14 +59,24 @@ export default {
             wordHide:require('@/assets/image/eye-close.png'),
             passwordShow:false,
             type:0,
+			params:{},
             user: 'administrator',
             password: '123456789',
             code:'',
             img:'',
+			loginSchool:false,
+			treeId:'',
+			treeInput:'',
+			treeData: [],
+			defaultProps: {
+				children: 'children',
+				label: 'displayName'
+			}
         }
     },
     created() {
         this.loginImg();
+        this.schoolList();
     },
     mounted() {
 
@@ -71,13 +84,25 @@ export default {
     methods: {
         ...mapMutations(['changeLogin']),
         login() {
-            let params = {
-                userName: this.user,
-                password: this.password,
-                loginType:this.type,
-                checkCode:this.code,
-                checkCodeSessionId:this.img.checkCodeSessionId
-            };
+        	let params = { };
+			if(this.type == 0){
+				params = {
+					userName: this.user,
+					password: this.password,
+					loginType:this.type,
+					checkCode:this.code,
+					checkCodeSessionId:this.img.checkCodeSessionId,
+				};
+			}else if(this.type == 1){
+				params = {
+					userName: this.user,
+					password: this.password,
+					loginType:this.type,
+					checkCode:this.code,
+					checkCodeSessionId:this.img.checkCodeSessionId,
+					orgId:this.treeId
+				};
+			};
             this.$api.apiLogin(params).then(res => {
                 if (res.success) {
                     this.changeLogin({
@@ -109,7 +134,31 @@ export default {
         },
         logINIMG(){
             this.loginImg();
-        }
+        },
+		schoolList(){
+			let params = {
+				level:0,
+				onlyOrg:1,
+				parentId:0
+			};
+			this.$api.institutions(params).then( res => {
+				if(res.success == true){
+					this.treeData = res.data;
+				}
+			})
+		},
+		schoolClick(){
+			this.loginSchool = !this.loginSchool
+		},
+		handleNodeClick(val){
+			if(val.unitAttr == 8||val.unitAttr == '8'){
+				this.treeId = val.id;
+				this.treeInput = val.displayName;
+				this.loginSchool = false;
+			}else {
+				this.$myLayer.errorLayer('请选择学校哦')
+			}
+		}
     }
 }
 </script>
@@ -121,6 +170,20 @@ export default {
 				width: 100%;
 				height: 100%;
 			}
+		}
+		.login-school{
+			position: absolute;
+			top: 43px;
+			left: 0px;
+			width: 100%;
+			z-index: 999999;
+			background-color: #fff;
+			border: 1px solid #ebeef5;
+			border-radius: 4px;
+			-webkit-box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+			box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+			max-height: 200px;
+			overflow: auto;
 		}
 	}
 </style>

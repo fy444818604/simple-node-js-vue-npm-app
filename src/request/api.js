@@ -53,6 +53,7 @@ export const areaList = params => post('/base/api/buildings/page',params);
 export const areaDis = params => post('/base/api/buildings/update/status',params);
 export const areaAdd = params => post('/base/api/buildings/add',params);
 export const areaEdi = params => post('/base/api/buildings/update',params);
+export const areaSelect = params => get('/base/api/buildings/select',params);
 //教师设置
 export const settingList = params => post('/base/api/classroom/page',params);
 //教职工账号管理
@@ -103,6 +104,14 @@ export const learn  = params => post('/base/api/grade/page',params);
 export const learnAdd  = params => post('/base/api/grade/add',params);
 export const learnEdit  = params => post('/base/api/grade/update',params);
 export const learnDis  = params => post('/base/api/grade/update/status',params);
+export const learSelect  = params => get('/base/api/grade/select',params);
+//班级管理
+export const claList  = params => post('/base/api/class/page',params);
+export const claAdd  = params => post('/base/api/class/add',params);
+export const claDis  = params => post('/base/api/class/update/status',params);
+export const claEdit  = params => post('/base/api/class/update',params);
+//教室管理
+export const classroomSelect  = params => get('/base/api/classroom/select',params);
 
 //测试接口
 export const test = params => post('http://192.168.38.221:8081/test/getToken',params);
